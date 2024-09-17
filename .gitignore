@@ -1,3 +1,6 @@
+# Android keystore
+android/key.properties
+
 # Miscellaneous
 *.class
 *.log
