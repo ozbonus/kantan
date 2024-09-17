@@ -1,3 +1,3 @@
-# kantan
+# Kantan Player
 
-An app for distributing textbook audio resources.
+A framework for making apps to distribute audio resources for textbooks.

@@ -1,7 +1,7 @@
 name: kantan
 description: "An app for distributing textbook audio resources."
 publish_to: 'none'
-version: 0.1.0
+version: 0.8.0+0
 
 environment:
   sdk: ^3.5.3
@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
