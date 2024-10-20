@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  demo_assets:
+    path: ../demo_assets/
   flutter_riverpod: ^2.5.1
   go_router: ^14.2.7
   mockito: ^5.4.4
