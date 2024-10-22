@@ -46,7 +46,10 @@ class _EagerInitializer extends ConsumerWidget {
     final appStartupState = ref.watch(appStartupProvider);
     return appStartupState.when(
       loading: () => const AppStartupLoading(),
-      error: (e, st) => const AppStartupError(),
+      error: (e, st) => AppStartupError(
+        error: e,
+        stackTrace: st,
+      ),
       data: (_) => child,
     );
   }
@@ -62,7 +65,13 @@ class AppStartupLoading extends StatelessWidget {
 }
 
 class AppStartupError extends StatelessWidget {
-  const AppStartupError({super.key});
+  const AppStartupError({
+    required this.error,
+    required this.stackTrace,
+    super.key,
+  });
+  final Object error;
+  final StackTrace stackTrace;
 
   @override
   Widget build(BuildContext context) {
