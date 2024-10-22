@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tracks_repository.dart';
+part of 'kantan_player_app.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tracksListHash() => r'44aa5762d64eaf42bff92516282013c03e3e19ac';
+String _$appStartupHash() => r'13bbac98599d1846e0918433ad81ed7d06a52c8c';
 
-/// See also [tracksList].
-@ProviderFor(tracksList)
-final tracksListProvider = FutureProvider<List<Track>>.internal(
-  tracksList,
-  name: r'tracksListProvider',
+/// See also [appStartup].
+@ProviderFor(appStartup)
+final appStartupProvider = AutoDisposeFutureProvider<void>.internal(
+  appStartup,
+  name: r'appStartupProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$tracksListHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$appStartupHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef TracksListRef = FutureProviderRef<List<Track>>;
+typedef AppStartupRef = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
