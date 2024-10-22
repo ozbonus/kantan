@@ -75,6 +75,9 @@ class AppStartupError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Show error text.
+    // TODO: Retry logic:
+    // https://codewithandrea.com/articles/robust-app-initialization-riverpod/#how-to-implement-the-retry-logic?
     return const Placeholder();
   }
 }
