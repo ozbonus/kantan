@@ -81,4 +81,55 @@ class Track {
       ),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Track &&
+        other.filename == filename &&
+        other.album == album &&
+        other.title == title &&
+        other.displayDescription == displayDescription &&
+        other.artist == artist &&
+        other.duration == duration &&
+        other.bundleName == bundleName &&
+        other.trackObject == trackObject &&
+        other.bundleTrack == bundleTrack &&
+        other.absoluteTrack == absoluteTrack &&
+        _mapEquals(other.transcripts, transcripts);
+  }
+
+  @override
+  int get hashCode {
+    return filename.hashCode ^
+        album.hashCode ^
+        title.hashCode ^
+        displayDescription.hashCode ^
+        artist.hashCode ^
+        duration.hashCode ^
+        bundleName.hashCode ^
+        trackObject.hashCode ^
+        bundleTrack.hashCode ^
+        absoluteTrack.hashCode ^
+        (transcripts == null ? 0 : transcripts.hashCode);
+  }
+
+  bool _mapEquals(
+      Map<String, List<String>>? map1, Map<String, List<String>>? map2) {
+    if (map1 == null && map2 == null) return true;
+    if (map1 == null || map2 == null) return false;
+    if (map1.length != map2.length) return false;
+
+    for (final key in map1.keys) {
+      if (!map2.containsKey(key)) return false;
+      final list1 = map1[key]!;
+      final list2 = map2[key]!;
+      if (list1.length != list2.length) return false;
+      for (int i = 0; i < list1.length; i++) {
+        if (list1[i] != list2[i]) return false;
+      }
+    }
+    return true;
+  }
 }

@@ -15,6 +15,7 @@ dependencies:
   go_router: ^14.2.7
   mockito: ^5.4.4
   riverpod_annotation: ^2.3.5
+  envied: ^0.5.4+1
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +23,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   riverpod_generator: ^2.4.3
   riverpod_lint: ^2.3.13
+  build_runner: ^2.4.13
+  envied_generator: ^0.5.4+1
 
 flutter:
   uses-material-design: true
