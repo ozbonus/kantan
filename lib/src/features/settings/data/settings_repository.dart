@@ -8,10 +8,20 @@ class SettingsRepository {
   const SettingsRepository(this.prefs);
   final SharedPreferences prefs;
 
-  bool? get debugSetting => prefs.getBool(SettingKey.debugKey);
+  bool? get debugBool => prefs.getBool(SettingKey.debugBool);
+  int? get debugInt => prefs.getInt(SettingKey.debugInt);
+  String? get debugString => prefs.getString(SettingKey.debugString);
 
-  Future<bool> setDebug(bool value) async {
-    return await prefs.setBool(SettingKey.debugKey, value);
+  Future<bool> setDebugBool(bool value) async {
+    return await prefs.setBool(SettingKey.debugBool, value);
+  }
+
+  Future<bool> setDebugInt(int value) async {
+    return await prefs.setInt(SettingKey.debugInt, value);
+  }
+
+  Future<bool> setDebugString(String value) async {
+    return await prefs.setString(SettingKey.debugString, value);
   }
 }
 
