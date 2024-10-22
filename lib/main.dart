@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/kantan_player_app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MainApp());
+  runApp(
+    const ProviderScope(
+      child: KantanPlayerApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
