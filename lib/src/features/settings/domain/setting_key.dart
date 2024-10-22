@@ -1,3 +1,5 @@
 class SettingKey {
-  static const debugKey = 'debugKey';
+  static const debugBool = 'debugBool';
+  static const debugInt = 'debugInt';
+  static const debugString = 'debugString';
 }
