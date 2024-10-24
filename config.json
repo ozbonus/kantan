@@ -1,3 +1,5 @@
 {
-  "TRACKS_JSON": "packages/demo_assets/assets/tracks.json"
+  "TRACKS_JSON": "packages/demo_assets/assets/tracks.json",
+  "rewindDuration": 5,
+  "fastForwardDuration": 5
 }
