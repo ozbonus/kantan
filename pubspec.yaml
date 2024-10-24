@@ -17,6 +17,10 @@ dependencies:
   riverpod_annotation: ^2.3.5
   envied: ^0.5.4+1
   shared_preferences: ^2.3.2
+  audio_service: ^0.18.15
+  audio_session: ^0.1.21
+  just_audio_platform_interface: ^4.3.0
+  just_audio: ^0.9.41
 
 dev_dependencies:
   flutter_test:
