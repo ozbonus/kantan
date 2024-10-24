@@ -8,6 +8,9 @@ const Map<String, Object> fullValues = {
   SettingKey.debugBool: true,
   SettingKey.debugInt: 0,
   SettingKey.debugString: 'fnord',
+  SettingKey.track: 1,
+  SettingKey.time: 1,
+  SettingKey.speed: 1.0,
 };
 
 Future<SettingsRepository> makeRepository(Map<String, Object> values) async {
@@ -32,6 +35,9 @@ void main() {
     expect(repository.debugBool, true);
     expect(repository.debugInt, 0);
     expect(repository.debugString, 'fnord');
+    expect(repository.track, 1);
+    expect(repository.time, 1);
+    expect(repository.speed, 1.0);
   });
 
   test('Get null values.', () async {
@@ -39,6 +45,9 @@ void main() {
     expect(repository.debugBool, null);
     expect(repository.debugInt, null);
     expect(repository.debugString, null);
+    expect(repository.track, null);
+    expect(repository.time, null);
+    expect(repository.speed, null);
   });
 
   test('Write and read values.', () async {
@@ -46,8 +55,14 @@ void main() {
     expectLater(repository.setDebugBool(true), completion(true));
     expectLater(repository.setDebugInt(1), completion(true));
     expectLater(repository.setDebugString('fnord'), completion(true));
+    expectLater(repository.setTrack(2), completion(true));
+    expectLater(repository.setTime(3), completion(true));
+    expectLater(repository.setSpeed(2.5), completion(true));
     expect(repository.debugBool, true);
     expect(repository.debugInt, 1);
     expect(repository.debugString, 'fnord');
+    expect(repository.track, 2);
+    expect(repository.time, 3);
+    expect(repository.speed, 2.5);
   });
 }
