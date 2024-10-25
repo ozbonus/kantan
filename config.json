@@ -1,5 +1,8 @@
 {
   "TRACKS_JSON": "packages/demo_assets/assets/tracks.json",
+  "androidNotificationChannelId": "com.crayonfox.kantanplayer",
+  "androidNotificationChannelName": "Kantan Player",
+  "androidNotificationIcon": "drawable/text_to_speech",
   "rewindDuration": 5,
   "fastForwardDuration": 5
 }
