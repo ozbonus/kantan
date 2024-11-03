@@ -1,10 +1,11 @@
 class Config {
-  static String getConfig(String key) => String.fromEnvironment(key);
+  static String getConfigStr(String key) => String.fromEnvironment(key);
+  static int getConfigInt(String key) => int.fromEnvironment(key);
 
-  static String get tracksJson => getConfig('TRACKS_JSON');
-  static String get channelId => getConfig('androidNotificationChannelId');
-  static String get channelName => getConfig('androidNotificationChannelName');
-  static String get notificationIcon => getConfig('androidNotificationIcon');
-  static String get rewindDuration => getConfig('rewindDuration');
-  static String get fastForwardDuration => getConfig('fastForwardDuration');
+  static get tracksJson => getConfigStr('TRACKS_JSON');
+  static get channelId => getConfigStr('androidNotificationChannelId');
+  static get channelName => getConfigStr('androidNotificationChannelName');
+  static get notificationIcon => getConfigStr('androidNotificationIcon');
+  static get rewindDuration => getConfigInt('rewindDuration');
+  static get fastForwardDuration => getConfigInt('fastForwardDuration');
 }
