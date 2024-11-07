@@ -15,11 +15,11 @@ class Config {
     return const String.fromEnvironment('androidNotificationIcon');
   }
 
-  static int get rewindDuration {
-    return const int.fromEnvironment('rewindDuration');
+  static Duration get rewindDuration {
+    return const Duration(seconds: int.fromEnvironment('rewindDuration'));
   }
 
-  static int get fastForwardDuration {
-    return const int.fromEnvironment('fastForwardDuration');
+  static Duration get fastForwardDuration {
+    return const Duration(seconds: int.fromEnvironment('fastForwardDuration'));
   }
 }
