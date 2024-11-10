@@ -1,4 +1,8 @@
 class Config {
+  static String get appTitle {
+    return const String.fromEnvironment('appTitle');
+  }
+
   static String get tracksJson {
     return const String.fromEnvironment('TRACKS_JSON');
   }
