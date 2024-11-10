@@ -381,11 +381,18 @@ class AudioHandlerService extends BaseAudioHandler {
 
 @riverpod
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
+  final session = await AudioSession.instance;
+  await session.configure(const AudioSessionConfiguration.speech());
   return await AudioService.init(
     builder: () => AudioHandlerService(),
     config: AudioServiceConfig(
-      androidNotificationChannelId: 'com.crayonfox.kantanplayer',
-      androidNotificationChannelName: 'Kantan Player',
+      androidNotificationChannelId: Config.channelId,
+      androidNotificationChannelName: Config.channelName,
+      // Setting androidStopForegroundOnPause would require the app the ask
+      // users to disable battery optimization for the app. Given that this app
+      // is meant to be accessible to young children and non-tech saavy adults,
+      // that's probably not a safe thing to ask.
+      androidStopForegroundOnPause: false,
       androidNotificationIcon: 'drawable/text_to_speech',
       rewindInterval: Config.rewindDuration,
       fastForwardInterval: Config.fastForwardDuration,
