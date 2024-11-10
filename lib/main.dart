@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/common_widgets/error_message_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
@@ -13,21 +14,57 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
-      child: KantanPlayerApp(),
+      child: AppStartupWidget(
+        child: KantanPlayerApp(),
+      ),
     ),
   );
 }
 
 class AppStartupWidget extends ConsumerWidget {
-  const AppStartupWidget({super.key});
+  const AppStartupWidget({
+    super.key,
+    required this.child,
+  });
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appStartupState = ref.watch(appStartupProvider);
     return appStartupState.when(
-      loading: () => const AppStartupLoadingWidget(),
-      error: (e, st) => ErrorMessageWidget(e.toString()),
-      data: (_) => const KantanPlayerApp(),
+      loading: () {
+        return const AppNotStartedScreen(
+          body: AppStartupLoadingWidget(),
+        );
+      },
+      error: (e, st) {
+        return AppNotStartedScreen(
+          body: AppStartupErrorWidget(
+            errorMessage: e.toString(),
+            retry: () => ref.invalidate(appStartupProvider),
+          ),
+        );
+      },
+      data: (_) => child,
+    );
+  }
+}
+
+class AppNotStartedScreen extends StatelessWidget {
+  const AppNotStartedScreen({
+    super.key,
+    required this.body,
+  });
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: Config.appTitle,
+      themeMode: ThemeMode.system,
+      home: Scaffold(
+        body: body,
+      ),
     );
   }
 }
@@ -37,8 +74,10 @@ class AppStartupLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator.adaptive(),
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator.adaptive(),
+      ),
     );
   }
 }
