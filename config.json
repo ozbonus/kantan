@@ -1,4 +1,5 @@
 {
+  "appTitle": "Kantan Player",
   "TRACKS_JSON": "packages/demo_assets/assets/tracks.json",
   "androidNotificationChannelId": "com.crayonfox.kantanplayer",
   "androidNotificationChannelName": "Kantan Player",

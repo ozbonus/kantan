@@ -1,16 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'kantan_player_app.dart';
+part of 'main.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appStartupHash() => r'13bbac98599d1846e0918433ad81ed7d06a52c8c';
+String _$appStartupHash() => r'1695a2b3cd35f7bff897bd9ee083bb9af988ed78';
 
 /// See also [appStartup].
 @ProviderFor(appStartup)
-final appStartupProvider = AutoDisposeFutureProvider<void>.internal(
+final appStartupProvider = FutureProvider<void>.internal(
   appStartup,
   name: r'appStartupProvider',
   debugGetCreateSourceHash:
@@ -21,6 +21,6 @@ final appStartupProvider = AutoDisposeFutureProvider<void>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AppStartupRef = AutoDisposeFutureProviderRef<void>;
+typedef AppStartupRef = FutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
