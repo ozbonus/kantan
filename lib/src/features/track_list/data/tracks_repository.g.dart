@@ -6,7 +6,7 @@ part of 'tracks_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tracksListHash() => r'44aa5762d64eaf42bff92516282013c03e3e19ac';
+String _$tracksListHash() => r'c485ffd1a5e589b3ec8cc4bcb5db9ded985ec853';
 
 /// See also [tracksList].
 @ProviderFor(tracksList)

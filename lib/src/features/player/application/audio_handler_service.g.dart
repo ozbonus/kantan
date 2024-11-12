@@ -6,12 +6,11 @@ part of 'audio_handler_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$audioHandlerHash() => r'28ce076efcd4e1715f1fd02e1f50039e38ca2c28';
+String _$audioHandlerHash() => r'4c0637f12fe426b1e93a80c9314d684afd63339e';
 
 /// See also [audioHandler].
 @ProviderFor(audioHandler)
-final audioHandlerProvider =
-    AutoDisposeFutureProvider<AudioHandlerService>.internal(
+final audioHandlerProvider = FutureProvider<AudioHandlerService>.internal(
   audioHandler,
   name: r'audioHandlerProvider',
   debugGetCreateSourceHash:
@@ -22,7 +21,7 @@ final audioHandlerProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AudioHandlerRef = AutoDisposeFutureProviderRef<AudioHandlerService>;
+typedef AudioHandlerRef = FutureProviderRef<AudioHandlerService>;
 String _$kantanPlaybackStateStreamHash() =>
     r'41e21f4b7c45720bc3c143f7e7ca8a128a84e62a';
 
