@@ -77,7 +77,6 @@ void main() {
   test('Make MediaItems', () {
     final container = createContainer();
     final mediaItemList = container.read(mediaItemListProvider(trackList));
-    print(mediaItemList[0]);
     expect(mediaItemList, isA<List<MediaItem>>());
   });
 
