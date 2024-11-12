@@ -7,6 +7,8 @@ import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/domain/position_data.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
+import 'package:kantan/src/features/track_list/data/track_to_media_item.dart';
+import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -112,10 +114,8 @@ class AudioHandlerService extends BaseAudioHandler {
   // a Kantan Player app the tracks repository provdies a list of MediaItems
   // wherein the required id field is the same as the local asset's location.
   AudioSource _createAudioSourceFromMediaItem(MediaItem item) {
-    return AudioSource.uri(
-      Uri.parse(item.id),
-      tag: item,
-    );
+    final uri = 'asset:///packages/${Config.assetsPackage}/assets/${item.id}';
+    return AudioSource.uri(Uri.parse(uri));
   }
 
   Future<void> dispose() => _player.dispose();
@@ -142,6 +142,16 @@ class AudioHandlerService extends BaseAudioHandler {
   @override
   Future<void> onNotificationDeleted() async {
     return;
+  }
+
+  Future<void> loadTrack(Track track) {
+    final mediaItem = track.mediaItem;
+    return addQueueItem(mediaItem);
+  }
+
+  Future<void> loadTracks(List<Track> tracks) {
+    final mediaItems = tracks.map((track) => track.mediaItem).toList();
+    return addQueueItems(mediaItems);
   }
 
   @override
@@ -379,7 +389,7 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
   final session = await AudioSession.instance;
   await session.configure(const AudioSessionConfiguration.speech());
