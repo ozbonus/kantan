@@ -1,29 +1,9 @@
 class Config {
-  static String get appTitle {
-    return const String.fromEnvironment('appTitle');
-  }
-
-  static String get tracksJson {
-    return const String.fromEnvironment('TRACKS_JSON');
-  }
-
-  static String get channelId {
-    return const String.fromEnvironment('androidNotificationChannelId');
-  }
-
-  static String get channelName {
-    return const String.fromEnvironment('androidNotificationChannelName');
-  }
-
-  static String get notificationIcon {
-    return const String.fromEnvironment('androidNotificationIcon');
-  }
-
-  static Duration get rewindDuration {
-    return const Duration(seconds: int.fromEnvironment('rewindDuration'));
-  }
-
-  static Duration get fastForwardDuration {
-    return const Duration(seconds: int.fromEnvironment('fastForwardDuration'));
-  }
+  static String get appTitle => 'Kantan Player';
+  static String get tracksJson => 'packages/demo_assets/assets/tracks.json';
+  static String get channelId => 'com.crayonfox.kantanplayer';
+  static String get channelName => 'Kantan Player';
+  static String get notificationIcon => 'drawable/text_to_speech';
+  static Duration get rewindDuration => const Duration(seconds: 5);
+  static Duration get fastForwardDuration => const Duration(seconds: 5);
 }
