@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
@@ -29,18 +28,4 @@ FutureOr<List<Track>> tracksList(Ref ref) async {
   final tracksMap = jsonDecode(tracksJson) as Map<String, dynamic>;
   final tracksRepository = TracksRepository(tracksMap);
   return tracksRepository.tracksList();
-}
-
-@riverpod
-List<MediaItem> mediaItemList(Ref ref, List<Track> trackList) {
-  return trackList
-      .map((track) => MediaItem(
-            id: track.filename,
-            album: track.album,
-            title: track.title,
-            displayDescription: track.displayDescription,
-            artist: track.artist,
-            duration: Duration(milliseconds: track.duration),
-          ))
-      .toList();
 }
