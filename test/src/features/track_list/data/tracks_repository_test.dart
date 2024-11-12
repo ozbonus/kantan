@@ -24,6 +24,7 @@ const Map<String, dynamic> trackMap1 = {
 const Map<String, dynamic> trackMap2 = {
   'filename': 'audio.m4a',
   'album': 'Book Name',
+  'title': 'Track Title',
   'artist': 'Artist',
   'duration': 599900,
   'trackObject': 'Track',
