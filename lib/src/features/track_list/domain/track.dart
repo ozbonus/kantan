@@ -26,7 +26,7 @@ class Track {
   final String title;
   final String? displayDescription;
   final String artist;
-  final double duration;
+  final int duration;
   final String? bundleName;
   final String trackObject;
   final String bundleTrack;
@@ -39,7 +39,7 @@ class Track {
     String? title,
     String? displayDescription,
     String? artist,
-    double? duration,
+    int? duration,
     String? bundleName,
     String? trackObject,
     String? bundleTrack,
@@ -65,10 +65,10 @@ class Track {
     return Track(
       filename: map['filename'] as String,
       album: map['album'] as String,
-      title: map['title'] as String?,
+      title: map['title'] as String,
       displayDescription: map['displayDescription'] as String?,
       artist: map['artist'] as String,
-      duration: map['duration'] as double,
+      duration: map['duration'] as int,
       bundleName: map['bundleName'] as String?,
       trackObject: map['trackObject'] as String,
       bundleTrack: map['bundleTrack'] as String,
