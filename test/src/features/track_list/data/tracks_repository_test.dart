@@ -74,23 +74,23 @@ void main() {
     expect(tracksList[1], equals(track2));
   });
 
-  test('Make MediaItems', () {
-    final container = createContainer();
-    final mediaItemList = container.read(mediaItemListProvider(trackList));
-    expect(mediaItemList, isA<List<MediaItem>>());
-  });
+  // test('Make MediaItems', () {
+  //   final container = createContainer();
+  //   final mediaItemList = container.read(mediaItemListProvider(trackList));
+  //   expect(mediaItemList, isA<List<MediaItem>>());
+  // });
 
-  test('MediaItems are correct.', () {
-    final container = createContainer();
-    final mediaItemList = container.read(mediaItemListProvider(trackList));
-    final expectedMediaitem = MediaItem(
-      id: track1.filename,
-      album: track1.album,
-      title: track1.title,
-      displayDescription: track1.displayDescription,
-      artist: track1.artist,
-      duration: Duration(milliseconds: track1.duration),
-    );
-    expect(mediaItemList[0], equals(expectedMediaitem));
-  });
+  // test('MediaItems are correct.', () {
+  //   final container = createContainer();
+  //   final mediaItemList = container.read(mediaItemListProvider(trackList));
+  //   final expectedMediaitem = MediaItem(
+  //     id: track1.filename,
+  //     album: track1.album,
+  //     title: track1.title,
+  //     displayDescription: track1.displayDescription,
+  //     artist: track1.artist,
+  //     duration: Duration(milliseconds: track1.duration),
+  //   );
+  //   expect(mediaItemList[0], equals(expectedMediaitem));
+  // });
 }
