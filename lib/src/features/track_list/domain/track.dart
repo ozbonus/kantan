@@ -2,7 +2,7 @@ class Track {
   Track({
     required this.filename,
     required this.album,
-    this.title,
+    required this.title,
     this.displayDescription,
     required this.artist,
     required this.duration,
@@ -23,7 +23,7 @@ class Track {
 
   final String filename;
   final String album;
-  final String? title;
+  final String title;
   final String? displayDescription;
   final String artist;
   final double duration;
