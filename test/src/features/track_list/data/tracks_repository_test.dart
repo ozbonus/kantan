@@ -40,7 +40,6 @@ final track1 = Track.fromMap(trackMap1);
 final track2 = Track.fromMap(trackMap2);
 
 final trackList = [track1, track2];
-// All nullable fields are left unpopulated.
 
 void main() {
   test('Create a normal list of tracks', () {
