@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,8 +22,9 @@ class TracksRepository {
 }
 
 @Riverpod(keepAlive: true)
-FutureOr<List<Track>> tracksList(TracksListRef ref) async {
-  final tracksJson = await rootBundle.loadString(Config.tracksJson);
+FutureOr<List<Track>> tracksList(Ref ref) async {
+  final tracksJsonUri = 'packages/${Config.assetsPackage}/assets/tracks.json';
+  final tracksJson = await rootBundle.loadString(tracksJsonUri);
   final tracksMap = jsonDecode(tracksJson) as Map<String, dynamic>;
   final tracksRepository = TracksRepository(tracksMap);
   return tracksRepository.tracksList();

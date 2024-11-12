@@ -4,6 +4,7 @@ import 'package:kantan/config.dart';
 import 'package:kantan/src/common_widgets/error_message_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
+import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/kantan_player_app.dart';
 import 'package:kantan/src/localization/string_hardcoded.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -45,7 +46,9 @@ class AppStartupWidget extends ConsumerWidget {
           ),
         );
       },
-      data: (_) => child,
+      data: (_) {
+        return child;
+      },
     );
   }
 }
@@ -114,8 +117,14 @@ class AppStartupErrorWidget extends StatelessWidget {
 Future<void> appStartup(Ref ref) async {
   ref.onDispose(() {
     ref.invalidate(settingsRepositoryProvider);
+    ref.invalidate(tracksListProvider);
     ref.invalidate(audioHandlerProvider);
   });
   await ref.watch(settingsRepositoryProvider.future);
+  await ref.watch(tracksListProvider.future);
   await ref.watch(audioHandlerProvider.future);
+
+  final tracks = ref.watch(tracksListProvider).requireValue;
+  final audioHandler = ref.watch(audioHandlerProvider).requireValue;
+  await audioHandler.loadTracks(tracks);
 }
