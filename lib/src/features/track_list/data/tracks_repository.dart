@@ -29,3 +29,17 @@ FutureOr<List<Track>> tracksList(Ref ref) async {
   final tracksRepository = TracksRepository(tracksMap);
   return tracksRepository.tracksList();
 }
+
+@riverpod
+List<MediaItem> mediaItemList(Ref ref, List<Track> trackList) {
+  return trackList
+      .map((track) => MediaItem(
+            id: track.filename,
+            album: track.album,
+            title: track.title,
+            displayDescription: track.displayDescription,
+            artist: track.artist,
+            duration: Duration(milliseconds: track.duration),
+          ))
+      .toList();
+}
