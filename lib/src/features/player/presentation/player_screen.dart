@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button.dart';
+import 'package:kantan/src/features/player/presentation/prev_next_buttons.dart';
 import 'package:kantan/src/features/player/presentation/rewind_forward_buttons.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
@@ -28,12 +29,13 @@ class PlayerScreen extends ConsumerWidget {
                 FastForwardButton(),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FilledButton(
-                onPressed: () => context.goNamed(AppRoute.home),
-                child: const Text('Go to Home Screen'),
-              ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SkipToPreviousButton(),
+                SkipToNextButton(),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
