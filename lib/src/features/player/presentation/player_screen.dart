@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kantan/src/features/player/presentation/play_pause_button.dart';
+import 'package:kantan/src/features/player/presentation/prev_next_buttons.dart';
+import 'package:kantan/src/features/player/presentation/progress_slider.dart';
+import 'package:kantan/src/features/player/presentation/repeat_mode_button.dart';
+import 'package:kantan/src/features/player/presentation/rewind_forward_buttons.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
 class PlayerScreen extends ConsumerWidget {
@@ -17,13 +22,25 @@ class PlayerScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FilledButton(
-                onPressed: () => context.goNamed(AppRoute.home),
-                child: const Text('Go to Home Screen'),
-              ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PlayPauseButton(),
+                RewindButton(),
+                FastForwardButton(),
+              ],
             ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SkipToPreviousButton(),
+                SkipToNextButton(),
+                RepeatModeButton(),
+              ],
+            ),
+            const ProgressSlider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FilledButton(
