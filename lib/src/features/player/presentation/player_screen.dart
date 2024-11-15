@@ -6,6 +6,7 @@ import 'package:kantan/src/features/player/presentation/prev_next_buttons.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
 import 'package:kantan/src/features/player/presentation/repeat_mode_button.dart';
 import 'package:kantan/src/features/player/presentation/rewind_forward_buttons.dart';
+import 'package:kantan/src/features/player/presentation/speed_slider.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
 class PlayerScreen extends ConsumerWidget {
@@ -40,6 +41,7 @@ class PlayerScreen extends ConsumerWidget {
                 RepeatModeButton(),
               ],
             ),
+            const SpeedSlider(),
             const ProgressSlider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
