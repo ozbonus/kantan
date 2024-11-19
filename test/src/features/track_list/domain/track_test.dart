@@ -8,7 +8,7 @@ const Map<String, dynamic> trackMap1 = {
   "title": "Track Title",
   "displayDescription": "Display Description",
   "artist": "Artist",
-  "duration": 59.99,
+  "duration": 1000,
   "bundleName": "Bundle Name",
   "trackObject": "Track",
   "bundleTrack": "1",
@@ -24,8 +24,9 @@ const Map<String, dynamic> trackMap1 = {
 const Map<String, dynamic> trackMap2 = {
   "filename": "audio.m4a",
   "album": "Book Name",
+  "title": "Track Title",
   "artist": "Artist",
-  "duration": 59.99,
+  "duration": 1000,
   "trackObject": "Track",
   "bundleTrack": "1",
   "absoluteTrack": "1",
@@ -38,7 +39,7 @@ const Map<String, dynamic> trackMap3 = {
   "title": "Track Title",
   "displayDescription": "Display Description",
   "artist": "Artist",
-  "duration": 59.99,
+  "duration": 1000,
   "bundleName": "Bundle Name",
   "trackObject": "Track",
   "bundleTrack": "1",
@@ -59,7 +60,7 @@ void main() {
     expect(track.title, equals("Track Title"));
     expect(track.displayDescription, equals("Display Description"));
     expect(track.artist, equals("Artist"));
-    expect(track.duration, equals(59.99));
+    expect(track.duration, equals(1000));
     expect(track.bundleName, equals("Bundle Name"));
     expect(track.trackObject, equals("Track"));
     expect(track.bundleTrack, equals("1"));
@@ -74,7 +75,6 @@ void main() {
   test('Create a Track with null values.', () {
     final track = Track.fromMap(trackMap2);
 
-    expect(track.title, isNull);
     expect(track.displayDescription, isNull);
     expect(track.bundleName, isNull);
     expect(track.transcripts, isNull);
