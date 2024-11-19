@@ -25,6 +25,11 @@ late TestableAudioHandlerService audioHandler;
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(
+    const MethodChannel('plugins.flutter.io/path_provider'),
+    (MethodCall methodCall) async => 'test',
+  );
 
   // Set up mocks for just_audio.
   final mockJustAudio = MockJustAudio();
