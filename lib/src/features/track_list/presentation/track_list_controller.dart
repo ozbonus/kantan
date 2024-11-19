@@ -7,4 +7,8 @@ part 'track_list_controller.g.dart';
 class TrackListController extends _$TrackListController {
   @override
   AsyncValue<int?> build() => ref.watch(queueIndexStreamProvider);
+
+  void skipToTrack(int index) {
+    ref.read(audioHandlerProvider).requireValue.skipToQueueItem(index);
+  }
 }

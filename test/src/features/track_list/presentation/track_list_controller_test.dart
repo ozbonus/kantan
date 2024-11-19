@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_controller.dart';
-import '../../../mocks/create_container.dart';
+import '../../../../mocks/create_container.dart';
 
 void main() {
   test("Init and return a value.", () async {

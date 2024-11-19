@@ -7,7 +7,7 @@ part of 'track_list_controller.dart';
 // **************************************************************************
 
 String _$trackListControllerHash() =>
-    r'c1aa0248f6e4399b9c5773d731e3637a0aa9b6a7';
+    r'b6b6e225f5198174605cd7bb7a8d02327bd33a0b';
 
 /// See also [TrackListController].
 @ProviderFor(TrackListController)
