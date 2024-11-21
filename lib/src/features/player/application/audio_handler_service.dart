@@ -372,6 +372,12 @@ class AudioHandlerService extends BaseAudioHandler {
     });
   }
 
+  PositionData get lastPositionData => PositionData(
+        _player.position,
+        _player.bufferedPosition,
+        _player.duration ?? Duration.zero,
+      );
+
   Stream<PositionData> get positionData {
     return Rx.combineLatest3(
       // AudioService.position has a weird behavior, maybe a bug, wherein
