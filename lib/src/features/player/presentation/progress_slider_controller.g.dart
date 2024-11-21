@@ -157,12 +157,12 @@ class _OnSeekProviderElement extends AutoDisposeProviderElement<Object?>
 }
 
 String _$progressSliderControllerHash() =>
-    r'2b4bb4418c39cce6593f7956afbe3602ff4265d8';
+    r'1e4d5cbd7e05adf7ce25cbc49d1a6e285df2a8db';
 
 /// See also [ProgressSliderController].
 @ProviderFor(ProgressSliderController)
 final progressSliderControllerProvider = AutoDisposeNotifierProvider<
-    ProgressSliderController, AsyncValue<PositionData>>.internal(
+    ProgressSliderController, PositionData>.internal(
   ProgressSliderController.new,
   name: r'progressSliderControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -172,7 +172,6 @@ final progressSliderControllerProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$ProgressSliderController
-    = AutoDisposeNotifier<AsyncValue<PositionData>>;
+typedef _$ProgressSliderController = AutoDisposeNotifier<PositionData>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
