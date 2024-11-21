@@ -8,18 +8,10 @@ class ProgressSlider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final positionValue = ref.watch(progressSliderControllerProvider);
+    final positionData = ref.watch(progressSliderControllerProvider);
     return ProgressBar(
-      progress: positionValue.when(
-        loading: () => Duration.zero,
-        error: (_, __) => Duration.zero,
-        data: (positionData) => positionData.position,
-      ),
-      total: positionValue.when(
-        loading: () => Duration.zero,
-        error: (_, __) => Duration.zero,
-        data: (positionData) => positionData.duration,
-      ),
+      progress: positionData.position,
+      total: positionData.duration,
       // Calling this onSeekProvider is a workaround for an issue described in
       // detail in progress_slider_controller.dart.
       onSeek: (position) => ref.read(onSeekProvider(position)),
