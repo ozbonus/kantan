@@ -8,8 +8,16 @@ part 'progress_slider_controller.g.dart';
 @riverpod
 class ProgressSliderController extends _$ProgressSliderController {
   @override
-  AsyncValue<PositionData> build() {
-    return ref.watch(positionDataStreamProvider);
+  PositionData build() {
+    // If the stream isn't active when the widget loads, get the most recent
+    // position data from the audio handler service.
+    return ref.watch(positionDataStreamProvider).when(
+          loading: () =>
+              ref.read(audioHandlerProvider).requireValue.lastPositionData,
+          error: (_, __) =>
+              ref.read(audioHandlerProvider).requireValue.lastPositionData,
+          data: (positionData) => positionData,
+        );
   }
 
   // Using this method throws the following exception:
