@@ -37,7 +37,7 @@ void main() {
       repository = SettingsRepository(prefs);
     });
 
-    test('Queue index is 1.', () async {
+    test('Queue index is 1.', () {
       expect(repository.queueIndex, equals(1));
     });
 
