@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
@@ -116,6 +115,25 @@ class AudioHandlerService extends BaseAudioHandler {
     });
   }
 
+  void loadState(Ref ref) async {
+    final repository = ref.watch(settingsRepositoryProvider).requireValue;
+    final queueIndex = repository.queueIndex;
+    final position = repository.position;
+    final speed = repository.speed;
+    final repeatMode = repository.repeatMode;
+
+    await _player.seek(position, index: queueIndex);
+    await _player.setSpeed(speed);
+    switch (repeatMode) {
+      case RepeatMode.none:
+        await setRepeatMode(AudioServiceRepeatMode.none);
+      case RepeatMode.one:
+        await setRepeatMode(AudioServiceRepeatMode.one);
+      case RepeatMode.all:
+        await setRepeatMode(AudioServiceRepeatMode.all);
+    }
+  }
+
   void saveState(Ref ref) {
     final repository = ref.watch(settingsRepositoryProvider).requireValue;
     _saveStateTimer = Timer.periodic(
@@ -138,25 +156,6 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> dispose() async {
     _saveStateTimer.cancel();
     await _player.dispose();
-  }
-
-  Future<void> loadState({
-    int? queueIndex,
-    Duration? position,
-    RepeatMode? repeatMode,
-    double? speed,
-  }) async {
-    await _player.seek(position ?? Duration.zero, index: queueIndex ?? 0);
-    await setSpeed(speed ?? 1.0);
-    switch (repeatMode) {
-      case null:
-      case RepeatMode.none:
-        await setRepeatMode(AudioServiceRepeatMode.none);
-      case RepeatMode.one:
-        await setRepeatMode(AudioServiceRepeatMode.one);
-      case RepeatMode.all:
-        await setRepeatMode(AudioServiceRepeatMode.all);
-    }
   }
 
   @override
@@ -434,6 +433,7 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       fastForwardInterval: Config.fastForwardDuration,
     ),
   );
+  audioHandler.loadState(ref);
   audioHandler.saveState(ref);
   return audioHandler;
 }
