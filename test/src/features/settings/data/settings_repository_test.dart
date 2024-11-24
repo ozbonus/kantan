@@ -54,6 +54,21 @@ void main() {
     test('Repository returns default repeat mode when null.', () {
       expect(repository.repeatMode, equals(Config.defaultRepeatMode));
     });
+
+    test('Write and read queue index.', () async {
+      expectLater(repository.setQueueIndex(2), completion(true));
+      expect(repository.queueIndex, equals(2));
+    });
+
+    test('Write and read position.', () async {
+      expectLater(repository.setPosition(3000), completion(true));
+      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+    });
+
+    test('Write and read speed.', () async {
+      expectLater(repository.setSpeed(2.5), completion(true));
+      expect(repository.speed, equals(2.5));
+    });
   });
 
   group('Retrieve pre-existing values:', () {
@@ -85,15 +100,5 @@ void main() {
     expect(repository.queueIndex, null);
     expect(repository.position, null);
     expect(repository.speed, null);
-  });
-
-  test('Write and read values.', () async {
-    final repository = await makeRepository(nullValues);
-    expectLater(repository.setQueueIndex(2), completion(true));
-    expectLater(repository.setPosition(3000), completion(true));
-    expectLater(repository.setSpeed(2.5), completion(true));
-    expect(repository.queueIndex, 2);
-    expect(repository.position, const Duration(milliseconds: 3000));
-    expect(repository.speed, 2.5);
   });
 }
