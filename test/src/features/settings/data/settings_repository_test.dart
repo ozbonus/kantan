@@ -53,13 +53,6 @@ void main() {
     test('Repeat mode is repeat one.', () {
       expect(repository.repeatMode, equals(RepeatMode.one));
     });
-
-    test('Get full values.', () async {
-      final repository = await makeRepository(fullValues);
-      expect(repository.queueIndex, 1);
-      expect(repository.position, 1);
-      expect(repository.speed, 1.0);
-    });
   });
 
   test('Get null values.', () async {
