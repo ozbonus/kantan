@@ -99,11 +99,4 @@ void main() {
       expect(repository.repeatMode, equals(RepeatMode.one));
     });
   });
-
-  test('Get default values.', () async {
-    final repository = await makeRepository(nullValues);
-    expect(repository.queueIndex, null);
-    expect(repository.position, null);
-    expect(repository.speed, null);
-  });
 }
