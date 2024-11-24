@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const Map<String, Object> nullValues = {};
 const Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
-  SettingKey.position: 1,
+  SettingKey.position: 1000,
   SettingKey.speed: 1.0,
   SettingKey.repeatMode: 1
 };
@@ -40,6 +40,11 @@ void main() {
     test('Queue index is 1.', () async {
       expect(repository.queueIndex, equals(1));
     });
+
+    test('Position is 1,000 milliseconds.', () {
+      expect(repository.position, equals(const Duration(milliseconds: 1000)));
+    });
+
     test('Get full values.', () async {
       final repository = await makeRepository(fullValues);
       expect(repository.queueIndex, 1);

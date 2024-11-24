@@ -11,7 +11,12 @@ class SettingsRepository {
   final SharedPreferences prefs;
 
   int? get queueIndex => prefs.getInt(SettingKey.queueIndex);
-  int? get position => prefs.getInt(SettingKey.position);
+
+  Duration? get position {
+    final milliseconds = prefs.getInt(SettingKey.position);
+    return milliseconds != null ? Duration(milliseconds: milliseconds) : null;
+  }
+
   double? get speed => prefs.getDouble(SettingKey.speed);
 
   RepeatMode? get repeatMode {
