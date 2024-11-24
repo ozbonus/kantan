@@ -11,6 +11,8 @@ const Map<String, Object> fullValues = {
   SettingKey.repeatMode: 1
 };
 
+late SettingsRepository repository;
+
 Future<SettingsRepository> makeRepository(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,20 +21,31 @@ Future<SettingsRepository> makeRepository(Map<String, Object> values) async {
 }
 
 void main() {
-  setUp(() {
+  setUpAll(() {
     TestWidgetsFlutterBinding.ensureInitialized();
   });
 
-  tearDown(() async {
+  tearDownAll(() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   });
 
-  test('Get full values.', () async {
-    final repository = await makeRepository(fullValues);
-    expect(repository.queueIndex, 1);
-    expect(repository.position, 1);
-    expect(repository.speed, 1.0);
+  group('Pre-existing values:', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues(fullValues);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      repository = SettingsRepository(prefs);
+    });
+
+    test('Queue index is 1.', () async {
+      expect(repository.queueIndex, equals(1));
+    });
+    test('Get full values.', () async {
+      final repository = await makeRepository(fullValues);
+      expect(repository.queueIndex, 1);
+      expect(repository.position, 1);
+      expect(repository.speed, 1.0);
+    });
   });
 
   test('Get null values.', () async {
