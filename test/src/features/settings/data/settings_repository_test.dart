@@ -71,7 +71,7 @@ void main() {
     });
   });
 
-  group('Retrieve pre-existing values:', () {
+  group('Pre-existing values:', () {
     setUp(() async {
       SharedPreferences.setMockInitialValues(fullValues);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
