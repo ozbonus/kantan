@@ -1,4 +1,5 @@
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,8 +42,7 @@ class SettingsRepository {
 }
 
 @Riverpod(keepAlive: true)
-FutureOr<SettingsRepository> settingsRepository(
-    SettingsRepositoryRef ref) async {
+FutureOr<SettingsRepository> settingsRepository(Ref ref) async {
   final sharedPreferences = await SharedPreferences.getInstance();
   return SettingsRepository(sharedPreferences);
 }
