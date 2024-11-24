@@ -6,7 +6,7 @@ part of 'audio_handler_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$audioHandlerHash() => r'4c0637f12fe426b1e93a80c9314d684afd63339e';
+String _$audioHandlerHash() => r'1e85544a38f90ad74c14728d8095d2592f01418a';
 
 /// See also [audioHandler].
 @ProviderFor(audioHandler)
@@ -59,7 +59,7 @@ final queueIndexStreamProvider = AutoDisposeStreamProvider<int?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef QueueIndexStreamRef = AutoDisposeStreamProviderRef<int?>;
-String _$repeatModeStreamHash() => r'4a8102b733a3d673a7e39bc0d04bb986fd9520c0';
+String _$repeatModeStreamHash() => r'74dc436be602ee5f89f66d602e61c217c44c96b0';
 
 /// See also [repeatModeStream].
 @ProviderFor(repeatModeStream)

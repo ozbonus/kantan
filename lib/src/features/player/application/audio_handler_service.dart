@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
@@ -7,6 +8,7 @@ import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/domain/position_data.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
+import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/track_to_media_item.dart';
 import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,12 +17,6 @@ import 'package:rxdart/rxdart.dart';
 part 'audio_handler_service.g.dart';
 
 class AudioHandlerService extends BaseAudioHandler {
-  final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(children: []);
-  final kantanPlaybackState = BehaviorSubject.seeded(
-    KantanPlaybackState.loading,
-  );
-
   AudioHandlerService() {
     _createAudioSession();
     _loadEmptyPlaylist();
@@ -29,6 +25,15 @@ class AudioHandlerService extends BaseAudioHandler {
     _listenForDurationChanges();
     _listenForPlaybackStateChanges();
   }
+
+  final _player = AudioPlayer();
+  final _playlist = ConcatenatingAudioSource(children: []);
+  final _repeatMode = BehaviorSubject.seeded(RepeatMode.none);
+  final kantanPlaybackState =
+      BehaviorSubject.seeded(KantanPlaybackState.loading);
+
+  late Timer _saveStateTimer;
+  late Ref ref;
 
   @visibleForTesting
   @protected
@@ -110,6 +115,39 @@ class AudioHandlerService extends BaseAudioHandler {
     });
   }
 
+  void loadState(Ref ref) async {
+    final repository = ref.watch(settingsRepositoryProvider).requireValue;
+    final queueIndex = repository.queueIndex;
+    final position = repository.position;
+    final speed = repository.speed;
+    final repeatMode = repository.repeatMode;
+
+    await _player.seek(position, index: queueIndex);
+    await _player.setSpeed(speed);
+    switch (repeatMode) {
+      case RepeatMode.none:
+        await setRepeatMode(AudioServiceRepeatMode.none);
+      case RepeatMode.one:
+        await setRepeatMode(AudioServiceRepeatMode.one);
+      case RepeatMode.all:
+        await setRepeatMode(AudioServiceRepeatMode.all);
+    }
+  }
+
+  void saveState(Ref ref) {
+    final repository = ref.watch(settingsRepositoryProvider).requireValue;
+    _saveStateTimer = Timer.periodic(
+      Config.saveStateUpdateDuration,
+      (timer) async {
+        repository
+            .setQueueIndex(_player.currentIndex ?? Config.defaultQueueIndex);
+        repository.setPosition(_player.position);
+        repository.setSpeed(_player.speed);
+        repository.setRepeatMode(_repeatMode.value);
+      },
+    );
+  }
+
   // audio_service relies on MediaItem, but just_audio relies on AudioSource. In
   // a Kantan Player app the tracks repository provdies a list of MediaItems
   // wherein the required id field is the same as the local asset's location.
@@ -118,25 +156,9 @@ class AudioHandlerService extends BaseAudioHandler {
     return AudioSource.uri(Uri.parse(uri));
   }
 
-  Future<void> dispose() => _player.dispose();
-
-  Future<void> loadState({
-    int? queueIndex,
-    Duration? position,
-    RepeatMode? repeatMode,
-    double? speed,
-  }) async {
-    await _player.seek(position ?? Duration.zero, index: queueIndex ?? 0);
-    await setSpeed(speed ?? 1.0);
-    switch (repeatMode) {
-      case null:
-      case RepeatMode.none:
-        await setRepeatMode(AudioServiceRepeatMode.none);
-      case RepeatMode.one:
-        await setRepeatMode(AudioServiceRepeatMode.one);
-      case RepeatMode.all:
-        await setRepeatMode(AudioServiceRepeatMode.all);
-    }
+  Future<void> dispose() async {
+    _saveStateTimer.cancel();
+    await _player.dispose();
   }
 
   @override
@@ -297,6 +319,7 @@ class AudioHandlerService extends BaseAudioHandler {
       case AudioServiceRepeatMode.group:
       case AudioServiceRepeatMode.none:
         _player.setLoopMode(LoopMode.off);
+        _repeatMode.add(RepeatMode.none);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.none,
@@ -304,6 +327,7 @@ class AudioHandlerService extends BaseAudioHandler {
         );
       case AudioServiceRepeatMode.one:
         _player.setLoopMode(LoopMode.one);
+        _repeatMode.add(RepeatMode.one);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.one,
@@ -311,6 +335,7 @@ class AudioHandlerService extends BaseAudioHandler {
         );
       case AudioServiceRepeatMode.all:
         _player.setLoopMode(LoopMode.all);
+        _repeatMode.add(RepeatMode.all);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.all,
@@ -332,21 +357,7 @@ class AudioHandlerService extends BaseAudioHandler {
     }
   }
 
-  Stream<RepeatMode> get repeatMode {
-    return playbackState.map((state) {
-      switch (state.repeatMode) {
-        case AudioServiceRepeatMode.none:
-          return RepeatMode.none;
-        case AudioServiceRepeatMode.one:
-          return RepeatMode.one;
-        case AudioServiceRepeatMode.all:
-          return RepeatMode.all;
-        // Group repeat mode should be impossible.
-        case AudioServiceRepeatMode.group:
-          return RepeatMode.one;
-      }
-    });
-  }
+  Stream<RepeatMode> get repeatModeStream => _repeatMode.stream;
 
   void _listenForPlaybackStateChanges() {
     playbackState.listen((state) {
@@ -399,7 +410,7 @@ class AudioHandlerService extends BaseAudioHandler {
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
   final session = await AudioSession.instance;
   await session.configure(const AudioSessionConfiguration.speech());
-  return await AudioService.init(
+  final audioHandler = await AudioService.init(
     builder: () => AudioHandlerService(),
     config: AudioServiceConfig(
       androidNotificationChannelId: Config.channelId,
@@ -414,6 +425,9 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       fastForwardInterval: Config.fastForwardDuration,
     ),
   );
+  audioHandler.loadState(ref);
+  audioHandler.saveState(ref);
+  return audioHandler;
 }
 
 @riverpod
@@ -431,7 +445,7 @@ Stream<int?> queueIndexStream(Ref ref) {
 @riverpod
 Stream<RepeatMode> repeatModeStream(Ref ref) {
   final audioHandler = ref.watch(audioHandlerProvider).requireValue;
-  return audioHandler.repeatMode;
+  return audioHandler.repeatModeStream;
 }
 
 @riverpod
