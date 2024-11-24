@@ -39,11 +39,11 @@ class SettingsRepository {
     }
   }
 
-  Future<bool> setTrack(int value) async {
+  Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
 
-  Future<bool> setTime(int value) async {
+  Future<bool> setPosition(int value) async {
     return await prefs.setInt(SettingKey.position, value);
   }
 

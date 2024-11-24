@@ -89,8 +89,8 @@ void main() {
 
   test('Write and read values.', () async {
     final repository = await makeRepository(nullValues);
-    expectLater(repository.setTrack(2), completion(true));
-    expectLater(repository.setTime(3000), completion(true));
+    expectLater(repository.setQueueIndex(2), completion(true));
+    expectLater(repository.setPosition(3000), completion(true));
     expectLater(repository.setSpeed(2.5), completion(true));
     expect(repository.queueIndex, 2);
     expect(repository.position, const Duration(milliseconds: 3000));
