@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
@@ -7,6 +9,7 @@ import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/domain/position_data.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
+import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/track_to_media_item.dart';
 import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -30,6 +33,7 @@ class AudioHandlerService extends BaseAudioHandler {
     KantanPlaybackState.loading,
   );
 
+  late Timer _saveStateTimer;
   late Ref ref;
 
   @visibleForTesting
@@ -112,6 +116,17 @@ class AudioHandlerService extends BaseAudioHandler {
     });
   }
 
+  void saveState(Ref ref) {
+    final repository = ref.watch(settingsRepositoryProvider).requireValue;
+    _saveStateTimer = Timer.periodic(
+      Config.saveStateUpdateDuration,
+      (timer) {
+        print(_player.position);
+        repository.setPosition(_player.position);
+      },
+    );
+  }
+
   // audio_service relies on MediaItem, but just_audio relies on AudioSource. In
   // a Kantan Player app the tracks repository provdies a list of MediaItems
   // wherein the required id field is the same as the local asset's location.
@@ -120,7 +135,10 @@ class AudioHandlerService extends BaseAudioHandler {
     return AudioSource.uri(Uri.parse(uri));
   }
 
-  Future<void> dispose() => _player.dispose();
+  Future<void> dispose() async {
+    _saveStateTimer.cancel();
+    await _player.dispose();
+  }
 
   Future<void> loadState({
     int? queueIndex,
@@ -416,7 +434,7 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       fastForwardInterval: Config.fastForwardDuration,
     ),
   );
-  audioHandler.ref = ref;
+  audioHandler.saveState(ref);
   return audioHandler;
 }
 
