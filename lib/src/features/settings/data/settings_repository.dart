@@ -43,8 +43,8 @@ class SettingsRepository {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
 
-  Future<bool> setPosition(int value) async {
-    return await prefs.setInt(SettingKey.position, value);
+  Future<bool> setPosition(Duration position) async {
+    return await prefs.setInt(SettingKey.position, position.inMilliseconds);
   }
 
   Future<bool> setSpeed(double value) async {
