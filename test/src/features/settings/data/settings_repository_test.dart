@@ -8,6 +8,7 @@ const Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
   SettingKey.position: 1,
   SettingKey.speed: 1.0,
+  SettingKey.repeatMode: 1
 };
 
 Future<SettingsRepository> makeRepository(Map<String, Object> values) async {

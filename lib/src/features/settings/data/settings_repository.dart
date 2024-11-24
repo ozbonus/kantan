@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,11 @@ class SettingsRepository {
   int? get position => prefs.getInt(SettingKey.position);
   double? get speed => prefs.getDouble(SettingKey.speed);
 
+  RepeatMode? get repeatMode {
+    final savedValue = prefs.getInt(SettingKey.repeatMode);
+    return RepeatMode.values[savedValue ?? 0];
+  }
+
   Future<bool> setTrack(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -23,6 +29,10 @@ class SettingsRepository {
 
   Future<bool> setSpeed(double value) async {
     return await prefs.setDouble(SettingKey.speed, value);
+  }
+
+  Future<bool> setRepeatMode(RepeatMode value) async {
+    return await prefs.setInt(SettingKey.repeatMode, value.index);
   }
 }
 
