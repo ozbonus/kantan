@@ -45,6 +45,10 @@ void main() {
       expect(repository.position, equals(const Duration(milliseconds: 1000)));
     });
 
+    test('Speed is 1.5x.', () {
+      expect(repository.speed, equals(1.5));
+    });
+
     test('Get full values.', () async {
       final repository = await makeRepository(fullValues);
       expect(repository.queueIndex, 1);
