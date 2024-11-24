@@ -1,9 +1,6 @@
 class SettingKey {
-  static const debugBool = 'debugBool';
-  static const debugInt = 'debugInt';
-  static const debugString = 'debugString';
-
-  static const track = 'track';
-  static const time = 'time';
+  static const queueIndex = 'queueIndex';
+  static const position = 'position';
   static const speed = 'speed';
+  static const repeatMode = 'repeatMode';
 }
