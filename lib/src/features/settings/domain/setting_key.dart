@@ -3,7 +3,7 @@ class SettingKey {
   static const debugInt = 'debugInt';
   static const debugString = 'debugString';
 
-  static const track = 'track';
-  static const time = 'time';
+  static const queueIndex = 'queueIndex';
+  static const position = 'position';
   static const speed = 'speed';
 }

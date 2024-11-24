@@ -9,16 +9,16 @@ class SettingsRepository {
   const SettingsRepository(this.prefs);
   final SharedPreferences prefs;
 
-  int? get track => prefs.getInt(SettingKey.track);
-  int? get time => prefs.getInt(SettingKey.time);
+  int? get queueIndex => prefs.getInt(SettingKey.queueIndex);
+  int? get position => prefs.getInt(SettingKey.position);
   double? get speed => prefs.getDouble(SettingKey.speed);
 
   Future<bool> setTrack(int value) async {
-    return await prefs.setInt(SettingKey.track, value);
+    return await prefs.setInt(SettingKey.queueIndex, value);
   }
 
   Future<bool> setTime(int value) async {
-    return await prefs.setInt(SettingKey.time, value);
+    return await prefs.setInt(SettingKey.position, value);
   }
 
   Future<bool> setSpeed(double value) async {

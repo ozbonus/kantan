@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const Map<String, Object> nullValues = {};
 const Map<String, Object> fullValues = {
-  SettingKey.track: 1,
-  SettingKey.time: 1,
+  SettingKey.queueIndex: 1,
+  SettingKey.position: 1,
   SettingKey.speed: 1.0,
 };
 
@@ -29,15 +29,15 @@ void main() {
 
   test('Get full values.', () async {
     final repository = await makeRepository(fullValues);
-    expect(repository.track, 1);
-    expect(repository.time, 1);
+    expect(repository.queueIndex, 1);
+    expect(repository.position, 1);
     expect(repository.speed, 1.0);
   });
 
   test('Get null values.', () async {
     final repository = await makeRepository(nullValues);
-    expect(repository.track, null);
-    expect(repository.time, null);
+    expect(repository.queueIndex, null);
+    expect(repository.position, null);
     expect(repository.speed, null);
   });
 
@@ -46,8 +46,8 @@ void main() {
     expectLater(repository.setTrack(2), completion(true));
     expectLater(repository.setTime(3), completion(true));
     expectLater(repository.setSpeed(2.5), completion(true));
-    expect(repository.track, 2);
-    expect(repository.time, 3);
+    expect(repository.queueIndex, 2);
+    expect(repository.position, 3);
     expect(repository.speed, 2.5);
   });
 }
