@@ -7,7 +7,7 @@ const Map<String, Object> nullValues = {};
 const Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
   SettingKey.position: 1000,
-  SettingKey.speed: 1.0,
+  SettingKey.speed: 1.5,
   SettingKey.repeatMode: 1
 };
 
