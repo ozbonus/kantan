@@ -28,9 +28,9 @@ class AudioHandlerService extends BaseAudioHandler {
 
   final _player = AudioPlayer();
   final _playlist = ConcatenatingAudioSource(children: []);
-  final kantanPlaybackState = BehaviorSubject.seeded(
-    KantanPlaybackState.loading,
-  );
+  final _repeatMode = BehaviorSubject.seeded(RepeatMode.none);
+  final kantanPlaybackState =
+      BehaviorSubject.seeded(KantanPlaybackState.loading);
 
   late Timer _saveStateTimer;
   late Ref ref;
@@ -138,9 +138,12 @@ class AudioHandlerService extends BaseAudioHandler {
     final repository = ref.watch(settingsRepositoryProvider).requireValue;
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
-      (timer) {
-        print(_player.position);
+      (timer) async {
+        repository
+            .setQueueIndex(_player.currentIndex ?? Config.defaultQueueIndex);
         repository.setPosition(_player.position);
+        repository.setSpeed(_player.speed);
+        repository.setRepeatMode(_repeatMode.value);
       },
     );
   }
@@ -316,6 +319,7 @@ class AudioHandlerService extends BaseAudioHandler {
       case AudioServiceRepeatMode.group:
       case AudioServiceRepeatMode.none:
         _player.setLoopMode(LoopMode.off);
+        _repeatMode.add(RepeatMode.none);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.none,
@@ -323,6 +327,7 @@ class AudioHandlerService extends BaseAudioHandler {
         );
       case AudioServiceRepeatMode.one:
         _player.setLoopMode(LoopMode.one);
+        _repeatMode.add(RepeatMode.one);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.one,
@@ -330,6 +335,7 @@ class AudioHandlerService extends BaseAudioHandler {
         );
       case AudioServiceRepeatMode.all:
         _player.setLoopMode(LoopMode.all);
+        _repeatMode.add(RepeatMode.all);
         playbackState.add(
           playbackState.value.copyWith(
             repeatMode: AudioServiceRepeatMode.all,
@@ -351,21 +357,7 @@ class AudioHandlerService extends BaseAudioHandler {
     }
   }
 
-  Stream<RepeatMode> get repeatMode {
-    return playbackState.map((state) {
-      switch (state.repeatMode) {
-        case AudioServiceRepeatMode.none:
-          return RepeatMode.none;
-        case AudioServiceRepeatMode.one:
-          return RepeatMode.one;
-        case AudioServiceRepeatMode.all:
-          return RepeatMode.all;
-        // Group repeat mode should be impossible.
-        case AudioServiceRepeatMode.group:
-          return RepeatMode.one;
-      }
-    });
-  }
+  Stream<RepeatMode> get repeatModeStream => _repeatMode.stream;
 
   void _listenForPlaybackStateChanges() {
     playbackState.listen((state) {
@@ -453,7 +445,7 @@ Stream<int?> queueIndexStream(Ref ref) {
 @riverpod
 Stream<RepeatMode> repeatModeStream(Ref ref) {
   final audioHandler = ref.watch(audioHandlerProvider).requireValue;
-  return audioHandler.repeatMode;
+  return audioHandler.repeatModeStream;
 }
 
 @riverpod
