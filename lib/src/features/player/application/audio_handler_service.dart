@@ -30,6 +30,8 @@ class AudioHandlerService extends BaseAudioHandler {
     KantanPlaybackState.loading,
   );
 
+  late Ref ref;
+
   @visibleForTesting
   @protected
   AudioPlayer get player => _player;
@@ -399,7 +401,7 @@ class AudioHandlerService extends BaseAudioHandler {
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
   final session = await AudioSession.instance;
   await session.configure(const AudioSessionConfiguration.speech());
-  return await AudioService.init(
+  final audioHandler = await AudioService.init(
     builder: () => AudioHandlerService(),
     config: AudioServiceConfig(
       androidNotificationChannelId: Config.channelId,
@@ -414,6 +416,8 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       fastForwardInterval: Config.fastForwardDuration,
     ),
   );
+  audioHandler.ref = ref;
+  return audioHandler;
 }
 
 @riverpod
