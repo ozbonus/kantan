@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +48,10 @@ void main() {
 
     test('Speed is 1.5x.', () {
       expect(repository.speed, equals(1.5));
+    });
+
+    test('Repeat mode is repeat one.', () {
+      expect(repository.repeatMode, equals(RepeatMode.one));
     });
 
     test('Get full values.', () async {
