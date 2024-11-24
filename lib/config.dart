@@ -6,6 +6,9 @@ class Config {
   static String get channelId => 'com.crayonfox.kantanplayer';
   static String get channelName => 'Kantan Player';
   static String get notificationIcon => 'drawable/text_to_speech';
+
+  static Duration get saveStateUpdateDuration => const Duration(seconds: 2);
+
   static Duration get rewindDuration => const Duration(seconds: 5);
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
