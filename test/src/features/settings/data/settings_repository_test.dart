@@ -61,7 +61,8 @@ void main() {
     });
 
     test('Write and read position.', () async {
-      expectLater(repository.setPosition(3000), completion(true));
+      const position = Duration(milliseconds: 3000);
+      expectLater(repository.setPosition(position), completion(true));
       expect(repository.position, equals(const Duration(milliseconds: 3000)));
     });
 
@@ -105,7 +106,8 @@ void main() {
     });
 
     test('Write and read position.', () async {
-      expectLater(repository.setPosition(3000), completion(true));
+      const position = Duration(milliseconds: 3000);
+      expectLater(repository.setPosition(position), completion(true));
       expect(repository.position, equals(const Duration(milliseconds: 3000)));
     });
 
