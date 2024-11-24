@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,18 +11,32 @@ class SettingsRepository {
   const SettingsRepository(this.prefs);
   final SharedPreferences prefs;
 
-  int? get queueIndex => prefs.getInt(SettingKey.queueIndex);
-
-  Duration? get position {
-    final milliseconds = prefs.getInt(SettingKey.position);
-    return milliseconds != null ? Duration(milliseconds: milliseconds) : null;
+  int get queueIndex {
+    final value = prefs.getInt(SettingKey.queueIndex);
+    return value ?? Config.defaultQueueIndex;
   }
 
-  double? get speed => prefs.getDouble(SettingKey.speed);
+  Duration get position {
+    final value = prefs.getInt(SettingKey.position);
+    if (value != null) {
+      return Duration(milliseconds: value);
+    } else {
+      return Config.defaultPosition;
+    }
+  }
 
-  RepeatMode? get repeatMode {
-    final savedValue = prefs.getInt(SettingKey.repeatMode);
-    return RepeatMode.values[savedValue ?? 0];
+  double get speed {
+    final value = prefs.getDouble(SettingKey.speed);
+    return value ?? Config.defaultSpeed;
+  }
+
+  RepeatMode get repeatMode {
+    final value = prefs.getInt(SettingKey.repeatMode);
+    if (value != null) {
+      return RepeatMode.values[value];
+    } else {
+      return Config.defaultRepeatMode;
+    }
   }
 
   Future<bool> setTrack(int value) async {

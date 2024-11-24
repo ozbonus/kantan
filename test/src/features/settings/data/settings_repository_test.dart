@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
@@ -31,6 +32,30 @@ void main() {
     await prefs.clear();
   });
 
+  group('No pre-existing values:', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues(nullValues);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      repository = SettingsRepository(prefs);
+    });
+
+    test('Repository returns default queue index when null.', () {
+      expect(repository.queueIndex, equals(Config.defaultQueueIndex));
+    });
+
+    test('Repository returns default position when null.', () {
+      expect(repository.position, equals(Config.defaultPosition));
+    });
+
+    test('Repository returns default speed when null.', () {
+      expect(repository.speed, equals(Config.defaultSpeed));
+    });
+
+    test('Repository returns default repeat mode when null.', () {
+      expect(repository.repeatMode, equals(Config.defaultRepeatMode));
+    });
+  });
+
   group('Retrieve pre-existing values:', () {
     setUp(() async {
       SharedPreferences.setMockInitialValues(fullValues);
@@ -55,7 +80,7 @@ void main() {
     });
   });
 
-  test('Get null values.', () async {
+  test('Get default values.', () async {
     final repository = await makeRepository(nullValues);
     expect(repository.queueIndex, null);
     expect(repository.position, null);
