@@ -15,12 +15,6 @@ import 'package:rxdart/rxdart.dart';
 part 'audio_handler_service.g.dart';
 
 class AudioHandlerService extends BaseAudioHandler {
-  final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(children: []);
-  final kantanPlaybackState = BehaviorSubject.seeded(
-    KantanPlaybackState.loading,
-  );
-
   AudioHandlerService() {
     _createAudioSession();
     _loadEmptyPlaylist();
@@ -29,6 +23,12 @@ class AudioHandlerService extends BaseAudioHandler {
     _listenForDurationChanges();
     _listenForPlaybackStateChanges();
   }
+
+  final _player = AudioPlayer();
+  final _playlist = ConcatenatingAudioSource(children: []);
+  final kantanPlaybackState = BehaviorSubject.seeded(
+    KantanPlaybackState.loading,
+  );
 
   @visibleForTesting
   @protected
