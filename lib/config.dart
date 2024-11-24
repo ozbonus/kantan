@@ -11,7 +11,7 @@ class Config {
 
   // Default values for player state.
   static int get defaultQueueIndex => 0;
-  static Duration get defaultDuration => Duration.zero;
+  static Duration get defaultPosition => Duration.zero;
   static double get defaultSpeed => 1.0;
   static RepeatMode get defaultRepeatMode => RepeatMode.none;
 }
