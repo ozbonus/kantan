@@ -69,6 +69,11 @@ void main() {
       expectLater(repository.setSpeed(2.5), completion(true));
       expect(repository.speed, equals(2.5));
     });
+
+    test('Write and read repeat mode.', () async {
+      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
+      expect(repository.repeatMode, equals(RepeatMode.all));
+    });
   });
 
   group('Pre-existing values:', () {
