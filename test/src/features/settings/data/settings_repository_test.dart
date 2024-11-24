@@ -98,5 +98,25 @@ void main() {
     test('Repeat mode is repeat one.', () {
       expect(repository.repeatMode, equals(RepeatMode.one));
     });
+
+    test('Write and read queue index.', () async {
+      expectLater(repository.setQueueIndex(2), completion(true));
+      expect(repository.queueIndex, equals(2));
+    });
+
+    test('Write and read position.', () async {
+      expectLater(repository.setPosition(3000), completion(true));
+      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+    });
+
+    test('Write and read speed.', () async {
+      expectLater(repository.setSpeed(2.5), completion(true));
+      expect(repository.speed, equals(2.5));
+    });
+
+    test('Write and read repeat mode.', () async {
+      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
+      expect(repository.repeatMode, equals(RepeatMode.all));
+    });
   });
 }
