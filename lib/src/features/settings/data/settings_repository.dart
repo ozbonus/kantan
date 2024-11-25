@@ -49,6 +49,11 @@ class SettingsRepository {
     }
   }
 
+  bool get useWakelock {
+    final value = prefs.getBool(SettingKey.useWakelock);
+    return value ?? Config.defaultUseWakelock;
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -67,6 +72,10 @@ class SettingsRepository {
 
   Future<bool> setThemeMode(ThemeMode themeMode) async {
     return await prefs.setInt(SettingKey.themeMode, themeMode.index);
+  }
+
+  Future<bool> setUseWakelock(bool value) async {
+    return await prefs.setBool(SettingKey.useWakelock, value);
   }
 }
 

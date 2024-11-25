@@ -13,6 +13,7 @@ const Map<String, Object> fullValues = {
   SettingKey.speed: 1.5,
   SettingKey.repeatMode: 1,
   SettingKey.themeMode: 1,
+  SettingKey.useWakelock: true,
 };
 
 late SettingsRepository repository;
@@ -61,6 +62,10 @@ void main() {
       expect(repository.themeMode, equals(Config.defaultThemeMode));
     });
 
+    test('Repository returns default wake lock value when null.', () {
+      expect(repository.useWakelock, equals(Config.defaultUseWakelock));
+    });
+
     test('Write and read queue index.', () async {
       expectLater(repository.setQueueIndex(2), completion(true));
       expect(repository.queueIndex, equals(2));
@@ -82,9 +87,14 @@ void main() {
       expect(repository.repeatMode, equals(RepeatMode.all));
     });
 
-    test('Write and read theme mode.', () {
+    test('Write and read theme mode.', () async {
       expectLater(repository.setThemeMode(ThemeMode.dark), completion(true));
       expect(repository.themeMode, equals(ThemeMode.dark));
+    });
+
+    test('Write and read use wakelock.', () async {
+      expectLater(repository.setUseWakelock(true), completion(true));
+      expect(repository.useWakelock, equals(true));
     });
   });
 
@@ -111,6 +121,10 @@ void main() {
       expect(repository.repeatMode, equals(RepeatMode.one));
     });
 
+    test('Use wakelock is true.', () {
+      expect(repository.useWakelock, equals(true));
+    });
+
     test('Write and read queue index.', () async {
       expectLater(repository.setQueueIndex(2), completion(true));
       expect(repository.queueIndex, equals(2));
@@ -130,6 +144,11 @@ void main() {
     test('Write and read repeat mode.', () async {
       expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
       expect(repository.repeatMode, equals(RepeatMode.all));
+    });
+
+    test('Write and read use wake lock.', () async {
+      expectLater(repository.setUseWakelock(false), completion(true));
+      expect(repository.useWakelock, equals(false));
     });
   });
 }

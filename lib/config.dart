@@ -20,4 +20,5 @@ class Config {
   static RepeatMode get defaultRepeatMode => RepeatMode.none;
 
   static ThemeMode get defaultThemeMode => ThemeMode.system;
+  static bool get defaultUseWakelock => false;
 }

@@ -4,4 +4,5 @@ class SettingKey {
   static const speed = 'speed';
   static const repeatMode = 'repeatMode';
   static const themeMode = 'themeMode';
+  static const useWakelock = 'useWakelock';
 }
