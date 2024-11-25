@@ -17,7 +17,7 @@ Map<String, Object> fullValues = {
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
 };
 
-late SettingsRepository repository;
+late SettingsRepository repo;
 
 Future<SettingsRepository> makeRepository(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
@@ -40,73 +40,72 @@ void main() {
     setUp(() async {
       SharedPreferences.setMockInitialValues(nullValues);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      repository = SettingsRepository(prefs);
+      repo = SettingsRepository(prefs);
     });
 
     test('Repository returns default queue index when null.', () {
-      expect(repository.queueIndex, equals(Config.defaultQueueIndex));
+      expect(repo.queueIndex, equals(Config.defaultQueueIndex));
     });
 
     test('Repository returns default position when null.', () {
-      expect(repository.position, equals(Config.defaultPosition));
+      expect(repo.position, equals(Config.defaultPosition));
     });
 
     test('Repository returns default speed when null.', () {
-      expect(repository.speed, equals(Config.defaultSpeed));
+      expect(repo.speed, equals(Config.defaultSpeed));
     });
 
     test('Repository returns default repeat mode when null.', () {
-      expect(repository.repeatMode, equals(Config.defaultRepeatMode));
+      expect(repo.repeatMode, equals(Config.defaultRepeatMode));
     });
 
     test('Repository returns default theme mode when null.', () {
-      expect(repository.themeMode, equals(Config.defaultThemeMode));
+      expect(repo.themeMode, equals(Config.defaultThemeMode));
     });
 
     test('Repository returns default wakelock value when null.', () {
-      expect(repository.useWakelock, equals(Config.defaultUseWakelock));
+      expect(repo.useWakelock, equals(Config.defaultUseWakelock));
     });
 
     test('Repository returns default parental mode value when null.', () {
-      expect(
-          repository.isParentalModeOn, equals(Config.defaultIsParentalModeOn));
+      expect(repo.isParentalModeOn, equals(Config.defaultIsParentalModeOn));
     });
 
     test('Write and read queue index.', () async {
-      expectLater(repository.setQueueIndex(2), completion(true));
-      expect(repository.queueIndex, equals(2));
+      expectLater(repo.setQueueIndex(2), completion(true));
+      expect(repo.queueIndex, equals(2));
     });
 
     test('Write and read position.', () async {
       const position = Duration(milliseconds: 3000);
-      expectLater(repository.setPosition(position), completion(true));
-      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+      expectLater(repo.setPosition(position), completion(true));
+      expect(repo.position, equals(const Duration(milliseconds: 3000)));
     });
 
     test('Write and read speed.', () async {
-      expectLater(repository.setSpeed(2.5), completion(true));
-      expect(repository.speed, equals(2.5));
+      expectLater(repo.setSpeed(2.5), completion(true));
+      expect(repo.speed, equals(2.5));
     });
 
     test('Write and read repeat mode.', () async {
-      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
-      expect(repository.repeatMode, equals(RepeatMode.all));
+      expectLater(repo.setRepeatMode(RepeatMode.all), completion(true));
+      expect(repo.repeatMode, equals(RepeatMode.all));
     });
 
     test('Write and read theme mode.', () async {
-      expectLater(repository.setThemeMode(ThemeMode.dark), completion(true));
-      expect(repository.themeMode, equals(ThemeMode.dark));
+      expectLater(repo.setThemeMode(ThemeMode.dark), completion(true));
+      expect(repo.themeMode, equals(ThemeMode.dark));
     });
 
     test('Write and read use wakelock.', () async {
-      expectLater(repository.setUseWakelock(true), completion(true));
-      expect(repository.useWakelock, equals(true));
+      expectLater(repo.setUseWakelock(true), completion(true));
+      expect(repo.useWakelock, equals(true));
     });
 
     test('Write and read parental mode.', () async {
       final value = !Config.defaultIsParentalModeOn;
-      expectLater(repository.setIsParentalModeOn(value), completion(true));
-      expect(repository.isParentalModeOn, equals(value));
+      expectLater(repo.setIsParentalModeOn(value), completion(true));
+      expect(repo.isParentalModeOn, equals(value));
     });
   });
 
@@ -114,73 +113,73 @@ void main() {
     setUp(() async {
       SharedPreferences.setMockInitialValues(fullValues);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      repository = SettingsRepository(prefs);
+      repo = SettingsRepository(prefs);
     });
 
     test('Queue index is 1.', () {
-      expect(repository.queueIndex, equals(1));
+      expect(repo.queueIndex, equals(1));
     });
 
     test('Position is 1,000 milliseconds.', () {
-      expect(repository.position, equals(const Duration(milliseconds: 1000)));
+      expect(repo.position, equals(const Duration(milliseconds: 1000)));
     });
 
     test('Speed is 1.5x.', () {
-      expect(repository.speed, equals(1.5));
+      expect(repo.speed, equals(1.5));
     });
 
     test('Repeat mode is repeat one.', () {
-      expect(repository.repeatMode, equals(RepeatMode.one));
+      expect(repo.repeatMode, equals(RepeatMode.one));
     });
 
     test('Theme mode is ThemeMode.light.', () {
-      expect(repository.themeMode, equals(ThemeMode.light));
+      expect(repo.themeMode, equals(ThemeMode.light));
     });
 
     test('Use wakelock is true.', () {
-      expect(repository.useWakelock, equals(true));
+      expect(repo.useWakelock, equals(true));
     });
 
     test('Parental mode is not default value.', () {
       final value = !Config.defaultIsParentalModeOn;
-      expect(repository.isParentalModeOn, equals(value));
+      expect(repo.isParentalModeOn, equals(value));
     });
 
     test('Write and read queue index.', () async {
-      expectLater(repository.setQueueIndex(2), completion(true));
-      expect(repository.queueIndex, equals(2));
+      expectLater(repo.setQueueIndex(2), completion(true));
+      expect(repo.queueIndex, equals(2));
     });
 
     test('Write and read position.', () async {
       const position = Duration(milliseconds: 3000);
-      expectLater(repository.setPosition(position), completion(true));
-      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+      expectLater(repo.setPosition(position), completion(true));
+      expect(repo.position, equals(const Duration(milliseconds: 3000)));
     });
 
     test('Write and read speed.', () async {
-      expectLater(repository.setSpeed(2.5), completion(true));
-      expect(repository.speed, equals(2.5));
+      expectLater(repo.setSpeed(2.5), completion(true));
+      expect(repo.speed, equals(2.5));
     });
 
     test('Write and read repeat mode.', () async {
-      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
-      expect(repository.repeatMode, equals(RepeatMode.all));
+      expectLater(repo.setRepeatMode(RepeatMode.all), completion(true));
+      expect(repo.repeatMode, equals(RepeatMode.all));
     });
 
     test('Write and read theme mode.', () async {
-      expectLater(repository.setThemeMode(ThemeMode.dark), completion(true));
-      expect(repository.themeMode, equals(ThemeMode.dark));
+      expectLater(repo.setThemeMode(ThemeMode.dark), completion(true));
+      expect(repo.themeMode, equals(ThemeMode.dark));
     });
 
     test('Write and read use wakelock.', () async {
-      expectLater(repository.setUseWakelock(false), completion(true));
-      expect(repository.useWakelock, equals(false));
+      expectLater(repo.setUseWakelock(false), completion(true));
+      expect(repo.useWakelock, equals(false));
     });
 
     test('Write and read parental mode.', () async {
-      final value = !repository.isParentalModeOn;
-      expectLater(repository.setIsParentalModeOn(value), completion(true));
-      expect(repository.isParentalModeOn, equals(value));
+      final value = !repo.isParentalModeOn;
+      expectLater(repo.setIsParentalModeOn(value), completion(true));
+      expect(repo.isParentalModeOn, equals(value));
     });
   });
 }
