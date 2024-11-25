@@ -54,6 +54,11 @@ class SettingsRepository {
     return value ?? Config.defaultUseWakelock;
   }
 
+  bool get isParentalModeOn {
+    final value = prefs.getBool(SettingKey.isParentalModeOn);
+    return value ?? Config.defaultIsParentalModeOn;
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -76,6 +81,10 @@ class SettingsRepository {
 
   Future<bool> setUseWakelock(bool value) async {
     return await prefs.setBool(SettingKey.useWakelock, value);
+  }
+
+  Future<bool> setIsParentalModeOn(bool value) async {
+    return await prefs.setBool(SettingKey.isParentalModeOn, value);
   }
 }
 

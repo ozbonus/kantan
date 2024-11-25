@@ -21,4 +21,5 @@ class Config {
 
   static ThemeMode get defaultThemeMode => ThemeMode.system;
   static bool get defaultUseWakelock => false;
+  static bool get defaultIsParentalModeOn => true;
 }

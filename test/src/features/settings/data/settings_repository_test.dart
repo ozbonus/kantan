@@ -7,13 +7,14 @@ import 'package:kantan/src/features/settings/domain/setting_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const Map<String, Object> nullValues = {};
-const Map<String, Object> fullValues = {
+Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
   SettingKey.position: 1000,
   SettingKey.speed: 1.5,
   SettingKey.repeatMode: 1,
   SettingKey.themeMode: 1,
   SettingKey.useWakelock: true,
+  SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
 };
 
 late SettingsRepository repository;
@@ -66,6 +67,11 @@ void main() {
       expect(repository.useWakelock, equals(Config.defaultUseWakelock));
     });
 
+    test('Repository returns default parental mode value when null.', () {
+      expect(
+          repository.isParentalModeOn, equals(Config.defaultIsParentalModeOn));
+    });
+
     test('Write and read queue index.', () async {
       expectLater(repository.setQueueIndex(2), completion(true));
       expect(repository.queueIndex, equals(2));
@@ -95,6 +101,12 @@ void main() {
     test('Write and read use wakelock.', () async {
       expectLater(repository.setUseWakelock(true), completion(true));
       expect(repository.useWakelock, equals(true));
+    });
+
+    test('Write and read parental mode.', () async {
+      final value = !Config.defaultIsParentalModeOn;
+      expectLater(repository.setIsParentalModeOn(value), completion(true));
+      expect(repository.isParentalModeOn, equals(value));
     });
   });
 
@@ -129,6 +141,11 @@ void main() {
       expect(repository.useWakelock, equals(true));
     });
 
+    test('Parental mode is not default value.', () {
+      final value = !Config.defaultIsParentalModeOn;
+      expect(repository.isParentalModeOn, equals(value));
+    });
+
     test('Write and read queue index.', () async {
       expectLater(repository.setQueueIndex(2), completion(true));
       expect(repository.queueIndex, equals(2));
@@ -158,6 +175,12 @@ void main() {
     test('Write and read use wakelock.', () async {
       expectLater(repository.setUseWakelock(false), completion(true));
       expect(repository.useWakelock, equals(false));
+    });
+
+    test('Write and read parental mode.', () async {
+      final value = !repository.isParentalModeOn;
+      expectLater(repository.setIsParentalModeOn(value), completion(true));
+      expect(repository.isParentalModeOn, equals(value));
     });
   });
 }

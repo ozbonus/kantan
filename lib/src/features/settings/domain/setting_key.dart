@@ -5,4 +5,5 @@ class SettingKey {
   static const repeatMode = 'repeatMode';
   static const themeMode = 'themeMode';
   static const useWakelock = 'useWakelock';
+  static const isParentalModeOn = 'isParentalModeOn';
 }
