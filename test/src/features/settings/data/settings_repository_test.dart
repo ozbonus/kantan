@@ -58,7 +58,7 @@ void main() {
       expect(repository.repeatMode, equals(Config.defaultRepeatMode));
     });
 
-    test('Repository returns ThemeMode.system when null.', () {
+    test('Repository returns default theme mode when null.', () {
       expect(repository.themeMode, equals(Config.defaultThemeMode));
     });
 
@@ -121,6 +121,10 @@ void main() {
       expect(repository.repeatMode, equals(RepeatMode.one));
     });
 
+    test('Theme mode is ThemeMode.light.', () {
+      expect(repository.themeMode, equals(ThemeMode.light));
+    });
+
     test('Use wakelock is true.', () {
       expect(repository.useWakelock, equals(true));
     });
@@ -144,6 +148,11 @@ void main() {
     test('Write and read repeat mode.', () async {
       expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
       expect(repository.repeatMode, equals(RepeatMode.all));
+    });
+
+    test('Write and read theme mode.', () async {
+      expectLater(repository.setThemeMode(ThemeMode.dark), completion(true));
+      expect(repository.themeMode, equals(ThemeMode.dark));
     });
 
     test('Write and read use wakelock.', () async {
