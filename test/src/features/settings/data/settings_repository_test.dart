@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
@@ -10,7 +11,8 @@ const Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
   SettingKey.position: 1000,
   SettingKey.speed: 1.5,
-  SettingKey.repeatMode: 1
+  SettingKey.repeatMode: 1,
+  SettingKey.themeMode: 1,
 };
 
 late SettingsRepository repository;
@@ -55,6 +57,10 @@ void main() {
       expect(repository.repeatMode, equals(Config.defaultRepeatMode));
     });
 
+    test('Repository returns ThemeMode.system when null.', () {
+      expect(repository.themeMode, equals(Config.defaultThemeMode));
+    });
+
     test('Write and read queue index.', () async {
       expectLater(repository.setQueueIndex(2), completion(true));
       expect(repository.queueIndex, equals(2));
@@ -74,6 +80,11 @@ void main() {
     test('Write and read repeat mode.', () async {
       expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
       expect(repository.repeatMode, equals(RepeatMode.all));
+    });
+
+    test('Write and read theme mode.', () {
+      expectLater(repository.setThemeMode(ThemeMode.dark), completion(true));
+      expect(repository.themeMode, equals(ThemeMode.dark));
     });
   });
 

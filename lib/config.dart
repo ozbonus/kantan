@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 
 class Config {
@@ -17,4 +18,6 @@ class Config {
   static Duration get defaultPosition => Duration.zero;
   static double get defaultSpeed => 1.0;
   static RepeatMode get defaultRepeatMode => RepeatMode.none;
+
+  static ThemeMode get defaultThemeMode => ThemeMode.system;
 }

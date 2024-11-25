@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
@@ -39,6 +40,15 @@ class SettingsRepository {
     }
   }
 
+  ThemeMode get themeMode {
+    final value = prefs.getInt(SettingKey.themeMode);
+    if (value != null) {
+      return ThemeMode.values[value];
+    } else {
+      return Config.defaultThemeMode;
+    }
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -53,6 +63,10 @@ class SettingsRepository {
 
   Future<bool> setRepeatMode(RepeatMode value) async {
     return await prefs.setInt(SettingKey.repeatMode, value.index);
+  }
+
+  Future<bool> setThemeMode(ThemeMode themeMode) async {
+    return await prefs.setInt(SettingKey.themeMode, themeMode.index);
   }
 }
 
