@@ -62,7 +62,7 @@ void main() {
       expect(repository.themeMode, equals(Config.defaultThemeMode));
     });
 
-    test('Repository returns default wake lock value when null.', () {
+    test('Repository returns default wakelock value when null.', () {
       expect(repository.useWakelock, equals(Config.defaultUseWakelock));
     });
 
@@ -146,7 +146,7 @@ void main() {
       expect(repository.repeatMode, equals(RepeatMode.all));
     });
 
-    test('Write and read use wake lock.', () async {
+    test('Write and read use wakelock.', () async {
       expectLater(repository.setUseWakelock(false), completion(true));
       expect(repository.useWakelock, equals(false));
     });
