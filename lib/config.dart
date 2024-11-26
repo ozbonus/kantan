@@ -19,7 +19,12 @@ class Config {
   static double get defaultSpeed => 1.0;
   static RepeatMode get defaultRepeatMode => RepeatMode.none;
 
+  // Default values for user-accessible settings.
   static ThemeMode get defaultThemeMode => ThemeMode.system;
   static bool get defaultUseWakelock => false;
   static bool get defaultIsParentalModeOn => true;
+  static String get defaultInterfaceLanguage => 'en';
+  static String get defaultTranslationLanguage => 'zh-TW';
+  static bool get defaultCanSeeTranscript => true;
+  static bool get defaultCanSeeTranslation => true;
 }

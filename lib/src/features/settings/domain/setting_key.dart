@@ -6,4 +6,8 @@ class SettingKey {
   static const themeMode = 'themeMode';
   static const useWakelock = 'useWakelock';
   static const isParentalModeOn = 'isParentalModeOn';
+  static const interfaceLanguage = 'interfaceLanguage';
+  static const translationLanguage = 'translationLanguage';
+  static const canSeeTranscript = 'canSeeTranscript';
+  static const canSeeTranslation = 'canSeeTranslation';
 }
