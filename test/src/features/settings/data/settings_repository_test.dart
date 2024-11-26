@@ -13,7 +13,7 @@ Map<String, Object> fullValues = {
   SettingKey.speed: 1.5,
   SettingKey.repeatMode: 1,
   SettingKey.themeMode: 1,
-  SettingKey.useWakelock: true,
+  SettingKey.isWakelockOn: true,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
   SettingKey.interfaceLanguage: 'Klingon',
   SettingKey.translationLanguage: 'Elvish',
@@ -73,8 +73,8 @@ void main() {
     });
 
     test('Wakelock value', () {
-      final value = Config.defaultUseWakelock;
-      expect(repo.useWakelock, equals(value));
+      final value = Config.defaultIsWakelockOn;
+      expect(repo.isWakelockOn, equals(value));
     });
 
     test('Parental mode value', () {
@@ -139,8 +139,8 @@ void main() {
     });
 
     test('Wakelock value', () {
-      final value = fullValues[SettingKey.useWakelock] as bool;
-      expect(repo.useWakelock, equals(value));
+      final value = fullValues[SettingKey.isWakelockOn] as bool;
+      expect(repo.isWakelockOn, equals(value));
     });
 
     test('Parental mode value', () {
@@ -210,9 +210,9 @@ void main() {
     });
 
     test('Wakelock value', () async {
-      final value = fullValues[SettingKey.useWakelock] as bool;
+      final value = fullValues[SettingKey.isWakelockOn] as bool;
       await expectLater(repo.setUseWakelock(value), completes);
-      expect(repo.useWakelock, equals(value));
+      expect(repo.isWakelockOn, equals(value));
     });
 
     test('Parental mode value', () async {

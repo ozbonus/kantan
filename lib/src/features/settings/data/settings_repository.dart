@@ -49,9 +49,9 @@ class SettingsRepository {
     }
   }
 
-  bool get useWakelock {
-    final value = prefs.getBool(SettingKey.useWakelock);
-    return value ?? Config.defaultUseWakelock;
+  bool get isWakelockOn {
+    final value = prefs.getBool(SettingKey.isWakelockOn);
+    return value ?? Config.defaultIsWakelockOn;
   }
 
   bool get isParentalModeOn {
@@ -100,7 +100,7 @@ class SettingsRepository {
   }
 
   Future<bool> setUseWakelock(bool value) async {
-    return await prefs.setBool(SettingKey.useWakelock, value);
+    return await prefs.setBool(SettingKey.isWakelockOn, value);
   }
 
   Future<bool> setIsParentalModeOn(bool value) async {

@@ -21,7 +21,7 @@ class Config {
 
   // Default values for user-accessible settings.
   static ThemeMode get defaultThemeMode => ThemeMode.system;
-  static bool get defaultUseWakelock => false;
+  static bool get defaultIsWakelockOn => false;
   static bool get defaultIsParentalModeOn => true;
   static String get defaultInterfaceLanguage => 'en';
   static String get defaultTranslationLanguage => 'zh-TW';

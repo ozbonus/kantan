@@ -4,7 +4,7 @@ class SettingKey {
   static const speed = 'speed';
   static const repeatMode = 'repeatMode';
   static const themeMode = 'themeMode';
-  static const useWakelock = 'useWakelock';
+  static const isWakelockOn = 'useWakelock';
   static const isParentalModeOn = 'isParentalModeOn';
   static const interfaceLanguage = 'interfaceLanguage';
   static const translationLanguage = 'translationLanguage';
