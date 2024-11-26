@@ -7,9 +7,9 @@ part 'wakelock_service.g.dart';
 class WakelockService extends _$WakelockService {
   @override
   bool build() {
-    final initialValue =
+    final initialState =
         ref.read(settingsRepositoryProvider).requireValue.isWakelockOn;
-    return initialValue;
+    return initialState;
   }
 
   void setIsWakelockOn(bool value) async {

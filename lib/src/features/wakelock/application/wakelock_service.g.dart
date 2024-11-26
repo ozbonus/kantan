@@ -6,7 +6,7 @@ part of 'wakelock_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$wakelockServiceHash() => r'ac5e92e22bcad347033d1e4e4201e05f51db4686';
+String _$wakelockServiceHash() => r'019e8532d7e2e1f6f20d72e97afcf26273d1482e';
 
 /// See also [WakelockService].
 @ProviderFor(WakelockService)
