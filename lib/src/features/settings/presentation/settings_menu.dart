@@ -13,6 +13,7 @@ class SettingsMenu extends StatelessWidget {
         children: const [
           ThemeModeSwitch(),
           WakelockSwitch(),
+          ParentalModeSwitch(),
         ],
       ),
     );
@@ -58,6 +59,23 @@ class WakelockSwitch extends ConsumerWidget {
       onChanged: (value) => ref
           .read(wakelockSwitchControllerProvider.notifier)
           .setIsWakelockOn(value),
+    );
+  }
+}
+
+class ParentalModeSwitch extends ConsumerWidget {
+  const ParentalModeSwitch({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isParentalModeOn = ref.watch(parentalModeSwitchControllerProvider);
+    return SwitchListTile(
+      title: Text('Parental mode'.hardcoded),
+      secondary: const Icon(Icons.family_restroom_rounded),
+      value: isParentalModeOn,
+      onChanged: (value) => ref
+          .read(parentalModeSwitchControllerProvider.notifier)
+          .setIsParentalModeOn(value),
     );
   }
 }

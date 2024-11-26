@@ -40,5 +40,22 @@ final themeModeSwitchControllerProvider =
 );
 
 typedef _$ThemeModeSwitchController = AutoDisposeNotifier<ThemeMode>;
+String _$parentalModeSwitchControllerHash() =>
+    r'13fa901a84293fd31c1e36d6e8a470f1463fd107';
+
+/// See also [ParentalModeSwitchController].
+@ProviderFor(ParentalModeSwitchController)
+final parentalModeSwitchControllerProvider =
+    AutoDisposeNotifierProvider<ParentalModeSwitchController, bool>.internal(
+  ParentalModeSwitchController.new,
+  name: r'parentalModeSwitchControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$parentalModeSwitchControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ParentalModeSwitchController = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
