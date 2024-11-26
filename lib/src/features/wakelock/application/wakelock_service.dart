@@ -13,10 +13,7 @@ class WakelockService extends _$WakelockService {
   }
 
   void setIsWakelockOn(bool value) async {
-    await ref
-        .read(settingsRepositoryProvider)
-        .requireValue
-        .setIsWakelockOn(value);
+    ref.read(settingsRepositoryProvider).requireValue.setIsWakelockOn(value);
     state = value;
   }
 }

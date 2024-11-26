@@ -10,9 +10,33 @@ class SettingsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: [
-          const WakelockSwitch(),
+        children: const [
+          ThemeModeSwitch(),
+          WakelockSwitch(),
         ],
+      ),
+    );
+  }
+}
+
+class ThemeModeSwitch extends ConsumerWidget {
+  const ThemeModeSwitch({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeModeValue = ref.watch(themeModeSwitchControllerProvider);
+    return ListTile(
+      title: Text('Theme'.hardcoded),
+      trailing: ToggleButtons(
+        isSelected: List.filled(3, false)..[themeModeValue.index] = true,
+        children: const [
+          Icon(Icons.phone_android_rounded),
+          Icon(Icons.light_mode_rounded),
+          Icon(Icons.dark_mode_rounded),
+        ],
+        onPressed: (index) => ref
+            .read(themeModeSwitchControllerProvider.notifier)
+            .setThemeMode(ThemeMode.values[index]),
       ),
     );
   }
