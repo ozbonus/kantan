@@ -6,12 +6,12 @@ part of 'wakelock_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$wakelockServiceHash() => r'019e8532d7e2e1f6f20d72e97afcf26273d1482e';
+String _$wakelockServiceHash() => r'2331aaf53c84bad2a73812449e9adab1dd84d87a';
 
 /// See also [WakelockService].
 @ProviderFor(WakelockService)
 final wakelockServiceProvider =
-    NotifierProvider<WakelockService, bool>.internal(
+    AutoDisposeNotifierProvider<WakelockService, bool>.internal(
   WakelockService.new,
   name: r'wakelockServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final wakelockServiceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$WakelockService = Notifier<bool>;
+typedef _$WakelockService = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
