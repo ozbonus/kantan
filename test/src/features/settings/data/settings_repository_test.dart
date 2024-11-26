@@ -13,7 +13,7 @@ Map<String, Object> fullValues = {
   SettingKey.speed: 1.5,
   SettingKey.repeatMode: 1,
   SettingKey.themeMode: 1,
-  SettingKey.isWakelockOn: true,
+  SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
   SettingKey.interfaceLanguage: 'Klingon',
   SettingKey.translationLanguage: 'Elvish',
