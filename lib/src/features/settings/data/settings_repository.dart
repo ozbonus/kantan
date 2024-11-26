@@ -99,7 +99,7 @@ class SettingsRepository {
     return await prefs.setInt(SettingKey.themeMode, themeMode.index);
   }
 
-  Future<bool> setUseWakelock(bool value) async {
+  Future<bool> setIsWakelockOn(bool value) async {
     return await prefs.setBool(SettingKey.isWakelockOn, value);
   }
 

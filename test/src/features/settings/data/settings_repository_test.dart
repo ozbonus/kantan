@@ -211,7 +211,7 @@ void main() {
 
     test('Wakelock value', () async {
       final value = fullValues[SettingKey.isWakelockOn] as bool;
-      await expectLater(repo.setUseWakelock(value), completes);
+      await expectLater(repo.setIsWakelockOn(value), completes);
       expect(repo.isWakelockOn, equals(value));
     });
 
