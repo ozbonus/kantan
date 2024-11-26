@@ -15,6 +15,10 @@ Map<String, Object> fullValues = {
   SettingKey.themeMode: 1,
   SettingKey.useWakelock: true,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
+  SettingKey.interfaceLanguage: 'Klingon',
+  SettingKey.translationLanguage: 'Elvish',
+  SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
+  SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
 
 late SettingsRepository repo;
