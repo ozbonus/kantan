@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/presentation/floating_mini_player.dart';
+import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_tile.dart';
 
@@ -17,6 +18,7 @@ class TrackListScreen extends ConsumerWidget {
       ),
       body: const TracksList(),
       floatingActionButton: const FloatingMiniPlayer(),
+      drawer: const SettingsMenu(),
     );
   }
 }
