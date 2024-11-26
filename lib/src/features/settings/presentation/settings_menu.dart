@@ -49,11 +49,12 @@ class WakelockSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isWakelockOn = ref.watch(wakelockSwitchControllerProvider);
     return SwitchListTile(
+      title: Text('Keep screen on'.hardcoded),
+      secondary: const Icon(Icons.lightbulb_outline_rounded),
       value: isWakelockOn,
       onChanged: (value) => ref
           .read(wakelockSwitchControllerProvider.notifier)
           .setIsWakelockOn(value),
-      title: Text('Keep screen on'.hardcoded),
     );
   }
 }
