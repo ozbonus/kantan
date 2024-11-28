@@ -16,7 +16,7 @@ Map<String, Object> fullValues = {
   SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
   SettingKey.interfaceLanguage: 'Klingon',
-  SettingKey.translationLanguage: 'Elvish',
+  SettingKey.translationLocale: 'Elvish',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
@@ -88,8 +88,8 @@ void main() {
     });
 
     test('Translation language', () {
-      final value = Config.defaultTranslationLanguage;
-      expect(repo.translationLanguage, equals(value));
+      final value = Config.defaultTranslationLocale;
+      expect(repo.translationLocale, equals(value));
     });
 
     test('Can see transcript', () {
@@ -154,8 +154,8 @@ void main() {
     });
 
     test('Translation language', () {
-      final value = fullValues[SettingKey.translationLanguage] as String;
-      expect(repo.translationLanguage, equals(value));
+      final value = fullValues[SettingKey.translationLocale] as String;
+      expect(repo.translationLocale, equals(value));
     });
 
     test('Can see transcript', () {
@@ -228,9 +228,9 @@ void main() {
     });
 
     test('Translation language', () async {
-      final value = fullValues[SettingKey.translationLanguage] as String;
-      await expectLater(repo.setTranslationLanguage(value), completes);
-      expect(repo.translationLanguage, equals(value));
+      final value = fullValues[SettingKey.translationLocale] as String;
+      await expectLater(repo.setTranslationLocale(value), completes);
+      expect(repo.translationLocale, equals(value));
     });
 
     test('Can see transcript', () async {
