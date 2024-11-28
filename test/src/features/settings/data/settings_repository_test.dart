@@ -16,7 +16,7 @@ Map<String, Object> fullValues = {
   SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
   SettingKey.interfaceLanguage: 'Klingon',
-  SettingKey.translationLocale: 'Elvish',
+  SettingKey.translationLocale: 'en_US',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
@@ -155,7 +155,12 @@ void main() {
 
     test('Translation language', () {
       final value = fullValues[SettingKey.translationLocale] as String;
-      expect(repo.translationLocale, equals(value));
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      expect(repo.translationLocale, equals(locale));
     });
 
     test('Can see transcript', () {
@@ -229,8 +234,13 @@ void main() {
 
     test('Translation language', () async {
       final value = fullValues[SettingKey.translationLocale] as String;
-      await expectLater(repo.setTranslationLocale(value), completes);
-      expect(repo.translationLocale, equals(value));
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      await expectLater(repo.setTranslationLocale(locale), completes);
+      expect(repo.translationLocale, equals(locale));
     });
 
     test('Can see transcript', () async {
