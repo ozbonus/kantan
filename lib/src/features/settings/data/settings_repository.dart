@@ -64,9 +64,17 @@ class SettingsRepository {
     return value ?? Config.defaultInterfaceLanguage;
   }
 
-  String get translationLanguage {
-    final value = prefs.getString(SettingKey.translationLanguage);
-    return value ?? Config.defaultTranslationLanguage;
+  Locale? get translationLocale {
+    final value = prefs.getString(SettingKey.translationLocale);
+    if (value != null) {
+      final subtags = value.split('-');
+      return Locale.fromSubtags(
+        languageCode: subtags[0], // Definitley not null.
+        countryCode: subtags.elementAtOrNull(1), // Nullable, ie. 'zh-TW'.
+      );
+    } else {
+      return Config.defaultTranslationLocale;
+    }
   }
 
   bool get canSeeTranscript {
@@ -111,8 +119,15 @@ class SettingsRepository {
     return await prefs.setString(SettingKey.interfaceLanguage, value);
   }
 
-  Future<bool> setTranslationLanguage(String value) async {
-    return await prefs.setString(SettingKey.translationLanguage, value);
+  Future<bool> setTranslationLocale(Locale? locale) async {
+    if (locale != null) {
+      return await prefs.setString(
+        SettingKey.translationLocale,
+        locale.toLanguageTag(),
+      );
+    } else {
+      return await prefs.remove(SettingKey.translationLocale);
+    }
   }
 
   Future<bool> setCanSeeTranscript(bool value) async {
