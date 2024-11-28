@@ -16,7 +16,7 @@ Map<String, Object> fullValues = {
   SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
   SettingKey.interfaceLanguage: 'Klingon',
-  SettingKey.translationLanguage: 'Elvish',
+  SettingKey.translationLocale: 'en_US',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
@@ -88,8 +88,8 @@ void main() {
     });
 
     test('Translation language', () {
-      final value = Config.defaultTranslationLanguage;
-      expect(repo.translationLanguage, equals(value));
+      final value = Config.defaultTranslationLocale;
+      expect(repo.translationLocale, equals(value));
     });
 
     test('Can see transcript', () {
@@ -154,8 +154,13 @@ void main() {
     });
 
     test('Translation language', () {
-      final value = fullValues[SettingKey.translationLanguage] as String;
-      expect(repo.translationLanguage, equals(value));
+      final value = fullValues[SettingKey.translationLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      expect(repo.translationLocale, equals(locale));
     });
 
     test('Can see transcript', () {
@@ -211,7 +216,7 @@ void main() {
 
     test('Wakelock value', () async {
       final value = fullValues[SettingKey.isWakelockOn] as bool;
-      await expectLater(repo.setUseWakelock(value), completes);
+      await expectLater(repo.setIsWakelockOn(value), completes);
       expect(repo.isWakelockOn, equals(value));
     });
 
@@ -228,9 +233,14 @@ void main() {
     });
 
     test('Translation language', () async {
-      final value = fullValues[SettingKey.translationLanguage] as String;
-      await expectLater(repo.setTranslationLanguage(value), completes);
-      expect(repo.translationLanguage, equals(value));
+      final value = fullValues[SettingKey.translationLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      await expectLater(repo.setTranslationLocale(locale), completes);
+      expect(repo.translationLocale, equals(locale));
     });
 
     test('Can see transcript', () async {
