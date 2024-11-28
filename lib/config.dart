@@ -24,7 +24,10 @@ class Config {
   static bool get defaultIsWakelockOn => false;
   static bool get defaultIsParentalModeOn => true;
   static String get defaultInterfaceLanguage => 'en';
-  static String get defaultTranslationLanguage => 'zh-TW';
+  static Locale? get defaultTranslationLocale => const Locale.fromSubtags(
+        languageCode: 'zh',
+        countryCode: 'TW',
+      );
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
 
