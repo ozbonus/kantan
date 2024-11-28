@@ -27,4 +27,9 @@ class Config {
   static String get defaultTranslationLanguage => 'zh-TW';
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
+
+  static List<Locale> get translationLocales => const [
+        Locale.fromSubtags(languageCode: 'es'),
+        Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
+      ];
 }
