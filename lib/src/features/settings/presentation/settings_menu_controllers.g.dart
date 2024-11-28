@@ -91,5 +91,22 @@ final canSeeTranslationSwitchControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$CanSeeTranslationSwitchController = AutoDisposeNotifier<bool>;
+String _$translationLocalOptionControllerHash() =>
+    r'd6ce8ba0676e8989e613421923e4a1b27530a98b';
+
+/// See also [TranslationLocalOptionController].
+@ProviderFor(TranslationLocalOptionController)
+final translationLocalOptionControllerProvider = AutoDisposeNotifierProvider<
+    TranslationLocalOptionController, Locale?>.internal(
+  TranslationLocalOptionController.new,
+  name: r'translationLocalOptionControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$translationLocalOptionControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TranslationLocalOptionController = AutoDisposeNotifier<Locale?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
