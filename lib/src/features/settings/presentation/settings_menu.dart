@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 import 'package:kantan/src/localization/string_hardcoded.dart';
 
@@ -16,6 +17,7 @@ class SettingsMenu extends StatelessWidget {
           ParentalModeSwitch(),
           CanSeeTranscriptSwitch(),
           CanSeeTranslationSwitch(),
+          TranslationLocaleSelector(),
         ],
       ),
     );
@@ -112,6 +114,77 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
       onChanged: (value) => ref
           .read(canSeeTranslationSwitchControllerProvider.notifier)
           .setCanSeeTranslation(value),
+    );
+  }
+}
+
+class TranslationLocaleSelector extends StatelessWidget {
+  const TranslationLocaleSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      leading: const Icon(Icons.translate_rounded),
+      title: Text('Translation'.hardcoded),
+      children: [
+        ListTile(
+          title: Text(
+              'Only the transcript translation will be affected by this option.'
+                  .hardcoded),
+        ),
+        const TranslationLocaleSelectorOption(null),
+        ...Config.translationLocales
+            .map((locale) => TranslationLocaleSelectorOption(locale)),
+      ],
+    );
+  }
+}
+
+class TranslationLocaleSelectorOption extends ConsumerWidget {
+  const TranslationLocaleSelectorOption(
+    this.locale, {
+    super.key,
+  });
+  final Locale? locale;
+
+  String get titleString {
+    if (locale != null) {
+      return locale!.toLanguageTag();
+    } else {
+      return 'None'.hardcoded;
+    }
+  }
+
+  TextDirection get textDirection {
+    final languageTag = locale?.languageCode.split('-')[0];
+    const rtlLanguages = ['ar', 'fa', 'he', 'pa', 'ur'];
+    if (rtlLanguages.contains(languageTag)) {
+      return TextDirection.rtl;
+    } else {
+      return TextDirection.ltr;
+    }
+  }
+
+  bool get isRtl => textDirection == TextDirection.rtl;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(translationLocalOptionControllerProvider);
+    final isSelected = locale == currentLocale;
+    return ListTile(
+      selected: isSelected,
+      leading: isSelected && isRtl ? const Icon(Icons.check_rounded) : null,
+      trailing: isSelected && !isRtl ? const Icon(Icons.check_rounded) : null,
+      title: Directionality(
+        textDirection: textDirection,
+        child: Text(
+          titleString,
+          locale: locale,
+        ),
+      ),
+      onTap: () => ref
+          .read(translationLocalOptionControllerProvider.notifier)
+          .setTranslationLocale(locale),
     );
   }
 }

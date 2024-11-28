@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kantan/src/features/parental_mode/application/parental_mode_service.dart';
 import 'package:kantan/src/features/transcript/application/can_see_transcript_service.dart';
 import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
+import 'package:kantan/src/features/transcript/application/translation_locale_service.dart';
 import 'package:kantan/src/features/wakelock/application/wakelock_service.dart';
 import 'package:kantan/src/themes/theme_mode_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -71,5 +72,20 @@ class CanSeeTranslationSwitchController
     ref
         .read(canSeeTranslationServiceProvider.notifier)
         .setCanSeeTranslation(value);
+  }
+}
+
+@riverpod
+class TranslationLocalOptionController
+    extends _$TranslationLocalOptionController {
+  @override
+  Locale? build() {
+    return ref.watch(translationLocaleServiceProvider);
+  }
+
+  void setTranslationLocale(Locale? locale) {
+    ref
+        .read(translationLocaleServiceProvider.notifier)
+        .setTranslationLocale(locale);
   }
 }
