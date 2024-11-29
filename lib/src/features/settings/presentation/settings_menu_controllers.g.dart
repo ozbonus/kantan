@@ -91,22 +91,39 @@ final canSeeTranslationSwitchControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$CanSeeTranslationSwitchController = AutoDisposeNotifier<bool>;
-String _$translationLocalOptionControllerHash() =>
-    r'd6ce8ba0676e8989e613421923e4a1b27530a98b';
+String _$interfaceLocaleOptionControllerHash() =>
+    r'ea850d9342851a71ab93305c8fa3ca03575a1a19';
 
-/// See also [TranslationLocalOptionController].
-@ProviderFor(TranslationLocalOptionController)
-final translationLocalOptionControllerProvider = AutoDisposeNotifierProvider<
-    TranslationLocalOptionController, Locale?>.internal(
-  TranslationLocalOptionController.new,
-  name: r'translationLocalOptionControllerProvider',
+/// See also [InterfaceLocaleOptionController].
+@ProviderFor(InterfaceLocaleOptionController)
+final interfaceLocaleOptionControllerProvider = AutoDisposeNotifierProvider<
+    InterfaceLocaleOptionController, Object?>.internal(
+  InterfaceLocaleOptionController.new,
+  name: r'interfaceLocaleOptionControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$translationLocalOptionControllerHash,
+      : _$interfaceLocaleOptionControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TranslationLocalOptionController = AutoDisposeNotifier<Locale?>;
+typedef _$InterfaceLocaleOptionController = AutoDisposeNotifier<Object?>;
+String _$translationLocaleOptionControllerHash() =>
+    r'6ba2d923567dd84cf95edad3a1d2ecfc833fa036';
+
+/// See also [TranslationLocaleOptionController].
+@ProviderFor(TranslationLocaleOptionController)
+final translationLocaleOptionControllerProvider = AutoDisposeNotifierProvider<
+    TranslationLocaleOptionController, Locale?>.internal(
+  TranslationLocaleOptionController.new,
+  name: r'translationLocaleOptionControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$translationLocaleOptionControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TranslationLocaleOptionController = AutoDisposeNotifier<Locale?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
