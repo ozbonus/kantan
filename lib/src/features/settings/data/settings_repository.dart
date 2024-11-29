@@ -59,9 +59,17 @@ class SettingsRepository {
     return value ?? Config.defaultIsParentalModeOn;
   }
 
-  String get interfaceLanguage {
-    final value = prefs.getString(SettingKey.interfaceLanguage);
-    return value ?? Config.defaultInterfaceLanguage;
+  Locale? get interfaceLocale {
+    final value = prefs.getString(SettingKey.interfaceLocale);
+    if (value != null) {
+      final subtags = value.split('-');
+      return Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+    } else {
+      return Config.defaultInterfaceLocale;
+    }
   }
 
   Locale? get translationLocale {
@@ -115,8 +123,15 @@ class SettingsRepository {
     return await prefs.setBool(SettingKey.isParentalModeOn, value);
   }
 
-  Future<bool> setInterfaceLanguage(String value) async {
-    return await prefs.setString(SettingKey.interfaceLanguage, value);
+  Future<bool> setInterfaceLocale(Locale? locale) async {
+    if (locale != null) {
+      return await prefs.setString(
+        SettingKey.interfaceLocale,
+        locale.toLanguageTag(),
+      );
+    } else {
+      return await prefs.remove(SettingKey.interfaceLocale);
+    }
   }
 
   Future<bool> setTranslationLocale(Locale? locale) async {

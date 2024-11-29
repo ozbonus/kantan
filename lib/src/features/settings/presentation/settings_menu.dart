@@ -169,7 +169,7 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocale = ref.watch(translationLocalOptionControllerProvider);
+    final currentLocale = ref.watch(translationLocaleOptionControllerProvider);
     final isSelected = locale == currentLocale;
     return ListTile(
       selected: isSelected,
@@ -183,7 +183,7 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
         ),
       ),
       onTap: () => ref
-          .read(translationLocalOptionControllerProvider.notifier)
+          .read(translationLocaleOptionControllerProvider.notifier)
           .setTranslationLocale(locale),
     );
   }
