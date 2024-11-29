@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
@@ -39,6 +40,61 @@ class SettingsRepository {
     }
   }
 
+  ThemeMode get themeMode {
+    final value = prefs.getInt(SettingKey.themeMode);
+    if (value != null) {
+      return ThemeMode.values[value];
+    } else {
+      return Config.defaultThemeMode;
+    }
+  }
+
+  bool get isWakelockOn {
+    final value = prefs.getBool(SettingKey.isWakelockOn);
+    return value ?? Config.defaultIsWakelockOn;
+  }
+
+  bool get isParentalModeOn {
+    final value = prefs.getBool(SettingKey.isParentalModeOn);
+    return value ?? Config.defaultIsParentalModeOn;
+  }
+
+  Locale? get interfaceLocale {
+    final value = prefs.getString(SettingKey.interfaceLocale);
+    if (value != null) {
+      final subtags = value.split('-');
+      return Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+    } else {
+      return Config.defaultInterfaceLocale;
+    }
+  }
+
+  Locale? get translationLocale {
+    final value = prefs.getString(SettingKey.translationLocale);
+    if (value != null) {
+      final subtags = value.split('-');
+      return Locale.fromSubtags(
+        languageCode: subtags[0], // Definitley not null.
+        countryCode: subtags.elementAtOrNull(1), // Nullable, ie. 'zh-TW'.
+      );
+    } else {
+      return Config.defaultTranslationLocale;
+    }
+  }
+
+  bool get canSeeTranscript {
+    final value = prefs.getBool(SettingKey.canSeeTranscript);
+    return value ?? Config.defaultCanSeeTranscript;
+  }
+
+  bool get canSeeTranslation {
+    final value = prefs.getBool(SettingKey.canSeeTranslation);
+    return value ?? Config.defaultCanSeeTranslation;
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -53,6 +109,48 @@ class SettingsRepository {
 
   Future<bool> setRepeatMode(RepeatMode value) async {
     return await prefs.setInt(SettingKey.repeatMode, value.index);
+  }
+
+  Future<bool> setThemeMode(ThemeMode themeMode) async {
+    return await prefs.setInt(SettingKey.themeMode, themeMode.index);
+  }
+
+  Future<bool> setIsWakelockOn(bool value) async {
+    return await prefs.setBool(SettingKey.isWakelockOn, value);
+  }
+
+  Future<bool> setIsParentalModeOn(bool value) async {
+    return await prefs.setBool(SettingKey.isParentalModeOn, value);
+  }
+
+  Future<bool> setInterfaceLocale(Locale? locale) async {
+    if (locale != null) {
+      return await prefs.setString(
+        SettingKey.interfaceLocale,
+        locale.toLanguageTag(),
+      );
+    } else {
+      return await prefs.remove(SettingKey.interfaceLocale);
+    }
+  }
+
+  Future<bool> setTranslationLocale(Locale? locale) async {
+    if (locale != null) {
+      return await prefs.setString(
+        SettingKey.translationLocale,
+        locale.toLanguageTag(),
+      );
+    } else {
+      return await prefs.remove(SettingKey.translationLocale);
+    }
+  }
+
+  Future<bool> setCanSeeTranscript(bool value) async {
+    return await prefs.setBool(SettingKey.canSeeTranscript, value);
+  }
+
+  Future<bool> setCanSeeTranslation(bool value) async {
+    return await prefs.setBool(SettingKey.canSeeTranslation, value);
   }
 }
 

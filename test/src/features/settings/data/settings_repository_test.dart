@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
@@ -6,14 +7,21 @@ import 'package:kantan/src/features/settings/domain/setting_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const Map<String, Object> nullValues = {};
-const Map<String, Object> fullValues = {
+Map<String, Object> fullValues = {
   SettingKey.queueIndex: 1,
   SettingKey.position: 1000,
   SettingKey.speed: 1.5,
-  SettingKey.repeatMode: 1
+  SettingKey.repeatMode: 1,
+  SettingKey.themeMode: 1,
+  SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
+  SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
+  SettingKey.interfaceLocale: 'en',
+  SettingKey.translationLocale: 'fr_CA',
+  SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
+  SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
 
-late SettingsRepository repository;
+late SettingsRepository repo;
 
 Future<SettingsRepository> makeRepository(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
@@ -32,93 +40,229 @@ void main() {
     await prefs.clear();
   });
 
-  group('No pre-existing values:', () {
+  group('Return default when null:', () {
     setUp(() async {
       SharedPreferences.setMockInitialValues(nullValues);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      repository = SettingsRepository(prefs);
+      repo = SettingsRepository(prefs);
     });
 
-    test('Repository returns default queue index when null.', () {
-      expect(repository.queueIndex, equals(Config.defaultQueueIndex));
+    test('Queue index', () {
+      final value = Config.defaultQueueIndex;
+      expect(repo.queueIndex, equals(value));
     });
 
-    test('Repository returns default position when null.', () {
-      expect(repository.position, equals(Config.defaultPosition));
+    test('Position', () {
+      final value = Config.defaultPosition;
+      expect(repo.position, equals(value));
     });
 
-    test('Repository returns default speed when null.', () {
-      expect(repository.speed, equals(Config.defaultSpeed));
+    test('Speed', () {
+      final value = Config.defaultSpeed;
+      expect(repo.speed, equals(value));
     });
 
-    test('Repository returns default repeat mode when null.', () {
-      expect(repository.repeatMode, equals(Config.defaultRepeatMode));
+    test('Repeat mode', () {
+      final value = Config.defaultRepeatMode;
+      expect(repo.repeatMode, equals(value));
     });
 
-    test('Write and read queue index.', () async {
-      expectLater(repository.setQueueIndex(2), completion(true));
-      expect(repository.queueIndex, equals(2));
+    test('Theme mode', () {
+      final value = Config.defaultThemeMode;
+      expect(repo.themeMode, equals(value));
     });
 
-    test('Write and read position.', () async {
-      const position = Duration(milliseconds: 3000);
-      expectLater(repository.setPosition(position), completion(true));
-      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+    test('Wakelock value', () {
+      final value = Config.defaultIsWakelockOn;
+      expect(repo.isWakelockOn, equals(value));
     });
 
-    test('Write and read speed.', () async {
-      expectLater(repository.setSpeed(2.5), completion(true));
-      expect(repository.speed, equals(2.5));
+    test('Parental mode value', () {
+      final value = Config.defaultIsParentalModeOn;
+      expect(repo.isParentalModeOn, equals(value));
     });
 
-    test('Write and read repeat mode.', () async {
-      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
-      expect(repository.repeatMode, equals(RepeatMode.all));
+    test('Interface locale', () {
+      final value = Config.defaultInterfaceLocale;
+      expect(repo.interfaceLocale, equals(value));
+    });
+
+    test('Translation locale', () {
+      final value = Config.defaultTranslationLocale;
+      expect(repo.translationLocale, equals(value));
+    });
+
+    test('Can see transcript', () {
+      final value = Config.defaultCanSeeTranscript;
+      expect(repo.canSeeTranscript, equals(value));
+    });
+
+    test('Can see translation', () {
+      final value = Config.defaultCanSeeTranslation;
+      expect(repo.canSeeTranslation, equals(value));
     });
   });
 
-  group('Pre-existing values:', () {
+  group('Return saved values:', () {
     setUp(() async {
       SharedPreferences.setMockInitialValues(fullValues);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      repository = SettingsRepository(prefs);
+      repo = SettingsRepository(prefs);
     });
 
-    test('Queue index is 1.', () {
-      expect(repository.queueIndex, equals(1));
+    test('Queue index', () {
+      final value = fullValues[SettingKey.queueIndex] as int;
+      expect(repo.queueIndex, equals(value));
     });
 
-    test('Position is 1,000 milliseconds.', () {
-      expect(repository.position, equals(const Duration(milliseconds: 1000)));
+    test('Position', () {
+      final milli = fullValues[SettingKey.position] as int;
+      final value = Duration(milliseconds: milli);
+      expect(repo.position, equals(value));
     });
 
-    test('Speed is 1.5x.', () {
-      expect(repository.speed, equals(1.5));
+    test('Speed', () {
+      final value = fullValues[SettingKey.speed] as double;
+      expect(repo.speed, equals(value));
     });
 
-    test('Repeat mode is repeat one.', () {
-      expect(repository.repeatMode, equals(RepeatMode.one));
+    test('Repeat mode', () {
+      final index = fullValues[SettingKey.repeatMode] as int;
+      final value = RepeatMode.values[index];
+      expect(repo.repeatMode, equals(value));
     });
 
-    test('Write and read queue index.', () async {
-      expectLater(repository.setQueueIndex(2), completion(true));
-      expect(repository.queueIndex, equals(2));
+    test('Theme mode', () {
+      final index = fullValues[SettingKey.themeMode] as int;
+      final value = ThemeMode.values[index];
+      expect(repo.themeMode, equals(value));
     });
 
-    test('Write and read position.', () async {
-      const position = Duration(milliseconds: 3000);
-      expectLater(repository.setPosition(position), completion(true));
-      expect(repository.position, equals(const Duration(milliseconds: 3000)));
+    test('Wakelock value', () {
+      final value = fullValues[SettingKey.isWakelockOn] as bool;
+      expect(repo.isWakelockOn, equals(value));
     });
 
-    test('Write and read speed.', () async {
-      expectLater(repository.setSpeed(2.5), completion(true));
-      expect(repository.speed, equals(2.5));
+    test('Parental mode value', () {
+      final value = fullValues[SettingKey.isParentalModeOn] as bool;
+      expect(repo.isParentalModeOn, equals(value));
     });
 
-    test('Write and read repeat mode.', () async {
-      expectLater(repository.setRepeatMode(RepeatMode.all), completion(true));
-      expect(repository.repeatMode, equals(RepeatMode.all));
+    test('Interface locale', () {
+      final value = fullValues[SettingKey.interfaceLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      expect(repo.interfaceLocale, equals(locale));
+    });
+
+    test('Translation locale', () {
+      final value = fullValues[SettingKey.translationLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      expect(repo.translationLocale, equals(locale));
+    });
+
+    test('Can see transcript', () {
+      final value = fullValues[SettingKey.canSeeTranscript] as bool;
+      expect(repo.canSeeTranscript, equals(value));
+    });
+
+    test('Can see translation', () {
+      final value = fullValues[SettingKey.canSeeTranscript] as bool;
+      expect(repo.canSeeTranslation, equals(value));
+    });
+  });
+
+  group('Write and read:', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues(nullValues);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+    });
+
+    test('Queue index', () async {
+      final value = fullValues[SettingKey.queueIndex] as int;
+      await expectLater(repo.setQueueIndex(value), completes);
+      expect(repo.queueIndex, equals(value));
+    });
+
+    test('Position', () async {
+      final milli = fullValues[SettingKey.position] as int;
+      final value = Duration(milliseconds: milli);
+      await expectLater(repo.setPosition(value), completes);
+      expect(repo.position, equals(value));
+    });
+
+    test('Speed', () async {
+      final value = fullValues[SettingKey.speed] as double;
+      await expectLater(repo.setSpeed(value), completes);
+      expect(repo.speed, equals(value));
+    });
+
+    test('Repeat mode', () async {
+      final index = fullValues[SettingKey.repeatMode] as int;
+      final value = RepeatMode.values[index];
+      await expectLater(repo.setRepeatMode(value), completes);
+      expect(repo.repeatMode, equals(value));
+    });
+
+    test('Theme mode', () async {
+      final index = fullValues[SettingKey.themeMode] as int;
+      final value = ThemeMode.values[index];
+      await expectLater(repo.setThemeMode(value), completes);
+      expect(repo.themeMode, equals(value));
+    });
+
+    test('Wakelock value', () async {
+      final value = fullValues[SettingKey.isWakelockOn] as bool;
+      await expectLater(repo.setIsWakelockOn(value), completes);
+      expect(repo.isWakelockOn, equals(value));
+    });
+
+    test('Parental mode value', () async {
+      final value = fullValues[SettingKey.isParentalModeOn] as bool;
+      await expectLater(repo.setIsParentalModeOn(value), completes);
+      expect(repo.isParentalModeOn, equals(value));
+    });
+
+    test('Interface locale', () async {
+      final value = fullValues[SettingKey.interfaceLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      await expectLater(repo.setInterfaceLocale(locale), completes);
+      expect(repo.interfaceLocale, equals(locale));
+    });
+
+    test('Translation locale', () async {
+      final value = fullValues[SettingKey.translationLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      await expectLater(repo.setTranslationLocale(locale), completes);
+      expect(repo.translationLocale, equals(locale));
+    });
+
+    test('Can see transcript', () async {
+      final value = fullValues[SettingKey.canSeeTranscript] as bool;
+      await expectLater(repo.setCanSeeTranscript(value), completes);
+      expect(repo.canSeeTranscript, equals(value));
+    });
+
+    test('Can see translation', () async {
+      final value = fullValues[SettingKey.canSeeTranscript] as bool;
+      await expectLater(repo.setCanSeeTranslation(value), completes);
+      expect(repo.canSeeTranslation, equals(value));
     });
   });
 }
