@@ -15,8 +15,8 @@ Map<String, Object> fullValues = {
   SettingKey.themeMode: 1,
   SettingKey.isWakelockOn: !Config.defaultIsWakelockOn,
   SettingKey.isParentalModeOn: !Config.defaultIsParentalModeOn,
-  SettingKey.interfaceLanguage: 'Klingon',
-  SettingKey.translationLocale: 'en_US',
+  SettingKey.interfaceLocale: 'en',
+  SettingKey.translationLocale: 'fr_CA',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
 };
@@ -82,12 +82,12 @@ void main() {
       expect(repo.isParentalModeOn, equals(value));
     });
 
-    test('Interface language', () {
-      final value = Config.defaultInterfaceLanguage;
-      expect(repo.interfaceLanguage, equals(value));
+    test('Interface locale', () {
+      final value = Config.defaultInterfaceLocale;
+      expect(repo.interfaceLocale, equals(value));
     });
 
-    test('Translation language', () {
+    test('Translation locale', () {
       final value = Config.defaultTranslationLocale;
       expect(repo.translationLocale, equals(value));
     });
@@ -148,12 +148,17 @@ void main() {
       expect(repo.isParentalModeOn, equals(value));
     });
 
-    test('Interface language', () {
-      final value = fullValues[SettingKey.interfaceLanguage] as String;
-      expect(repo.interfaceLanguage, equals(value));
+    test('Interface locale', () {
+      final value = fullValues[SettingKey.interfaceLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      expect(repo.interfaceLocale, equals(locale));
     });
 
-    test('Translation language', () {
+    test('Translation locale', () {
       final value = fullValues[SettingKey.translationLocale] as String;
       final subtags = value.split('-');
       final locale = Locale.fromSubtags(
@@ -226,13 +231,18 @@ void main() {
       expect(repo.isParentalModeOn, equals(value));
     });
 
-    test('Interface language', () async {
-      final value = fullValues[SettingKey.interfaceLanguage] as String;
-      await expectLater(repo.setInterfaceLanguage(value), completes);
-      expect(repo.interfaceLanguage, equals(value));
+    test('Interface locale', () async {
+      final value = fullValues[SettingKey.interfaceLocale] as String;
+      final subtags = value.split('-');
+      final locale = Locale.fromSubtags(
+        languageCode: subtags[0],
+        countryCode: subtags.elementAtOrNull(1),
+      );
+      await expectLater(repo.setInterfaceLocale(locale), completes);
+      expect(repo.interfaceLocale, equals(locale));
     });
 
-    test('Translation language', () async {
+    test('Translation locale', () async {
       final value = fullValues[SettingKey.translationLocale] as String;
       final subtags = value.split('-');
       final locale = Locale.fromSubtags(
