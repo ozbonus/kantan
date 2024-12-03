@@ -11,6 +11,7 @@ import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:rxdart/rxdart.dart';
+import '../../../../mocks/fake_settings_repository.dart';
 
 const track1 = MediaItem(id: 'i1', title: 't1', duration: audioSourceDuration);
 const track2 = MediaItem(id: 'i2', title: 't2', duration: audioSourceDuration);
@@ -41,6 +42,8 @@ void main() async {
     await audioHandler.addQueueItems(testPlaylist);
     await Future<dynamic>.delayed(const Duration(microseconds: 100));
     await audioHandler.load();
+    final fakeSettingsRepository = FakeSettingsRepository();
+    audioHandler.saveState(fakeSettingsRepository);
     return audioHandler;
   }
 
@@ -162,7 +165,10 @@ void main() async {
 
   group('Load state:', () {
     setUp(() async {
+      final fakeSettingsRepository = FakeSettingsRepository();
       audioHandler = await makeLoadedAudioHandler();
+      audioHandler.loadState(fakeSettingsRepository);
+      await Future.delayed(const Duration(milliseconds: 100));
     });
 
     tearDown(() async {
@@ -170,37 +176,35 @@ void main() async {
     });
 
     test('Load nothing, expect default values.', () async {
-      final state = audioHandler.playbackState.value;
+      final statelessAudioHandler = await makeLoadedAudioHandler();
+      final state = statelessAudioHandler.playbackState.value;
       const defaultPositionData = PositionData(
         Duration.zero,
         Duration.zero,
         audioSourceDuration,
       );
       expect(state.queueIndex, equals(0));
-      expect(audioHandler.positionData, emits(defaultPositionData));
+      expect(statelessAudioHandler.positionData, emits(defaultPositionData));
       expect(state.speed, equals(1.0));
       expect(state.processingState, equals(AudioProcessingState.ready));
     });
 
     test('Load queue index.', () async {
-      await audioHandler.loadState(queueIndex: 1);
       final queueIndex = audioHandler.playbackState.value.queueIndex;
       expect(queueIndex, equals(1));
     });
 
     test('Load position.', () async {
-      await audioHandler.loadState(position: const Duration(seconds: 5));
       const expectedPositionData = PositionData(
-        Duration(seconds: 5),
-        Duration(seconds: 5),
+        Duration(seconds: 1),
+        Duration(seconds: 1),
         audioSourceDuration,
       );
       expect(audioHandler.positionData, emits(expectedPositionData));
     });
 
     test('Load repeat mode.', () async {
-      await audioHandler.loadState(repeatMode: RepeatMode.one);
-      expect(audioHandler.repeatMode, emits(RepeatMode.one));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.one));
     });
 
     test('Load speed.', () async {
@@ -324,7 +328,7 @@ void main() async {
       final loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.none));
       expect(loopMode, equals(LoopMode.off));
-      expect(audioHandler.repeatMode, emits(RepeatMode.none));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.none));
     });
 
     test('Set repeat mode to repeat one.', () async {
@@ -333,7 +337,7 @@ void main() async {
       final loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.one));
       expect(loopMode, equals(LoopMode.one));
-      expect(audioHandler.repeatMode, emits(RepeatMode.one));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.one));
     });
 
     test('Set repeat mode to repeat all.', () async {
@@ -342,7 +346,7 @@ void main() async {
       final loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.all));
       expect(loopMode, equals(LoopMode.all));
-      expect(audioHandler.repeatMode, emits(RepeatMode.all));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.all));
     });
 
     test('Cycle repeat modes.', () async {
@@ -351,21 +355,21 @@ void main() async {
       var loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.one));
       expect(loopMode, equals(LoopMode.one));
-      expect(audioHandler.repeatMode, emits(RepeatMode.one));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.one));
 
       await audioHandler.nextRepeatMode();
       repeatMode = audioHandler.playbackState.value.repeatMode;
       loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.all));
       expect(loopMode, equals(LoopMode.all));
-      expect(audioHandler.repeatMode, emits(RepeatMode.all));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.all));
 
       await audioHandler.nextRepeatMode();
       repeatMode = audioHandler.playbackState.value.repeatMode;
       loopMode = audioHandler.player.loopMode;
       expect(repeatMode, equals(AudioServiceRepeatMode.none));
       expect(loopMode, equals(LoopMode.off));
-      expect(audioHandler.repeatMode, emits(RepeatMode.none));
+      expect(audioHandler.repeatModeStream, emits(RepeatMode.none));
     });
 
     test('Skip to next track in queue in repeat one moode.', () async {
