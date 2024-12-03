@@ -116,12 +116,11 @@ class AudioHandlerService extends BaseAudioHandler {
     });
   }
 
-  void loadState(Ref ref) async {
-    final repository = ref.watch(settingsRepositoryProvider).requireValue;
-    final queueIndex = repository.queueIndex;
-    final position = repository.position;
-    final speed = repository.speed;
-    final repeatMode = repository.repeatMode;
+  void loadState(SettingsRepository settingsRepository) async {
+    final queueIndex = settingsRepository.queueIndex;
+    final position = settingsRepository.position;
+    final speed = settingsRepository.speed;
+    final repeatMode = settingsRepository.repeatMode;
 
     await _player.seek(position, index: queueIndex);
     await _player.setSpeed(speed);
@@ -135,16 +134,15 @@ class AudioHandlerService extends BaseAudioHandler {
     }
   }
 
-  void saveState(Ref ref) {
-    final repository = ref.watch(settingsRepositoryProvider).requireValue;
+  void saveState(SettingsRepository settingsRepository) {
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
       (timer) async {
-        repository
+        settingsRepository
             .setQueueIndex(_player.currentIndex ?? Config.defaultQueueIndex);
-        repository.setPosition(_player.position);
-        repository.setSpeed(_player.speed);
-        repository.setRepeatMode(_repeatMode.value);
+        settingsRepository.setPosition(_player.position);
+        settingsRepository.setSpeed(_player.speed);
+        settingsRepository.setRepeatMode(_repeatMode.value);
       },
     );
   }
@@ -428,22 +426,11 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
   );
 
   final tracks = ref.watch(tracksListProvider).requireValue;
-  await audioHandler.loadTracks(tracks);
-
   final settings = ref.watch(settingsRepositoryProvider).requireValue;
-  await audioHandler.skipToQueueItem(settings.queueIndex);
-  await audioHandler.seek(settings.position);
-  await audioHandler.setSpeed(settings.speed);
-  switch (settings.repeatMode) {
-    case RepeatMode.none:
-      await audioHandler.setRepeatMode(AudioServiceRepeatMode.one);
-    case RepeatMode.one:
-      await audioHandler.setRepeatMode(AudioServiceRepeatMode.one);
-    case RepeatMode.all:
-      await audioHandler.setRepeatMode(AudioServiceRepeatMode.all);
-  }
 
-  audioHandler.saveState(ref);
+  audioHandler.loadTracks(tracks).then((_) => audioHandler.loadState(settings));
+
+  audioHandler.saveState(settings);
   return audioHandler;
 }
 
