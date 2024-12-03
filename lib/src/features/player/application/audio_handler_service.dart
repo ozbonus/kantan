@@ -10,6 +10,7 @@ import 'package:kantan/src/features/player/domain/position_data.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/track_to_media_item.dart';
+import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -416,16 +417,32 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       androidNotificationChannelId: Config.channelId,
       androidNotificationChannelName: Config.channelName,
       // Setting androidStopForegroundOnPause would require the app the ask
-      // users to disable battery optimization for the app. Given that this app
-      // is meant to be accessible to young children and non-tech saavy adults,
-      // that's probably not a safe thing to ask.
+      // users to disable battery optimization for the app. Given that this
+      // app is meant to be accessible to young children and non-tech saavy
+      // adults, that's probably not a safe thing to ask.
       androidStopForegroundOnPause: false,
       androidNotificationIcon: 'drawable/text_to_speech',
       rewindInterval: Config.rewindDuration,
       fastForwardInterval: Config.fastForwardDuration,
     ),
   );
-  audioHandler.loadState(ref);
+
+  final tracks = ref.watch(tracksListProvider).requireValue;
+  await audioHandler.loadTracks(tracks);
+
+  final settings = ref.watch(settingsRepositoryProvider).requireValue;
+  await audioHandler.skipToQueueItem(settings.queueIndex);
+  await audioHandler.seek(settings.position);
+  await audioHandler.setSpeed(settings.speed);
+  switch (settings.repeatMode) {
+    case RepeatMode.none:
+      await audioHandler.setRepeatMode(AudioServiceRepeatMode.one);
+    case RepeatMode.one:
+      await audioHandler.setRepeatMode(AudioServiceRepeatMode.one);
+    case RepeatMode.all:
+      await audioHandler.setRepeatMode(AudioServiceRepeatMode.all);
+  }
+
   audioHandler.saveState(ref);
   return audioHandler;
 }
