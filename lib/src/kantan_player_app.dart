@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
@@ -14,6 +15,8 @@ class KantanPlayerApp extends ConsumerWidget {
       title: Config.appTitle,
       routerConfig: goRouter,
       restorationScopeId: 'app',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
