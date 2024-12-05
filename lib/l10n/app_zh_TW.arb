@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh-TW",
+  "@@locale": "zh_TW",
   "aboutAndInfoTileLabel": "關於 kantanplayer",
   "@aboutAndInfoTileLabel": {
     "description": "The label of a button that reveals essential information about the app, such as the version number and copyright information.",
