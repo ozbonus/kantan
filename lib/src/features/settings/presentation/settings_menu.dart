@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
-import 'package:kantan/src/localization/string_hardcoded.dart';
+import 'package:kantan/l10n/string_hardcoded.dart';
 
 class SettingsMenu extends StatelessWidget {
   const SettingsMenu({super.key});

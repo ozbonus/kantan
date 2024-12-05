@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider_controller.dart';
-import 'package:kantan/src/localization/string_hardcoded.dart';
+import 'package:kantan/l10n/string_hardcoded.dart';
 
 class SpeedSlider extends ConsumerWidget {
   const SpeedSlider({super.key});

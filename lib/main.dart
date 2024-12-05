@@ -6,7 +6,7 @@ import 'package:kantan/src/features/player/application/audio_handler_service.dar
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/kantan_player_app.dart';
-import 'package:kantan/src/localization/string_hardcoded.dart';
+import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'main.g.dart';
