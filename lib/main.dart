@@ -120,7 +120,7 @@ Future<void> appStartup(Ref ref) async {
     ref.invalidate(tracksListProvider);
     ref.invalidate(audioHandlerProvider);
   });
-  ref
+  await ref
       .watch(settingsRepositoryProvider.future)
       .then((_) => ref.watch(tracksListProvider.future))
       .then((_) => ref.watch(audioHandlerProvider.future));
