@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kantan/src/features/parental_mode/application/parental_mode_service.dart';
 import 'package:kantan/src/features/transcript/application/can_see_transcript_service.dart';
 import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
-import 'package:kantan/src/features/transcript/application/interface_locale_service.dart';
+import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
 import 'package:kantan/src/features/transcript/application/translation_locale_service.dart';
 import 'package:kantan/src/features/wakelock/application/wakelock_service.dart';
 import 'package:kantan/src/themes/theme_mode_service.dart';
