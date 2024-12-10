@@ -1,0 +1,213 @@
+{
+  "@@locale": "ar",
+  "aboutAndInfoTileLabel": "نبذة عن {appName}",
+  "@aboutAndInfoTileLabel": {
+    "description": "The label of a button that reveals essential information about the app, such as the version number and copyright information.",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Super English Book 2 Audio"
+      }
+    }
+  },
+  "appLanguageDescription": "يمكنك تغيير لغة واجهة التطبيق. لا يغيّر هذا من لغة ترجمة النسخ المكتوبة.",
+  "@appLanguageDescription": {},
+  "appLanguageListTileLabel": "لغة الواجهة",
+  "@appLanguageListTileLabel": {
+    "description": "The label of a menu that allows the user to pick what language the interface of the app will be."
+  },
+  "cancelButtonLabel": "إلغاء",
+  "@cancelButtonLabel": {
+    "description": "The label of a button that closes a dialog that otherwise would have asked the user to decide to do something. There are no side effects from choosing this action."
+  },
+  "canSeeTranscriptTileLabel": "يستطيع رؤية النسخة المكتوبة",
+  "@canSeeTranscriptTileLabel": {
+    "description": "The label of a switch that controls whether the user is allowed to see transcripts of audio tracks."
+  },
+  "canSeeTranslationTileLabel": "يستطيع رؤية الترجمة",
+  "@canSeeTranslationTileLabel": {
+    "description": "The label of a switch that controls whether the user is allowed to see translations of transcripts."
+  },
+  "changeTextSizeTooltip": "تغيير حجم النص",
+  "@changeTextSizeTooltip": {
+    "description": "The tooltip of a button that changes the size of text on the screen. Usually it will increase the size of the text, but once the text is at a predefined maximum size, clicking the button will return to its original, smaller size."
+  },
+  "checkAnswerButtonText": "تحقق من الحل",
+  "@checkAnswerButtonText": {
+    "description": "The label of a button that causes the app to check whether the user's answer to a math problem is correct or incorrect."
+  },
+  "closeSettingsAndInfoTileLabel": "إغلاق",
+  "@closeSettingsAndInfoTileLabel": {
+    "description": "The label of a button that closes the settings and info screen."
+  },
+  "darkTheme": "نسق داكن",
+  "@darkTheme": {
+    "description": "Tooltip of the theme switcher option that sets the app theme to dark."
+  },
+  "defaultLanguageOptionLabel": "اللغة الافتراضية",
+  "@defaultLanguageOptionLabel": {
+    "description": "The label of a button that refers to the default language of the phone or computer that is running the app."
+  },
+  "deviceTheme": "نسق الجهاز",
+  "@deviceTheme": {
+    "description": "Tooltip of the theme switcher option that sets the app theme to match the device theme."
+  },
+  "disableModeWindowTitle": "تعطيل الوضع",
+  "@disableModeWindowTitle": {
+    "description": "The title of a window that asks the user if they would like to disable a mode that the app is operating in."
+  },
+  "disableParentTeacherModeConfirmationText": "هل تود إيقاف تشغيل وضع ولي الأمر والمعلم؟",
+  "@disableParentTeacherModeConfirmationText": {
+    "description": "A text description that asks the user if they would like to disable a mode that is meant for parents and teachers."
+  },
+  "discObject": "قرص مدمج",
+  "@discObject": {
+    "description": "The short name that refers to compact discs (CDs) that audio content is distributed on. Sometimes multiples of them are packed together and therefore need to be numbered.\n\nExamples: CD 1, Disc 2"
+  },
+  "exitFullscreenTooltip": "الخروج من وضع ملء الشاشة",
+  "@exitFullscreenTooltip": {
+    "description": "The tooltip of a button that closes a fullscreen window and returns it to its normal, smaller size."
+  },
+  "fastForwardButtonTooltip": "تقدم خمس ثوانٍ",
+  "@fastForwardButtonTooltip": {
+    "description": "The tooltip of the button that fast forwards the current audio track five seconds."
+  },
+  "lightTheme": "نسق فاتح",
+  "@lightTheme": {
+    "description": "Tooltip of the theme switcher option that sets the app theme to light."
+  },
+  "loadingButtonTooltip": "جارٍ التحميل",
+  "@loadingButtonTooltip": {
+    "description": "The tooltip of a button that is deactivated while data is being loaded."
+  },
+  "loadingLabel": "جارٍ التحميل...",
+  "@loadingLabel": {
+    "description": "A label the tells the user data is currently being loaded and will be available in this same space soon."
+  },
+  "mathChallengeWarning": "يجب عليك حل مسألة حسابية لتمكينه مرة أخرى.",
+  "@mathChallengeWarning": {
+    "description": "A message to the user before they disable a mode meant for parents and teachers. It informs them that will have to solve a math problem in the future if they wish to enable the mode again."
+  },
+  "noTranslationLanguageOptionLabel": "لا شيء",
+  "@noTranslationLanguageOptionLabel": {
+    "description": "The label of a button that specifies no language has been chosen to translate audio transcripts."
+  },
+  "okButtonText": "موافق",
+  "@okButtonText": {
+    "description": "The text on a button that confirms that the user has decided to perform an action."
+  },
+  "openPlayerControlsTooltip": "فتح عناصر التحكم في المشغل",
+  "@openPlayerControlsTooltip": {
+    "description": "The tooltip of a button that navigates to a screen with many ways to control playback of the current audio stream. Play, pause, seek, speed, etc."
+  },
+  "parentAndTeacherModeTileLabel": "وضع ولي الأمر والمعلم",
+  "@parentAndTeacherModeTileLabel": {
+    "description": "The label of the button that toggles a special mode meant only for parents and teachers of young children."
+  },
+  "parentTeacherModeActivatedPopup": "تم تمكين وضع ولي الأمر والمعلم.",
+  "@parentTeacherModeActivatedPopup": {
+    "description": "A notification message that briefly appears after the user has enabled a mode meant for parents and teachers."
+  },
+  "parentTeacherModeWindowTitle": "لأولياء الأمور والمعلمين",
+  "@parentTeacherModeWindowTitle": {
+    "description": "The title of a window that states this part of app is only meant to be used by parents and teachers."
+  },
+  "pauseButtonTooltip": "توقف مؤقت",
+  "@pauseButtonTooltip": {
+    "description": "The aooltip of a button that pauses a piece of audio that is currently being played."
+  },
+  "playButtonTooltip": "تشغيل",
+  "@playButtonTooltip": {
+    "description": "The tooltip of a button that plays audio."
+  },
+  "progressSliderTooltip": "الوصول إلى وقت معين",
+  "@progressSliderTooltip": {
+    "description": "The tooltip of a slider that allows the user to move to a position within an audio track that is currently playing. "
+  },
+  "repeatModeButtonTooltip": "تغيير وضع التكرار",
+  "@repeatModeButtonTooltip": {
+    "description": "The tooltip of a button that cycles through audio repeat modes: repeat none, repeat one, and repeat all."
+  },
+  "replayButtonTooltip": "إعادة تشغيل الكل",
+  "@replayButtonTooltip": {
+    "description": "The tooltip of a button that appears after a playlist of audio tracks has played completely and automatically stopped at the end. Pushing this button will play every track again from the beginning."
+  },
+  "replayIntroduction": "إعادة تشغيل المقدمة",
+  "@replayIntroduction": {
+    "description": "The label of a button that replays the onboarding process of an app which teaches users its essential functions."
+  },
+  "rewindButtonTooltip": "إرجاع خمس ثوانٍ",
+  "@rewindButtonTooltip": {
+    "description": "The tooltip of the button that rewinds the current audio track five seconds."
+  },
+  "settingsAndInfoMenuTitle": "الإعدادات",
+  "@settingsAndInfoMenuTitle": {
+    "description": "The title of a slide out menu that contains settings and links to app information."
+  },
+  "showTranslationTooltip": "عرض أو إخفاء الترجمة",
+  "@showTranslationTooltip": {
+    "description": "The tooltip for a button that toggles the visibility of the translation of the transcript of the currently-playing audio."
+  },
+  "sizeMultiplierSymbol": "{size}x",
+  "@sizeMultiplierSymbol": {
+    "description": "The symbol that appears next to a number that displays the relative size of text on the screen compared to its default size.\n\nExamples: 1.0x, 1.5x, 2.0x, etc.",
+    "placeholders": {
+      "size": {
+        "type": "String",
+        "example": "1.25"
+      }
+    }
+  },
+  "skipNextButtonTooltip": "تخطٍ إلى التالي",
+  "@skipNextButtonTooltip": {
+    "description": "The tooltip of a button that skips to the next audio track in a playlist."
+  },
+  "skipPreviousButtonTooltip": "تخطٍ إلى السابق",
+  "@skipPreviousButtonTooltip": {
+    "description": "The tooltip of a button that skips to the previous audio track in a playlist."
+  },
+  "solveForX": "أوجد x",
+  "@solveForX": {
+    "description": "A prompt for a math problem wherein the user must find the correct value for a variable named x."
+  },
+  "speedMultiplierSymbol": "{speed}x",
+  "@speedMultiplierSymbol": {
+    "description": "The symbol that appears next to a number that displays the relative speed of audio playback.\n\nExamples: 1.0x, 0.5x, 2.0x, etc.",
+    "placeholders": {
+      "speed": {
+        "type": "String",
+        "example": "1.5"
+      }
+    }
+  },
+  "speedSliderTooltip": "تغيير السرعة",
+  "@speedSliderTooltip": {
+    "description": "The tooltip of a slider that controls audio playback speed."
+  },
+  "themeMenuTitle": "النسق",
+  "@themeMenuTitle": {
+    "description": "The title of a menu that allows the user the change the app's visual theme."
+  },
+  "trackObject": "مقطع صوتي",
+  "@trackObject": {
+    "description": "The name of a discrete, numbered, piece of audio content, often distributed on a CD or as a digital file.\n\nExamples: Track 1, Track 5, #10, etc."
+  },
+  "transcriptButtonLabel": "النسخة المكتوبة",
+  "@transcriptButtonLabel": {
+    "description": "The label for a button that opens the written transcript for the currently-playing audio."
+  },
+  "transcriptFullscreenTooltip": "فتح وضع ملء الشاشة",
+  "@transcriptFullscreenTooltip": {
+    "description": "The tooltip for a button that enlarges a portion of the app to fill the entire window."
+  },
+  "translationLanguageDescription": "تتوفر الترجمات أو النسخ المكتوبة بهذه اللغات. اختر واحدة لعرضها في شاشة النسخة المكتوبة. لا يغيّر هذا من لغة واجهة التطبيق.",
+  "@translationLanguageDescription": {},
+  "translationLanguageListTileLabel": "لغة الترجمة",
+  "@translationLanguageListTileLabel": {
+    "description": "The label of a menu that allows the user to specify a second language into which audio transcripts can be translated into. Similar to subtitles.\n\nFor example, if the app has an text transcript of an English school book audio track and the user selects French as the translation language, then the text transcript may appear like this:\n\nDominique: Hello\nDominique: Bonjour.\n\nPat: Hello\nPat: Bonjour.\n\nDominique: How's it going?\nDominique: Comment ça va ?\n\nPat: It's going very well, thank you. And you?\nPat: Ça va très bien, merci. Et vous ?"
+  },
+  "wakelockTileLabel": "إبقاء الشاشة مفتوحة",
+  "@wakelockTileLabel": {
+    "description": "The label of a button that toggles on or off a feature that prevents the device's screen from turning off automatically."
+  }
+}

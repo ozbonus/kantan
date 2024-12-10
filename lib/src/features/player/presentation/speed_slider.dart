@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider_controller.dart';
-import 'package:kantan/src/localization/string_hardcoded.dart';
 
 class SpeedSlider extends ConsumerWidget {
   const SpeedSlider({super.key});
+
+  String _speedValueString(BuildContext context, double speed) {
+    final localizations = AppLocalizations.of(context)!;
+    return localizations.speedMultiplierSymbol(speed.toStringAsFixed(1));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,9 +18,9 @@ class SpeedSlider extends ConsumerWidget {
       children: [
         Text(
           speedValue.when(
-            loading: () => 1.0.toString(),
-            error: (_, __) => 1.0.toString(),
-            data: (speed) => '${speed.toStringAsFixed(1)}x'.hardcoded,
+            loading: () => _speedValueString(context, 1.0),
+            error: (_, __) => _speedValueString(context, 1.0),
+            data: (speed) => _speedValueString(context, speed),
           ),
           style: Theme.of(context).textTheme.titleLarge,
         ),

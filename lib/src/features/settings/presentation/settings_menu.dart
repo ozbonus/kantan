@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
-import 'package:kantan/src/localization/string_hardcoded.dart';
 
 class SettingsMenu extends StatelessWidget {
   const SettingsMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Drawer(
       child: ListView(
-        children: const [
-          ThemeModeSwitch(),
-          WakelockSwitch(),
-          ParentalModeSwitch(),
-          CanSeeTranscriptSwitch(),
-          CanSeeTranslationSwitch(),
-          TranslationLocaleSelector(),
+        children: [
+          DrawerHeader(
+            duration: const Duration(seconds: 2),
+            child: Center(
+              child: Text(
+                localizations!.settingsAndInfoMenuTitle,
+                style: Theme.of(context).textTheme.displaySmall!,
+              ),
+            ),
+          ),
+          const ThemeModeSwitch(),
+          const WakelockSwitch(),
+          const ParentalModeSwitch(),
+          const CanSeeTranscriptSwitch(),
+          const CanSeeTranslationSwitch(),
+          const InterfaceLocaleSelector(),
+          const TranslationLocaleSelector(),
         ],
       ),
     );
@@ -29,9 +41,10 @@ class ThemeModeSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final themeModeValue = ref.watch(themeModeSwitchControllerProvider);
     return ListTile(
-      title: Text('Theme'.hardcoded),
+      title: Text(localizations.themeMenuTitle),
       trailing: ToggleButtons(
         isSelected: List.filled(3, false)..[themeModeValue.index] = true,
         children: const [
@@ -52,9 +65,10 @@ class WakelockSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final isWakelockOn = ref.watch(wakelockSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Keep screen on'.hardcoded),
+      title: Text(localizations.wakelockTileLabel),
       // secondary: const Icon(Icons.lightbulb_outline_rounded),
       secondary: isWakelockOn
           ? const Icon(Icons.lightbulb_rounded)
@@ -72,9 +86,10 @@ class ParentalModeSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final isParentalModeOn = ref.watch(parentalModeSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Parental mode'.hardcoded),
+      title: Text(localizations.parentAndTeacherModeTileLabel),
       secondary: const Icon(Icons.family_restroom_rounded),
       value: isParentalModeOn,
       onChanged: (value) => ref
@@ -89,9 +104,10 @@ class CanSeeTranscriptSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final canSee = ref.watch(canSeeTranscriptSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Can see transcript'.hardcoded),
+      title: Text(localizations.canSeeTranscriptTileLabel),
       secondary: const Icon(Icons.chat_rounded),
       value: canSee,
       onChanged: (value) => ref
@@ -106,9 +122,10 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final canSee = ref.watch(canSeeTranslationSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Can see translation'.hardcoded),
+      title: Text(localizations.canSeeTranslationTileLabel),
       secondary: const Icon(Icons.translate_rounded),
       value: canSee,
       onChanged: (value) => ref
@@ -118,22 +135,85 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
   }
 }
 
+class InterfaceLocaleSelector extends StatelessWidget {
+  const InterfaceLocaleSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    const supportedLocales = AppLocalizations.supportedLocales;
+    return ExpansionTile(
+      leading: const Icon(Icons.language_rounded),
+      title: Text(localizations.appLanguageListTileLabel),
+      children: [
+        ListTile(title: Text(localizations.appLanguageDescription)),
+        const InterfaceLocaleSelectorOption(null),
+        ...supportedLocales
+            .map((locale) => InterfaceLocaleSelectorOption(locale)),
+      ],
+    );
+  }
+}
+
+class InterfaceLocaleSelectorOption extends ConsumerWidget {
+  const InterfaceLocaleSelectorOption(
+    this.locale, {
+    super.key,
+  });
+  final Locale? locale;
+
+  String nativeLocaleString(BuildContext context, Locale locale) {
+    final nativeNames = LocaleNamesLocalizationsDelegate.nativeLocaleNames;
+    final languageTags = locale.toLanguageTag().replaceAll('-', '_');
+    final nativeName = nativeNames[languageTags];
+    return nativeName ?? 'Native name not found';
+  }
+
+  String localizedLocaleString(BuildContext context) {
+    final languageTags = locale!.toLanguageTag().replaceAll('-', '_');
+    final localeNameString = LocaleNames.of(context)!.nameOf(languageTags);
+    return localeNameString ?? languageTags;
+  }
+
+  String titleString(BuildContext context) {
+    if (locale == null) {
+      final localizations = AppLocalizations.of(context);
+      return localizations!.defaultLanguageOptionLabel;
+    } else {
+      return nativeLocaleString(context, locale!);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(interfaceLocaleOptionControllerProvider);
+    final isSelected = locale == currentLocale;
+    return ListTile(
+      selected: isSelected,
+      trailing: isSelected ? const Icon(Icons.check_rounded) : null,
+      title: Text(titleString(context)),
+      subtitle: locale != null ? Text(localizedLocaleString(context)) : null,
+      onTap: () => ref
+          .read(interfaceLocaleOptionControllerProvider.notifier)
+          .setInterfaceLocale(locale),
+    );
+  }
+}
+
 class TranslationLocaleSelector extends StatelessWidget {
   const TranslationLocaleSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final supportedLocales = Config.translationLocales;
     return ExpansionTile(
       leading: const Icon(Icons.translate_rounded),
-      title: Text('Translation'.hardcoded),
+      title: Text(localizations.translationLanguageListTileLabel),
       children: [
-        ListTile(
-          title: Text(
-              'Only the transcript translation will be affected by this option.'
-                  .hardcoded),
-        ),
+        ListTile(title: Text(localizations.translationLanguageDescription)),
         const TranslationLocaleSelectorOption(null),
-        ...Config.translationLocales
+        ...supportedLocales
             .map((locale) => TranslationLocaleSelectorOption(locale)),
       ],
     );
@@ -147,25 +227,27 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
   });
   final Locale? locale;
 
-  String get titleString {
-    if (locale != null) {
-      return locale!.toLanguageTag();
-    } else {
-      return 'None'.hardcoded;
-    }
+  String nativeLocaleString(BuildContext context, Locale locale) {
+    final nativeNames = LocaleNamesLocalizationsDelegate.nativeLocaleNames;
+    final languageTags = locale.toLanguageTag().replaceAll('-', '_');
+    final nativeName = nativeNames[languageTags];
+    return nativeName ?? 'Native name not found';
   }
 
-  TextDirection get textDirection {
-    final languageTag = locale?.languageCode.split('-')[0];
-    const rtlLanguages = ['ar', 'fa', 'he', 'pa', 'ur'];
-    if (rtlLanguages.contains(languageTag)) {
-      return TextDirection.rtl;
-    } else {
-      return TextDirection.ltr;
-    }
+  String localizedLocaleString(BuildContext context) {
+    final languageTags = locale!.toLanguageTag().replaceAll('-', '_');
+    final localeNameString = LocaleNames.of(context)!.nameOf(languageTags);
+    return localeNameString ?? languageTags;
   }
 
-  bool get isRtl => textDirection == TextDirection.rtl;
+  String titleString(BuildContext context) {
+    if (locale == null) {
+      final localizations = AppLocalizations.of(context);
+      return localizations!.noTranslationLanguageOptionLabel;
+    } else {
+      return nativeLocaleString(context, locale!);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -173,15 +255,9 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
     final isSelected = locale == currentLocale;
     return ListTile(
       selected: isSelected,
-      leading: isSelected && isRtl ? const Icon(Icons.check_rounded) : null,
-      trailing: isSelected && !isRtl ? const Icon(Icons.check_rounded) : null,
-      title: Directionality(
-        textDirection: textDirection,
-        child: Text(
-          titleString,
-          locale: locale,
-        ),
-      ),
+      trailing: isSelected ? const Icon(Icons.check_rounded) : null,
+      title: Text(titleString(context)),
+      subtitle: locale != null ? Text(localizedLocaleString(context)) : null,
       onTap: () => ref
           .read(translationLocaleOptionControllerProvider.notifier)
           .setTranslationLocale(locale),
