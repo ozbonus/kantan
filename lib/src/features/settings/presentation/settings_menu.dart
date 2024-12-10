@@ -223,25 +223,27 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
   });
   final Locale? locale;
 
-  String get titleString {
-    if (locale != null) {
-      return locale!.toLanguageTag();
-    } else {
-      return 'None'.hardcoded;
-    }
+  String nativeLocaleString(BuildContext context, Locale locale) {
+    final nativeNames = LocaleNamesLocalizationsDelegate.nativeLocaleNames;
+    final languageTags = locale.toLanguageTag().replaceAll('-', '_');
+    final nativeName = nativeNames[languageTags];
+    return nativeName ?? 'Native name not found';
   }
 
-  TextDirection get textDirection {
-    final languageTag = locale?.languageCode.split('-')[0];
-    const rtlLanguages = ['ar', 'fa', 'he', 'pa', 'ur'];
-    if (rtlLanguages.contains(languageTag)) {
-      return TextDirection.rtl;
-    } else {
-      return TextDirection.ltr;
-    }
+  String localizedLocaleString(BuildContext context) {
+    final languageTags = locale!.toLanguageTag().replaceAll('-', '_');
+    final localeNameString = LocaleNames.of(context)!.nameOf(languageTags);
+    return localeNameString ?? languageTags;
   }
 
-  bool get isRtl => textDirection == TextDirection.rtl;
+  String titleString(BuildContext context) {
+    if (locale == null) {
+      final localizations = AppLocalizations.of(context);
+      return localizations!.noTranslationLanguageOptionLabel;
+    } else {
+      return nativeLocaleString(context, locale!);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -249,15 +251,9 @@ class TranslationLocaleSelectorOption extends ConsumerWidget {
     final isSelected = locale == currentLocale;
     return ListTile(
       selected: isSelected,
-      leading: isSelected && isRtl ? const Icon(Icons.check_rounded) : null,
-      trailing: isSelected && !isRtl ? const Icon(Icons.check_rounded) : null,
-      title: Directionality(
-        textDirection: textDirection,
-        child: Text(
-          titleString,
-          locale: locale,
-        ),
-      ),
+      trailing: isSelected ? const Icon(Icons.check_rounded) : null,
+      title: Text(titleString(context)),
+      subtitle: locale != null ? Text(localizedLocaleString(context)) : null,
       onTap: () => ref
           .read(translationLocaleOptionControllerProvider.notifier)
           .setTranslationLocale(locale),
