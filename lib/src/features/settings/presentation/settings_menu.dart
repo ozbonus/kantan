@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
-import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
 class SettingsMenu extends StatelessWidget {
   const SettingsMenu({super.key});
@@ -17,6 +19,7 @@ class SettingsMenu extends StatelessWidget {
           ParentalModeSwitch(),
           CanSeeTranscriptSwitch(),
           CanSeeTranslationSwitch(),
+          InterfaceLocaleSelector(),
           TranslationLocaleSelector(),
         ],
       ),
@@ -114,6 +117,71 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
       onChanged: (value) => ref
           .read(canSeeTranslationSwitchControllerProvider.notifier)
           .setCanSeeTranslation(value),
+    );
+  }
+}
+
+class InterfaceLocaleSelector extends StatelessWidget {
+  const InterfaceLocaleSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    const supportedLocales = AppLocalizations.supportedLocales;
+    return ExpansionTile(
+      leading: const Icon(Icons.language_rounded),
+      title: Text(localizations.appLanguageListTileLabel),
+      children: [
+        ListTile(title: Text(localizations.appLanguageDescription)),
+        const InterfaceLocaleSelectorOption(null),
+        ...supportedLocales
+            .map((locale) => InterfaceLocaleSelectorOption(locale)),
+      ],
+    );
+  }
+}
+
+class InterfaceLocaleSelectorOption extends ConsumerWidget {
+  const InterfaceLocaleSelectorOption(
+    this.locale, {
+    super.key,
+  });
+  final Locale? locale;
+
+  String nativeLocaleString(BuildContext context, Locale locale) {
+    final nativeNames = LocaleNamesLocalizationsDelegate.nativeLocaleNames;
+    final languageTags = locale.toLanguageTag().replaceAll('-', '_');
+    final nativeName = nativeNames[languageTags];
+    return nativeName ?? 'Native name not found';
+  }
+
+  String localizedLocaleString(BuildContext context) {
+    final languageTags = locale!.toLanguageTag().replaceAll('-', '_');
+    final localeNameString = LocaleNames.of(context)!.nameOf(languageTags);
+    return localeNameString ?? languageTags;
+  }
+
+  String titleString(BuildContext context) {
+    if (locale == null) {
+      final localizations = AppLocalizations.of(context);
+      return localizations!.defaultLanguageOptionLabel;
+    } else {
+      return nativeLocaleString(context, locale!);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(interfaceLocaleOptionControllerProvider);
+    final isSelected = locale == currentLocale;
+    return ListTile(
+      selected: isSelected,
+      trailing: isSelected ? const Icon(Icons.check_rounded) : null,
+      title: Text(titleString(context)),
+      subtitle: locale != null ? Text(localizedLocaleString(context)) : null,
+      onTap: () => ref
+          .read(interfaceLocaleOptionControllerProvider.notifier)
+          .setInterfaceLocale(locale),
     );
   }
 }
