@@ -1,7 +1,9 @@
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
@@ -11,12 +13,17 @@ class KantanPlayerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
+    final interfaceLocale = ref.watch(interfaceLocaleServiceProvider);
     return MaterialApp.router(
       title: Config.appTitle,
       routerConfig: goRouter,
       restorationScopeId: 'app',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: const [
+        LocaleNamesLocalizationsDelegate(),
+        ...AppLocalizations.localizationsDelegates,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: interfaceLocale,
     );
   }
 }
