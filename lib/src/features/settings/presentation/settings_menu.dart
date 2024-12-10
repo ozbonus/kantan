@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
-import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
 class SettingsMenu extends StatelessWidget {
@@ -42,9 +41,10 @@ class ThemeModeSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final themeModeValue = ref.watch(themeModeSwitchControllerProvider);
     return ListTile(
-      title: Text('Theme'.hardcoded),
+      title: Text(localizations.themeMenuTitle),
       trailing: ToggleButtons(
         isSelected: List.filled(3, false)..[themeModeValue.index] = true,
         children: const [
@@ -65,9 +65,10 @@ class WakelockSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final isWakelockOn = ref.watch(wakelockSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Keep screen on'.hardcoded),
+      title: Text(localizations.wakelockTileLabel),
       // secondary: const Icon(Icons.lightbulb_outline_rounded),
       secondary: isWakelockOn
           ? const Icon(Icons.lightbulb_rounded)
@@ -85,9 +86,10 @@ class ParentalModeSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final isParentalModeOn = ref.watch(parentalModeSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Parental mode'.hardcoded),
+      title: Text(localizations.parentAndTeacherModeTileLabel),
       secondary: const Icon(Icons.family_restroom_rounded),
       value: isParentalModeOn,
       onChanged: (value) => ref
@@ -102,9 +104,10 @@ class CanSeeTranscriptSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final canSee = ref.watch(canSeeTranscriptSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Can see transcript'.hardcoded),
+      title: Text(localizations.canSeeTranscriptTileLabel),
       secondary: const Icon(Icons.chat_rounded),
       value: canSee,
       onChanged: (value) => ref
@@ -119,9 +122,10 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final canSee = ref.watch(canSeeTranslationSwitchControllerProvider);
     return SwitchListTile(
-      title: Text('Can see translation'.hardcoded),
+      title: Text(localizations.canSeeTranslationTileLabel),
       secondary: const Icon(Icons.translate_rounded),
       value: canSee,
       onChanged: (value) => ref
