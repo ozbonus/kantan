@@ -11,16 +11,26 @@ class SettingsMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Drawer(
       child: ListView(
-        children: const [
-          ThemeModeSwitch(),
-          WakelockSwitch(),
-          ParentalModeSwitch(),
-          CanSeeTranscriptSwitch(),
-          CanSeeTranslationSwitch(),
-          InterfaceLocaleSelector(),
-          TranslationLocaleSelector(),
+        children: [
+          DrawerHeader(
+            duration: const Duration(seconds: 2),
+            child: Center(
+              child: Text(
+                localizations!.settingsAndInfoMenuTitle,
+                style: Theme.of(context).textTheme.displaySmall!,
+              ),
+            ),
+          ),
+          const ThemeModeSwitch(),
+          const WakelockSwitch(),
+          const ParentalModeSwitch(),
+          const CanSeeTranscriptSwitch(),
+          const CanSeeTranslationSwitch(),
+          const InterfaceLocaleSelector(),
+          const TranslationLocaleSelector(),
         ],
       ),
     );
