@@ -201,17 +201,15 @@ class TranslationLocaleSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final supportedLocales = Config.translationLocales;
     return ExpansionTile(
       leading: const Icon(Icons.translate_rounded),
-      title: Text('Translation'.hardcoded),
+      title: Text(localizations.translationLanguageListTileLabel),
       children: [
-        ListTile(
-          title: Text(
-              'Only the transcript translation will be affected by this option.'
-                  .hardcoded),
-        ),
+        ListTile(title: Text(localizations.translationLanguageDescription)),
         const TranslationLocaleSelectorOption(null),
-        ...Config.translationLocales
+        ...supportedLocales
             .map((locale) => TranslationLocaleSelectorOption(locale)),
       ],
     );
