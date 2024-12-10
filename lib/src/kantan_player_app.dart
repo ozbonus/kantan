@@ -1,3 +1,4 @@
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,10 @@ class KantanPlayerApp extends ConsumerWidget {
       title: Config.appTitle,
       routerConfig: goRouter,
       restorationScopeId: 'app',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: const [
+        LocaleNamesLocalizationsDelegate(),
+        ...AppLocalizations.localizationsDelegates,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: interfaceLocale,
     );
