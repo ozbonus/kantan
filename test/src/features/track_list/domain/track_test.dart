@@ -9,10 +9,10 @@ const Map<String, dynamic> trackMap1 = {
   "displayDescription": "Display Description",
   "artist": "Artist",
   "duration": 1000,
-  "disc": 1,
-  "discTotal": 2,
-  "track": 1,
-  "trackTotal": 99,
+  "disc": "1",
+  "discTotal": "2",
+  "track": "1",
+  "trackTotal": "99",
 };
 
 // displayDescription is null.
@@ -22,10 +22,10 @@ const Map<String, dynamic> trackMap2 = {
   "title": "Track Title",
   "artist": "Artist",
   "duration": 1000,
-  "disc": 1,
-  "discTotal": 2,
-  "track": 1,
-  "trackTotal": 99,
+  "disc": "1",
+  "discTotal": "2",
+  "track": "1",
+  "trackTotal": "99",
 };
 
 void main() {
@@ -37,10 +37,10 @@ void main() {
     expect(track.displayDescription, equals("Display Description"));
     expect(track.artist, equals("Artist"));
     expect(track.duration, equals(1000));
-    expect(track.disc, equals(1));
-    expect(track.discTotal, equals(2));
-    expect(track.track, equals(1));
-    expect(track.trackTotal, equals(99));
+    expect(track.disc, equals("1"));
+    expect(track.discTotal, equals("2"));
+    expect(track.track, equals("1"));
+    expect(track.trackTotal, equals("99"));
   });
 
   test('Create a Track with null display description.', () {

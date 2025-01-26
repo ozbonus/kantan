@@ -20,10 +20,10 @@ class Track {
   final String title;
   final String? displayDescription;
   final int duration;
-  final int disc;
-  final int discTotal;
-  final int track;
-  final int trackTotal;
+  final String disc;
+  final String discTotal;
+  final String track;
+  final String trackTotal;
 
   Track copyWith({
     String? filename,
@@ -32,10 +32,10 @@ class Track {
     String? title,
     String? displayDescription,
     int? duration,
-    int? disc,
-    int? discTotal,
-    int? track,
-    int? trackTotal,
+    String? disc,
+    String? discTotal,
+    String? track,
+    String? trackTotal,
   }) {
     return Track(
       filename: filename ?? this.filename,
@@ -76,10 +76,10 @@ class Track {
           ? map['displayDescription'] as String
           : null,
       duration: map['duration'] as int,
-      disc: map['disc'] as int,
-      discTotal: map['discTotal'] as int,
-      track: map['track'] as int,
-      trackTotal: map['trackTotal'] as int,
+      disc: map['disc'] as String,
+      discTotal: map['discTotal'] as String,
+      track: map['track'] as String,
+      trackTotal: map['trackTotal'] as String,
     );
   }
 
