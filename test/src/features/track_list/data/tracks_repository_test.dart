@@ -10,10 +10,10 @@ const Map<String, dynamic> trackMap1 = {
   'title': 'Track Title',
   'displayDescription': 'Display Description',
   'duration': 599900,
-  'disc': 1,
-  'discTotal': 1,
-  'track': 1,
-  'trackTotal': 2
+  'disc': "1",
+  'discTotal': "1",
+  'track': "1",
+  'trackTotal': "2"
 };
 
 // All nullable fields are left unpopulated.
@@ -23,10 +23,10 @@ const Map<String, dynamic> trackMap2 = {
   'artist': 'Artist',
   'title': 'Track Title',
   'duration': 599900,
-  'disc': 1,
-  'discTotal': 1,
-  'track': 2,
-  'trackTotal': 2
+  'disc': "1",
+  'discTotal': "1",
+  'track': "2",
+  'trackTotal': "2"
 };
 
 const tracksMap = {
