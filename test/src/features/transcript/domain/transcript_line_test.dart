@@ -22,10 +22,10 @@ const Map<String, dynamic> lineMapNullSpeaker = {
 void main() {
   test('Create a Transcript Line from a map with all values.', () {
     final line = TranscriptLine.fromMap(lineMap);
-    expect(line.startTime, equals(0));
-    expect(line.endTime, equals(100));
-    expect(line.speaker, equals('Dash'));
-    expect(line.text, equals('Fnord.'));
+    expect(line.startTime, equals(expectedStartTime));
+    expect(line.endTime, equals(expectedEndTime));
+    expect(line.speaker, equals(expectedSpeaker));
+    expect(line.text, equals(expectedText));
   });
 
   test('Create a Transcript Line from a map with null speaker.', () {
