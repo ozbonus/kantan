@@ -416,7 +416,7 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
       androidNotificationChannelName: Config.channelName,
       // Setting androidStopForegroundOnPause would require the app the ask
       // users to disable battery optimization for the app. Given that this
-      // app is meant to be accessible to young children and non-tech saavy
+      // app is meant to be accessible to young children and non-tech savvy
       // adults, that's probably not a safe thing to ask.
       androidStopForegroundOnPause: false,
       androidNotificationIcon: 'drawable/text_to_speech',
