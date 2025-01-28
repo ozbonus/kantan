@@ -6,31 +6,27 @@ import 'package:kantan/src/features/track_list/domain/track.dart';
 const Map<String, dynamic> trackMap1 = {
   'filename': 'audio.m4a',
   'album': 'Book Name',
+  'artist': 'Artist',
   'title': 'Track Title',
   'displayDescription': 'Display Description',
-  'artist': 'Artist',
   'duration': 599900,
-  'bundleName': 'Bundle Name',
-  'trackObject': 'Track',
-  'bundleTrack': '1',
-  'absoluteTrack': '1',
-  'transcripts': {
-    'en': ['Hello', 'What\'s your name?'],
-    'ja': ['今日は', 'お名前は？'],
-    'zh-TW': ['你好', '你叫什麼名字？'],
-  },
+  'disc': "1",
+  'discTotal': "1",
+  'track': "1",
+  'trackTotal': "2"
 };
 
 // All nullable fields are left unpopulated.
 const Map<String, dynamic> trackMap2 = {
   'filename': 'audio.m4a',
   'album': 'Book Name',
-  'title': 'Track Title',
   'artist': 'Artist',
+  'title': 'Track Title',
   'duration': 599900,
-  'trackObject': 'Track',
-  'bundleTrack': '1',
-  'absoluteTrack': '1',
+  'disc': "1",
+  'discTotal': "1",
+  'track': "2",
+  'trackTotal': "2"
 };
 
 const tracksMap = {

@@ -25,7 +25,7 @@ class TrackListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool? selected = ref.watch(trackListTileControllerProvider(index));
     return ListTile(
-      leading: Text(track.absoluteTrack),
+      leading: Text(track.track),
       title: Text(track.title),
       selected: selected ?? false,
       onTap: () => ref

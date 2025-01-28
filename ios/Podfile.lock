@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   just_audio: 6c031bb61297cf218b4462be616638e81c058e97
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
-  sqflite_darwin: 44bb54cc302bff1fbe5752293aba1820b157cf1c
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
 
 PODFILE CHECKSUM: fce9eedc0c772e28467e21b4689288d153613ac2
 
