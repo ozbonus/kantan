@@ -7,12 +7,13 @@ part of 'transcript_controller.dart';
 // **************************************************************************
 
 String _$transcriptControllerHash() =>
-    r'a64cffb32e55bf587efe165536ac2c3eb396af1d';
+    r'1a3d81457f9556ed7211b97d9a363d96697de954';
 
 /// See also [TranscriptController].
 @ProviderFor(TranscriptController)
 final transcriptControllerProvider = AutoDisposeAsyncNotifierProvider<
-    TranscriptController, Transcript?>.internal(
+    TranscriptController,
+    ({Transcript? transcript, Transcript? translation})>.internal(
   TranscriptController.new,
   name: r'transcriptControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +23,7 @@ final transcriptControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$TranscriptController = AutoDisposeAsyncNotifier<Transcript?>;
+typedef _$TranscriptController = AutoDisposeAsyncNotifier<
+    ({Transcript? transcript, Transcript? translation})>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
