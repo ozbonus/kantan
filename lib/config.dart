@@ -33,6 +33,8 @@ class Config {
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
 
+  static Locale get transcriptLocale =>
+      const Locale.fromSubtags(languageCode: 'en');
   static List<Locale> get translationLocales => const [
         Locale.fromSubtags(languageCode: 'es'),
         Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),

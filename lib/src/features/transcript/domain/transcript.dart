@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
-import 'package:kantan/src/features/transcript/domain/locale_from_map.dart';
 
 class Transcript {
   Transcript({
@@ -23,19 +22,24 @@ class Transcript {
     );
   }
 
-  factory Transcript.fromMap(Map<String, dynamic> map) {
+  factory Transcript.fromJson(String source) {
+    final json = jsonDecode(source);
     return Transcript(
-      locale: LocaleFromMap.fromMap(map['locale'] as Map<String, String?>),
-      lines: List<TranscriptLine>.from(
-        (map['lines'] as List<Map<String, dynamic>>).map<TranscriptLine>(
-          (x) => TranscriptLine.fromMap(x),
-        ),
+      locale: Locale.fromSubtags(
+        languageCode: json['locale']['languageCode'] as String,
+        scriptCode: json['locale']['scriptCode'] as String?,
+        countryCode: json['locale']['countryCode'] as String?,
       ),
+      lines: (json['lines'] as List<dynamic>).map((line) {
+        return TranscriptLine(
+          startTime: line['startTime'] as int,
+          endTime: line['endTime'] as int,
+          speaker: line['speaker'] as String?,
+          text: line['text'] as String,
+        );
+      }).toList(),
     );
   }
-
-  factory Transcript.fromJson(String source) =>
-      Transcript.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'Transcript(locale: $locale, lines: $lines)';

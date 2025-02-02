@@ -4,16 +4,17 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
+import 'package:kantan/src/features/player/domain/media_item_to_track.dart';
 import 'package:kantan/src/features/player/domain/position_data.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/track_to_media_item.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/features/track_list/domain/track.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rxdart/rxdart.dart';
 
 part 'audio_handler_service.g.dart';
 
@@ -462,4 +463,10 @@ Stream<PositionData> positionDataStream(Ref ref) {
 Stream<double> speedStream(Ref ref) {
   final audioHandler = ref.watch(audioHandlerProvider).requireValue;
   return audioHandler.player.speedStream;
+}
+
+@riverpod
+Stream<Track?> currentTrackStream(Ref ref) {
+  final audioHandler = ref.watch(audioHandlerProvider).requireValue;
+  return audioHandler.mediaItem.map((mediaItem) => mediaItem?.track);
 }

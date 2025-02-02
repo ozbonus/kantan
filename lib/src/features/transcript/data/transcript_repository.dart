@@ -12,7 +12,11 @@ part 'transcript_repository.g.dart';
 class TranscriptRepository {
   const TranscriptRepository();
 
-  Future<Transcript?> getTranscript(Track track, Locale locale) async {
+  Future<Transcript?> getTranscript(Track track, Locale? locale) async {
+    if (locale == null) {
+      return null;
+    }
+
     final jsonFilename = '${track.filenameStem}.${locale.toLanguageTag()}.json';
     final jsonUri = p.join(Config.assetsDir, jsonFilename);
     try {

@@ -7,7 +7,7 @@ part of 'transcript_repository.dart';
 // **************************************************************************
 
 String _$transcriptRepositoryHash() =>
-    r'5daeab02659c2aced75ed99ce5aaecb12592b41b';
+    r'5aaf050997fc570f7a8bb8f675ee76ce06855c73';
 
 /// See also [transcriptRepository].
 @ProviderFor(transcriptRepository)

@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
+import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
 
 const expected = (
   languageCode: 'zh',
@@ -15,6 +19,46 @@ const expected = (
   endTime2: 199,
   speaker2: 'Fnord',
   text2: 'I am Fnord.',
+);
+
+final expectedTranscript = Transcript(
+  locale: Locale.fromSubtags(
+    languageCode: expected.languageCode,
+    scriptCode: expected.scriptCode,
+    countryCode: expected.countryCode,
+  ),
+  lines: [
+    TranscriptLine(
+      startTime: expected.startTime1,
+      endTime: expected.endTime1,
+      speaker: expected.speaker1,
+      text: expected.text1,
+    ),
+    TranscriptLine(
+      startTime: expected.startTime2,
+      endTime: expected.endTime2,
+      speaker: expected.speaker2,
+      text: expected.text2,
+    ),
+  ],
+);
+
+final expectedTranscriptWithNull = Transcript(
+  locale: Locale.fromSubtags(
+    languageCode: expected.languageCode,
+  ),
+  lines: [
+    TranscriptLine(
+      startTime: expected.startTime1,
+      endTime: expected.endTime1,
+      text: expected.text1,
+    ),
+    TranscriptLine(
+      startTime: expected.startTime2,
+      endTime: expected.endTime2,
+      text: expected.text2,
+    ),
+  ],
 );
 
 final testMap = {
@@ -42,85 +86,32 @@ final testMap = {
 final testMapWithNull = {
   'locale': {
     'languageCode': expected.languageCode,
-    // 'scriptCode' is null.
-    // 'countryCode' is null.
   },
   'lines': [
     {
       'startTime': expected.startTime1,
       'endTime': expected.endTime1,
-      // 'speaker' is null.
       'text': expected.text1,
     },
     {
       'startTime': expected.startTime2,
       'endTime': expected.endTime2,
-      // 'speaker' is null.
       'text': expected.text2,
     },
   ],
 };
 
+final testJson = json.encode(testMap);
+final testJsonWithNull = json.encode(testMapWithNull);
+
 void main() {
-  group('All values are non-null.', () {
-    late Transcript transcript;
-
-    setUp(() {
-      transcript = Transcript.fromMap(testMap);
-    });
-
-    test('Locale is zh-Hant-TW.', () {
-      final languageTag = transcript.locale.toLanguageTag();
-      expect(languageTag, equals(expected.fullLanguageTag));
-    });
-
-    test('There are two lines.', () {
-      expect(transcript.lines.length, equals(2));
-    });
-
-    test('First line matches expectation.', () {
-      final line = transcript.lines[0];
-      expect(line.startTime, equals(expected.startTime1));
-      expect(line.endTime, equals(expected.endTime1));
-      expect(line.speaker, equals(expected.speaker1));
-      expect(line.text, equals(expected.text1));
-    });
-
-    test('Second line matches expectation.', () {
-      final line = transcript.lines[1];
-      expect(line.startTime, equals(expected.startTime2));
-      expect(line.endTime, equals(expected.endTime2));
-      expect(line.speaker, equals(expected.speaker2));
-      expect(line.text, equals(expected.text2));
-    });
+  test('Transcript from JSON.', () {
+    final transcript = Transcript.fromJson(testJson);
+    expect(transcript, equals(expectedTranscript));
   });
 
-  group('Nullable values are null.', () {
-    late Transcript transcript;
-
-    setUp(() {
-      transcript = Transcript.fromMap(testMapWithNull);
-    });
-
-    test('Locale is zh', () {
-      final languageTag = transcript.locale.toLanguageTag();
-      expect(languageTag, equals(expected.minimalLanguageTag));
-    });
-
-    test('First line matches expectation.', () {
-      final line = transcript.lines[0];
-      expect(line.startTime, equals(expected.startTime1));
-      expect(line.endTime, equals(expected.endTime1));
-      expect(line.speaker, isNull);
-      expect(line.text, equals(expected.text1));
-    });
-
-    test('Second line matches expectation.', () {
-      final line = transcript.lines[1];
-      expect(line.startTime, equals(expected.startTime2));
-      expect(line.endTime, equals(expected.endTime2));
-      expect(line.speaker, isNull);
-      expect(line.text, equals(expected.text2));
-    });
+  test('Transcript from JSON with null values.', () {
+    final transcript = Transcript.fromJson(testJsonWithNull);
+    expect(transcript, equals(expectedTranscriptWithNull));
   });
 }
