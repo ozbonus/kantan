@@ -111,5 +111,23 @@ final speedStreamProvider = AutoDisposeStreamProvider<double>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SpeedStreamRef = AutoDisposeStreamProviderRef<double>;
+String _$currentTrackStreamHash() =>
+    r'a95c38e95856eda50855a977968f753e228dc5fc';
+
+/// See also [currentTrackStream].
+@ProviderFor(currentTrackStream)
+final currentTrackStreamProvider = AutoDisposeStreamProvider<Track?>.internal(
+  currentTrackStream,
+  name: r'currentTrackStreamProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentTrackStreamHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CurrentTrackStreamRef = AutoDisposeStreamProviderRef<Track?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -25,6 +25,8 @@ class Track {
   final String track;
   final String trackTotal;
 
+  String get filenameStem => filename.split('.')[0];
+
   Track copyWith({
     String? filename,
     String? album,

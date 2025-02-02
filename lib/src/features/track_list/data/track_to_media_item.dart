@@ -9,5 +9,11 @@ extension TrackToMediaItem on Track {
         displayDescription: displayDescription,
         artist: artist,
         duration: Duration(milliseconds: duration),
+        extras: {
+          'disc': disc,
+          'discTotal': discTotal,
+          'track': track,
+          'trackTotal': trackTotal,
+        },
       );
 }

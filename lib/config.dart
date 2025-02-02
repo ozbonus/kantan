@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 
 class Config {
   static String get appTitle => 'Kantan Player';
   static String get assetsPackage => 'demo_assets';
+  static String get assetsDir => p.join('packages', assetsPackage, 'assets');
   static String get channelId => 'com.crayonfox.kantanplayer';
   static String get channelName => 'Kantan Player';
   static String get notificationIcon => 'drawable/text_to_speech';
@@ -31,6 +33,8 @@ class Config {
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
 
+  static Locale get transcriptLocale =>
+      const Locale.fromSubtags(languageCode: 'en');
   static List<Locale> get translationLocales => const [
         Locale.fromSubtags(languageCode: 'es'),
         Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),

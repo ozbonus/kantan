@@ -47,4 +47,9 @@ void main() {
     final track = Track.fromMap(trackMap2);
     expect(track.displayDescription, isNull);
   });
+
+  test('Get filename stem.', () {
+    final track = Track.fromMap(trackMap1);
+    expect(track.filenameStem, equals('audio'));
+  });
 }
