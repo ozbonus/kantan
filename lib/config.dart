@@ -40,5 +40,6 @@ class Config {
         // Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
         Locale.fromSubtags(languageCode: 'ar'),
         Locale.fromSubtags(languageCode: 'he'),
+        Locale.fromSubtags(languageCode: 'ja'),
       ];
 }
