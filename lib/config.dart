@@ -37,7 +37,7 @@ class Config {
       const Locale.fromSubtags(languageCode: 'en');
   static List<Locale> get translationLocales => const [
         Locale.fromSubtags(languageCode: 'es'),
-        Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
+        // Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
         Locale.fromSubtags(languageCode: 'ar'),
         Locale.fromSubtags(languageCode: 'he'),
       ];
