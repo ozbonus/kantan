@@ -32,8 +32,8 @@ class Transcript {
       ),
       lines: (json['lines'] as List<dynamic>).map((line) {
         return TranscriptLine(
-          startTime: line['startTime'] as int,
-          endTime: line['endTime'] as int,
+          startTime: line['startTime'] as int?,
+          endTime: line['endTime'] as int?,
           speaker: line['speaker'] as String?,
           text: line['text'] as String,
         );
