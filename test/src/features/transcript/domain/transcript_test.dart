@@ -49,13 +49,9 @@ final expectedTranscriptWithNull = Transcript(
   ),
   lines: [
     TranscriptLine(
-      startTime: expected.startTime1,
-      endTime: expected.endTime1,
       text: expected.text1,
     ),
     TranscriptLine(
-      startTime: expected.startTime2,
-      endTime: expected.endTime2,
       text: expected.text2,
     ),
   ],
@@ -89,13 +85,9 @@ final testMapWithNull = {
   },
   'lines': [
     {
-      'startTime': expected.startTime1,
-      'endTime': expected.endTime1,
       'text': expected.text1,
     },
     {
-      'startTime': expected.startTime2,
-      'endTime': expected.endTime2,
       'text': expected.text2,
     },
   ],

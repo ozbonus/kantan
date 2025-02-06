@@ -2,14 +2,14 @@ import 'dart:convert';
 
 class TranscriptLine {
   TranscriptLine({
-    required this.startTime,
-    required this.endTime,
+    this.startTime,
+    this.endTime,
     this.speaker,
     required this.text,
   });
 
-  final int startTime;
-  final int endTime;
+  final int? startTime;
+  final int? endTime;
   final String? speaker;
   final String text;
 
@@ -38,8 +38,8 @@ class TranscriptLine {
 
   factory TranscriptLine.fromMap(Map<String, dynamic> map) {
     return TranscriptLine(
-      startTime: map['startTime'] as int,
-      endTime: map['endTime'] as int,
+      startTime: map['startTime'] != null ? map['startTime'] as int : null,
+      endTime: map['endTime'] != null ? map['endTime'] as int : null,
       speaker: map['speaker'] != null ? map['speaker'] as String : null,
       text: map['text'] as String,
     );
