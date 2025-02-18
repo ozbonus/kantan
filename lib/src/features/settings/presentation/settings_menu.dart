@@ -29,6 +29,7 @@ class SettingsMenu extends StatelessWidget {
           const ParentalModeSwitch(),
           const CanSeeTranscriptSwitch(),
           const CanSeeTranslationSwitch(),
+          const EnableAutoScrollSwitch(),
           const InterfaceLocaleSelector(),
           const TranslationLocaleSelector(),
         ],
