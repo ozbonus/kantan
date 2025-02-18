@@ -98,7 +98,6 @@ class DynamicScrollingTranscript extends ConsumerStatefulWidget {
 class _ScrollingTranscriptScreenContentsState
     extends ConsumerState<DynamicScrollingTranscript> {
   late final AutoScrollController _scrollController;
-  late final bool _enableAutoScroll;
 
   @override
   void initState() {
