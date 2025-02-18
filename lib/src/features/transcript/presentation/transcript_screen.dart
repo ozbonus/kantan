@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
@@ -97,12 +98,16 @@ class DynamicScrollingTranscript extends ConsumerStatefulWidget {
 
 class _ScrollingTranscriptScreenContentsState
     extends ConsumerState<DynamicScrollingTranscript> {
-  late final AutoScrollController _scrollController;
+  final _scrollController = AutoScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController = AutoScrollController();
+    // Recall the last known index and scroll to that.
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final index = ref.read(transcriptIndexServiceProvider);
+      _scroll(index);
+    });
   }
 
   @override
