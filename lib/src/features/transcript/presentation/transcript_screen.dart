@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
@@ -117,12 +118,13 @@ class _ScrollingTranscriptScreenContentsState
   }
 
   void _scroll(int index) {
-    // TODO: Make a service to provide whether autoscrolling is enabled or not.
-    // Check the value of that service before actually scrolling.
-    _scrollController.scrollToIndex(
-      index,
-      preferPosition: AutoScrollPosition.middle,
-    );
+    final enableAutoScroll = ref.read(enableAutoScrollServiceProvider);
+    if (enableAutoScroll) {
+      _scrollController.scrollToIndex(
+        index,
+        preferPosition: AutoScrollPosition.middle,
+      );
+    }
   }
 
   @override
