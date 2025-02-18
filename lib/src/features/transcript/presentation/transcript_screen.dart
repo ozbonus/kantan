@@ -127,9 +127,19 @@ class _ScrollingTranscriptScreenContentsState
     }
   }
 
+  void enabler(bool enable) {
+    /// If the option to enable auto scroll is switching from off to on,
+    /// immediately scroll to the active index.
+    if (enable) {
+      final index = ref.read(transcriptIndexServiceProvider);
+      _scroll(index);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(transcriptIndexServiceProvider, (_, index) => _scroll(index));
+    ref.listen(enableAutoScrollServiceProvider, (_, enable) => enabler(enable));
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.transcript.lines.length,
