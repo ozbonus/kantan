@@ -183,6 +183,8 @@ class TranscriptLineWidget extends ConsumerWidget {
         locale: transcriptLineLocale,
         child: Text(transcriptLine.text),
       ),
+      leading:
+          transcriptLine.speaker != null ? Text(transcriptLine.speaker!) : null,
       subtitle: translationLine != null
           ? Localizations.override(
               context: context,
