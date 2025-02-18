@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/settings/domain/setting_key.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'settings_repository.g.dart';
 
@@ -95,6 +95,11 @@ class SettingsRepository {
     return value ?? Config.defaultCanSeeTranslation;
   }
 
+  bool get enableAutoScroll {
+    final value = prefs.getBool(SettingKey.enableAutoScroll);
+    return value ?? Config.defaultEnableAutoScroll;
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -151,6 +156,10 @@ class SettingsRepository {
 
   Future<bool> setCanSeeTranslation(bool value) async {
     return await prefs.setBool(SettingKey.canSeeTranslation, value);
+  }
+
+  Future<bool> setEnableAutoScroll(bool value) async {
+    return await prefs.setBool(SettingKey.enableAutoScroll, value);
   }
 }
 

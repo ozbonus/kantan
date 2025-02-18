@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class TranscriptLine {
-  TranscriptLine({
+  const TranscriptLine({
     this.startTime,
     this.endTime,
     this.speaker,

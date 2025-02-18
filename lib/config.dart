@@ -25,6 +25,7 @@ class Config {
   static ThemeMode get defaultThemeMode => ThemeMode.system;
   static bool get defaultIsWakelockOn => false;
   static bool get defaultIsParentalModeOn => true;
+  static bool get defaultEnableAutoScroll => true;
   static Locale? get defaultInterfaceLocale => const Locale('en');
   static Locale? get defaultTranslationLocale => const Locale.fromSubtags(
         languageCode: 'zh',

@@ -91,6 +91,23 @@ final canSeeTranslationSwitchControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$CanSeeTranslationSwitchController = AutoDisposeNotifier<bool>;
+String _$enableAutoScrollSwitchControllerHash() =>
+    r'4a87944eff38405d0e923db834bdd6dc5db50e5f';
+
+/// See also [EnableAutoScrollSwitchController].
+@ProviderFor(EnableAutoScrollSwitchController)
+final enableAutoScrollSwitchControllerProvider = AutoDisposeNotifierProvider<
+    EnableAutoScrollSwitchController, bool>.internal(
+  EnableAutoScrollSwitchController.new,
+  name: r'enableAutoScrollSwitchControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$enableAutoScrollSwitchControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$EnableAutoScrollSwitchController = AutoDisposeNotifier<bool>;
 String _$interfaceLocaleOptionControllerHash() =>
     r'ea850d9342851a71ab93305c8fa3ca03575a1a19';
 
