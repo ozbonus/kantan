@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:kantan/src/features/parental_mode/application/parental_mode_service.dart';
 import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
@@ -73,6 +74,21 @@ class CanSeeTranslationSwitchController
     ref
         .read(canSeeTranslationServiceProvider.notifier)
         .setCanSeeTranslation(value);
+  }
+}
+
+@riverpod
+class EnableAutoScrollSwitchController
+    extends _$EnableAutoScrollSwitchController {
+  @override
+  bool build() {
+    return ref.watch(enableAutoScrollServiceProvider);
+  }
+
+  void setEnableAutoScroll(bool value) {
+    ref
+        .read(enableAutoScrollServiceProvider.notifier)
+        .setEnableAutoScroll(value);
   }
 }
 
