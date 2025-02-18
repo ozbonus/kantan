@@ -139,6 +139,8 @@ class _ScrollingTranscriptScreenContentsState
           index: index,
           transcriptLine: widget.transcript.lines[index],
           translationLine: widget.translation?.lines[index],
+          transcriptLineLocale: widget.transcript.locale,
+          translationLineLocale: widget.translation?.locale,
         ),
       ),
     );
@@ -151,11 +153,15 @@ class TranscriptLineWidget extends ConsumerWidget {
     required this.index,
     required this.transcriptLine,
     this.translationLine,
+    required this.transcriptLineLocale,
+    this.translationLineLocale,
   });
 
   final int index;
   final TranscriptLine transcriptLine;
   final TranscriptLine? translationLine;
+  final Locale transcriptLineLocale;
+  final Locale? translationLineLocale;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,8 +178,18 @@ class TranscriptLineWidget extends ConsumerWidget {
     }
 
     return ListTile(
-      title: Text(transcriptLine.text),
-      subtitle: translationLine != null ? Text(translationLine!.text) : null,
+      title: Localizations.override(
+        context: context,
+        locale: transcriptLineLocale,
+        child: Text(transcriptLine.text),
+      ),
+      subtitle: translationLine != null
+          ? Localizations.override(
+              context: context,
+              locale: translationLineLocale,
+              child: Text(translationLine!.text),
+            )
+          : null,
       selected: playbackPosition != null
           ? playbackPosition == PlaybackPosition.during
           : false,
