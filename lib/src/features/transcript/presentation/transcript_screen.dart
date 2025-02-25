@@ -6,7 +6,6 @@ import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_controller.dart';
 
