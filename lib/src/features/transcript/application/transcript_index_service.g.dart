@@ -7,7 +7,7 @@ part of 'transcript_index_service.dart';
 // **************************************************************************
 
 String _$transcriptIndexServiceHash() =>
-    r'74627e172b2d1c094730854e60b0c1d8b8cee77d';
+    r'551c304ba5bf25fa986a2ce9cb0038c89214a66e';
 
 /// See also [TranscriptIndexService].
 @ProviderFor(TranscriptIndexService)

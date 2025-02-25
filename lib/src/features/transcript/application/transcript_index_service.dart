@@ -9,14 +9,12 @@ part 'transcript_index_service.g.dart';
 class TranscriptIndexService extends _$TranscriptIndexService {
   @override
   int build() {
-    debugPrint('TranscriptIndexService init.');
     return 0;
   }
 
   void setIndex(int index) {
     /// Update the notifier's state only if
     if (index != state) {
-      debugPrint('TranscriptIndexService state = $index');
       state = index;
     }
   }
