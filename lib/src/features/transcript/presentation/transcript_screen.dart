@@ -7,7 +7,6 @@ import 'package:kantan/src/features/transcript/application/enable_auto_scroll_se
 import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_line_controller.dart';
 
 class TranscriptScreen extends StatelessWidget {
   const TranscriptScreen({super.key});
