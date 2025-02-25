@@ -44,7 +44,7 @@ class TranscriptScreenContents extends ConsumerWidget {
       data: (data) {
         if (data.transcript == null) {
           return const NoTranscript();
-        } else if (data.transcript!.lines[0].startTime == null) {
+        } else if (data.transcript!.endTimes == null) {
           return StaticTranscript(
             transcript: data.transcript!,
             translation: data.translation,
