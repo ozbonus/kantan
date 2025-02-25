@@ -8,6 +8,8 @@ import 'package:kantan/src/features/transcript/application/transcript_index_serv
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 
+/// A wrapper widget for small displays that show the transcript as a single
+/// screen.
 class TranscriptScreen extends StatelessWidget {
   const TranscriptScreen({super.key});
 
@@ -24,6 +26,12 @@ class TranscriptScreen extends StatelessWidget {
   }
 }
 
+/// The core contents of the transcript screen that can be shown on displays of
+/// any size. Depending on what `transcriptValue` resolves to, one three types
+/// of content can be shown:
+/// * a notification that no transcript is available
+/// * a simple transcript akin to a text document
+/// * a self-scrolling transcript with tappable lines that seek to a position
 class TranscriptScreenContents extends ConsumerWidget {
   const TranscriptScreenContents({super.key});
 
