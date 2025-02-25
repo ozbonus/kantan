@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
 
 const expected = (
   languageCode: 'zh',
@@ -19,42 +17,6 @@ const expected = (
   endTime2: 199,
   speaker2: 'Fnord',
   text2: 'I am Fnord.',
-);
-
-final expectedTranscript = Transcript(
-  locale: Locale.fromSubtags(
-    languageCode: expected.languageCode,
-    scriptCode: expected.scriptCode,
-    countryCode: expected.countryCode,
-  ),
-  lines: [
-    TranscriptLine(
-      startTime: expected.startTime1,
-      endTime: expected.endTime1,
-      speaker: expected.speaker1,
-      text: expected.text1,
-    ),
-    TranscriptLine(
-      startTime: expected.startTime2,
-      endTime: expected.endTime2,
-      speaker: expected.speaker2,
-      text: expected.text2,
-    ),
-  ],
-);
-
-final expectedTranscriptWithNull = Transcript(
-  locale: Locale.fromSubtags(
-    languageCode: expected.languageCode,
-  ),
-  lines: [
-    TranscriptLine(
-      text: expected.text1,
-    ),
-    TranscriptLine(
-      text: expected.text2,
-    ),
-  ],
 );
 
 final testMap = {
@@ -93,6 +55,31 @@ final testMapWithNull = {
   ],
 };
 
+final expectedTranscript = Transcript(
+  locale: Locale.fromSubtags(
+    languageCode: expected.languageCode,
+    scriptCode: expected.scriptCode,
+    countryCode: expected.countryCode,
+  ),
+  lines: [
+    (speaker: expected.speaker1, text: expected.text1),
+    (speaker: expected.speaker2, text: expected.text2),
+  ],
+  endTimes: [
+    Duration(milliseconds: expected.endTime1),
+    Duration(milliseconds: expected.endTime2),
+  ],
+);
+
+final expectedTranscriptWithNull = Transcript(
+  locale: Locale.fromSubtags(
+    languageCode: expected.languageCode,
+  ),
+  lines: [
+    (speaker: null, text: expected.text1),
+    (speaker: null, text: expected.text2),
+  ],
+);
 final testJson = json.encode(testMap);
 final testJsonWithNull = json.encode(testMapWithNull);
 
