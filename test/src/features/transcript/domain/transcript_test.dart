@@ -93,4 +93,9 @@ void main() {
     final transcript = Transcript.fromJson(testJsonWithNull);
     expect(transcript, equals(expectedTranscriptWithNull));
   });
+
+  test('Transcript with null end times.', () {
+    final transcript = Transcript.fromJson(testJsonWithNull);
+    expect(transcript.endTimes, isNull);
+  });
 }
