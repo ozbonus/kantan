@@ -187,17 +187,7 @@ class TranscriptLineWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late final PlaybackPosition? playbackPosition;
-    if (transcriptLine.startTime != null) {
-      playbackPosition =
-          ref.watch(transcriptLineControllerProvider(transcriptLine, index));
-      ref.listen(transcriptLineControllerProvider(transcriptLine, index),
-          (prev, next) {
-        if (next == PlaybackPosition.during) {
-          ref.read(transcriptIndexServiceProvider.notifier).setIndex(index);
-        }
-      });
-    }
+    final activeIndex = ref.watch(transcriptIndexServiceProvider);
 
     return ListTile(
       title: Localizations.override(
@@ -214,9 +204,7 @@ class TranscriptLineWidget extends ConsumerWidget {
               child: Text(translationLine!.text),
             )
           : null,
-      selected: playbackPosition != null
-          ? playbackPosition == PlaybackPosition.during
-          : false,
+      selected: index == activeIndex,
       onTap: transcriptLine.startTime != null
           ? () => ref.read(seekToLineProvider(transcriptLine))
           : null,
