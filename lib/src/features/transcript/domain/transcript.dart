@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 
 typedef TranscriptLine = ({
+  Duration? startTime,
   String? speaker,
   String text,
 });
@@ -43,7 +44,12 @@ class Transcript {
         countryCode: json['locale']['countryCode'] as String?,
       ),
       lines: (json['lines'] as List<dynamic>).map((line) {
+        Duration? startTime;
+        if (json['lines'][0].containsKey('startTime')) {
+          startTime = Duration(milliseconds: ['startTime'] as int);
+        }
         return (
+          startTime: startTime,
           speaker: line['speaker'] as String?,
           text: line['text'] as String,
         );
