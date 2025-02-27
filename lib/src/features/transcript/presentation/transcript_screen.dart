@@ -174,15 +174,15 @@ class TranscriptLineWidget extends ConsumerWidget {
     super.key,
     required this.index,
     required this.transcriptLine,
-    this.translationLine,
     required this.transcriptLineLocale,
+    this.translationLine,
     this.translationLineLocale,
   });
 
   final int index;
   final TranscriptLine transcriptLine;
-  final TranscriptLine? translationLine;
   final Locale transcriptLineLocale;
+  final TranscriptLine? translationLine;
   final Locale? translationLineLocale;
 
   @override
