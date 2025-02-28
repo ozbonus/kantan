@@ -62,8 +62,16 @@ final expectedTranscript = Transcript(
     countryCode: expected.countryCode,
   ),
   lines: [
-    (speaker: expected.speaker1, text: expected.text1),
-    (speaker: expected.speaker2, text: expected.text2),
+    (
+      speaker: expected.speaker1,
+      text: expected.text1,
+      startTime: Duration(milliseconds: expected.startTime1),
+    ),
+    (
+      speaker: expected.speaker2,
+      text: expected.text2,
+      startTime: Duration(milliseconds: expected.startTime2),
+    ),
   ],
   endTimes: [
     Duration(milliseconds: expected.endTime1),
@@ -76,8 +84,8 @@ final expectedTranscriptWithNull = Transcript(
     languageCode: expected.languageCode,
   ),
   lines: [
-    (speaker: null, text: expected.text1),
-    (speaker: null, text: expected.text2),
+    (speaker: null, text: expected.text1, startTime: null),
+    (speaker: null, text: expected.text2, startTime: null),
   ],
 );
 final testJson = json.encode(testMap);

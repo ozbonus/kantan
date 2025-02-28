@@ -44,9 +44,10 @@ class Transcript {
         countryCode: json['locale']['countryCode'] as String?,
       ),
       lines: (json['lines'] as List<dynamic>).map((line) {
+        // If endTimes is not null, then lines are certain to have start times.
         Duration? startTime;
-        if (json['lines'][0].containsKey('startTime')) {
-          startTime = Duration(milliseconds: ['startTime'] as int);
+        if (endTimes != null) {
+          startTime = Duration(milliseconds: line['startTime'] as int);
         }
         return (
           startTime: startTime,
