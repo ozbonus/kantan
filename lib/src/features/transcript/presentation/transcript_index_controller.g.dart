@@ -9,7 +9,18 @@ part of 'transcript_index_controller.dart';
 String _$transcriptIndexControllerHash() =>
     r'ec6ba115b4c81993a7ffb15e5cb5c74e6c06a90e';
 
-/// See also [transcriptIndexController].
+/// Provides the index of the transcript line presently being spoken.
+///
+/// Returns an [int] index when a transcript and position data stream are
+/// available.
+///
+/// Returns [null] under the following conditions:
+/// * during [AsyncLoading] and [AsyncError]
+/// * [Transcript.transcript] is null
+/// * [Transcript.transcript.endTimes] is null
+/// * the index is out of bounds of the transcript (possible when seeking)
+///
+/// Copied from [transcriptIndexController].
 @ProviderFor(transcriptIndexController)
 final transcriptIndexControllerProvider = AutoDisposeProvider<int?>.internal(
   transcriptIndexController,

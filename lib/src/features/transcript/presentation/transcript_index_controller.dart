@@ -6,6 +6,16 @@ import 'package:kantan/src/features/transcript/presentation/transcript_controlle
 
 part 'transcript_index_controller.g.dart';
 
+/// Provides the index of the transcript line presently being spoken.
+///
+/// Returns an [int] index when a transcript and position data stream are
+/// available.
+///
+/// Returns [null] under the following conditions:
+/// * during [AsyncLoading] and [AsyncError]
+/// * [Transcript.transcript] is null
+/// * [Transcript.transcript.endTimes] is null
+/// * the index is out of bounds of the transcript (possible when seeking)
 @riverpod
 int? transcriptIndexController(Ref ref) {
   return ref.watch(transcriptControllerProvider).whenOrNull(
