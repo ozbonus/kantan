@@ -14,12 +14,6 @@ part 'transcript_controller.g.dart';
 /// attempts to load transcript data from two files: one for the verbatim
 /// transcript, and another for the translation.
 ///
-/// Transcript files must follow a specific naming pattern based on track name
-/// and locale. If a track is named [001.m4a], then the English language
-/// transcript must be named [001.en.json]. See the documentation of the
-/// [Transcript] class for information about formatting the internal structure
-/// of the files.
-///
 /// Returns a Riverpod [AsyncValue]. If that value is [AsyncData], the data is a
 /// record of two nullable [Transcript?] objects, as mentioned above. If either
 /// is not available, then its associated member will be [null].
