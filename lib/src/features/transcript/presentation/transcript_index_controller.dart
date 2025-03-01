@@ -22,7 +22,6 @@ int? transcriptIndexController(Ref ref) {
     data: (transcriptData) {
       final transcript = transcriptData.transcript;
       if (transcript == null || transcript.endTimes == null) {
-        debugPrint('Transcript index: null');
         return null;
       }
       return ref.watch(positionDataStreamProvider).whenOrNull(
