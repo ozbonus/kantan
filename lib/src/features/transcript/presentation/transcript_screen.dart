@@ -123,11 +123,6 @@ class _ScrollingTranscriptScreenContentsState
   }
 
   @override
-  void didUpdateWidget(covariant DynamicScrollingTranscript oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
