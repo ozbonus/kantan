@@ -15,6 +15,9 @@ class Config {
   static Duration get rewindDuration => const Duration(seconds: 5);
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
+  // Theming
+  static Duration get scrollDuration => const Duration(milliseconds: 1500);
+
   // Default values for player state.
   static int get defaultQueueIndex => 0;
   static Duration get defaultPosition => Duration.zero;
