@@ -109,11 +109,8 @@ class _ScrollingTranscriptScreenContentsState
   @override
   void initState() {
     super.initState();
-    // Recall the last known index and scroll to that.
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      final index = ref.read(transcriptIndexControllerProvider);
-      _scroll(index);
-    });
+    final index = ref.read(transcriptIndexControllerProvider);
+    _scroll(index);
   }
 
   @override
