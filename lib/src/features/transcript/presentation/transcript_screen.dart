@@ -6,7 +6,6 @@ import 'package:kantan/src/features/transcript/presentation/transcript_index_con
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
-import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 
@@ -40,8 +39,6 @@ class TranscriptScreenContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
-    final transcriptIndex = ref.watch(transcriptIndexControllerProvider);
-    debugPrint('index: $transcriptIndex');
     return transcriptValue.when(
       loading: () => const CircularProgressIndicator.adaptive(),
       error: (e, st) => throw Exception('$e $st'),
@@ -115,7 +112,7 @@ class _ScrollingTranscriptScreenContentsState
     super.initState();
     // Recall the last known index and scroll to that.
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      final index = ref.read(transcriptIndexServiceProvider);
+      final index = ref.read(transcriptIndexControllerProvider);
       _scroll(index);
     });
   }
@@ -145,7 +142,7 @@ class _ScrollingTranscriptScreenContentsState
     /// If the option to enable auto scroll is switching from off to on,
     /// immediately scroll to the active index.
     if (enable) {
-      final index = ref.read(transcriptIndexServiceProvider);
+      final index = ref.read(transcriptIndexControllerProvider);
       _scroll(index);
     }
   }
