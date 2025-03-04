@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
@@ -134,6 +135,7 @@ class _ScrollingTranscriptScreenContentsState
       _scrollController.scrollToIndex(
         index,
         preferPosition: AutoScrollPosition.middle,
+        duration: Config.scrollDuration,
       );
     }
   }
