@@ -20,6 +20,10 @@
   "@cancelButtonLabel": {
     "description": "The label of a button that closes a dialog that otherwise would have asked the user to decide to do something. There are no side effects from choosing this action."
   },
+  "noTranscriptMessage": "No transcript for this track.",
+  "@noTranscriptMessage": {
+    "description": "A message that informs the user that the current audio track does not a text transcript."
+  },
   "canSeeTranscriptTileLabel": "Can see transcript",
   "@canSeeTranscriptTileLabel": {
     "description": "The label of a switch that controls whether the user is allowed to see transcripts of audio tracks."
