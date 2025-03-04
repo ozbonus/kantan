@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
@@ -39,6 +40,8 @@ class TranscriptScreenContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
+    final transcriptIndex = ref.watch(transcriptIndexControllerProvider);
+    debugPrint('index: $transcriptIndex');
     return transcriptValue.when(
       loading: () => const CircularProgressIndicator.adaptive(),
       error: (e, st) => throw Exception('$e $st'),
@@ -128,9 +131,9 @@ class _ScrollingTranscriptScreenContentsState
     super.dispose();
   }
 
-  void _scroll(int index) {
+  void _scroll(int? index) {
     final enableAutoScroll = ref.read(enableAutoScrollServiceProvider);
-    if (enableAutoScroll) {
+    if (enableAutoScroll && index != null) {
       _scrollController.scrollToIndex(
         index,
         preferPosition: AutoScrollPosition.middle,
@@ -149,7 +152,8 @@ class _ScrollingTranscriptScreenContentsState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(transcriptIndexServiceProvider, (_, index) => _scroll(index));
+    ref.listen<int?>(
+        transcriptIndexControllerProvider, (_, index) => _scroll(index));
     ref.listen(enableAutoScrollServiceProvider, (_, enable) => enabler(enable));
     return ListView.builder(
       controller: _scrollController,
@@ -188,8 +192,7 @@ class TranscriptLineWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeIndex = ref.watch(transcriptIndexServiceProvider);
-
+    final activeIndex = ref.watch(transcriptIndexControllerProvider);
     return ListTile(
       title: Localizations.override(
         context: context,
