@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
-import 'package:kantan/src/features/transcript/application/transcript_index_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:kantan/src/features/transcript/domain/transcript_line.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_line_controller.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 
+/// A wrapper widget for small displays that show the transcript as a single
+/// screen.
 class TranscriptScreen extends StatelessWidget {
   const TranscriptScreen({super.key});
 
@@ -26,6 +26,12 @@ class TranscriptScreen extends StatelessWidget {
   }
 }
 
+/// The core contents of the transcript screen that can be shown on displays of
+/// any size. Depending on what `transcriptValue` resolves to, one three types
+/// of content can be shown:
+/// * a notification that no transcript is available
+/// * a simple transcript akin to a text document
+/// * a self-scrolling transcript with tappable lines that seek to a position
 class TranscriptScreenContents extends ConsumerWidget {
   const TranscriptScreenContents({super.key});
 
@@ -38,7 +44,7 @@ class TranscriptScreenContents extends ConsumerWidget {
       data: (data) {
         if (data.transcript == null) {
           return const NoTranscript();
-        } else if (data.transcript!.lines[0].startTime == null) {
+        } else if (data.transcript!.endTimes == null) {
           return StaticTranscript(
             transcript: data.transcript!,
             translation: data.translation,
@@ -78,7 +84,16 @@ class StaticTranscript extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    return ListView.builder(
+      itemCount: transcript.lines.length,
+      itemBuilder: (context, index) => TranscriptLineWidget(
+        index: index,
+        transcriptLine: transcript.lines[index],
+        transcriptLineLocale: transcript.locale,
+        translationLine: translation?.lines[index],
+        translationLineLocale: translation?.locale,
+      ),
+    );
   }
 }
 
@@ -103,11 +118,8 @@ class _ScrollingTranscriptScreenContentsState
   @override
   void initState() {
     super.initState();
-    // Recall the last known index and scroll to that.
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      final index = ref.read(transcriptIndexServiceProvider);
-      _scroll(index);
-    });
+    final index = ref.read(transcriptIndexControllerProvider);
+    _scroll(index);
   }
 
   @override
@@ -121,9 +133,9 @@ class _ScrollingTranscriptScreenContentsState
     super.dispose();
   }
 
-  void _scroll(int index) {
+  void _scroll(int? index) {
     final enableAutoScroll = ref.read(enableAutoScrollServiceProvider);
-    if (enableAutoScroll) {
+    if (enableAutoScroll && index != null) {
       _scrollController.scrollToIndex(
         index,
         preferPosition: AutoScrollPosition.middle,
@@ -135,14 +147,15 @@ class _ScrollingTranscriptScreenContentsState
     /// If the option to enable auto scroll is switching from off to on,
     /// immediately scroll to the active index.
     if (enable) {
-      final index = ref.read(transcriptIndexServiceProvider);
+      final index = ref.read(transcriptIndexControllerProvider);
       _scroll(index);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(transcriptIndexServiceProvider, (_, index) => _scroll(index));
+    ref.listen<int?>(
+        transcriptIndexControllerProvider, (_, index) => _scroll(index));
     ref.listen(enableAutoScrollServiceProvider, (_, enable) => enabler(enable));
     return ListView.builder(
       controller: _scrollController,
@@ -168,31 +181,20 @@ class TranscriptLineWidget extends ConsumerWidget {
     super.key,
     required this.index,
     required this.transcriptLine,
-    this.translationLine,
     required this.transcriptLineLocale,
+    this.translationLine,
     this.translationLineLocale,
   });
 
   final int index;
   final TranscriptLine transcriptLine;
-  final TranscriptLine? translationLine;
   final Locale transcriptLineLocale;
+  final TranscriptLine? translationLine;
   final Locale? translationLineLocale;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late final PlaybackPosition? playbackPosition;
-    if (transcriptLine.startTime != null) {
-      playbackPosition =
-          ref.watch(transcriptLineControllerProvider(transcriptLine, index));
-      ref.listen(transcriptLineControllerProvider(transcriptLine, index),
-          (prev, next) {
-        if (next == PlaybackPosition.during) {
-          ref.read(transcriptIndexServiceProvider.notifier).setIndex(index);
-        }
-      });
-    }
-
+    final activeIndex = ref.watch(transcriptIndexControllerProvider);
     return ListTile(
       title: Localizations.override(
         context: context,
@@ -208,11 +210,12 @@ class TranscriptLineWidget extends ConsumerWidget {
               child: Text(translationLine!.text),
             )
           : null,
-      selected: playbackPosition != null
-          ? playbackPosition == PlaybackPosition.during
-          : false,
+      selected: index == activeIndex,
       onTap: transcriptLine.startTime != null
-          ? () => ref.read(seekToLineProvider(transcriptLine))
+          ? () => ref
+              .read(audioHandlerProvider)
+              .requireValue
+              .seek(transcriptLine.startTime!)
           : null,
     );
   }

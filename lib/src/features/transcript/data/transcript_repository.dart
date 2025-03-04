@@ -9,6 +9,18 @@ import 'package:kantan/src/features/transcript/domain/transcript.dart';
 
 part 'transcript_repository.g.dart';
 
+/// Provides a [Transcript] for a given [Track].
+///
+/// Transcript files must follow a specific naming pattern based on track name
+/// and locale. If a track is named [001.m4a], then the English language
+/// transcript must be named [001.en.json]. See the documentation of the
+/// [Transcript] class for information about formatting the internal structure
+/// of the files.
+///
+/// Returns a [Future] of type [Transcript?] via the
+/// [TranscriptRepository.getTranscript] method. [null] values occur when a
+/// requested file is not found. It may be the case that only some tracks do not
+/// have transcripts or translations.
 class TranscriptRepository {
   const TranscriptRepository();
 
