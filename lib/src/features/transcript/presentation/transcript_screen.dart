@@ -84,7 +84,16 @@ class StaticTranscript extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    return ListView.builder(
+      itemCount: transcript.lines.length,
+      itemBuilder: (context, index) => TranscriptLineWidget(
+        index: index,
+        transcriptLine: transcript.lines[index],
+        transcriptLineLocale: transcript.locale,
+        translationLine: translation?.lines[index],
+        translationLineLocale: translation?.locale,
+      ),
+    );
   }
 }
 
