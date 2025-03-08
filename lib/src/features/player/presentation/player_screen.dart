@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button.dart';
 import 'package:kantan/src/features/player/presentation/prev_next_buttons.dart';
@@ -26,9 +27,9 @@ class PlayerScreenContents extends StatelessWidget {
   const PlayerScreenContents({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +59,7 @@ class PlayerScreenContents extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: FilledButton(
               onPressed: () => context.goNamed(AppRoute.transcript),
-              child: const Text('Go to Transcript Screen'),
+              child: Text(localizations!.transcriptButtonLabel),
             ),
           ),
         ],
