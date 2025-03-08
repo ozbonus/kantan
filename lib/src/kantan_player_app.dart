@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
 class KantanPlayerApp extends ConsumerWidget {
@@ -118,9 +119,7 @@ class LargeLayout extends StatelessWidget {
               flex: 1,
               child: Container(
                 color: Colors.blue[100],
-                child: Center(
-                  child: Text('right'),
-                ),
+                child: const TranscriptScreenContents(),
               ),
             ),
           ],
