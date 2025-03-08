@@ -33,6 +33,99 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const TrackListScreen();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > Config.largeBreakpoint) {
+          return const LargeLayout();
+        } else if (constraints.maxWidth > Config.mediumBreakpoint) {
+          return const MediumLayout();
+        } else {
+          return const TrackListScreen();
+        }
+      },
+    );
+  }
+}
+
+class MediumLayout extends StatelessWidget {
+  const MediumLayout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        minimum: EdgeInsets.all(Config.layoutOuterPadding),
+        child: Row(
+          spacing: Config.layoutSpacing,
+          textDirection: TextDirection.ltr,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.red[100],
+                child: Center(
+                  child: Text('left'),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.green[100],
+                child: Center(
+                  child: Text('right'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LargeLayout extends StatelessWidget {
+  const LargeLayout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        minimum: EdgeInsets.all(Config.layoutOuterPadding),
+        child: Row(
+          textDirection: TextDirection.ltr,
+          spacing: Config.layoutSpacing,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.red[100],
+                child: Center(
+                  child: Text('left'),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.green[100],
+                child: Center(
+                  child: Text('middle'),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.blue[100],
+                child: Center(
+                  child: Text('right'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
