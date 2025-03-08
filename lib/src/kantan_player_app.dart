@@ -64,9 +64,7 @@ class MediumLayout extends StatelessWidget {
               flex: 1,
               child: Container(
                 color: Colors.red[100],
-                child: Center(
-                  child: Text('left'),
-                ),
+                child: const TracksList(),
               ),
             ),
             Expanded(
@@ -101,9 +99,7 @@ class LargeLayout extends StatelessWidget {
               flex: 1,
               child: Container(
                 color: Colors.red[100],
-                child: Center(
-                  child: Text('left'),
-                ),
+                child: const TracksList(),
               ),
             ),
             Expanded(
