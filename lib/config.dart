@@ -18,6 +18,8 @@ class Config {
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
   // Theming
+  static double get layoutOuterPadding => 16.0;
+  static double get layoutSpacing => 16.0;
   static Duration get scrollDuration => const Duration(milliseconds: 1500);
 
   // Default values for player state.
