@@ -17,40 +17,51 @@ class PlayerScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Player Screen'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                PlayPauseButton(),
-                RewindButton(),
-                FastForwardButton(),
-              ],
+      body: const PlayerScreenContents(),
+    );
+  }
+}
+
+class PlayerScreenContents extends StatelessWidget {
+  const PlayerScreenContents({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              PlayPauseButton(),
+              RewindButton(),
+              FastForwardButton(),
+            ],
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SkipToPreviousButton(),
+              SkipToNextButton(),
+              RepeatModeButton(),
+            ],
+          ),
+          const SpeedSlider(),
+          const ProgressSlider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FilledButton(
+              onPressed: () => context.goNamed(AppRoute.transcript),
+              child: const Text('Go to Transcript Screen'),
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SkipToPreviousButton(),
-                SkipToNextButton(),
-                RepeatModeButton(),
-              ],
-            ),
-            const SpeedSlider(),
-            const ProgressSlider(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FilledButton(
-                onPressed: () => context.goNamed(AppRoute.transcript),
-                child: const Text('Go to Transcript Screen'),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
