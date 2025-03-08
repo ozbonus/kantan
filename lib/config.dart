@@ -9,6 +9,8 @@ class Config {
   static String get channelId => 'com.crayonfox.kantanplayer';
   static String get channelName => 'Kantan Player';
   static String get notificationIcon => 'drawable/text_to_speech';
+  static int get mediumBreakpoint => 590;
+  static int get largeBreakpoint => 1000;
 
   static Duration get saveStateUpdateDuration => const Duration(seconds: 2);
 
@@ -16,6 +18,8 @@ class Config {
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
   // Theming
+  static double get layoutOuterPadding => 16.0;
+  static double get layoutSpacing => 16.0;
   static Duration get scrollDuration => const Duration(milliseconds: 1500);
 
   // Default values for player state.
