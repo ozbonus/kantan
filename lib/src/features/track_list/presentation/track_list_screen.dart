@@ -28,7 +28,7 @@ class TracksList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tracksList = ref.watch(tracksListProvider);
+    final tracksList = ref.watch(tracksRepositoryProvider);
     return AsyncValueWidget(
       value: tracksList,
       data: (tracks) {

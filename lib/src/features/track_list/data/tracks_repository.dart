@@ -22,7 +22,7 @@ class TracksRepository {
 }
 
 @Riverpod(keepAlive: true)
-FutureOr<List<Track>> tracksList(Ref ref) async {
+FutureOr<List<Track>> tracksRepository(Ref ref) async {
   final tracksJsonUri = 'packages/${Config.assetsPackage}/assets/tracks.json';
   final tracksJson = await rootBundle.loadString(tracksJsonUri);
   final tracksMap = jsonDecode(tracksJson) as Map<String, dynamic>;
