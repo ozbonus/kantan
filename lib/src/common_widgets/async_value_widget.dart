@@ -22,6 +22,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         },
         loading: () {
           return const Center(
+
             child: CircularProgressIndicator.adaptive(),
           );
         });
