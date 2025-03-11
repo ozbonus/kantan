@@ -12,13 +12,82 @@ class TrackListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Config.appTitle),
+    return const Scaffold(
+      body: TrackListScreenContents(),
+      floatingActionButton: FloatingMiniPlayer(),
+      drawer: SettingsMenu(),
+    );
+  }
+}
+
+class TrackListScreenContents extends StatefulWidget {
+  const TrackListScreenContents({super.key});
+
+  @override
+  State<TrackListScreenContents> createState() =>
+      _TrackListScreenContentsState();
+}
+
+class _TrackListScreenContentsState extends State<TrackListScreenContents> {
+  bool collapsed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    // This listener nonsense is required because there's no simple way to show
+    // a sliver app bar title only when it is collapsed. The magic integer in
+    // the control flow will vary based on the expanded height of the sliver app
+    // bar.
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification.metrics.pixels > 330 && !collapsed) {
+          setState(() => collapsed = true);
+        } else if (notification.metrics.pixels < 330 && collapsed) {
+          setState(() => collapsed = false);
+        }
+        return true;
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            snap: false,
+            floating: false,
+            stretch: true,
+            expandedHeight: 400.0,
+            flexibleSpace: FlexibleSpaceBar(
+              title: AnimatedOpacity(
+                opacity: collapsed ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: Text(Config.appTitle),
+              ),
+              background: const _BookCover(),
+            ),
+          ),
+          const TracksList(),
+        ],
       ),
-      body: const TracksList(),
-      floatingActionButton: const FloatingMiniPlayer(),
-      drawer: const SettingsMenu(),
+    );
+  }
+}
+
+class _BookCover extends StatelessWidget {
+  const _BookCover();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: Config.bookCoverPadding,
+        right: Config.bookCoverPadding,
+        bottom: Config.bookCoverPadding,
+        top: MediaQuery.paddingOf(context).top,
+      ),
+      child: Image(
+        image: AssetImage(
+          'assets/images/cover.webp',
+          package: Config.assetsPackage,
+        ),
+      ),
     );
   }
 }
@@ -28,18 +97,18 @@ class TracksList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tracksList = ref.watch(tracksListProvider);
-    return AsyncValueWidget(
+    final tracksList = ref.watch(tracksRepositoryProvider);
+    return AsyncValueSliverWidget(
       value: tracksList,
       data: (tracks) {
-        return ListView.builder(
-          itemCount: tracks.length,
-          itemBuilder: (context, index) {
-            return TrackListTile(
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: tracks.length,
+            (context, index) => TrackListTile(
               track: tracks[index],
               index: index,
-            );
-          },
+            ),
+          ),
         );
       },
     );

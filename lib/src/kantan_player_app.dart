@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/presentation/player_screen.dart';
 import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
+import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
@@ -55,6 +56,7 @@ class MediumLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SettingsMenu(),
       body: SafeArea(
         minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
@@ -65,7 +67,7 @@ class MediumLayout extends StatelessWidget {
               flex: 1,
               child: Container(
                 color: Colors.red[100],
-                child: const TracksList(),
+                child: const TrackListScreenContents(),
               ),
             ),
             Expanded(
@@ -88,6 +90,7 @@ class LargeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SettingsMenu(),
       body: SafeArea(
         minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
@@ -98,7 +101,7 @@ class LargeLayout extends StatelessWidget {
               flex: 1,
               child: Container(
                 color: Colors.red[100],
-                child: const TracksList(),
+                child: const TrackListScreenContents(),
               ),
             ),
             Expanded(

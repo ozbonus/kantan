@@ -117,11 +117,11 @@ class AppStartupErrorWidget extends StatelessWidget {
 Future<void> appStartup(Ref ref) async {
   ref.onDispose(() {
     ref.invalidate(settingsRepositoryProvider);
-    ref.invalidate(tracksListProvider);
+    ref.invalidate(tracksRepositoryProvider);
     ref.invalidate(audioHandlerProvider);
   });
   await ref
       .watch(settingsRepositoryProvider.future)
-      .then((_) => ref.watch(tracksListProvider.future))
+      .then((_) => ref.watch(tracksRepositoryProvider.future))
       .then((_) => ref.watch(audioHandlerProvider.future));
 }

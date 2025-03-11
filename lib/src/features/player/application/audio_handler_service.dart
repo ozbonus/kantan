@@ -426,7 +426,7 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
     ),
   );
 
-  final tracks = ref.watch(tracksListProvider).requireValue;
+  final tracks = ref.watch(tracksRepositoryProvider).requireValue;
   final settings = ref.watch(settingsRepositoryProvider).requireValue;
 
   audioHandler.loadTracks(tracks).then((_) => audioHandler.loadState(settings));
