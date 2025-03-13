@@ -9,8 +9,8 @@ import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 
-/// A wrapper widget for small displays that show the transcript as a single
-/// screen.
+/// A wrapper widget for small displays, such as smart phones, that show the
+/// transcript as a single screen.
 class TranscriptScreen extends StatelessWidget {
   const TranscriptScreen({super.key});
 
