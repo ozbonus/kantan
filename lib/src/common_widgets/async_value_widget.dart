@@ -7,13 +7,16 @@ class AsyncValueWidget<T> extends StatelessWidget {
     super.key,
     required this.value,
     required this.data,
+    this.skipLoadingOnReload = true,
   });
   final AsyncValue<T> value;
   final Widget Function(T) data;
+  final bool skipLoadingOnReload;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
+      skipLoadingOnReload: skipLoadingOnReload,
       loading: () {
         return const Center(
           child: CircularProgressIndicator.adaptive(),
