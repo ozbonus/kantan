@@ -95,6 +95,11 @@ class SettingsRepository {
     return value ?? Config.defaultCanSeeTranslation;
   }
 
+  bool get showTranslation {
+    final value = prefs.getBool(SettingKey.showTranslation);
+    return value ?? Config.defaultShowTranslation;
+  }
+
   bool get enableAutoScroll {
     final value = prefs.getBool(SettingKey.enableAutoScroll);
     return value ?? Config.defaultEnableAutoScroll;
@@ -156,6 +161,10 @@ class SettingsRepository {
 
   Future<bool> setCanSeeTranslation(bool value) async {
     return await prefs.setBool(SettingKey.canSeeTranslation, value);
+  }
+
+  Future<bool> setShowTranslation(bool value) async {
+    return await prefs.setBool(SettingKey.showTranslation, value);
   }
 
   Future<bool> setEnableAutoScroll(bool value) async {

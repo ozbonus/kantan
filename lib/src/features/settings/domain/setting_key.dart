@@ -10,5 +10,6 @@ class SettingKey {
   static const translationLocale = 'translationLocale';
   static const canSeeTranscript = 'canSeeTranscript';
   static const canSeeTranslation = 'canSeeTranslation';
+  static const showTranslation = 'showTranslation';
   static const enableAutoScroll = 'enableAutoScroll';
 }
