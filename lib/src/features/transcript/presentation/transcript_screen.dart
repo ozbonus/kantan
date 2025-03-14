@@ -5,6 +5,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
+import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
@@ -213,6 +214,24 @@ class TranscriptLineWidget extends ConsumerWidget {
               .requireValue
               .seek(transcriptLine.startTime!)
           : null,
+    );
+  }
+}
+class ShowTranslationSwitch extends ConsumerWidget {
+  const ShowTranslationSwitch({super.key});
+
+  static const thumbIcon =
+      WidgetStatePropertyAll<Icon>(Icon(Icons.translate_rounded));
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(showTranslationServiceProvider);
+    return Switch(
+      thumbIcon: thumbIcon,
+      value: value,
+      onChanged: (value) => ref
+          .read(showTranslationServiceProvider.notifier)
+          .setShowTranslation(value),
     );
   }
 }
