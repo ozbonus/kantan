@@ -235,3 +235,23 @@ class ShowTranslationSwitch extends ConsumerWidget {
     );
   }
 }
+
+class EnableAutoScrollSwitch extends ConsumerWidget {
+  const EnableAutoScrollSwitch({super.key});
+
+  static const thumbIcon =
+      WidgetStatePropertyAll<Icon>(Icon(Icons.format_line_spacing_rounded));
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(enableAutoScrollServiceProvider);
+    return Switch(
+      thumbIcon: thumbIcon,
+      value: value,
+      onChanged: (value) => ref
+          .read(enableAutoScrollServiceProvider.notifier)
+          .setEnableAutoScroll(value),
+    );
+  }
+}
+
