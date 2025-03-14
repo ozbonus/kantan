@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -9,6 +10,7 @@ import 'package:kantan/src/features/transcript/application/show_translation_serv
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
+import 'package:kantan/src/routing/app_router.dart';
 
 /// A wrapper widget for small displays, such as smart phones, that show the
 /// transcript as a single screen.
@@ -255,3 +257,14 @@ class EnableAutoScrollSwitch extends ConsumerWidget {
   }
 }
 
+class ExpandTranscriptButton extends StatelessWidget {
+  const ExpandTranscriptButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.zoom_out_map_rounded),
+      onPressed: () => context.goNamed(AppRoute.transcript),
+    );
+  }
+}
