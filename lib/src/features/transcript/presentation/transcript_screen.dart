@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
@@ -49,14 +50,28 @@ class TranscriptScreenContents extends ConsumerWidget {
         if (data.transcript == null) {
           return const NoTranscript();
         } else if (data.transcript!.endTimes == null) {
-          return StaticTranscript(
-            transcript: data.transcript!,
-            translation: data.translation,
+          return Column(
+            children: [
+              Expanded(
+                child: StaticTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
+                ),
+              ),
+              const TranscriptPlayerControls()
+            ],
           );
         } else {
-          return DynamicScrollingTranscript(
-            transcript: data.transcript!,
-            translation: data.translation,
+          return Column(
+            children: [
+              Expanded(
+                child: DynamicScrollingTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
+                ),
+              ),
+              const TranscriptPlayerControls(),
+            ],
           );
         }
       },
@@ -194,6 +209,9 @@ class TranscriptLineWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeIndex = ref.watch(transcriptIndexControllerProvider);
+    final canSeeTranslation = ref.watch(canSeeTranslationServiceProvider);
+    final userShowTranslation = ref.watch(showTranslationServiceProvider);
+    final showTranslation = canSeeTranslation && userShowTranslation;
     return ListTile(
       title: Localizations.override(
         context: context,
@@ -202,7 +220,7 @@ class TranscriptLineWidget extends ConsumerWidget {
       ),
       leading:
           transcriptLine.speaker != null ? Text(transcriptLine.speaker!) : null,
-      subtitle: translationLine != null
+      subtitle: translationLine != null && showTranslation
           ? Localizations.override(
               context: context,
               locale: translationLineLocale,
@@ -219,6 +237,22 @@ class TranscriptLineWidget extends ConsumerWidget {
     );
   }
 }
+
+class TranscriptPlayerControls extends ConsumerWidget {
+  const TranscriptPlayerControls({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      children: [
+        ShowTranslationSwitch(),
+        EnableAutoScrollSwitch(),
+        ExpandTranscriptButton(),
+      ],
+    );
+  }
+}
+
 class ShowTranslationSwitch extends ConsumerWidget {
   const ShowTranslationSwitch({super.key});
 
