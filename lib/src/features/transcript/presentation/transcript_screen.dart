@@ -1,7 +1,9 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -243,12 +245,34 @@ class TranscriptPlayerControls extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
+    return Column(
       children: [
-        ShowTranslationSwitch(),
-        EnableAutoScrollSwitch(),
-        ExpandTranscriptButton(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TranscriptProgressSlider(),
+        ),
+        Row(
+          children: [
+            ShowTranslationSwitch(),
+            EnableAutoScrollSwitch(),
+            ExpandTranscriptButton(),
+          ],
+        ),
       ],
+    );
+  }
+}
+
+class TranscriptProgressSlider extends ConsumerWidget {
+  const TranscriptProgressSlider({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final positionData = ref.watch(progressSliderControllerProvider);
+    return ProgressBar(
+      progress: positionData.position,
+      total: positionData.duration,
+      onSeek: (position) => ref.read(onSeekProvider(position)),
     );
   }
 }
