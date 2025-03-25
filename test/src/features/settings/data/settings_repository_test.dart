@@ -19,6 +19,7 @@ Map<String, Object> fullValues = {
   SettingKey.translationLocale: 'fr_CA',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
+  SettingKey.enableAutoScroll: !Config.defaultEnableAutoScroll,
 };
 
 late SettingsRepository repo;
@@ -100,6 +101,10 @@ void main() {
     test('Can see translation', () {
       final value = Config.defaultCanSeeTranslation;
       expect(repo.canSeeTranslation, equals(value));
+    });
+    test('Enable auto scroll', () {
+      final value = Config.defaultEnableAutoScroll;
+      expect(repo.enableAutoScroll, equals(value));
     });
   });
 
@@ -263,6 +268,12 @@ void main() {
       final value = fullValues[SettingKey.canSeeTranscript] as bool;
       await expectLater(repo.setCanSeeTranslation(value), completes);
       expect(repo.canSeeTranslation, equals(value));
+    });
+
+    test('Enable auto scroll', () async {
+      final value = fullValues[SettingKey.enableAutoScroll] as bool;
+      await expectLater(repo.setEnableAutoScroll(value), completes);
+      expect(repo.enableAutoScroll, equals(value));
     });
   });
 }
