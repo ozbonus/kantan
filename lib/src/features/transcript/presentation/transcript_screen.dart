@@ -1,17 +1,17 @@
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kantan/l10n/string_hardcoded.dart';
-import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
-import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
 import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
+import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
@@ -29,7 +29,9 @@ class TranscriptScreen extends StatelessWidget {
         title: const Text('Transcript Screen'),
       ),
       body: const Center(
-        child: TranscriptScreenContents(),
+        child: TranscriptScreenContents(
+          isFullscreen: true,
+        ),
       ),
     );
   }
@@ -42,43 +44,50 @@ class TranscriptScreen extends StatelessWidget {
 /// * a simple transcript akin to a text document
 /// * a self-scrolling transcript with tappable lines that seek to a position
 class TranscriptScreenContents extends ConsumerWidget {
-  const TranscriptScreenContents({super.key});
+  const TranscriptScreenContents({
+    super.key,
+    this.isFullscreen = false,
+  });
+
+  final bool isFullscreen;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
-    return transcriptValue.when(
-      loading: () => const CircularProgressIndicator.adaptive(),
-      error: (e, st) => throw Exception('$e $st'),
-      data: (data) {
-        if (data.transcript == null) {
-          return const NoTranscript();
-        } else if (data.transcript!.endTimes == null) {
-          return Column(
-            children: [
-              Expanded(
-                child: StaticTranscript(
-                  transcript: data.transcript!,
-                  translation: data.translation,
+    return SafeArea(
+      child: transcriptValue.when(
+        loading: () => const CircularProgressIndicator.adaptive(),
+        error: (e, st) => throw Exception('$e $st'),
+        data: (data) {
+          if (data.transcript == null) {
+            return const NoTranscript();
+          } else if (data.transcript!.endTimes == null) {
+            return Column(
+              children: [
+                Expanded(
+                  child: StaticTranscript(
+                    transcript: data.transcript!,
+                    translation: data.translation,
+                  ),
                 ),
-              ),
-              const TranscriptPlayerControls()
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              Expanded(
-                child: DynamicScrollingTranscript(
-                  transcript: data.transcript!,
-                  translation: data.translation,
+                TranscriptPlayerControls(isFullscreen: isFullscreen)
+              ],
+            );
+          } else {
+            return Column(
+              children: [
+                Expanded(
+                  child: DynamicScrollingTranscript(
+                    transcript: data.transcript!,
+                    translation: data.translation,
+                  ),
                 ),
-              ),
-              const TranscriptPlayerControls(),
-            ],
-          );
-        }
-      },
+                const TranscriptPlayerControls(),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }
@@ -266,24 +275,38 @@ class TranscriptLineText extends ConsumerWidget {
 }
 
 class TranscriptPlayerControls extends ConsumerWidget {
-  const TranscriptPlayerControls({super.key});
+  const TranscriptPlayerControls({
+    super.key,
+    this.isFullscreen = false,
+  });
+
+  final bool isFullscreen;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: Colors.white,
-      child: const Column(
+      child: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(8.0),
             child: TranscriptProgressSlider(),
           ),
           Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ShowTranslationSwitch(),
-              EnableAutoScrollSwitch(),
-              TranscriptScaleButton(),
-              ExpandTranscriptButton(),
+              const Row(
+                children: [
+                  ShowTranslationSwitch(),
+                  EnableAutoScrollSwitch(),
+                  TranscriptScaleButton(),
+                ],
+              ),
+              if (isFullscreen)
+                const CloseTranscriptButton()
+              else
+                const ExpandTranscriptButton(),
             ],
           ),
         ],
@@ -402,6 +425,18 @@ class ExpandTranscriptButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.zoom_out_map_rounded),
       onPressed: () => context.goNamed(AppRoute.transcript),
+    );
+  }
+}
+
+class CloseTranscriptButton extends StatelessWidget {
+  const CloseTranscriptButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.close_rounded),
+      onPressed: context.pop,
     );
   }
 }
