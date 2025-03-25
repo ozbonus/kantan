@@ -42,6 +42,7 @@ class Config {
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
   static bool get defaultShowTranslation => true;
+  static double get transcriptScale => 1.0;
 
   static Locale get transcriptLocale =>
       const Locale.fromSubtags(languageCode: 'en');
