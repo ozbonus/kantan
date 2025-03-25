@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
+import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -215,10 +217,11 @@ class TranscriptLineWidget extends ConsumerWidget {
     final userShowTranslation = ref.watch(showTranslationServiceProvider);
     final showTranslation = canSeeTranslation && userShowTranslation;
     return ListTile(
+      selectedTileColor: Colors.purple[100],
       title: Localizations.override(
         context: context,
         locale: transcriptLineLocale,
-        child: Text(transcriptLine.text),
+        child: TranscriptLineText(transcriptLine.text),
       ),
       leading:
           transcriptLine.speaker != null ? Text(transcriptLine.speaker!) : null,
@@ -226,7 +229,7 @@ class TranscriptLineWidget extends ConsumerWidget {
           ? Localizations.override(
               context: context,
               locale: translationLineLocale,
-              child: Text(translationLine!.text),
+              child: TranscriptLineText(translationLine!.text),
             )
           : null,
       selected: index == activeIndex,
@@ -240,25 +243,51 @@ class TranscriptLineWidget extends ConsumerWidget {
   }
 }
 
+class TranscriptLineText extends ConsumerWidget {
+  const TranscriptLineText(
+    this.text, {
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textScale = ref.watch(transcriptScaleServiceProvider);
+    final style = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontSize:
+              Theme.of(context).textTheme.bodyMedium!.fontSize! * textScale,
+        );
+    return Text(
+      text,
+      style: style,
+    );
+  }
+}
+
 class TranscriptPlayerControls extends ConsumerWidget {
   const TranscriptPlayerControls({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TranscriptProgressSlider(),
-        ),
-        Row(
-          children: [
-            ShowTranslationSwitch(),
-            EnableAutoScrollSwitch(),
-            ExpandTranscriptButton(),
-          ],
-        ),
-      ],
+    return Container(
+      color: Colors.white,
+      child: const Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TranscriptProgressSlider(),
+          ),
+          Row(
+            children: [
+              ShowTranslationSwitch(),
+              EnableAutoScrollSwitch(),
+              TranscriptScaleButton(),
+              ExpandTranscriptButton(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -311,6 +340,56 @@ class EnableAutoScrollSwitch extends ConsumerWidget {
       onChanged: (value) => ref
           .read(enableAutoScrollServiceProvider.notifier)
           .setEnableAutoScroll(value),
+    );
+  }
+}
+
+class TranscriptScaleButton extends StatelessWidget {
+  const TranscriptScaleButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.text_fields_rounded),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Adjust text scale'.hardcoded),
+              content: Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  final scale = ref.watch(transcriptScaleServiceProvider);
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Scale: ${scale.toStringAsFixed(2)}'),
+                      Slider(
+                        label: 'hello',
+                        value: scale,
+                        min: Config.minTranscriptScale,
+                        max: Config.maxTranscriptScale,
+                        // divisions: Config.transcriptScaleDivisions,
+                        onChanged: (value) {
+                          ref
+                              .read(transcriptScaleServiceProvider.notifier)
+                              .setTranscriptScale(value);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+              actions: [
+                TextButton(
+                  onPressed: context.pop,
+                  child: Text('Close'.hardcoded),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
