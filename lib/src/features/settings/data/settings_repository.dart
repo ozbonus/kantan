@@ -105,6 +105,11 @@ class SettingsRepository {
     return value ?? Config.defaultEnableAutoScroll;
   }
 
+  double get transcriptScale {
+    final value = prefs.getDouble(SettingKey.transcriptScale);
+    return value ?? Config.defaultTranscriptScale;
+  }
+
   Future<bool> setQueueIndex(int value) async {
     return await prefs.setInt(SettingKey.queueIndex, value);
   }
@@ -169,6 +174,10 @@ class SettingsRepository {
 
   Future<bool> setEnableAutoScroll(bool value) async {
     return await prefs.setBool(SettingKey.enableAutoScroll, value);
+  }
+
+  Future<bool> setTranscriptScale(double value) async {
+    return await prefs.setDouble(SettingKey.transcriptScale, value);
   }
 }
 

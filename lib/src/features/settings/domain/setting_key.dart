@@ -12,4 +12,5 @@ class SettingKey {
   static const canSeeTranslation = 'canSeeTranslation';
   static const showTranslation = 'showTranslation';
   static const enableAutoScroll = 'enableAutoScroll';
+  static const transcriptScale = 'transcriptScale';
 }
