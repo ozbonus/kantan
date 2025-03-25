@@ -53,4 +53,5 @@ class Config {
         Locale.fromSubtags(languageCode: 'he'),
         Locale.fromSubtags(languageCode: 'ja'),
       ];
+  static List<double> transcriptScales = [1.0, 1.2, 1.5, 1.8, 2.0];
 }
