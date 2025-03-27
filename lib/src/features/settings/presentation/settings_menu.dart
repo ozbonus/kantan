@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
-import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
 class SettingsMenu extends StatelessWidget {
@@ -29,7 +28,6 @@ class SettingsMenu extends StatelessWidget {
           const ParentalModeSwitch(),
           const CanSeeTranscriptSwitch(),
           const CanSeeTranslationSwitch(),
-          const EnableAutoScrollSwitch(),
           const InterfaceLocaleSelector(),
           const TranslationLocaleSelector(),
         ],
@@ -133,25 +131,6 @@ class CanSeeTranslationSwitch extends ConsumerWidget {
       onChanged: (value) => ref
           .read(canSeeTranslationSwitchControllerProvider.notifier)
           .setCanSeeTranslation(value),
-    );
-  }
-}
-
-class EnableAutoScrollSwitch extends ConsumerWidget {
-  const EnableAutoScrollSwitch({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final enabled = ref.watch(enableAutoScrollSwitchControllerProvider);
-    return SwitchListTile(
-      // TODO: Add localizations for enable auto scroll switch.
-      title: Text('Auto scroll transcript'.hardcoded),
-      secondary: const Icon(Icons.format_line_spacing_rounded),
-      value: enabled,
-      onChanged: (value) => ref
-          .read(enableAutoScrollSwitchControllerProvider.notifier)
-          .setEnableAutoScroll(value),
     );
   }
 }

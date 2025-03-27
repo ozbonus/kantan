@@ -5,9 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
+import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
+import 'package:kantan/src/features/transcript/presentation/enable_auto_scroll_switch_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/show_translation_switch_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
@@ -77,7 +79,7 @@ class ShowTranslationSwitch extends ConsumerWidget {
     final state = ref.watch(showTranslationSwitchControllerProvider);
     return Switch(
       thumbIcon: thumbIcon,
-      value: state.value,
+      value: state.isActive ? state.value : false,
       onChanged: state.isActive
           ? (value) => ref
               .read(showTranslationServiceProvider.notifier)
@@ -95,13 +97,15 @@ class EnableAutoScrollSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(enableAutoScrollServiceProvider);
+    final state = ref.watch(enableAutoScrollSwitchControllerProvider);
     return Switch(
       thumbIcon: thumbIcon,
-      value: value,
-      onChanged: (value) => ref
-          .read(enableAutoScrollServiceProvider.notifier)
-          .setEnableAutoScroll(value),
+      value: state.isActive ? state.value : false,
+      onChanged: state.isActive
+          ? (value) => ref
+              .read(enableAutoScrollServiceProvider.notifier)
+              .setEnableAutoScroll(value)
+          : null,
     );
   }
 }
