@@ -9,7 +9,17 @@ part of 'enable_auto_scroll_switch_controller.dart';
 String _$enableAutoScrollSwitchControllerHash() =>
     r'521d2defaa56f62c751b5a963402adfa8fa183ed';
 
-/// See also [EnableAutoScrollSwitchController].
+/// Provides a state for the [EnableAutoScrollSwitch] widget in the player
+/// controls of the transcript screen.
+///
+/// Depending on the state, the switch may be active or inactive, on or off.
+///
+/// Returns a [EnableAutoScrollSwitchState] which is a record comprising two
+/// boolean values, [isActive] and [value]. [isActive] will be true if the
+/// current track has timestamps available. [value] corresponds to whether
+/// auto scroll is enabled or not.
+///
+/// Copied from [EnableAutoScrollSwitchController].
 @ProviderFor(EnableAutoScrollSwitchController)
 final enableAutoScrollSwitchControllerProvider = AutoDisposeNotifierProvider<
     EnableAutoScrollSwitchController, EnableAutoScrollSwitchState>.internal(

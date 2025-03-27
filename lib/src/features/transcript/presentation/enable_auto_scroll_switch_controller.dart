@@ -7,6 +7,15 @@ part 'enable_auto_scroll_switch_controller.g.dart';
 
 typedef EnableAutoScrollSwitchState = ({bool isActive, bool value});
 
+/// Provides a state for the [EnableAutoScrollSwitch] widget in the player
+/// controls of the transcript screen.
+///
+/// Depending on the state, the switch may be active or inactive, on or off.
+///
+/// Returns a [EnableAutoScrollSwitchState] which is a record comprising two
+/// boolean values, [isActive] and [value]. [isActive] will be true if the
+/// current track has timestamps available. [value] corresponds to whether
+/// auto scroll is enabled or not.
 @riverpod
 class EnableAutoScrollSwitchController
     extends _$EnableAutoScrollSwitchController {
