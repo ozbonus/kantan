@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/src/common_widgets/async_value_widget.dart';
+import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
+import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
@@ -44,6 +47,7 @@ class TranscriptPlayerControls extends StatelessWidget {
                       if (Config.useAutoScrollFeature)
                         const EnableAutoScrollSwitch(),
                       const TranscriptScaleButton(),
+                      const TranscriptPlayPauseButton(),
                     ],
                   ),
                   if (isFullscreen)
@@ -175,6 +179,35 @@ class ExpandTranscriptButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.zoom_out_map_rounded),
       onPressed: () => context.goNamed(AppRoute.transcript),
+    );
+  }
+}
+
+class TranscriptPlayPauseButton extends ConsumerWidget {
+  const TranscriptPlayPauseButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackStateValue = ref.watch(playPauseButtonControllerProvider);
+    return IconButton(
+      onPressed: ref.read(playPauseButtonControllerProvider.notifier).activate,
+      icon: AsyncValueWidget(
+        value: playbackStateValue,
+        data: (playbackState) {
+          switch (playbackState) {
+            case KantanPlaybackState.loading:
+              return const Icon(Icons.play_arrow_rounded);
+            case KantanPlaybackState.playing:
+              return const Icon(Icons.pause_rounded);
+            case KantanPlaybackState.paused:
+              return const Icon(Icons.play_arrow_rounded);
+            case KantanPlaybackState.completed:
+              return const Icon(Icons.replay_rounded);
+            case KantanPlaybackState.error:
+              return const Icon(Icons.error_rounded);
+          }
+        },
+      ),
     );
   }
 }
