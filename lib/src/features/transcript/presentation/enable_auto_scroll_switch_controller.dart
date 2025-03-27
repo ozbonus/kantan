@@ -30,7 +30,6 @@ class EnableAutoScrollSwitchController
         return (isActive: false, value: false);
       },
       data: (transcript) => (
-        // isActive: true,
         isActive: transcript.transcript?.endTimes != null,
         value: value,
       ),
