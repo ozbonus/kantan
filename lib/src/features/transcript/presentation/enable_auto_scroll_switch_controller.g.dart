@@ -7,7 +7,7 @@ part of 'enable_auto_scroll_switch_controller.dart';
 // **************************************************************************
 
 String _$enableAutoScrollSwitchControllerHash() =>
-    r'acaaf0c28c3d95e5200aa1c674e11af4c1f3baa2';
+    r'90dccc1a6bfc49768a9f709564302aa40336601e';
 
 /// See also [EnableAutoScrollSwitchController].
 @ProviderFor(EnableAutoScrollSwitchController)

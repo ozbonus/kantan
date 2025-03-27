@@ -19,7 +19,7 @@ class EnableAutoScrollSwitchController
 
   EnableAutoScrollSwitchState _mapTranscriptValueToState(
     AsyncValue<TranscriptBundle> transcriptValue,
-    bool initialValue,
+    bool value,
   ) {
     return transcriptValue.when(
       skipLoadingOnReload: true,
@@ -32,7 +32,7 @@ class EnableAutoScrollSwitchController
       data: (transcript) => (
         // isActive: true,
         isActive: transcript.transcript?.endTimes != null,
-        value: initialValue,
+        value: value,
       ),
     );
   }
