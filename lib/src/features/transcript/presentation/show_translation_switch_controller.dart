@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kantan/src/features/settings/data/settings_repository.dart';
+import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 
 part 'show_translation_switch_controller.g.dart';
@@ -21,37 +21,31 @@ class ShowTranslationSwitchController
     extends _$ShowTranslationSwitchController {
   @override
   ShowTranslationSwitchState build() {
-    final initialValue = _getInitialValue();
+    final value = ref.watch(showTranslationServiceProvider);
     final transcriptValue = ref.watch(transcriptControllerProvider);
-    return _mapTranscriptValueToState(transcriptValue, initialValue);
-  }
-
-  bool _getInitialValue() {
-    return ref.read(settingsRepositoryProvider).requireValue.showTranslation;
+    return _mapTranscriptValueToState(transcriptValue, value);
   }
 
   ShowTranslationSwitchState _mapTranscriptValueToState(
     AsyncValue<TranscriptBundle> transcriptValue,
-    bool initialValue,
+    bool value,
   ) {
     return transcriptValue.when(
       skipLoadingOnReload: true,
       skipLoadingOnRefresh: true,
-      loading: () => (isActive: false, value: false),
+      loading: () => (isActive: false, value: value),
       error: (e, st) {
         debugPrint('Error in ShowTranslationSwitchController: $e $st');
         return (isActive: false, value: false);
       },
       data: (transcript) => (
         isActive: transcript.translation != null,
-        value: initialValue,
+        value: value,
       ),
     );
   }
 
   void setShowTranslation(bool value) {
-    ref.read(settingsRepositoryProvider).requireValue.setShowTranslation(value);
-    final newState = (isActive: state.isActive, value: value);
-    state = newState;
+    ref.read(showTranslationServiceProvider.notifier).setShowTranslation(value);
   }
 }

@@ -7,7 +7,7 @@ part of 'show_translation_switch_controller.dart';
 // **************************************************************************
 
 String _$showTranslationSwitchControllerHash() =>
-    r'03d33d6ac149841b4a24afce12c1eff34f6ec500';
+    r'078af421b3e4e122161748cfa6ab0d1101e34f48';
 
 /// Provides a state for the [ShowTranslationSwitch] widget in the player
 /// controls of the transcript screen.
