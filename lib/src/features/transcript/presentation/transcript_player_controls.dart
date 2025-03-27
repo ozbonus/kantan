@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
-import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
