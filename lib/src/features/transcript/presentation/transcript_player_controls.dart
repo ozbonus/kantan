@@ -7,6 +7,7 @@ import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
+import 'package:kantan/src/features/player/presentation/prev_next_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
@@ -36,25 +37,30 @@ class TranscriptPlayerControls extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 child: TranscriptProgressSlider(),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      if (Config.useTranslationFeature)
-                        const ShowTranslationSwitch(),
-                      if (Config.useAutoScrollFeature)
-                        const EnableAutoScrollSwitch(),
-                      const TranscriptScaleButton(),
-                      const TranscriptPlayPauseButton(),
-                    ],
-                  ),
-                  if (isFullscreen)
-                    const CloseTranscriptButton()
-                  else
-                    const ExpandTranscriptButton(),
-                ],
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        if (Config.useTranslationFeature)
+                          const ShowTranslationSwitch(),
+                        if (Config.useAutoScrollFeature)
+                          const EnableAutoScrollSwitch(),
+                        const TranscriptScaleButton(),
+                        const VerticalDivider(),
+                        const TranscriptSkipToPreviousButton(),
+                        const TranscriptPlayPauseButton(),
+                        const TranscriptSkipToNextButton(),
+                      ],
+                    ),
+                    if (isFullscreen)
+                      const CloseTranscriptButton()
+                    else
+                      const ExpandTranscriptButton(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -208,6 +214,32 @@ class TranscriptPlayPauseButton extends ConsumerWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class TranscriptSkipToPreviousButton extends ConsumerWidget {
+  const TranscriptSkipToPreviousButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(prevNextButtonControllerProvider.notifier);
+    return IconButton(
+      onPressed: controller.skipToPrevious,
+      icon: const Icon(Icons.skip_previous_rounded),
+    );
+  }
+}
+
+class TranscriptSkipToNextButton extends ConsumerWidget {
+  const TranscriptSkipToNextButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(prevNextButtonControllerProvider.notifier);
+    return IconButton(
+      onPressed: controller.skipToNext,
+      icon: const Icon(Icons.skip_next_rounded),
     );
   }
 }
