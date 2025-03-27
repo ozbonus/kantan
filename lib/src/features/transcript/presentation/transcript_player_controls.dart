@@ -24,30 +24,32 @@ class TranscriptPlayerControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TranscriptProgressSlider(),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  if (Config.useTranslationFeature) ShowTranslationSwitch(),
-                  if (Config.useAutoScrollFeature) EnableAutoScrollSwitch(),
-                  TranscriptScaleButton(),
-                ],
-              ),
-              if (isFullscreen)
-                const CloseTranscriptButton()
-              else
-                const ExpandTranscriptButton(),
-            ],
-          ),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: TranscriptProgressSlider(),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    if (Config.useTranslationFeature) ShowTranslationSwitch(),
+                    if (Config.useAutoScrollFeature) EnableAutoScrollSwitch(),
+                    TranscriptScaleButton(),
+                  ],
+                ),
+                if (isFullscreen)
+                  const CloseTranscriptButton()
+                else
+                  const ExpandTranscriptButton(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
