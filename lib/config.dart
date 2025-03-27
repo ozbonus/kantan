@@ -17,6 +17,12 @@ class Config {
   static Duration get rewindDuration => const Duration(seconds: 5);
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
+  // Feature flags
+  static bool get useTranscriptFeature => true;
+  static bool get useTranscriptLineSeekFeature => true;
+  static bool get useTranslationFeature => true;
+  static bool get useAutoScrollFeature => true;
+
   // Theming
   static double get layoutOuterPadding => 16.0;
   static double get layoutSpacing => 16.0;
