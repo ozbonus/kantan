@@ -24,7 +24,7 @@ class EnableAutoScrollSwitchController
     return transcriptValue.when(
       skipLoadingOnReload: true,
       skipLoadingOnRefresh: true,
-      loading: () => (isActive: false, value: false),
+      loading: () => (isActive: false, value: value),
       error: (e, st) {
         debugPrint('Error in ShowTranslationSwitchController: $e $st');
         return (isActive: false, value: false);
