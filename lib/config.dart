@@ -27,7 +27,7 @@ class Config {
   static double get layoutOuterPadding => 16.0;
   static double get layoutSpacing => 16.0;
   static double get bookCoverPadding => 24.0;
-  static Duration get scrollDuration => const Duration(milliseconds: 1500);
+  static Duration get scrollDuration => const Duration(milliseconds: 200);
 
   // Default values for player state.
   static int get defaultQueueIndex => 0;
