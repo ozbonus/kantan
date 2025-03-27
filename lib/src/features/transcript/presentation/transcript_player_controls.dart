@@ -8,10 +8,10 @@ import 'package:kantan/src/features/player/presentation/progress_slider_controll
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
+import 'package:kantan/src/features/transcript/presentation/show_translation_switch_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
-class TranscriptPlayerControls extends ConsumerWidget {
+class TranscriptPlayerControls extends StatelessWidget {
   const TranscriptPlayerControls({
     super.key,
     this.isFullscreen = false,
@@ -20,7 +20,7 @@ class TranscriptPlayerControls extends ConsumerWidget {
   final bool isFullscreen;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(
@@ -33,10 +33,10 @@ class TranscriptPlayerControls extends ConsumerWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
-                  ShowTranslationSwitch(),
-                  EnableAutoScrollSwitch(),
+                  if (Config.useTranslationFeature) ShowTranslationSwitch(),
+                  if (Config.useAutoScrollFeature) EnableAutoScrollSwitch(),
                   TranscriptScaleButton(),
                 ],
               ),
@@ -74,13 +74,15 @@ class ShowTranslationSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(showTranslationServiceProvider);
+    final state = ref.watch(showTranslationSwitchControllerProvider);
     return Switch(
       thumbIcon: thumbIcon,
-      value: value,
-      onChanged: (value) => ref
-          .read(showTranslationServiceProvider.notifier)
-          .setShowTranslation(value),
+      value: state.value,
+      onChanged: state.isActive
+          ? (value) => ref
+              .read(showTranslationServiceProvider.notifier)
+              .setShowTranslation(value)
+          : null,
     );
   }
 }

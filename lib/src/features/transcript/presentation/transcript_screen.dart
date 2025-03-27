@@ -50,40 +50,38 @@ class TranscriptScreenContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
-    return SafeArea(
-      child: transcriptValue.when(
-        loading: () => const CircularProgressIndicator.adaptive(),
-        error: (e, st) => throw Exception('$e $st'),
-        data: (data) {
-          if (data.transcript == null) {
-            return const NoTranscript();
-          } else if (data.transcript!.endTimes == null) {
-            return Column(
-              children: [
-                Expanded(
-                  child: StaticTranscript(
-                    transcript: data.transcript!,
-                    translation: data.translation,
-                  ),
+    return transcriptValue.when(
+      loading: () => const CircularProgressIndicator.adaptive(),
+      error: (e, st) => throw Exception('$e $st'),
+      data: (data) {
+        if (data.transcript == null) {
+          return const NoTranscript();
+        } else if (data.transcript!.endTimes == null) {
+          return Column(
+            children: [
+              Expanded(
+                child: StaticTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
                 ),
-                TranscriptPlayerControls(isFullscreen: isFullscreen)
-              ],
-            );
-          } else {
-            return Column(
-              children: [
-                Expanded(
-                  child: DynamicScrollingTranscript(
-                    transcript: data.transcript!,
-                    translation: data.translation,
-                  ),
+              ),
+              TranscriptPlayerControls(isFullscreen: isFullscreen)
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: DynamicScrollingTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
                 ),
-                const TranscriptPlayerControls(),
-              ],
-            );
-          }
-        },
-      ),
+              ),
+              TranscriptPlayerControls(),
+            ],
+          );
+        }
+      },
     );
   }
 }
