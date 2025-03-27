@@ -12,7 +12,7 @@ typedef ShowTranslationSwitchState = ({bool isActive, bool value});
 ///
 /// Depending on the state, the switch may be active or inactive, on or off.
 ///
-/// Returns a [ShowTranslationSwitchState] which is a record comprising to
+/// Returns a [ShowTranslationSwitchState] which is a record comprising two
 /// boolean values, [isActive] and [value]. [isActive] will be true if the
 /// current track has a translation available. [value] corresponds to whether
 /// the translation, if available, will be shown or not.
