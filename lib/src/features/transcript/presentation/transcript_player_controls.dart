@@ -68,6 +68,7 @@ class TranscriptProgressSlider extends ConsumerWidget {
     final positionData = ref.watch(progressSliderControllerProvider);
     return ProgressBar(
       progress: positionData.position,
+      timeLabelLocation: TimeLabelLocation.none,
       total: positionData.duration,
       onSeek: (position) => ref.read(onSeekProvider(position)),
     );
