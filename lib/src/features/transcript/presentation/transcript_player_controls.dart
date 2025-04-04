@@ -26,6 +26,8 @@ class TranscriptPlayerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final smallScreen =
+        MediaQuery.sizeOf(context).width < Config.mediumBreakpoint;
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -38,27 +40,34 @@ class TranscriptPlayerControls extends StatelessWidget {
                 child: TranscriptProgressSlider(),
               ),
               IntrinsicHeight(
-                child: Row(
+                child: Flex(
+                  direction: smallScreen ? Axis.vertical : Axis.horizontal,
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const TranscriptSkipToPreviousButton(),
+                        const TranscriptPlayPauseButton(),
+                        const TranscriptSkipToNextButton(),
+                        if (!smallScreen) const VerticalDivider(),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (Config.useTranslationFeature)
                           const ShowTranslationSwitch(),
                         if (Config.useAutoScrollFeature)
                           const EnableAutoScrollSwitch(),
                         const TranscriptScaleButton(),
-                        const VerticalDivider(),
-                        const TranscriptSkipToPreviousButton(),
-                        const TranscriptPlayPauseButton(),
-                        const TranscriptSkipToNextButton(),
+                        if (isFullscreen)
+                          const CloseTranscriptButton()
+                        else
+                          const ExpandTranscriptButton(),
                       ],
                     ),
-                    if (isFullscreen)
-                      const CloseTranscriptButton()
-                    else
-                      const ExpandTranscriptButton(),
                   ],
                 ),
               ),
