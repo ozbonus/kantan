@@ -19,6 +19,8 @@ Map<String, Object> fullValues = {
   SettingKey.translationLocale: 'fr_CA',
   SettingKey.canSeeTranscript: !Config.defaultCanSeeTranscript,
   SettingKey.canSeeTranslation: !Config.defaultCanSeeTranslation,
+  SettingKey.enableAutoScroll: !Config.defaultEnableAutoScroll,
+  SettingKey.transcriptScale: Config.defaultTranscriptScale + 0.1,
 };
 
 late SettingsRepository repo;
@@ -100,6 +102,16 @@ void main() {
     test('Can see translation', () {
       final value = Config.defaultCanSeeTranslation;
       expect(repo.canSeeTranslation, equals(value));
+    });
+
+    test('Enable auto scroll', () {
+      final value = Config.defaultEnableAutoScroll;
+      expect(repo.enableAutoScroll, equals(value));
+    });
+
+    test('Transcript scale', () {
+      final value = Config.defaultTranscriptScale;
+      expect(repo.transcriptScale, equals(value));
     });
   });
 
@@ -263,6 +275,18 @@ void main() {
       final value = fullValues[SettingKey.canSeeTranscript] as bool;
       await expectLater(repo.setCanSeeTranslation(value), completes);
       expect(repo.canSeeTranslation, equals(value));
+    });
+
+    test('Enable auto scroll', () async {
+      final value = fullValues[SettingKey.enableAutoScroll] as bool;
+      await expectLater(repo.setEnableAutoScroll(value), completes);
+      expect(repo.enableAutoScroll, equals(value));
+    });
+
+    test('Transcript scale', () async {
+      final value = fullValues[SettingKey.transcriptScale] as double;
+      await expectLater(repo.setTranscriptScale(value), completes);
+      expect(repo.transcriptScale, equals(value));
     });
   });
 }

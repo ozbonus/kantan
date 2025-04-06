@@ -17,7 +17,7 @@ class PlayPauseButton extends ConsumerWidget {
         data: (playbackState) {
           switch (playbackState) {
             case KantanPlaybackState.loading:
-              return const Icon(Icons.local_pizza_rounded);
+              return const Icon(Icons.play_arrow_rounded);
             case KantanPlaybackState.playing:
               return const Icon(Icons.pause_rounded);
             case KantanPlaybackState.paused:

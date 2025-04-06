@@ -4,13 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
+import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
+import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_player_controls.dart';
 
-/// A wrapper widget for small displays that show the transcript as a single
-/// screen.
+/// A wrapper widget for small displays, such as smart phones, that show the
+/// transcript as a single screen.
 class TranscriptScreen extends StatelessWidget {
   const TranscriptScreen({super.key});
 
@@ -21,7 +25,9 @@ class TranscriptScreen extends StatelessWidget {
         title: const Text('Transcript Screen'),
       ),
       body: const Center(
-        child: TranscriptScreenContents(),
+        child: TranscriptScreenContents(
+          isFullscreen: true,
+        ),
       ),
     );
   }
@@ -34,26 +40,54 @@ class TranscriptScreen extends StatelessWidget {
 /// * a simple transcript akin to a text document
 /// * a self-scrolling transcript with tappable lines that seek to a position
 class TranscriptScreenContents extends ConsumerWidget {
-  const TranscriptScreenContents({super.key});
+  const TranscriptScreenContents({
+    super.key,
+    this.isFullscreen = false,
+  });
+
+  final bool isFullscreen;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
     return transcriptValue.when(
+      skipLoadingOnReload: true,
       loading: () => const CircularProgressIndicator.adaptive(),
       error: (e, st) => throw Exception('$e $st'),
       data: (data) {
         if (data.transcript == null) {
-          return const NoTranscript();
+          // return const NoTranscript();
+          return Column(
+            children: [
+              const Expanded(
+                child: NoTranscript(),
+              ),
+              TranscriptPlayerControls(isFullscreen: isFullscreen),
+            ],
+          );
         } else if (data.transcript!.endTimes == null) {
-          return StaticTranscript(
-            transcript: data.transcript!,
-            translation: data.translation,
+          return Column(
+            children: [
+              Expanded(
+                child: StaticTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
+                ),
+              ),
+              TranscriptPlayerControls(isFullscreen: isFullscreen)
+            ],
           );
         } else {
-          return DynamicScrollingTranscript(
-            transcript: data.transcript!,
-            translation: data.translation,
+          return Column(
+            children: [
+              Expanded(
+                child: DynamicScrollingTranscript(
+                  transcript: data.transcript!,
+                  translation: data.translation,
+                ),
+              ),
+              TranscriptPlayerControls(isFullscreen: isFullscreen),
+            ],
           );
         }
       },
@@ -191,19 +225,23 @@ class TranscriptLineWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeIndex = ref.watch(transcriptIndexControllerProvider);
+    final canSeeTranslation = ref.watch(canSeeTranslationServiceProvider);
+    final userShowTranslation = ref.watch(showTranslationServiceProvider);
+    final showTranslation = canSeeTranslation && userShowTranslation;
     return ListTile(
+      selectedTileColor: Colors.purple[100],
       title: Localizations.override(
         context: context,
         locale: transcriptLineLocale,
-        child: Text(transcriptLine.text),
+        child: TranscriptLineText(transcriptLine.text),
       ),
       leading:
           transcriptLine.speaker != null ? Text(transcriptLine.speaker!) : null,
-      subtitle: translationLine != null
+      subtitle: translationLine != null && showTranslation
           ? Localizations.override(
               context: context,
               locale: translationLineLocale,
-              child: Text(translationLine!.text),
+              child: TranscriptLineText(translationLine!.text),
             )
           : null,
       selected: index == activeIndex,
@@ -213,6 +251,28 @@ class TranscriptLineWidget extends ConsumerWidget {
               .requireValue
               .seek(transcriptLine.startTime!)
           : null,
+    );
+  }
+}
+
+class TranscriptLineText extends ConsumerWidget {
+  const TranscriptLineText(
+    this.text, {
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textScale = ref.watch(transcriptScaleServiceProvider);
+    final style = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontSize:
+              Theme.of(context).textTheme.bodyMedium!.fontSize! * textScale,
+        );
+    return Text(
+      text,
+      style: style,
     );
   }
 }

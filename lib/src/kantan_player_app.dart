@@ -114,7 +114,6 @@ class LargeLayout extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                color: Colors.blue[100],
                 child: const TranscriptScreenContents(),
               ),
             ),

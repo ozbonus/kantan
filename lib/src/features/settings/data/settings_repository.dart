@@ -95,9 +95,19 @@ class SettingsRepository {
     return value ?? Config.defaultCanSeeTranslation;
   }
 
+  bool get showTranslation {
+    final value = prefs.getBool(SettingKey.showTranslation);
+    return value ?? Config.defaultShowTranslation;
+  }
+
   bool get enableAutoScroll {
     final value = prefs.getBool(SettingKey.enableAutoScroll);
     return value ?? Config.defaultEnableAutoScroll;
+  }
+
+  double get transcriptScale {
+    final value = prefs.getDouble(SettingKey.transcriptScale);
+    return value ?? Config.defaultTranscriptScale;
   }
 
   Future<bool> setQueueIndex(int value) async {
@@ -158,8 +168,16 @@ class SettingsRepository {
     return await prefs.setBool(SettingKey.canSeeTranslation, value);
   }
 
+  Future<bool> setShowTranslation(bool value) async {
+    return await prefs.setBool(SettingKey.showTranslation, value);
+  }
+
   Future<bool> setEnableAutoScroll(bool value) async {
     return await prefs.setBool(SettingKey.enableAutoScroll, value);
+  }
+
+  Future<bool> setTranscriptScale(double value) async {
+    return await prefs.setDouble(SettingKey.transcriptScale, value);
   }
 }
 

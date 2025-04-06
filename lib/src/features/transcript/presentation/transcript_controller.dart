@@ -7,6 +7,8 @@ import 'package:kantan/src/features/transcript/domain/transcript.dart';
 
 part 'transcript_controller.g.dart';
 
+typedef TranscriptBundle = ({Transcript? transcript, Transcript? translation});
+
 /// Provides a transcript and translation for the current track, if either are
 /// available.
 ///
@@ -20,7 +22,7 @@ part 'transcript_controller.g.dart';
 @riverpod
 class TranscriptController extends _$TranscriptController {
   @override
-  FutureOr<({Transcript? transcript, Transcript? translation})> build() {
+  FutureOr<TranscriptBundle> build() {
     ref.watch(translationLocaleServiceProvider); // Trigger rebuild on change.
     final trackValue = ref.watch(currentTrackStreamProvider);
     return trackValue.when(
