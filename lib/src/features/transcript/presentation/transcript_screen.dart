@@ -56,7 +56,15 @@ class TranscriptScreenContents extends ConsumerWidget {
       error: (e, st) => throw Exception('$e $st'),
       data: (data) {
         if (data.transcript == null) {
-          return const NoTranscript();
+          // return const NoTranscript();
+          return Column(
+            children: [
+              const Expanded(
+                child: NoTranscript(),
+              ),
+              TranscriptPlayerControls(isFullscreen: isFullscreen),
+            ],
+          );
         } else if (data.transcript!.endTimes == null) {
           return Column(
             children: [
