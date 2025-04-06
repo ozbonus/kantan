@@ -25,16 +25,19 @@ class SpeedSlider extends ConsumerWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         Expanded(
-          child: Slider(
-            min: 0.5,
-            max: 2.0,
-            divisions: 16,
-            value: speedValue.when(
-              loading: () => 1.0,
-              error: (_, __) => 1.0,
-              data: (speed) => speed,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Slider(
+              min: 0.5,
+              max: 2.0,
+              divisions: 16,
+              value: speedValue.when(
+                loading: () => 1.0,
+                error: (_, __) => 1.0,
+                data: (speed) => speed,
+              ),
+              onChanged: (speed) => ref.read(setSpeedProvider(speed)),
             ),
-            onChanged: (speed) => ref.read(setSpeedProvider(speed)),
           ),
         ),
       ],
