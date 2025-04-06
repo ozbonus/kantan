@@ -22,6 +22,7 @@ class Config {
   static bool get useTranscriptLineSeekFeature => true;
   static bool get useTranslationFeature => true;
   static bool get useAutoScrollFeature => true;
+  static bool get disableAutoScrollOnUserScroll => true;
 
   // Theming
   static double get layoutOuterPadding => 16.0;
