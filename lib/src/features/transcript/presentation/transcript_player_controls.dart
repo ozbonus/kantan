@@ -165,17 +165,20 @@ class TranscriptScaleButton extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('Scale: ${scale.toStringAsFixed(2)}'),
-                      Slider(
-                        label: 'hello',
-                        value: scale,
-                        min: Config.minTranscriptScale,
-                        max: Config.maxTranscriptScale,
-                        // divisions: Config.transcriptScaleDivisions,
-                        onChanged: (value) {
-                          ref
-                              .read(transcriptScaleServiceProvider.notifier)
-                              .setTranscriptScale(value);
-                        },
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Slider(
+                          label: 'hello',
+                          value: scale,
+                          min: Config.minTranscriptScale,
+                          max: Config.maxTranscriptScale,
+                          // divisions: Config.transcriptScaleDivisions,
+                          onChanged: (value) {
+                            ref
+                                .read(transcriptScaleServiceProvider.notifier)
+                                .setTranscriptScale(value);
+                          },
+                        ),
                       ),
                     ],
                   );
