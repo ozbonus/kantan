@@ -47,10 +47,12 @@ class TranscriptPlayerControls extends StatelessWidget {
                           : Axis.vertical,
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
+                      textDirection: TextDirection.ltr,
                       children: [
                         if (isFullscreen)
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            textDirection: TextDirection.ltr,
                             children: [
                               TranscriptSkipToPreviousButton(),
                               TranscriptPlayPauseButton(),
@@ -60,6 +62,7 @@ class TranscriptPlayerControls extends StatelessWidget {
                           ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          textDirection: TextDirection.ltr,
                           children: [
                             if (Config.useTranslationFeature)
                               const ShowTranslationSwitch(),
