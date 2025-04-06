@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
@@ -148,45 +149,82 @@ class DynamicScrollingTranscript extends ConsumerStatefulWidget {
 class _ScrollingTranscriptScreenContentsState
     extends ConsumerState<DynamicScrollingTranscript> {
   final _scrollController = AutoScrollController();
+  bool _isAutoScrolling = false;
 
   @override
   void initState() {
     super.initState();
     final index = ref.read(transcriptIndexControllerProvider);
-    _scroll(index);
+    _scrollToIndex(index);
+    _scrollController.addListener(_maybeDisableAutoScroll);
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_maybeDisableAutoScroll);
     _scrollController.dispose();
     super.dispose();
   }
 
-  void _scroll(int? index) {
+  /// Scroll to the given index of the transcript.
+  ///
+  /// Sets [_isAutoScrolling] to [true] just before scrolling and then back to
+  /// [false] when complete, so as not to accidentally disable auto scrolling
+  /// when [_onScroll] is called.
+  void _scrollToIndex(int? index) {
     final enableAutoScroll = ref.read(enableAutoScrollServiceProvider);
     if (enableAutoScroll && index != null) {
-      _scrollController.scrollToIndex(
+      _isAutoScrolling = true;
+      _scrollController
+          .scrollToIndex(
         index,
         preferPosition: AutoScrollPosition.middle,
         duration: Config.scrollDuration,
-      );
+      )
+          .then((_) {
+        _isAutoScrolling = false;
+      });
     }
   }
 
-  void enabler(bool enable) {
-    /// If the option to enable auto scroll is switching from off to on,
-    /// immediately scroll to the active index.
+  /// Disables auto scroll upon manual scroll.
+  ///
+  /// When a user scrolls the transcript manually disable auto scrolling if it
+  /// is enabled, audio is currently playing, and this feature is enabled by the
+  /// customer.
+  void _maybeDisableAutoScroll() async {
+    if (!_isAutoScrolling) {
+      final autoScrollEnabled = ref.read(enableAutoScrollServiceProvider);
+      final currentlyPlaying =
+          await ref.read(kantanPlaybackStateStreamProvider.future);
+      if (autoScrollEnabled &&
+          currentlyPlaying == KantanPlaybackState.playing &&
+          Config.disableAutoScrollOnUserScroll) {
+        ref
+            .read(enableAutoScrollServiceProvider.notifier)
+            .setEnableAutoScroll(false);
+      }
+    }
+  }
+
+  /// Immediate auto scrolls when auto scrolling is toggled on.
+  ///
+  /// If enable auto scroll changes from [false] to [true], immediately scrolls
+  /// to the portion of the transcript associated with position of the current
+  /// track.
+  void _enabler(bool enable) {
     if (enable) {
       final index = ref.read(transcriptIndexControllerProvider);
-      _scroll(index);
+      _scrollToIndex(index);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen<int?>(
-        transcriptIndexControllerProvider, (_, index) => _scroll(index));
-    ref.listen(enableAutoScrollServiceProvider, (_, enable) => enabler(enable));
+        transcriptIndexControllerProvider, (_, index) => _scrollToIndex(index));
+    ref.listen(
+        enableAutoScrollServiceProvider, (_, enable) => _enabler(enable));
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.transcript.lines.length,
