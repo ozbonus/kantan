@@ -35,10 +35,11 @@ class TranscriptPlayerControls extends StatelessWidget {
             builder: (context, constraints) {
               return Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: TranscriptProgressSlider(),
-                  ),
+                  if (isFullscreen)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: TranscriptProgressSlider(),
+                    ),
                   IntrinsicHeight(
                     child: Flex(
                       direction: constraints.maxWidth > Config.mediumBreakpoint
