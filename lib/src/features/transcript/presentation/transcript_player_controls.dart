@@ -26,52 +26,57 @@ class TranscriptPlayerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final smallScreen =
-        MediaQuery.sizeOf(context).width < Config.mediumBreakpoint;
     return Container(
       color: Colors.white,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: TranscriptProgressSlider(),
-              ),
-              IntrinsicHeight(
-                child: Flex(
-                  direction: smallScreen ? Axis.vertical : Axis.horizontal,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: TranscriptProgressSlider(),
+                  ),
+                  IntrinsicHeight(
+                    child: Flex(
+                      direction: constraints.maxWidth > Config.mediumBreakpoint
+                          ? Axis.horizontal
+                          : Axis.vertical,
+                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const TranscriptSkipToPreviousButton(),
-                        const TranscriptPlayPauseButton(),
-                        const TranscriptSkipToNextButton(),
-                        if (!smallScreen) const VerticalDivider(),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (Config.useTranslationFeature)
-                          const ShowTranslationSwitch(),
-                        if (Config.useAutoScrollFeature)
-                          const EnableAutoScrollSwitch(),
-                        const TranscriptScaleButton(),
                         if (isFullscreen)
-                          const CloseTranscriptButton()
-                        else
-                          const ExpandTranscriptButton(),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TranscriptSkipToPreviousButton(),
+                              TranscriptPlayPauseButton(),
+                              TranscriptSkipToNextButton(),
+                              VerticalDivider(),
+                            ],
+                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (Config.useTranslationFeature)
+                              const ShowTranslationSwitch(),
+                            if (Config.useAutoScrollFeature)
+                              const EnableAutoScrollSwitch(),
+                            const TranscriptScaleButton(),
+                            if (isFullscreen)
+                              const CloseTranscriptButton()
+                            else
+                              const ExpandTranscriptButton(),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
