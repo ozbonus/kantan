@@ -51,6 +51,7 @@ class TranscriptScreenContents extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
     return transcriptValue.when(
+      skipLoadingOnReload: true,
       loading: () => const CircularProgressIndicator.adaptive(),
       error: (e, st) => throw Exception('$e $st'),
       data: (data) {
