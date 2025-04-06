@@ -77,7 +77,7 @@ class TranscriptScreenContents extends ConsumerWidget {
                   translation: data.translation,
                 ),
               ),
-              TranscriptPlayerControls(),
+              TranscriptPlayerControls(isFullscreen: isFullscreen),
             ],
           );
         }
