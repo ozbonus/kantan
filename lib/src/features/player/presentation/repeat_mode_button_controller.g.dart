@@ -7,12 +7,12 @@ part of 'repeat_mode_button_controller.dart';
 // **************************************************************************
 
 String _$repeatModeButtonControllerHash() =>
-    r'5317ce954f907dcdc996a09930fe324092ee8c1a';
+    r'5c2af81c58b643459743fb12bb1fbc2973df6272';
 
 /// See also [RepeatModeButtonController].
 @ProviderFor(RepeatModeButtonController)
 final repeatModeButtonControllerProvider = AutoDisposeNotifierProvider<
-    RepeatModeButtonController, AsyncValue<RepeatMode>>.internal(
+    RepeatModeButtonController, RepeatMode>.internal(
   RepeatModeButtonController.new,
   name: r'repeatModeButtonControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,7 +22,6 @@ final repeatModeButtonControllerProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$RepeatModeButtonController
-    = AutoDisposeNotifier<AsyncValue<RepeatMode>>;
+typedef _$RepeatModeButtonController = AutoDisposeNotifier<RepeatMode>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
