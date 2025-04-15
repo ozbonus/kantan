@@ -13,17 +13,3 @@ void skipToPreviousButtonController(Ref ref) {
 void skipToNextButtonController(Ref ref) {
   ref.read(audioHandlerProvider).requireValue.skipToNext();
 }
-
-@riverpod
-class PrevNextButtonController extends _$PrevNextButtonController {
-  @override
-  void build() {}
-
-  void skipToPrevious() {
-    ref.read(audioHandlerProvider).requireValue.skipToPrevious();
-  }
-
-  void skipToNext() {
-    ref.read(audioHandlerProvider).requireValue.skipToNext();
-  }
-}
