@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
-import 'package:kantan/src/features/player/presentation/play_pause_button.dart';
-import 'package:kantan/src/features/player/presentation/prev_next_buttons.dart';
+import 'package:kantan/src/features/player/presentation/buttons.dart';
+import 'package:kantan/src/features/player/presentation/open_transcript_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
-import 'package:kantan/src/features/player/presentation/repeat_mode_button.dart';
-import 'package:kantan/src/features/player/presentation/rewind_forward_buttons.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
@@ -26,48 +25,104 @@ class PlayerScreen extends StatelessWidget {
   }
 }
 
-class PlayerScreenContents extends StatelessWidget {
+class PlayerScreenContents extends ConsumerWidget {
   const PlayerScreenContents({
+    this.isFullscreen = false,
     super.key,
   });
+
+  final bool isFullscreen;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final showOpenTranscriptButton = ref.watch(
+        showOpenTranscriptButtonControllerProvider(isFullscreen, screenWidth));
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Removable?
+          children: [
+            TrackInfo(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 420),
+                child: ButtonGrid(
+                  showOpenTranscriptButton: showOpenTranscriptButton,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonGrid extends StatelessWidget {
+  const ButtonGrid({
+    super.key,
+    this.showOpenTranscriptButton = false,
+  });
+
+  final bool showOpenTranscriptButton;
+
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const TrackInfo(),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              PlayPauseButton(),
-              RewindButton(),
-              FastForwardButton(),
-            ],
+    return StaggeredGrid.count(
+      crossAxisCount: 4,
+      mainAxisSpacing: 16.0,
+      crossAxisSpacing: 16.0,
+      children: [
+        StaggeredGridTile.count(
+          mainAxisCellCount: 3,
+          crossAxisCellCount: 2,
+          child: const PlayPauseButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 1,
+          child: const SkipToPreviousButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 1,
+          child: const SkipToNextButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 1,
+          child: const RewindButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 1,
+          child: const FastForwardButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 2,
+          child: const RepeatModeButton(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 4,
+          child: const SpeedSlider(),
+        ),
+        StaggeredGridTile.count(
+          mainAxisCellCount: 1,
+          crossAxisCellCount: 4,
+          child: const ProgressSlider(),
+        ),
+        if (showOpenTranscriptButton)
+          StaggeredGridTile.fit(
+            crossAxisCellCount: 4,
+            child: const OpenTranscriptButton(),
           ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SkipToPreviousButton(),
-              SkipToNextButton(),
-              RepeatModeButton(),
-            ],
-          ),
-          const SpeedSlider(),
-          const ProgressSlider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FilledButton(
-              onPressed: () => context.goNamed(AppRoute.transcript),
-              child: Text(localizations!.transcriptButtonLabel),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }
