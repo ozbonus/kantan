@@ -7,29 +7,28 @@ part 'play_pause_button_controller.g.dart';
 @riverpod
 class PlayPauseButtonController extends _$PlayPauseButtonController {
   @override
-  AsyncValue<KantanPlaybackState> build() {
-    state = const AsyncValue.loading();
-    return ref.watch(kantanPlaybackStateStreamProvider);
+  KantanPlaybackState build() {
+    return ref.watch(kantanPlaybackStateStreamProvider).when(
+          skipLoadingOnReload: true,
+          loading: () => KantanPlaybackState.loading,
+          error: (_, __) => KantanPlaybackState.error,
+          data: (playbackState) => playbackState,
+        );
   }
 
-  void activate() {
-    state.when(
-      loading: () {},
-      error: (e, st) => throw Exception('PlayPauseButtonController $e $st'),
-      data: (data) {
-        switch (data) {
-          case KantanPlaybackState.loading:
-          case KantanPlaybackState.error:
-            () {};
-          case KantanPlaybackState.playing:
-            ref.read(audioHandlerProvider).requireValue.pause();
-          case KantanPlaybackState.paused:
-            ref.read(audioHandlerProvider).requireValue.play();
-          case KantanPlaybackState.completed:
-            ref.read(audioHandlerProvider).requireValue.skipToQueueItem(0);
-            ref.read(audioHandlerProvider).requireValue.play();
-        }
-      },
-    );
+  void activate() async {
+    switch (state) {
+      case KantanPlaybackState.loading:
+      case KantanPlaybackState.error:
+        return;
+      case KantanPlaybackState.playing:
+        ref.read(audioHandlerProvider).requireValue.pause();
+      case KantanPlaybackState.paused:
+        ref.read(audioHandlerProvider).requireValue.play();
+      case KantanPlaybackState.completed:
+        await ref.read(audioHandlerProvider).requireValue.skipToQueueItem(0);
+        await Future.delayed(const Duration(milliseconds: 10));
+        await ref.read(audioHandlerProvider).requireValue.play();
+    }
   }
 }
