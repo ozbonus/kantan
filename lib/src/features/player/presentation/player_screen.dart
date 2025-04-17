@@ -81,7 +81,6 @@ class ResponsiveButtonGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        print(constraints.maxHeight);
         if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
           return ButtonGrid(
             showOpenTranscriptButton: showOpenTranscriptButton,
