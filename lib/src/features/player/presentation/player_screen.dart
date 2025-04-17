@@ -8,6 +8,7 @@ import 'package:kantan/src/features/player/application/audio_handler_service.dar
 import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/open_transcript_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
+import 'package:kantan/src/features/player/presentation/repeat_mode_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider.dart';
 import 'package:kantan/src/routing/app_router.dart';
 
@@ -43,21 +44,60 @@ class PlayerScreenContents extends ConsumerWidget {
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Removable?
+          mainAxisAlignment: MainAxisAlignment.end, // Removable?
           children: [
             TrackInfo(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 420),
-                child: ButtonGrid(
-                  showOpenTranscriptButton: showOpenTranscriptButton,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 420),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ResponsiveButtonGrid(
+                      showOpenTranscriptButton: showOpenTranscriptButton,
+                    ),
+                  ),
                 ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class ResponsiveButtonGrid extends StatelessWidget {
+  const ResponsiveButtonGrid({
+    super.key,
+    this.showOpenTranscriptButton = false,
+  });
+
+  final bool showOpenTranscriptButton;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: Move these to config file.
+    const fullButtonGridBreakpoint = 600;
+    const smallButtonGridBreakpoint = 400;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        print(constraints.maxHeight);
+        if (constraints.maxHeight > fullButtonGridBreakpoint) {
+          return ButtonGrid(
+            showOpenTranscriptButton: showOpenTranscriptButton,
+          );
+        } else if (constraints.maxHeight >= smallButtonGridBreakpoint) {
+          return SmallButtonGrid(
+            showOpenTranscriptButton: showOpenTranscriptButton,
+          );
+        } else {
+          return VerySmallButtonGrid(
+            showOpenTranscriptButton: showOpenTranscriptButton,
+          );
+        }
+      },
     );
   }
 }
@@ -122,6 +162,127 @@ class ButtonGrid extends StatelessWidget {
             crossAxisCellCount: 4,
             child: const OpenTranscriptButton(),
           ),
+      ],
+    );
+  }
+}
+
+class SmallButtonGrid extends StatelessWidget {
+  const SmallButtonGrid({
+    super.key,
+    this.showOpenTranscriptButton = false,
+  });
+
+  final bool showOpenTranscriptButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGrid.count(
+      crossAxisCount: 4,
+      mainAxisSpacing: 16.0,
+      crossAxisSpacing: 16.0,
+      children: [
+        StaggeredGridTile.count(
+          crossAxisCellCount: 2,
+          mainAxisCellCount: 2,
+          child: const PlayPauseButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const SkipToPreviousButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const SkipToNextButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const RewindButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const FastForwardButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 3,
+          mainAxisCellCount: 1,
+          child: const SpeedSlider(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const RepeatModeButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 3,
+          mainAxisCellCount: 1,
+          child: const ProgressSlider(),
+        ),
+        if (showOpenTranscriptButton)
+          StaggeredGridTile.fit(
+            crossAxisCellCount: 4,
+            child: const OpenTranscriptButton(),
+          ),
+      ],
+    );
+  }
+}
+
+class VerySmallButtonGrid extends StatelessWidget {
+  const VerySmallButtonGrid({
+    super.key,
+    this.showOpenTranscriptButton = false,
+  });
+
+  final bool showOpenTranscriptButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGrid.count(
+      crossAxisCount: 4,
+      mainAxisSpacing: 16.0,
+      crossAxisSpacing: 16.0,
+      children: [
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const PlayPauseButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const SkipToPreviousButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const SkipToNextButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 1,
+          mainAxisCellCount: 1,
+          child: const RepeatModeButton(),
+        ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: showOpenTranscriptButton ? 3 : 4,
+          mainAxisCellCount: 1,
+          child: const SpeedSlider(),
+        ),
+        if (showOpenTranscriptButton)
+          StaggeredGridTile.count(
+            crossAxisCellCount: 1,
+            mainAxisCellCount: 1,
+            child: const OpenTranscriptButton(iconOnly: true),
+          ),
+        StaggeredGridTile.count(
+          crossAxisCellCount: 4,
+          mainAxisCellCount: 1,
+          child: const ProgressSlider(),
+        ),
       ],
     );
   }
