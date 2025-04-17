@@ -141,7 +141,12 @@ class RepeatModeButton extends ConsumerWidget {
 }
 
 class OpenTranscriptButton extends StatelessWidget {
-  const OpenTranscriptButton({super.key});
+  const OpenTranscriptButton({
+    super.key,
+    this.iconOnly = false,
+  });
+
+  final bool iconOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +161,9 @@ class OpenTranscriptButton extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Text('Transcript'.hardcoded),
+                child: iconOnly
+                    ? const Icon(Icons.message_rounded)
+                    : Text('Transcript'.hardcoded),
               ),
             ),
           ),
