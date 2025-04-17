@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/presentation/buttons.dart';
@@ -78,17 +79,14 @@ class ResponsiveButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Move these to config file.
-    const fullButtonGridBreakpoint = 600;
-    const smallButtonGridBreakpoint = 400;
     return LayoutBuilder(
       builder: (context, constraints) {
         print(constraints.maxHeight);
-        if (constraints.maxHeight > fullButtonGridBreakpoint) {
+        if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
           return ButtonGrid(
             showOpenTranscriptButton: showOpenTranscriptButton,
           );
-        } else if (constraints.maxHeight >= smallButtonGridBreakpoint) {
+        } else if (constraints.maxHeight >= Config.smallButtonGridBreakpoint) {
           return SmallButtonGrid(
             showOpenTranscriptButton: showOpenTranscriptButton,
           );

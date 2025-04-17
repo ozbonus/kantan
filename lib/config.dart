@@ -11,6 +11,8 @@ class Config {
   static String get notificationIcon => 'drawable/text_to_speech';
   static int get mediumBreakpoint => 590;
   static int get largeBreakpoint => 1000;
+  static int get fullButtonGridBreakpoint => 600;
+  static int get smallButtonGridBreakpoint => 400;
 
   static Duration get saveStateUpdateDuration => const Duration(seconds: 2);
 
