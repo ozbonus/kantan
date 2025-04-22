@@ -7,12 +7,12 @@ part of 'play_pause_button_controller.dart';
 // **************************************************************************
 
 String _$playPauseButtonControllerHash() =>
-    r'd537f5d8b0df8ecc79957529d9b83af9c9e2fdd9';
+    r'ddeeb1a8a7b1cdac3bc9d90669766778d8e5eb1d';
 
 /// See also [PlayPauseButtonController].
 @ProviderFor(PlayPauseButtonController)
 final playPauseButtonControllerProvider = AutoDisposeNotifierProvider<
-    PlayPauseButtonController, AsyncValue<KantanPlaybackState>>.internal(
+    PlayPauseButtonController, KantanPlaybackState>.internal(
   PlayPauseButtonController.new,
   name: r'playPauseButtonControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,7 +22,6 @@ final playPauseButtonControllerProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$PlayPauseButtonController
-    = AutoDisposeNotifier<AsyncValue<KantanPlaybackState>>;
+typedef _$PlayPauseButtonController = AutoDisposeNotifier<KantanPlaybackState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -7,8 +7,13 @@ part 'repeat_mode_button_controller.g.dart';
 @riverpod
 class RepeatModeButtonController extends _$RepeatModeButtonController {
   @override
-  AsyncValue<RepeatMode> build() {
-    return ref.watch(repeatModeStreamProvider);
+  RepeatMode build() {
+    return ref.watch(repeatModeStreamProvider).when(
+          skipLoadingOnReload: true,
+          loading: () => RepeatMode.none,
+          error: (_, __) => RepeatMode.none,
+          data: (repeatMode) => repeatMode,
+        );
   }
 
   void nextRepeatMode() {
