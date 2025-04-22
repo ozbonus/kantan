@@ -64,4 +64,5 @@ class Config {
       ];
   static double minTranscriptScale = 1.0;
   static double maxTranscriptScale = 2.5;
+  static bool showSpeakerNameTranslation = true;
 }
