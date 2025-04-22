@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/open_transcript_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
-import 'package:kantan/src/features/player/presentation/repeat_mode_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider.dart';
-import 'package:kantan/src/routing/app_router.dart';
 
 class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key});
