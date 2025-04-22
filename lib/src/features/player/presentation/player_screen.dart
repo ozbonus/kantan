@@ -215,7 +215,7 @@ class SmallButtonGrid extends StatelessWidget {
           child: const RepeatModeButton(),
         ),
         StaggeredGridTile.count(
-          crossAxisCellCount: 3,
+          crossAxisCellCount: 4,
           mainAxisCellCount: 1,
           child: const ProgressSlider(),
         ),
