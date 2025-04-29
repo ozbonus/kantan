@@ -5,13 +5,11 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
-import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
-import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
-import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_line_widget.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_player_controls.dart';
 
 /// A wrapper widget for small displays, such as smart phones, that show the
@@ -240,77 +238,6 @@ class _ScrollingTranscriptScreenContentsState
           translationLineLocale: widget.translation?.locale,
         ),
       ),
-    );
-  }
-}
-
-class TranscriptLineWidget extends ConsumerWidget {
-  const TranscriptLineWidget({
-    super.key,
-    required this.index,
-    required this.transcriptLine,
-    required this.transcriptLineLocale,
-    this.translationLine,
-    this.translationLineLocale,
-  });
-
-  final int index;
-  final TranscriptLine transcriptLine;
-  final Locale transcriptLineLocale;
-  final TranscriptLine? translationLine;
-  final Locale? translationLineLocale;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final activeIndex = ref.watch(transcriptIndexControllerProvider);
-    final canSeeTranslation = ref.watch(canSeeTranslationServiceProvider);
-    final userShowTranslation = ref.watch(showTranslationServiceProvider);
-    final showTranslation = canSeeTranslation && userShowTranslation;
-    return ListTile(
-      selectedTileColor: Colors.purple[100],
-      title: Localizations.override(
-        context: context,
-        locale: transcriptLineLocale,
-        child: TranscriptLineText(transcriptLine.text),
-      ),
-      leading:
-          transcriptLine.speaker != null ? Text(transcriptLine.speaker!) : null,
-      subtitle: translationLine != null && showTranslation
-          ? Localizations.override(
-              context: context,
-              locale: translationLineLocale,
-              child: TranscriptLineText(translationLine!.text),
-            )
-          : null,
-      selected: index == activeIndex,
-      onTap: transcriptLine.startTime != null
-          ? () => ref
-              .read(audioHandlerProvider)
-              .requireValue
-              .seek(transcriptLine.startTime!)
-          : null,
-    );
-  }
-}
-
-class TranscriptLineText extends ConsumerWidget {
-  const TranscriptLineText(
-    this.text, {
-    super.key,
-  });
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final textScale = ref.watch(transcriptScaleServiceProvider);
-    final style = Theme.of(context).textTheme.bodyMedium!.copyWith(
-          fontSize:
-              Theme.of(context).textTheme.bodyMedium!.fontSize! * textScale,
-        );
-    return Text(
-      text,
-      style: style,
     );
   }
 }
