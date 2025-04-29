@@ -54,18 +54,35 @@ class TranscriptLineWidget extends ConsumerWidget {
               spacing: 8.0,
               children: [
                 if (showNames)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 8.0,
-                    children: [
-                      if (controller.showSpeakerName)
-                        Text(transcriptLine.speaker!),
-                      if (controller.showSpeakerNameTranslation)
-                        Text(translationLine!.speaker!),
-                    ],
+                  Localizations.override(
+                    context: context,
+                    locale: transcriptLineLocale,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 8.0,
+                      children: [
+                        if (controller.showSpeakerName)
+                          Text(transcriptLine.speaker!),
+                        if (controller.showSpeakerNameTranslation)
+                          Localizations.override(
+                            context: context,
+                            locale: translationLineLocale,
+                            child: Text(translationLine!.speaker!),
+                          ),
+                      ],
+                    ),
                   ),
-                Text(transcriptLine.text),
-                if (controller.showTranslation) Text(translationLine!.text),
+                Localizations.override(
+                  context: context,
+                  locale: transcriptLineLocale,
+                  child: Text(transcriptLine.text),
+                ),
+                if (controller.showTranslation)
+                  Localizations.override(
+                    context: context,
+                    locale: translationLineLocale,
+                    child: Text(translationLine!.text),
+                  ),
               ],
             ),
           ),
