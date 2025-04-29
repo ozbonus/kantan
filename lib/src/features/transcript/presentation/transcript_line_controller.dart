@@ -1,9 +1,10 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
-import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
+import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
+import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 
 part 'transcript_line_controller.g.dart';
@@ -13,6 +14,7 @@ typedef TranscriptLineState = ({
   bool showSpeakerName,
   bool showTranslation,
   bool showSpeakerNameTranslation,
+  double scale,
 });
 
 @riverpod
@@ -45,11 +47,14 @@ class TranscriptLineController extends _$TranscriptLineController {
     final showSpeakNameTranslation =
         Config.showSpeakerNameTranslation && nameTranslationExists;
 
+    final scale = ref.watch(transcriptScaleServiceProvider);
+
     return (
       isActive: isActive,
       showSpeakerName: showSpeakerName,
       showTranslation: showTranslation,
       showSpeakerNameTranslation: showSpeakNameTranslation,
+      scale: scale,
     );
   }
 
