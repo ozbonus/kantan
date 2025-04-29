@@ -7,7 +7,7 @@ part of 'transcript_line_controller.dart';
 // **************************************************************************
 
 String _$transcriptLineControllerHash() =>
-    r'2bce64a6fd1c20bd5bcaf2a9480caa1aa8147bf0';
+    r'44bbcca2a15732d46a52fbaf85dd0721327347b9';
 
 /// Copied from Dart SDK
 class _SystemHash {
