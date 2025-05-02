@@ -207,35 +207,6 @@ class ExpandTranscriptButton extends StatelessWidget {
   }
 }
 
-// class TranscriptPlayPauseButton extends ConsumerWidget {
-//   const TranscriptPlayPauseButton({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final playbackStateValue = ref.watch(playPauseButtonControllerProvider);
-//     return IconButton(
-//       onPressed: ref.read(playPauseButtonControllerProvider.notifier).activate,
-//       icon: AsyncValueWidget(
-//         value: playbackStateValue,
-//         data: (playbackState) {
-//           switch (playbackState) {
-//             case KantanPlaybackState.loading:
-//               return const Icon(Icons.play_arrow_rounded);
-//             case KantanPlaybackState.playing:
-//               return const Icon(Icons.pause_rounded);
-//             case KantanPlaybackState.paused:
-//               return const Icon(Icons.play_arrow_rounded);
-//             case KantanPlaybackState.completed:
-//               return const Icon(Icons.replay_rounded);
-//             case KantanPlaybackState.error:
-//               return const Icon(Icons.error_rounded);
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
 class TranscriptSkipToPreviousButton extends ConsumerWidget {
   const TranscriptSkipToPreviousButton({super.key});
 
