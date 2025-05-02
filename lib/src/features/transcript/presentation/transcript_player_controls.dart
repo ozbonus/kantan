@@ -242,7 +242,7 @@ class TranscriptSkipToPreviousButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
-      onPressed: () => ref.read(skipToNextButtonControllerProvider),
+      onPressed: () => ref.read(skipToPreviousButtonControllerProvider),
       icon: const Icon(Icons.skip_previous_rounded),
     );
   }
