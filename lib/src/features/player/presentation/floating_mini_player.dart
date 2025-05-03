@@ -31,7 +31,7 @@ class FloatingMiniPlayer extends ConsumerWidget {
               ref.read(playPauseButtonControllerProvider.notifier).activate(),
           icon: Icon(buttonIcon),
         ),
-        IconButton.filledTonal(
+        IconButton.filled(
           onPressed: () => context.goNamed(AppRoute.player),
           icon: const Icon(Icons.window_rounded),
         ),
