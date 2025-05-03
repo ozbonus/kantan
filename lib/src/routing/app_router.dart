@@ -24,11 +24,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: AppRoute.player,
             name: AppRoute.player,
             builder: (_, __) => const PlayerScreen(),
-          ),
-          GoRoute(
-            path: AppRoute.transcript,
-            name: AppRoute.transcript,
-            builder: (_, __) => const TranscriptScreen(),
+            routes: [
+              GoRoute(
+                path: AppRoute.transcript,
+                name: AppRoute.transcript,
+                builder: (_, __) => const TranscriptScreen(),
+              ),
+            ],
           ),
         ],
       ),
