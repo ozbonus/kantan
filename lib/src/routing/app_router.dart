@@ -12,6 +12,7 @@ class AppRoute {
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
+    debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
       GoRoute(
