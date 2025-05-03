@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
+import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/prev_next_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
@@ -52,7 +54,7 @@ class TranscriptPlayerControls extends StatelessWidget {
                             textDirection: TextDirection.ltr,
                             children: [
                               TranscriptSkipToPreviousButton(),
-                              // TranscriptPlayPauseButton(),
+                              TranscriptPlayButton(),
                               TranscriptSkipToNextButton(),
                               VerticalDivider(),
                             ],
@@ -203,6 +205,30 @@ class ExpandTranscriptButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.zoom_out_map_rounded),
       onPressed: () => context.goNamed(AppRoute.transcript),
+    );
+  }
+}
+
+class TranscriptPlayButton extends ConsumerWidget {
+  const TranscriptPlayButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackState = ref.watch(playPauseButtonControllerProvider);
+
+    IconData buttonIcon = switch (playbackState) {
+      KantanPlaybackState.loading ||
+      KantanPlaybackState.error ||
+      KantanPlaybackState.playing =>
+        Icons.pause_rounded,
+      KantanPlaybackState.paused => Icons.play_arrow_rounded,
+      KantanPlaybackState.completed => Icons.replay_rounded,
+    };
+
+    return IconButton(
+      onPressed: () =>
+          ref.read(playPauseButtonControllerProvider.notifier).activate(),
+      icon: Icon(buttonIcon),
     );
   }
 }
