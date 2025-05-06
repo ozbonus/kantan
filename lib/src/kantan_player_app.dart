@@ -9,6 +9,7 @@ import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_mode_service.dart';
 
 class KantanPlayerApp extends ConsumerWidget {
   const KantanPlayerApp({super.key});
@@ -16,6 +17,7 @@ class KantanPlayerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
+    final themeMode = ref.watch(themeModeServiceProvider);
     final interfaceLocale = ref.watch(interfaceLocaleServiceProvider);
     return MaterialApp.router(
       title: Config.appTitle,
@@ -27,6 +29,7 @@ class KantanPlayerApp extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: interfaceLocale,
+      themeMode: themeMode,
     );
   }
 }
