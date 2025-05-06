@@ -10,6 +10,7 @@ import 'package:kantan/src/features/track_list/presentation/track_list_screen.da
 import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
 import 'package:kantan/src/themes/theme_mode_service.dart';
+import 'package:kantan/src/themes/themes.dart';
 
 class KantanPlayerApp extends ConsumerWidget {
   const KantanPlayerApp({super.key});
@@ -29,7 +30,7 @@ class KantanPlayerApp extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: interfaceLocale,
-      theme: ThemeData.light(),
+      theme: lightTheme,
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
     );

@@ -27,6 +27,7 @@ class Config {
   static bool get disableAutoScrollOnUserScroll => true;
 
   // Theming
+  static Color get primary => Color(0xFFBE3137);
   static double get layoutOuterPadding => 16.0;
   static double get layoutSpacing => 16.0;
   static double get bookCoverPadding => 24.0;
