@@ -157,7 +157,7 @@ class OpenTranscriptButton extends StatelessWidget {
         child: Ink(
           child: InkWell(
             borderRadius: BorderRadius.circular(32),
-            onTap: () => context.goNamed(AppRoute.transcript),
+            onTap: () => context.pushNamed(AppRoute.transcript),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8),
