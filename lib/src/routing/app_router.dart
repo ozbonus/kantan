@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/presentation/player_screen.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/kantan_player_app.dart';
@@ -12,6 +14,7 @@ class AppRoute {
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
+    debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
       GoRoute(
@@ -22,6 +25,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppRoute.player,
             name: AppRoute.player,
+            redirect: (context, state) {
+              final width = MediaQuery.sizeOf(context).width;
+              return width > Config.mediumBreakpoint ? '/' : null;
+            },
             builder: (_, __) => const PlayerScreen(),
           ),
           GoRoute(
