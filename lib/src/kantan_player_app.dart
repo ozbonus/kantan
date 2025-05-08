@@ -31,7 +31,7 @@ class KantanPlayerApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: interfaceLocale,
       theme: lightTheme,
-      darkTheme: ThemeData.dark(),
+      darkTheme: darkTheme,
       themeMode: themeMode,
     );
   }
