@@ -6,5 +6,4 @@ final lightTheme = FlexThemeData.light(
 
 final darkTheme = FlexThemeData.dark(
   scheme: FlexScheme.mandyRed,
-  subThemesData: FlexSubThemesData(),
 );
