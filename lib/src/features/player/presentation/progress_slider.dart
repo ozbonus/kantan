@@ -12,6 +12,11 @@ class ProgressSlider extends ConsumerWidget {
     return ProgressBar(
       progress: positionData.position,
       total: positionData.duration,
+      timeLabelTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+        fontFeatures: [
+          FontFeature.tabularFigures(),
+        ],
+      ),
       // Calling this onSeekProvider is a workaround for an issue described in
       // detail in progress_slider_controller.dart.
       onSeek: (position) => ref.read(onSeekProvider(position)),

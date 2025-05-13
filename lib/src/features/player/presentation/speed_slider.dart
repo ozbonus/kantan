@@ -22,7 +22,11 @@ class SpeedSlider extends ConsumerWidget {
             error: (_, __) => _speedValueString(context, 1.0),
             data: (speed) => _speedValueString(context, speed),
           ),
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontFeatures: [
+              FontFeature.tabularFigures(),
+            ],
+          ),
         ),
         Expanded(
           child: Directionality(
