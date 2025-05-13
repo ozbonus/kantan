@@ -9,16 +9,21 @@ import 'package:kantan/src/features/player/presentation/prev_next_button_control
 import 'package:kantan/src/features/player/presentation/repeat_mode_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/rewind_forward_button_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
-class _ButtonContainer extends StatelessWidget {
-  const _ButtonContainer({
+class ButtonContainer extends StatelessWidget {
+  const ButtonContainer({
+    super.key,
     required this.child,
   });
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
+    final decoration = style?.decoration;
     return Container(
+      decoration: decoration,
       child: child,
     );
   }
@@ -35,7 +40,7 @@ class _TappableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ButtonContainer(
+    return ButtonContainer(
       child: Material(
         child: Ink(
           child: InkWell(
