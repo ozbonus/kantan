@@ -12,6 +12,7 @@ class ProgressSlider extends ConsumerWidget {
     return ProgressBar(
       progress: positionData.position,
       total: positionData.duration,
+      timeLabelLocation: TimeLabelLocation.sides,
       timeLabelTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
         fontFeatures: [
           FontFeature.tabularFigures(),
