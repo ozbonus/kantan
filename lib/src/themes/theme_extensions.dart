@@ -5,17 +5,21 @@ class PlayerScreenContainerStyle
     extends ThemeExtension<PlayerScreenContainerStyle> {
   const PlayerScreenContainerStyle({
     this.decoration,
+    this.foregroundDecoration,
   });
 
   final BoxDecoration? decoration;
+  final BoxDecoration? foregroundDecoration;
 
   @override
   PlayerScreenContainerStyle copyWith({
     BoxDecoration? decoration,
+    BoxDecoration? foregroundDecoration,
   }) {
     return PlayerScreenContainerStyle(
-      decoration: decoration ?? this.decoration,
-    );
+        decoration: decoration ?? this.decoration,
+        foregroundDecoration:
+            foregroundDecoration ?? this.foregroundDecoration);
   }
 
   @override
@@ -26,6 +30,8 @@ class PlayerScreenContainerStyle
     }
     return PlayerScreenContainerStyle(
       decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      foregroundDecoration: BoxDecoration.lerp(
+          foregroundDecoration, other.foregroundDecoration, t),
     );
   }
 }

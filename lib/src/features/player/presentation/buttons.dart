@@ -21,9 +21,10 @@ class ButtonContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
-    final decoration = style?.decoration;
     return Container(
-      decoration: decoration,
+      decoration: style?.decoration,
+      foregroundDecoration: style?.foregroundDecoration,
+      clipBehavior: Clip.antiAlias,
       child: child,
     );
   }
@@ -42,6 +43,8 @@ class _TappableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonContainer(
       child: Material(
+        type: MaterialType.transparency,
+        clipBehavior: Clip.antiAlias,
         child: Ink(
           child: InkWell(
             onTap: onTap,

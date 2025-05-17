@@ -7,12 +7,16 @@ final lightColors = FlexColorScheme.light(
 ).toScheme;
 
 abstract final class AppTheme {
-  static final _light = FlexColorScheme.light(
+  static final lightColorScheme = FlexColorScheme.light(
+    scheme: FlexScheme.mandyRed,
+  ).toScheme;
+
+  static final darkColorScheme = FlexColorScheme.dark(
     scheme: FlexScheme.mandyRed,
   ).toScheme;
 
   static ThemeData light = FlexThemeData.light(
-    colorScheme: _light,
+    colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
     fontFamily: 'Atkinson Hyperlegible Next',
     subThemesData: FlexSubThemesData(
@@ -22,25 +26,24 @@ abstract final class AppTheme {
     extensions: <ThemeExtension<dynamic>>[
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
-          color: _light.surfaceContainer,
-          borderRadius: BorderRadius.circular(24),
+          color: lightColorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+        foregroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24.0),
           border: Border(
-            top: BorderSide(width: 4, color: _light.shadow),
-            right: BorderSide(width: 4, color: _light.shadow),
-            bottom: BorderSide(width: 8, color: _light.shadow),
-            left: BorderSide(width: 4, color: _light.shadow),
+            top: BorderSide(width: 4, color: lightColorScheme.shadow),
+            right: BorderSide(width: 4, color: lightColorScheme.shadow),
+            bottom: BorderSide(width: 8, color: lightColorScheme.shadow),
+            left: BorderSide(width: 4, color: lightColorScheme.shadow),
           ),
-          // border: Border.all(
-          //   width: 4.0,
-          //   color: _light.shadow,
-          // ),
         ),
       ),
     ],
   );
 
   static ThemeData dark = FlexThemeData.dark(
-    scheme: FlexScheme.mandyRed,
+    colorScheme: darkColorScheme,
     applyElevationOverlayColor: false,
     fontFamily: 'Atkinson Hyperlegible Next',
     variant: FlexSchemeVariant.fidelity,
@@ -48,6 +51,19 @@ abstract final class AppTheme {
       interactionEffects: true,
       splashType: FlexSplashType.inkSparkle,
     ),
-    extensions: <ThemeExtension<dynamic>>[],
+    extensions: <ThemeExtension<dynamic>>[
+      PlayerScreenContainerStyle(
+        decoration: BoxDecoration(
+          color: darkColorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(width: 4, color: lightColorScheme.onSurface),
+            right: BorderSide(width: 4, color: lightColorScheme.onSurface),
+            bottom: BorderSide(width: 8, color: lightColorScheme.onSurface),
+            left: BorderSide(width: 4, color: lightColorScheme.onSurface),
+          ),
+        ),
+      ),
+    ],
   );
 }
