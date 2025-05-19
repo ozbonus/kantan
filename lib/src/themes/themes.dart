@@ -8,10 +8,12 @@ final lightColors = FlexColorScheme.light(
 
 abstract final class AppTheme {
   static final lightColorScheme = FlexColorScheme.light(
+    blendLevel: 5,
     scheme: FlexScheme.mandyRed,
   ).toScheme;
 
   static final darkColorScheme = FlexColorScheme.dark(
+    blendLevel: 5,
     scheme: FlexScheme.mandyRed,
   ).toScheme;
 
