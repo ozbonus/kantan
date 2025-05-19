@@ -66,17 +66,20 @@ class PlayPauseButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackState = ref.watch(playPauseButtonControllerProvider);
+
+    IconData buttonIcon = switch (playbackState) {
+      KantanPlaybackState.loading ||
+      KantanPlaybackState.error ||
+      KantanPlaybackState.playing =>
+        Icons.pause_rounded,
+      KantanPlaybackState.paused => Icons.play_arrow_rounded,
+      KantanPlaybackState.completed => Icons.replay_rounded,
+    };
+
     return _TappableButton(
       onTap: () =>
           ref.read(playPauseButtonControllerProvider.notifier).activate(),
-      child: switch (playbackState) {
-        KantanPlaybackState.loading ||
-        KantanPlaybackState.error ||
-        KantanPlaybackState.paused =>
-          Icon(Icons.play_arrow_rounded),
-        KantanPlaybackState.playing => Icon(Icons.pause_rounded),
-        KantanPlaybackState.completed => Icon(Icons.replay_rounded),
-      },
+      child: Icon(buttonIcon),
     );
   }
 }
