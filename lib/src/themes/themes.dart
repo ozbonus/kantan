@@ -54,6 +54,8 @@ abstract final class AppTheme {
             ),
           ),
         ),
+        mainAxisSpacing: 24.0,
+        crossAxisSpacing: 24.0,
       ),
     ],
   );
@@ -98,6 +100,8 @@ abstract final class AppTheme {
             ),
           ),
         ),
+        mainAxisSpacing: 24.0,
+        crossAxisSpacing: 24.0,
       ),
     ],
   );

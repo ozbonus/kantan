@@ -9,6 +9,7 @@ import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/open_transcript_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key});
@@ -106,10 +107,11 @@ class ButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
-      mainAxisSpacing: 16.0,
-      crossAxisSpacing: 16.0,
+      mainAxisSpacing: style?.mainAxisSpacing ?? 0,
+      crossAxisSpacing: style?.crossAxisSpacing ?? 0,
       children: [
         StaggeredGridTile.count(
           mainAxisCellCount: 3,
@@ -171,10 +173,11 @@ class SmallButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
-      mainAxisSpacing: 16.0,
-      crossAxisSpacing: 16.0,
+      mainAxisSpacing: style?.mainAxisSpacing ?? 0,
+      crossAxisSpacing: style?.crossAxisSpacing ?? 0,
       children: [
         StaggeredGridTile.count(
           crossAxisCellCount: 2,
@@ -236,10 +239,11 @@ class VerySmallButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
-      mainAxisSpacing: 16.0,
-      crossAxisSpacing: 16.0,
+      mainAxisSpacing: style?.mainAxisSpacing ?? 0,
+      crossAxisSpacing: style?.crossAxisSpacing ?? 0,
       children: [
         StaggeredGridTile.count(
           crossAxisCellCount: 1,
