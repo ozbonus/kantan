@@ -60,6 +60,24 @@ class _TappableButton extends StatelessWidget {
   }
 }
 
+class _TappableButtonIcon extends StatelessWidget {
+  const _TappableButtonIcon(
+    this.iconData, {
+    super.key,
+  });
+
+  final IconData iconData;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
+    return Icon(
+      color: style?.iconColor,
+      iconData,
+    );
+  }
+}
+
 class PlayPauseButton extends ConsumerWidget {
   const PlayPauseButton({super.key});
 
@@ -79,7 +97,7 @@ class PlayPauseButton extends ConsumerWidget {
     return _TappableButton(
       onTap: () =>
           ref.read(playPauseButtonControllerProvider.notifier).activate(),
-      child: Icon(buttonIcon),
+      child: _TappableButtonIcon(buttonIcon),
     );
   }
 }
@@ -91,7 +109,7 @@ class SkipToPreviousButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(skipToPreviousButtonControllerProvider),
-      child: const Icon(Icons.skip_previous_rounded),
+      child: _TappableButtonIcon(Icons.skip_previous_rounded),
     );
   }
 }
