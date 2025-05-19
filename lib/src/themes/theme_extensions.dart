@@ -9,12 +9,14 @@ class PlayerScreenContainerStyle
     this.foregroundDecoration,
     this.mainAxisSpacing,
     this.crossAxisSpacing,
+    this.iconColor,
   });
 
   final BoxDecoration? decoration;
   final BoxDecoration? foregroundDecoration;
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
+  final Color? iconColor;
 
   @override
   PlayerScreenContainerStyle copyWith({
@@ -22,12 +24,14 @@ class PlayerScreenContainerStyle
     BoxDecoration? foregroundDecoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
+    Color? iconColor,
   }) {
     return PlayerScreenContainerStyle(
       decoration: decoration ?? this.decoration,
       foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing ?? this.crossAxisSpacing,
+      iconColor: iconColor ?? this.iconColor,
     );
   }
 
@@ -59,6 +63,11 @@ class PlayerScreenContainerStyle
       crossAxisSpacing: lerpDouble(
         crossAxisSpacing,
         other.crossAxisSpacing,
+        t,
+      ),
+      iconColor: Color.lerp(
+        iconColor,
+        other.iconColor,
         t,
       ),
     );
