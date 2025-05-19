@@ -27,15 +27,31 @@ abstract final class AppTheme {
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(20.0),
           border: Border(
-            top: BorderSide(width: 4, color: lightColorScheme.shadow),
-            right: BorderSide(width: 4, color: lightColorScheme.shadow),
-            bottom: BorderSide(width: 8, color: lightColorScheme.shadow),
-            left: BorderSide(width: 4, color: lightColorScheme.shadow),
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
           ),
         ),
       ),
@@ -54,13 +70,32 @@ abstract final class AppTheme {
     extensions: <ThemeExtension<dynamic>>[
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
-          color: darkColorScheme.surface,
+          color: darkColorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+        foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24.0),
           border: Border(
-            top: BorderSide(width: 4, color: lightColorScheme.onSurface),
-            right: BorderSide(width: 4, color: lightColorScheme.onSurface),
-            bottom: BorderSide(width: 8, color: lightColorScheme.onSurface),
-            left: BorderSide(width: 4, color: lightColorScheme.onSurface),
+            top: BorderSide(
+              width: 4,
+              color: darkColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: darkColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: darkColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: darkColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
           ),
         ),
       ),
