@@ -65,8 +65,11 @@ class TranscriptScreenContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
+    final style = Theme.of(context).extension<TranscriptScreenStyle>();
     return DecoratedBox(
-      decoration: BoxDecoration(),
+      decoration: BoxDecoration(
+        color: style?.backgroundColor,
+      ),
       child: transcriptValue.when(
         skipLoadingOnReload: true,
         loading: () => const CircularProgressIndicator.adaptive(),

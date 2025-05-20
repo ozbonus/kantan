@@ -26,8 +26,11 @@ class TranscriptPlayerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
+    final style = Theme.of(context).extension<TranscriptScreenStyle>();
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: style?.backgroundColor,
+      ),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
