@@ -78,6 +78,7 @@ class TranscriptLineWidget extends ConsumerWidget {
       padding: const EdgeInsets.all(8.0),
       child: Material(
         type: MaterialType.transparency,
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () => ref
               .read(
