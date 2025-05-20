@@ -118,6 +118,17 @@ abstract final class AppTheme {
         crossAxisSpacing: 24.0,
         iconColor: darkColorScheme.primary,
       ),
+      PlayerScreenSliderStyle(
+        trackHeight: 8.0,
+        activeTrackColor: darkColorScheme.primary,
+        inactiveTrackColor: darkColorScheme.surfaceContainerHighest,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: darkColorScheme.primary,
+        thumbRadius: 12.0,
+        elevation: 0.0,
+        overlayColor: darkColorScheme.primary.withAlpha(50),
+        overlayRadius: 24.0,
+      ),
     ],
   );
 }
