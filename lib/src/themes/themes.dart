@@ -71,6 +71,17 @@ abstract final class AppTheme {
         overlayColor: lightColorScheme.primary.withAlpha(50),
         overlayRadius: 24.0,
       ),
+      TranscriptProgressSliderStyle(
+        trackHeight: 4.0,
+        activeTrackColor: lightColorScheme.secondary,
+        inactiveTrackColor: lightColorScheme.secondaryContainer,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: lightColorScheme.secondary,
+        thumbRadius: 8.0,
+        elevation: 0.0,
+        overlayColor: lightColorScheme.secondaryContainer.withAlpha(50),
+        overlayRadius: 12.0,
+      ),
     ],
   );
 
@@ -128,6 +139,17 @@ abstract final class AppTheme {
         elevation: 0.0,
         overlayColor: darkColorScheme.primary.withAlpha(50),
         overlayRadius: 24.0,
+      ),
+      TranscriptProgressSliderStyle(
+        trackHeight: 4.0,
+        activeTrackColor: darkColorScheme.secondary,
+        inactiveTrackColor: darkColorScheme.secondaryContainer,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: darkColorScheme.secondary,
+        thumbRadius: 8.0,
+        elevation: 0.0,
+        overlayColor: darkColorScheme.secondaryContainer.withAlpha(50),
+        overlayRadius: 12.0,
       ),
     ],
   );

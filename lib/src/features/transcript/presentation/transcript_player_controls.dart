@@ -94,10 +94,18 @@ class TranscriptProgressSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final positionData = ref.watch(progressSliderControllerProvider);
+    final style = Theme.of(context).extension<TranscriptProgressSliderStyle>();
     return ProgressBar(
       progress: positionData.position,
       timeLabelLocation: TimeLabelLocation.none,
       total: positionData.duration,
+      barHeight: style?.trackHeight ?? 2.0,
+      baseBarColor: style?.inactiveTrackColor,
+      progressBarColor: style?.activeTrackColor,
+      thumbColor: style?.thumbColor,
+      thumbRadius: style?.thumbRadius ?? 3.0,
+      thumbGlowColor: style?.overlayColor,
+      thumbGlowRadius: style?.overlayRadius ?? 4.0,
       onSeek: (position) => ref.read(onSeekProvider(position)),
     );
   }
