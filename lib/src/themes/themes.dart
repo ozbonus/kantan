@@ -87,6 +87,15 @@ abstract final class AppTheme {
         appBarElevation: 0.0,
         appBarScrolledUnderElevation: 0.0,
       ),
+      TranscriptLineWidgetStyle(
+        inactiveColor: lightColorScheme.secondary,
+        activeColor: lightColorScheme.secondaryContainer,
+        transcriptTextColor: lightColorScheme.onSecondary,
+        translationTextColor: lightColorScheme.onSecondary.withAlpha(128),
+        borderRadius: 24.0,
+        borderColor: lightColorScheme.secondary.darken(),
+        borderWidth: 2.0,
+      ),
     ],
   );
 
