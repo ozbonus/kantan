@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_controller.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TranscriptLineWidget extends ConsumerWidget {
   const TranscriptLineWidget({
@@ -26,6 +27,7 @@ class TranscriptLineWidget extends ConsumerWidget {
       transcriptLine,
       translationLine,
     ));
+    final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
     final showNames =
         controller.showSpeakerName || controller.showSpeakerNameTranslation;
 
@@ -36,6 +38,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! *
                   controller.scale,
+              color: style?.transcriptTextColor,
             ),
       );
     }
@@ -47,8 +50,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! *
                   controller.scale,
-              color:
-                  Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(96),
+              color: style?.translationTextColor,
             ),
       );
     }
@@ -58,6 +60,7 @@ class TranscriptLineWidget extends ConsumerWidget {
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
                 controller.scale,
+            color: style?.transcriptTextColor,
           ),
     );
 
@@ -68,8 +71,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
                   controller.scale,
-              color:
-                  Theme.of(context).textTheme.bodyLarge?.color?.withAlpha(96),
+              color: style?.translationTextColor,
             ),
       );
     }
@@ -80,6 +82,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         type: MaterialType.transparency,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
+          borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
           onTap: () => ref
               .read(
                 transcriptLineControllerProvider(
@@ -90,12 +93,22 @@ class TranscriptLineWidget extends ConsumerWidget {
               )
               .seekToLine(),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
-              color: controller.isActive ? Colors.purple[100] : null,
+              color: controller.isActive ? style?.activeColor : null,
+              borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+            ),
+            foregroundDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+              border: controller.isActive
+                  ? Border.all(
+                      width: style?.borderWidth ?? 0,
+                      color: style?.borderColor ?? Colors.transparent,
+                    )
+                  : null,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
