@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_screen_title_controller.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -21,7 +22,7 @@ class TranscriptScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transcript Screen'),
+        title: const _TranscriptScreenTitle(),
       ),
       body: const Center(
         child: TranscriptScreenContents(
@@ -29,6 +30,16 @@ class TranscriptScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _TranscriptScreenTitle extends ConsumerWidget {
+  const _TranscriptScreenTitle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trackTitle = ref.watch(transcriptScreenTitleControllerProvider);
+    return Text(trackTitle ?? '');
   }
 }
 
