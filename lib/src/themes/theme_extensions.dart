@@ -282,3 +282,73 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
     );
   }
 }
+
+@immutable
+class TranscriptLineWidgetStyle
+    extends ThemeExtension<TranscriptLineWidgetStyle> {
+  const TranscriptLineWidgetStyle({
+    this.activeColor,
+    this.inactiveColor,
+    this.transcriptTextColor,
+    this.translationTextColor,
+    this.splashColor,
+    this.borderColor,
+    this.borderRadius,
+    this.borderWidth,
+  });
+
+  final Color? activeColor;
+  final Color? inactiveColor;
+  final Color? transcriptTextColor;
+  final Color? translationTextColor;
+  final Color? splashColor;
+  final Color? borderColor;
+  final double? borderRadius;
+  final double? borderWidth;
+
+  @override
+  TranscriptLineWidgetStyle copyWith({
+    Color? activeColor,
+    Color? inactiveColor,
+    Color? transcriptTextColor,
+    Color? translationTextColor,
+    Color? splashColor,
+    Color? borderColor,
+    double? borderRadius,
+    double? borderWidth,
+  }) {
+    return TranscriptLineWidgetStyle(
+      activeColor: activeColor ?? this.activeColor,
+      inactiveColor: inactiveColor ?? this.inactiveColor,
+      transcriptTextColor: transcriptTextColor ?? this.transcriptTextColor,
+      translationTextColor: translationTextColor ?? this.translationTextColor,
+      splashColor: splashColor ?? this.splashColor,
+      borderColor: borderColor ?? this.borderColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+      borderWidth: borderWidth ?? this.borderWidth,
+    );
+  }
+
+  @override
+  ThemeExtension<TranscriptLineWidgetStyle> lerp(
+    ThemeExtension<TranscriptLineWidgetStyle>? other,
+    double t,
+  ) {
+    if (other is! TranscriptLineWidgetStyle) {
+      return this;
+    }
+
+    return TranscriptLineWidgetStyle(
+      activeColor: Color.lerp(activeColor, other.activeColor, t),
+      inactiveColor: Color.lerp(inactiveColor, other.inactiveColor, t),
+      transcriptTextColor:
+          Color.lerp(transcriptTextColor, other.transcriptTextColor, t),
+      translationTextColor:
+          Color.lerp(translationTextColor, other.translationTextColor, t),
+      splashColor: Color.lerp(splashColor, other.splashColor, t),
+      borderColor: Color.lerp(borderColor, other.borderColor, t),
+      borderRadius: lerpDouble(borderRadius, other.borderRadius, t),
+      borderWidth: lerpDouble(borderWidth, other.borderWidth, t),
+    );
+  }
+}
