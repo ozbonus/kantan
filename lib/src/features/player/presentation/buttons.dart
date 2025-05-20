@@ -182,21 +182,18 @@ class OpenTranscriptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Material(
-        // type: MaterialType.button,
-        borderRadius: BorderRadius.circular(32),
-        child: Ink(
-          child: InkWell(
-            borderRadius: BorderRadius.circular(32),
-            onTap: () => context.pushNamed(AppRoute.transcript),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: iconOnly
-                    ? const Icon(Icons.message_rounded)
-                    : Text('Transcript'.hardcoded),
-              ),
+    return Material(
+      borderRadius: BorderRadius.circular(32),
+      child: Ink(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(32),
+          onTap: () => context.pushNamed(AppRoute.transcript),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: iconOnly
+                  ? const Icon(Icons.message_rounded)
+                  : Text('Transcript'.hardcoded),
             ),
           ),
         ),
