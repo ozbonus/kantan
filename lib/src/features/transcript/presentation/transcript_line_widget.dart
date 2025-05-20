@@ -76,58 +76,61 @@ class TranscriptLineWidget extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () => ref
-            .read(
-              transcriptLineControllerProvider(
-                index,
-                transcriptLine,
-                translationLine,
-              ).notifier,
-            )
-            .seekToLine(),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 500),
-          decoration: BoxDecoration(
-            color: controller.isActive ? Colors.purple[100] : null,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 8.0,
-              children: [
-                if (showNames)
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: () => ref
+              .read(
+                transcriptLineControllerProvider(
+                  index,
+                  transcriptLine,
+                  translationLine,
+                ).notifier,
+              )
+              .seekToLine(),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            decoration: BoxDecoration(
+              color: controller.isActive ? Colors.purple[100] : null,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 8.0,
+                children: [
+                  if (showNames)
+                    Localizations.override(
+                      context: context,
+                      locale: transcriptLineLocale,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 8.0,
+                        children: [
+                          if (speakerName != null) speakerName,
+                          if (speakerNameTranslation != null)
+                            Localizations.override(
+                              context: context,
+                              locale: translationLineLocale,
+                              child: speakerNameTranslation,
+                            ),
+                        ],
+                      ),
+                    ),
                   Localizations.override(
                     context: context,
                     locale: transcriptLineLocale,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 8.0,
-                      children: [
-                        if (speakerName != null) speakerName,
-                        if (speakerNameTranslation != null)
-                          Localizations.override(
-                            context: context,
-                            locale: translationLineLocale,
-                            child: speakerNameTranslation,
-                          ),
-                      ],
+                    child: transcriptText,
+                  ),
+                  if (controller.showTranslation)
+                    Localizations.override(
+                      context: context,
+                      locale: translationLineLocale,
+                      child: translationText,
                     ),
-                  ),
-                Localizations.override(
-                  context: context,
-                  locale: transcriptLineLocale,
-                  child: transcriptText,
-                ),
-                if (controller.showTranslation)
-                  Localizations.override(
-                    context: context,
-                    locale: translationLineLocale,
-                    child: translationText,
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
