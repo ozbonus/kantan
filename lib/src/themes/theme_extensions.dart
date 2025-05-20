@@ -238,3 +238,47 @@ class TranscriptProgressSliderStyle
     );
   }
 }
+
+@immutable
+class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
+  const TranscriptScreenStyle({
+    this.backgroundColor,
+    this.appBarElevation,
+    this.appBarScrolledUnderElevation,
+  });
+
+  final Color? backgroundColor;
+  final double? appBarElevation;
+  final double? appBarScrolledUnderElevation;
+
+  @override
+  TranscriptScreenStyle copyWith({
+    Color? backgroundColor,
+    double? appBarElevation,
+    double? appBarScrolledUnderElevation,
+  }) {
+    return TranscriptScreenStyle(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      appBarElevation: appBarElevation ?? this.appBarElevation,
+      appBarScrolledUnderElevation:
+          appBarScrolledUnderElevation ?? this.appBarScrolledUnderElevation,
+    );
+  }
+
+  @override
+  ThemeExtension<TranscriptScreenStyle> lerp(
+    ThemeExtension<TranscriptScreenStyle>? other,
+    double t,
+  ) {
+    if (other is! TranscriptScreenStyle) {
+      return this;
+    }
+
+    return TranscriptScreenStyle(
+      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
+      appBarElevation: lerpDouble(appBarElevation, other.appBarElevation, t),
+      appBarScrolledUnderElevation: lerpDouble(
+          appBarScrolledUnderElevation, other.appBarScrolledUnderElevation, t),
+    );
+  }
+}
