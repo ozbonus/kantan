@@ -82,6 +82,11 @@ abstract final class AppTheme {
         overlayColor: lightColorScheme.secondaryContainer.withAlpha(50),
         overlayRadius: 12.0,
       ),
+      TranscriptScreenStyle(
+        backgroundColor: lightColorScheme.secondary,
+        appBarElevation: 0.0,
+        appBarScrolledUnderElevation: 0.0,
+      ),
     ],
   );
 

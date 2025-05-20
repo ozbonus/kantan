@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen_title_controller.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -20,8 +21,12 @@ class TranscriptScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<TranscriptScreenStyle>();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: style?.backgroundColor,
+        elevation: style?.appBarElevation,
+        scrolledUnderElevation: style?.appBarScrolledUnderElevation,
         title: const _TranscriptScreenTitle(),
       ),
       body: const Center(
@@ -60,47 +65,50 @@ class TranscriptScreenContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transcriptValue = ref.watch(transcriptControllerProvider);
-    return transcriptValue.when(
-      skipLoadingOnReload: true,
-      loading: () => const CircularProgressIndicator.adaptive(),
-      error: (e, st) => throw Exception('$e $st'),
-      data: (data) {
-        if (data.transcript == null) {
-          // return const NoTranscript();
-          return Column(
-            children: [
-              const Expanded(
-                child: NoTranscript(),
-              ),
-              TranscriptPlayerControls(isFullscreen: isFullscreen),
-            ],
-          );
-        } else if (data.transcript!.endTimes == null) {
-          return Column(
-            children: [
-              Expanded(
-                child: StaticTranscript(
-                  transcript: data.transcript!,
-                  translation: data.translation,
+    return DecoratedBox(
+      decoration: BoxDecoration(),
+      child: transcriptValue.when(
+        skipLoadingOnReload: true,
+        loading: () => const CircularProgressIndicator.adaptive(),
+        error: (e, st) => throw Exception('$e $st'),
+        data: (data) {
+          if (data.transcript == null) {
+            // return const NoTranscript();
+            return Column(
+              children: [
+                const Expanded(
+                  child: NoTranscript(),
                 ),
-              ),
-              TranscriptPlayerControls(isFullscreen: isFullscreen)
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              Expanded(
-                child: DynamicScrollingTranscript(
-                  transcript: data.transcript!,
-                  translation: data.translation,
+                TranscriptPlayerControls(isFullscreen: isFullscreen),
+              ],
+            );
+          } else if (data.transcript!.endTimes == null) {
+            return Column(
+              children: [
+                Expanded(
+                  child: StaticTranscript(
+                    transcript: data.transcript!,
+                    translation: data.translation,
+                  ),
                 ),
-              ),
-              TranscriptPlayerControls(isFullscreen: isFullscreen),
-            ],
-          );
-        }
-      },
+                TranscriptPlayerControls(isFullscreen: isFullscreen)
+              ],
+            );
+          } else {
+            return Column(
+              children: [
+                Expanded(
+                  child: DynamicScrollingTranscript(
+                    transcript: data.transcript!,
+                    translation: data.translation,
+                  ),
+                ),
+                TranscriptPlayerControls(isFullscreen: isFullscreen),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }
