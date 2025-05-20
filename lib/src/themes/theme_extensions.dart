@@ -295,10 +295,14 @@ class TranscriptLineWidgetStyle
     this.borderColor,
     this.borderRadius,
     this.borderWidth,
+    this.speakerNameTextColor,
+    this.speakerNameTranslationTextColor,
   });
 
   final Color? activeColor;
   final Color? inactiveColor;
+  final Color? speakerNameTextColor;
+  final Color? speakerNameTranslationTextColor;
   final Color? transcriptTextColor;
   final Color? translationTextColor;
   final Color? splashColor;
@@ -316,6 +320,8 @@ class TranscriptLineWidgetStyle
     Color? borderColor,
     double? borderRadius,
     double? borderWidth,
+    Color? speakerNameTextColor,
+    Color? speakerNameTranslationTextColor,
   }) {
     return TranscriptLineWidgetStyle(
       activeColor: activeColor ?? this.activeColor,
@@ -326,6 +332,9 @@ class TranscriptLineWidgetStyle
       borderColor: borderColor ?? this.borderColor,
       borderRadius: borderRadius ?? this.borderRadius,
       borderWidth: borderWidth ?? this.borderWidth,
+      speakerNameTextColor: speakerNameTextColor ?? this.speakerNameTextColor,
+      speakerNameTranslationTextColor: speakerNameTranslationTextColor ??
+          this.speakerNameTranslationTextColor,
     );
   }
 
@@ -349,6 +358,12 @@ class TranscriptLineWidgetStyle
       borderColor: Color.lerp(borderColor, other.borderColor, t),
       borderRadius: lerpDouble(borderRadius, other.borderRadius, t),
       borderWidth: lerpDouble(borderWidth, other.borderWidth, t),
+      speakerNameTextColor:
+          Color.lerp(speakerNameTextColor, other.speakerNameTextColor, t),
+      speakerNameTranslationTextColor: Color.lerp(
+          speakerNameTranslationTextColor,
+          other.speakerNameTranslationTextColor,
+          t),
     );
   }
 }
