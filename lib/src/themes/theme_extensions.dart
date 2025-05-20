@@ -75,10 +75,12 @@ class PlayerScreenContainerStyle
 }
 
 // This theme extension is being used instead of setting the [SliderTheme]
-// because extracting values for the the progress slider didn't work well.
+// because extracting values for the the progress slider didn't work well. Also,
+// there are other sliders that'll need to be styled differently anyway, so they
+// might as well all be handled the same way.
 @immutable
-class SliderStyle extends ThemeExtension<SliderStyle> {
-  const SliderStyle({
+class PlayerScreenSliderStyle extends ThemeExtension<PlayerScreenSliderStyle> {
+  const PlayerScreenSliderStyle({
     this.trackHeight,
     this.thumbRadius,
     this.glowRadius,
@@ -103,7 +105,7 @@ class SliderStyle extends ThemeExtension<SliderStyle> {
   final double? elevation;
 
   @override
-  SliderStyle copyWith({
+  PlayerScreenSliderStyle copyWith({
     double? trackHeight,
     double? thumbRadius,
     double? glowRadius,
@@ -115,7 +117,7 @@ class SliderStyle extends ThemeExtension<SliderStyle> {
     Color? thumbColor,
     double? elevation,
   }) {
-    return SliderStyle(
+    return PlayerScreenSliderStyle(
       trackHeight: trackHeight ?? this.trackHeight,
       thumbRadius: thumbRadius ?? this.thumbRadius,
       glowRadius: glowRadius ?? this.glowRadius,
@@ -130,15 +132,15 @@ class SliderStyle extends ThemeExtension<SliderStyle> {
   }
 
   @override
-  ThemeExtension<SliderStyle> lerp(
-    ThemeExtension<SliderStyle>? other,
+  ThemeExtension<PlayerScreenSliderStyle> lerp(
+    ThemeExtension<PlayerScreenSliderStyle>? other,
     double t,
   ) {
-    if (other is! SliderStyle) {
+    if (other is! PlayerScreenSliderStyle) {
       return this;
     }
 
-    return SliderStyle(
+    return PlayerScreenSliderStyle(
       trackHeight: lerpDouble(trackHeight, other.trackHeight, t),
       thumbRadius: lerpDouble(thumbRadius, other.thumbRadius, t),
       glowRadius: lerpDouble(glowRadius, other.glowRadius, t),

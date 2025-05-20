@@ -60,7 +60,7 @@ abstract final class AppTheme {
         crossAxisSpacing: 24.0,
         iconColor: lightColorScheme.primary,
       ),
-      SliderStyle(
+      PlayerScreenSliderStyle(
         trackHeight: 8.0,
         activeTrackColor: lightColorScheme.primary,
         inactiveTrackColor: lightColorScheme.shadow,

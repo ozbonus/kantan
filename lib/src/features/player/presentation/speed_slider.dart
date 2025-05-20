@@ -16,7 +16,7 @@ class SpeedSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final speedValue = ref.watch(speedProvider);
-    final style = Theme.of(context).extension<SliderStyle>();
+    final style = Theme.of(context).extension<PlayerScreenSliderStyle>();
     return ButtonContainer(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

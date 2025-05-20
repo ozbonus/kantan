@@ -150,7 +150,7 @@ class TranscriptScaleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<SliderStyle>();
+    final style = Theme.of(context).extension<PlayerScreenSliderStyle>();
     return IconButton(
       icon: const Icon(Icons.text_fields_rounded),
       onPressed: () {
