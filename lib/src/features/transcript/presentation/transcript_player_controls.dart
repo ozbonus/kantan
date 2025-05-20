@@ -14,6 +14,7 @@ import 'package:kantan/src/features/transcript/application/transcript_scale_serv
 import 'package:kantan/src/features/transcript/presentation/enable_auto_scroll_switch_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/show_translation_switch_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TranscriptPlayerControls extends StatelessWidget {
   const TranscriptPlayerControls({
@@ -149,6 +150,7 @@ class TranscriptScaleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<SliderStyle>();
     return IconButton(
       icon: const Icon(Icons.text_fields_rounded),
       onPressed: () {
@@ -166,17 +168,31 @@ class TranscriptScaleButton extends StatelessWidget {
                       Text('Scale: ${scale.toStringAsFixed(2)}'),
                       Directionality(
                         textDirection: TextDirection.ltr,
-                        child: Slider(
-                          label: 'hello',
-                          value: scale,
-                          min: Config.minTranscriptScale,
-                          max: Config.maxTranscriptScale,
-                          // divisions: Config.transcriptScaleDivisions,
-                          onChanged: (value) {
-                            ref
-                                .read(transcriptScaleServiceProvider.notifier)
-                                .setTranscriptScale(value);
-                          },
+                        child: SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            trackHeight: style?.trackHeight,
+                            tickMarkShape: style?.sliderTickMarkShape,
+                            activeTrackColor: style?.activeTrackColor,
+                            inactiveTrackColor: style?.inactiveTrackColor,
+                            thumbColor: style?.thumbColor,
+                            thumbShape: RoundSliderThumbShape(
+                              enabledThumbRadius: style?.thumbRadius ?? 8.0,
+                              disabledThumbRadius: style?.thumbRadius ?? 8.0,
+                              elevation: style?.elevation ?? 0.0,
+                              pressedElevation: style?.elevation ?? 0.0,
+                            ),
+                            overlayColor: style?.overlayColor,
+                          ),
+                          child: Slider(
+                            value: scale,
+                            min: Config.minTranscriptScale,
+                            max: Config.maxTranscriptScale,
+                            onChanged: (value) {
+                              ref
+                                  .read(transcriptScaleServiceProvider.notifier)
+                                  .setTranscriptScale(value);
+                            },
+                          ),
                         ),
                       ),
                     ],

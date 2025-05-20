@@ -60,6 +60,17 @@ abstract final class AppTheme {
         crossAxisSpacing: 24.0,
         iconColor: lightColorScheme.primary,
       ),
+      SliderStyle(
+        trackHeight: 8.0,
+        activeTrackColor: lightColorScheme.primary,
+        inactiveTrackColor: lightColorScheme.shadow,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: lightColorScheme.primary,
+        thumbRadius: 12.0,
+        elevation: 0.0,
+        overlayColor: lightColorScheme.primary.withAlpha(50),
+        overlayRadius: 24.0,
+      ),
     ],
   );
 

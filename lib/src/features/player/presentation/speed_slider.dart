@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider_controller.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class SpeedSlider extends ConsumerWidget {
   const SpeedSlider({super.key});
@@ -15,6 +16,7 @@ class SpeedSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final speedValue = ref.watch(speedProvider);
+    final style = Theme.of(context).extension<SliderStyle>();
     return ButtonContainer(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,16 +37,32 @@ class SpeedSlider extends ConsumerWidget {
             Expanded(
               child: Directionality(
                 textDirection: TextDirection.ltr,
-                child: Slider(
-                  min: 0.5,
-                  max: 2.0,
-                  divisions: 16,
-                  value: speedValue.when(
-                    loading: () => 1.0,
-                    error: (_, __) => 1.0,
-                    data: (speed) => speed,
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    trackHeight: style?.trackHeight,
+                    tickMarkShape: style?.sliderTickMarkShape,
+                    activeTrackColor: style?.activeTrackColor,
+                    inactiveTrackColor: style?.inactiveTrackColor,
+                    thumbColor: style?.thumbColor,
+                    thumbShape: RoundSliderThumbShape(
+                      enabledThumbRadius: style?.thumbRadius ?? 8.0,
+                      disabledThumbRadius: style?.thumbRadius ?? 8.0,
+                      elevation: style?.elevation ?? 0.0,
+                      pressedElevation: style?.elevation ?? 0.0,
+                    ),
+                    overlayColor: style?.overlayColor,
                   ),
-                  onChanged: (speed) => ref.read(setSpeedProvider(speed)),
+                  child: Slider(
+                    min: 0.5,
+                    max: 2.0,
+                    divisions: 16,
+                    value: speedValue.when(
+                      loading: () => 1.0,
+                      error: (_, __) => 1.0,
+                      data: (speed) => speed,
+                    ),
+                    onChanged: (speed) => ref.read(setSpeedProvider(speed)),
+                  ),
                 ),
               ),
             ),
