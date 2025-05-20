@@ -121,7 +121,7 @@ class SkipToNextButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(skipToNextButtonControllerProvider),
-      child: const Icon(Icons.skip_next_rounded),
+      child: _TappableButtonIcon(Icons.skip_next_rounded),
     );
   }
 }
@@ -133,7 +133,7 @@ class RewindButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(rewindButtonControllerProvider),
-      child: const Icon(Icons.replay_5_rounded),
+      child: _TappableButtonIcon(Icons.replay_5_rounded),
     );
   }
 }
@@ -145,7 +145,7 @@ class FastForwardButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(fastForwardButtonControllerProvider),
-      child: const Icon(Icons.forward_5_rounded),
+      child: _TappableButtonIcon(Icons.forward_5_rounded),
     );
   }
 }
@@ -156,15 +156,18 @@ class RepeatModeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final repeatMode = ref.watch(repeatModeButtonControllerProvider);
+
+    IconData buttonIcon = switch (repeatMode) {
+      RepeatMode.one => Icons.repeat_one_rounded,
+      RepeatMode.all => Icons.repeat_rounded,
+      RepeatMode.none => Icons.arrow_right_alt_rounded,
+    };
+
     return _TappableButton(
       onTap: () => ref
           .read(repeatModeButtonControllerProvider.notifier)
           .nextRepeatMode(),
-      child: switch (repeatMode) {
-        RepeatMode.one => const Icon(Icons.repeat_one_rounded),
-        RepeatMode.all => const Icon(Icons.repeat_rounded),
-        RepeatMode.none => const Icon(Icons.arrow_right_alt_rounded),
-      },
+      child: _TappableButtonIcon(buttonIcon),
     );
   }
 }
