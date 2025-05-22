@@ -35,9 +35,10 @@ class TranscriptLineWidget extends ConsumerWidget {
     if (controller.showSpeakerName) {
       speakerName = Text(
         transcriptLine.speaker!,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! *
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize! *
                   controller.scale,
+              fontWeight: FontWeight.bold,
               color: style?.transcriptTextColor,
             ),
       );
@@ -47,9 +48,10 @@ class TranscriptLineWidget extends ConsumerWidget {
     if (controller.showSpeakerNameTranslation) {
       speakerNameTranslation = Text(
         translationLine!.speaker!,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! *
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize! *
                   controller.scale,
+              fontWeight: FontWeight.bold,
               color: style?.translationTextColor,
             ),
       );
@@ -60,6 +62,7 @@ class TranscriptLineWidget extends ConsumerWidget {
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
                 controller.scale,
+            fontWeight: FontWeight.bold,
             color: style?.transcriptTextColor,
           ),
     );
@@ -71,6 +74,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
                   controller.scale,
+              fontWeight: FontWeight.bold,
               color: style?.translationTextColor,
             ),
       );
@@ -108,7 +112,10 @@ class TranscriptLineWidget extends ConsumerWidget {
                   : null,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 24.0,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,

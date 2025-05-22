@@ -12,10 +12,19 @@ final darkColorScheme = FlexColorScheme.dark(
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
+final lightTextTheme = Typography.material2021(
+  colorScheme: lightColorScheme,
+).black;
+
+final darkTextTheme = Typography.material2021(
+  colorScheme: darkColorScheme,
+).white;
+
 abstract final class AppTheme {
   static ThemeData light = FlexThemeData.light(
     colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
+    textTheme: lightTextTheme,
     fontFamily: 'Atkinson Hyperlegible Next',
     subThemesData: FlexSubThemesData(
       interactionEffects: true,
@@ -99,6 +108,7 @@ abstract final class AppTheme {
   static ThemeData dark = FlexThemeData.dark(
     colorScheme: darkColorScheme,
     applyElevationOverlayColor: false,
+    textTheme: darkTextTheme,
     fontFamily: 'Atkinson Hyperlegible Next',
     variant: FlexSchemeVariant.fidelity,
     subThemesData: FlexSubThemesData(
