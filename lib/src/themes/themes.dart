@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
-final lightColors = FlexColorScheme.light(
+final lightColorScheme = FlexColorScheme.light(
+  blendLevel: 5,
+  scheme: FlexScheme.mandyRed,
+).toScheme;
+
+final darkColorScheme = FlexColorScheme.dark(
+  blendLevel: 5,
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
 abstract final class AppTheme {
-  static final lightColorScheme = FlexColorScheme.light(
-    blendLevel: 5,
-    scheme: FlexScheme.mandyRed,
-  ).toScheme;
-
-  static final darkColorScheme = FlexColorScheme.dark(
-    blendLevel: 5,
-    scheme: FlexScheme.mandyRed,
-  ).toScheme;
-
   static ThemeData light = FlexThemeData.light(
     colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
@@ -83,17 +79,18 @@ abstract final class AppTheme {
         overlayRadius: 12.0,
       ),
       TranscriptScreenStyle(
-        backgroundColor: lightColorScheme.secondary,
+        backgroundColor: lightColorScheme.secondaryContainer,
         appBarElevation: 0.0,
         appBarScrolledUnderElevation: 0.0,
       ),
       TranscriptLineWidgetStyle(
-        inactiveColor: lightColorScheme.secondary,
-        activeColor: lightColorScheme.secondaryContainer,
-        transcriptTextColor: lightColorScheme.onSecondary,
-        translationTextColor: lightColorScheme.onSecondary.withAlpha(128),
+        inactiveColor: lightColorScheme.secondaryContainer,
+        activeColor: lightColorScheme.secondaryContainer.darken(10),
+        transcriptTextColor: lightColorScheme.onSecondaryContainer,
+        translationTextColor: lightColorScheme.onSecondaryContainer
+            .blend(lightColorScheme.secondaryContainer, 50),
         borderRadius: 24.0,
-        borderColor: lightColorScheme.secondary.darken(),
+        borderColor: lightColorScheme.secondaryContainer.darken(50),
         borderWidth: 2.0,
       ),
     ],
@@ -164,6 +161,21 @@ abstract final class AppTheme {
         elevation: 0.0,
         overlayColor: darkColorScheme.secondaryContainer.withAlpha(50),
         overlayRadius: 12.0,
+      ),
+      TranscriptScreenStyle(
+        backgroundColor: darkColorScheme.secondaryContainer,
+        appBarElevation: 0.0,
+        appBarScrolledUnderElevation: 0.0,
+      ),
+      TranscriptLineWidgetStyle(
+        inactiveColor: darkColorScheme.secondaryContainer,
+        activeColor: darkColorScheme.secondaryContainer.darken(10),
+        transcriptTextColor: darkColorScheme.onSecondaryContainer,
+        translationTextColor: darkColorScheme.onSecondaryContainer
+            .blend(darkColorScheme.secondaryContainer, 50),
+        borderRadius: 24.0,
+        borderColor: darkColorScheme.secondaryContainer.lighten(50),
+        borderWidth: 2.0,
       ),
     ],
   );
