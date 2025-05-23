@@ -35,12 +35,8 @@ class TranscriptLineWidget extends ConsumerWidget {
     if (controller.showSpeakerName) {
       speakerName = Text(
         transcriptLine.speaker!,
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize! *
-                  controller.scale,
-              fontWeight: FontWeight.bold,
-              color: style?.transcriptTextColor,
-            ),
+        style: style?.speakerNameTextStyle,
+        textScaler: TextScaler.linear(controller.scale),
       );
     }
 
@@ -48,35 +44,23 @@ class TranscriptLineWidget extends ConsumerWidget {
     if (controller.showSpeakerNameTranslation) {
       speakerNameTranslation = Text(
         translationLine!.speaker!,
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize! *
-                  controller.scale,
-              fontWeight: FontWeight.bold,
-              color: style?.translationTextColor,
-            ),
+        style: style?.speakerNameTranslationTextStyle,
+        textScaler: TextScaler.linear(controller.scale),
       );
     }
 
     Widget transcriptText = Text(
       transcriptLine.text,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
-                controller.scale,
-            fontWeight: FontWeight.bold,
-            color: style?.transcriptTextColor,
-          ),
+      style: style?.transcriptTextStyle,
+      textScaler: TextScaler.linear(controller.scale),
     );
 
     Widget? translationText;
     if (controller.showTranslation) {
       translationText = Text(
         translationLine!.text,
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize! *
-                  controller.scale,
-              fontWeight: FontWeight.bold,
-              color: style?.translationTextColor,
-            ),
+        style: style?.translationTextStyle,
+        textScaler: TextScaler.linear(controller.scale),
       );
     }
 

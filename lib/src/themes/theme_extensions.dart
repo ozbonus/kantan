@@ -289,18 +289,26 @@ class TranscriptLineWidgetStyle
   const TranscriptLineWidgetStyle({
     this.activeColor,
     this.inactiveColor,
+    this.speakerNameTextStyle,
+    this.speakerNameTranslationTextStyle,
+    this.transcriptTextStyle,
+    this.translationTextStyle,
+    this.speakerNameTextColor,
+    this.speakerNameTranslationTextColor,
     this.transcriptTextColor,
     this.translationTextColor,
     this.splashColor,
     this.borderColor,
     this.borderRadius,
     this.borderWidth,
-    this.speakerNameTextColor,
-    this.speakerNameTranslationTextColor,
   });
 
   final Color? activeColor;
   final Color? inactiveColor;
+  final TextStyle? speakerNameTextStyle;
+  final TextStyle? speakerNameTranslationTextStyle;
+  final TextStyle? transcriptTextStyle;
+  final TextStyle? translationTextStyle;
   final Color? speakerNameTextColor;
   final Color? speakerNameTranslationTextColor;
   final Color? transcriptTextColor;

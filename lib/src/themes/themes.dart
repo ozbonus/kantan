@@ -95,9 +95,10 @@ abstract final class AppTheme {
       TranscriptLineWidgetStyle(
         inactiveColor: lightColorScheme.secondaryContainer,
         activeColor: lightColorScheme.secondaryContainer.darken(10),
-        transcriptTextColor: lightColorScheme.onSecondaryContainer,
-        translationTextColor: lightColorScheme.onSecondaryContainer
-            .blend(lightColorScheme.secondaryContainer, 50),
+        speakerNameTextStyle: lightTextTheme.bodyMedium,
+        speakerNameTranslationTextStyle: lightTextTheme.bodyMedium,
+        transcriptTextStyle: lightTextTheme.displaySmall,
+        translationTextStyle: lightTextTheme.displaySmall,
         borderRadius: 24.0,
         borderColor: lightColorScheme.secondaryContainer.darken(50),
         borderWidth: 2.0,
@@ -180,9 +181,6 @@ abstract final class AppTheme {
       TranscriptLineWidgetStyle(
         inactiveColor: darkColorScheme.secondaryContainer,
         activeColor: darkColorScheme.secondaryContainer.darken(10),
-        transcriptTextColor: darkColorScheme.onSecondaryContainer,
-        translationTextColor: darkColorScheme.onSecondaryContainer
-            .blend(darkColorScheme.secondaryContainer, 50),
         borderRadius: 24.0,
         borderColor: darkColorScheme.secondaryContainer.lighten(50),
         borderWidth: 2.0,
