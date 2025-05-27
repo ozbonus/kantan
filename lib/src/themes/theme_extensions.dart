@@ -293,10 +293,6 @@ class TranscriptLineWidgetStyle
     this.speakerNameTranslationTextStyle,
     this.transcriptTextStyle,
     this.translationTextStyle,
-    this.speakerNameTextColor,
-    this.speakerNameTranslationTextColor,
-    this.transcriptTextColor,
-    this.translationTextColor,
     this.splashColor,
     this.borderColor,
     this.borderRadius,
@@ -309,10 +305,6 @@ class TranscriptLineWidgetStyle
   final TextStyle? speakerNameTranslationTextStyle;
   final TextStyle? transcriptTextStyle;
   final TextStyle? translationTextStyle;
-  final Color? speakerNameTextColor;
-  final Color? speakerNameTranslationTextColor;
-  final Color? transcriptTextColor;
-  final Color? translationTextColor;
   final Color? splashColor;
   final Color? borderColor;
   final double? borderRadius;
@@ -322,27 +314,27 @@ class TranscriptLineWidgetStyle
   TranscriptLineWidgetStyle copyWith({
     Color? activeColor,
     Color? inactiveColor,
-    Color? transcriptTextColor,
-    Color? translationTextColor,
+    TextStyle? speakerNameTextStyle,
+    TextStyle? speakerNameTranslationTextStyle,
+    TextStyle? transcriptTextStyle,
+    TextStyle? translationTextStyle,
     Color? splashColor,
     Color? borderColor,
     double? borderRadius,
     double? borderWidth,
-    Color? speakerNameTextColor,
-    Color? speakerNameTranslationTextColor,
   }) {
     return TranscriptLineWidgetStyle(
       activeColor: activeColor ?? this.activeColor,
       inactiveColor: inactiveColor ?? this.inactiveColor,
-      transcriptTextColor: transcriptTextColor ?? this.transcriptTextColor,
-      translationTextColor: translationTextColor ?? this.translationTextColor,
+      speakerNameTextStyle: speakerNameTextStyle ?? this.speakerNameTextStyle,
+      speakerNameTranslationTextStyle: speakerNameTranslationTextStyle ??
+          this.speakerNameTranslationTextStyle,
+      transcriptTextStyle: transcriptTextStyle ?? this.transcriptTextStyle,
+      translationTextStyle: translationTextStyle ?? this.translationTextStyle,
       splashColor: splashColor ?? this.splashColor,
       borderColor: borderColor ?? this.borderColor,
       borderRadius: borderRadius ?? this.borderRadius,
       borderWidth: borderWidth ?? this.borderWidth,
-      speakerNameTextColor: speakerNameTextColor ?? this.speakerNameTextColor,
-      speakerNameTranslationTextColor: speakerNameTranslationTextColor ??
-          this.speakerNameTranslationTextColor,
     );
   }
 
@@ -358,20 +350,20 @@ class TranscriptLineWidgetStyle
     return TranscriptLineWidgetStyle(
       activeColor: Color.lerp(activeColor, other.activeColor, t),
       inactiveColor: Color.lerp(inactiveColor, other.inactiveColor, t),
-      transcriptTextColor:
-          Color.lerp(transcriptTextColor, other.transcriptTextColor, t),
-      translationTextColor:
-          Color.lerp(translationTextColor, other.translationTextColor, t),
+      speakerNameTextStyle:
+          TextStyle.lerp(speakerNameTextStyle, other.speakerNameTextStyle, t),
+      speakerNameTranslationTextStyle: TextStyle.lerp(
+          speakerNameTranslationTextStyle,
+          other.speakerNameTranslationTextStyle,
+          t),
+      transcriptTextStyle:
+          TextStyle.lerp(transcriptTextStyle, other.transcriptTextStyle, t),
+      translationTextStyle:
+          TextStyle.lerp(translationTextStyle, other.translationTextStyle, t),
       splashColor: Color.lerp(splashColor, other.splashColor, t),
       borderColor: Color.lerp(borderColor, other.borderColor, t),
       borderRadius: lerpDouble(borderRadius, other.borderRadius, t),
       borderWidth: lerpDouble(borderWidth, other.borderWidth, t),
-      speakerNameTextColor:
-          Color.lerp(speakerNameTextColor, other.speakerNameTextColor, t),
-      speakerNameTranslationTextColor: Color.lerp(
-          speakerNameTranslationTextColor,
-          other.speakerNameTranslationTextColor,
-          t),
     );
   }
 }

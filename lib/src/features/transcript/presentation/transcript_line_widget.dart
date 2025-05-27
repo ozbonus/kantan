@@ -28,15 +28,20 @@ class TranscriptLineWidget extends ConsumerWidget {
       translationLine,
     ));
     final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
+    final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
     final showNames =
         controller.showSpeakerName || controller.showSpeakerNameTranslation;
+
+    TextScaler? textScaler = TextScaler.linear(controller.scale).clamp(
+      maxScaleFactor: 3.0,
+    );
 
     Widget? speakerName;
     if (controller.showSpeakerName) {
       speakerName = Text(
         transcriptLine.speaker!,
-        style: style?.speakerNameTextStyle,
-        textScaler: TextScaler.linear(controller.scale),
+        style: baseTextStyle?.merge(style?.speakerNameTextStyle).apply(),
+        textScaler: textScaler,
       );
     }
 
@@ -44,57 +49,58 @@ class TranscriptLineWidget extends ConsumerWidget {
     if (controller.showSpeakerNameTranslation) {
       speakerNameTranslation = Text(
         translationLine!.speaker!,
-        style: style?.speakerNameTranslationTextStyle,
-        textScaler: TextScaler.linear(controller.scale),
+        style: baseTextStyle?.merge(style?.speakerNameTranslationTextStyle),
+        textScaler: textScaler,
       );
     }
 
     Widget transcriptText = Text(
       transcriptLine.text,
-      style: style?.transcriptTextStyle,
-      textScaler: TextScaler.linear(controller.scale),
+      style: baseTextStyle?.merge(style?.transcriptTextStyle),
+      textScaler: textScaler,
     );
 
     Widget? translationText;
     if (controller.showTranslation) {
       translationText = Text(
         translationLine!.text,
-        style: style?.translationTextStyle,
-        textScaler: TextScaler.linear(controller.scale),
+        style: baseTextStyle?.merge(style?.translationTextStyle),
+        textScaler: textScaler,
       );
     }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Material(
-        type: MaterialType.transparency,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: controller.isActive ? style?.activeColor : null,
           borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-          onTap: () => ref
-              .read(
-                transcriptLineControllerProvider(
-                  index,
-                  transcriptLine,
-                  translationLine,
-                ).notifier,
-              )
-              .seekToLine(),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            decoration: BoxDecoration(
-              color: controller.isActive ? style?.activeColor : null,
-              borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-            ),
-            foregroundDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-              border: controller.isActive
-                  ? Border.all(
-                      width: style?.borderWidth ?? 0,
-                      color: style?.borderColor ?? Colors.transparent,
-                    )
-                  : null,
-            ),
+        ),
+        foregroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+          border: controller.isActive
+              ? Border.all(
+                  width: style?.borderWidth ?? 0,
+                  color: style?.borderColor ?? Colors.transparent,
+                )
+              : null,
+        ),
+        child: Material(
+          type: MaterialType.transparency,
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            splashColor: style?.splashColor,
+            borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+            onTap: () => ref
+                .read(
+                  transcriptLineControllerProvider(
+                    index,
+                    transcriptLine,
+                    translationLine,
+                  ).notifier,
+                )
+                .seekToLine(),
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,

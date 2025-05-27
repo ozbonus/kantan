@@ -12,19 +12,10 @@ final darkColorScheme = FlexColorScheme.dark(
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
-final lightTextTheme = Typography.material2021(
-  colorScheme: lightColorScheme,
-).black;
-
-final darkTextTheme = Typography.material2021(
-  colorScheme: darkColorScheme,
-).white;
-
 abstract final class AppTheme {
   static ThemeData light = FlexThemeData.light(
     colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
-    textTheme: lightTextTheme,
     fontFamily: 'Atkinson Hyperlegible Next',
     subThemesData: FlexSubThemesData(
       interactionEffects: true,
@@ -94,14 +85,29 @@ abstract final class AppTheme {
       ),
       TranscriptLineWidgetStyle(
         inactiveColor: lightColorScheme.secondaryContainer,
-        activeColor: lightColorScheme.secondaryContainer.darken(10),
-        speakerNameTextStyle: lightTextTheme.bodyMedium,
-        speakerNameTranslationTextStyle: lightTextTheme.bodyMedium,
-        transcriptTextStyle: lightTextTheme.displaySmall,
-        translationTextStyle: lightTextTheme.displaySmall,
+        activeColor: lightColorScheme.secondaryContainer.darken(5),
         borderRadius: 24.0,
         borderColor: lightColorScheme.secondaryContainer.darken(50),
         borderWidth: 2.0,
+        splashColor: lightColorScheme.secondary.withAlpha(128),
+        speakerNameTextStyle: TextStyle(
+          color: lightColorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        speakerNameTranslationTextStyle: TextStyle(
+          color: lightColorScheme.onSecondaryContainer
+              .blend(lightColorScheme.secondaryContainer, 50),
+          fontWeight: FontWeight.bold,
+        ),
+        transcriptTextStyle: TextStyle(
+          color: lightColorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        translationTextStyle: TextStyle(
+          color: lightColorScheme.onSecondaryContainer
+              .blend(lightColorScheme.secondaryContainer, 50),
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ],
   );
@@ -109,7 +115,6 @@ abstract final class AppTheme {
   static ThemeData dark = FlexThemeData.dark(
     colorScheme: darkColorScheme,
     applyElevationOverlayColor: false,
-    textTheme: darkTextTheme,
     fontFamily: 'Atkinson Hyperlegible Next',
     variant: FlexSchemeVariant.fidelity,
     subThemesData: FlexSubThemesData(
@@ -180,10 +185,29 @@ abstract final class AppTheme {
       ),
       TranscriptLineWidgetStyle(
         inactiveColor: darkColorScheme.secondaryContainer,
-        activeColor: darkColorScheme.secondaryContainer.darken(10),
+        activeColor: darkColorScheme.secondaryContainer.darken(4),
         borderRadius: 24.0,
-        borderColor: darkColorScheme.secondaryContainer.lighten(50),
+        borderColor: darkColorScheme.secondaryContainer.darken(8),
         borderWidth: 2.0,
+        splashColor: darkColorScheme.secondary.withAlpha(128),
+        speakerNameTextStyle: TextStyle(
+          color: darkColorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        speakerNameTranslationTextStyle: TextStyle(
+          color: darkColorScheme.onSecondaryContainer
+              .blend(darkColorScheme.secondaryContainer, 50),
+          fontWeight: FontWeight.bold,
+        ),
+        transcriptTextStyle: TextStyle(
+          color: darkColorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        translationTextStyle: TextStyle(
+          color: darkColorScheme.onSecondaryContainer
+              .blend(darkColorScheme.secondaryContainer, 50),
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ],
   );
