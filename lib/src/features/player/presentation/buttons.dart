@@ -61,10 +61,7 @@ class _TappableButton extends StatelessWidget {
 }
 
 class _TappableButtonIcon extends StatelessWidget {
-  const _TappableButtonIcon(
-    this.iconData, {
-    super.key,
-  });
+  const _TappableButtonIcon(this.iconData);
 
   final IconData iconData;
 
