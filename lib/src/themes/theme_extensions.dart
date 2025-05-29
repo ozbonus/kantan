@@ -402,6 +402,44 @@ class TranscriptScreenButtonStyle
 }
 
 @immutable
+class TranscriptScreenToggleStyle
+    extends ThemeExtension<TranscriptScreenToggleStyle> {
+  const TranscriptScreenToggleStyle({
+    this.active,
+    this.inactive,
+  });
+
+  final ButtonStyle? active;
+  final ButtonStyle? inactive;
+
+  @override
+  TranscriptScreenToggleStyle copyWith({
+    ButtonStyle? active,
+    ButtonStyle? inactive,
+  }) {
+    return TranscriptScreenToggleStyle(
+      active: active ?? this.active,
+      inactive: inactive ?? this.inactive,
+    );
+  }
+
+  @override
+  ThemeExtension<TranscriptScreenToggleStyle> lerp(
+    ThemeExtension<TranscriptScreenToggleStyle>? other,
+    double t,
+  ) {
+    if (other is! TranscriptScreenToggleStyle) {
+      return this;
+    }
+
+    return TranscriptScreenToggleStyle(
+      active: ButtonStyle.lerp(active, other.active, t),
+      inactive: ButtonStyle.lerp(inactive, other.inactive, t),
+    );
+  }
+}
+
+@immutable
 class TranscriptScreenSwitchStyle
     extends ThemeExtension<TranscriptScreenSwitchStyle> {
   const TranscriptScreenSwitchStyle({
