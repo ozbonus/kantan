@@ -117,8 +117,9 @@ class TranscriptProgressSlider extends ConsumerWidget {
 class ShowTranslationSwitch extends ConsumerWidget {
   const ShowTranslationSwitch({super.key});
 
-  static const thumbIcon =
-      WidgetStatePropertyAll<Icon>(Icon(Icons.translate_rounded));
+  static const thumbIcon = WidgetStatePropertyAll<Icon>(Icon(
+    Icons.translate_rounded,
+  ));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
