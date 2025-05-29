@@ -109,6 +109,27 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
       ),
+      TranscriptScreenButtonStyle(
+        buttonStyle: IconButton.styleFrom(
+          foregroundColor: lightColorScheme.onSecondary,
+          backgroundColor: lightColorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+      TranscriptScreenSwitchStyle(
+        data: SwitchThemeData(
+          thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return const Icon(Icons.check);
+              }
+              return const Icon(Icons.close);
+            },
+          ),
+        ),
+      ),
     ],
   );
 

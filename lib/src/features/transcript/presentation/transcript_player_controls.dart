@@ -124,6 +124,20 @@ class ShowTranslationSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(showTranslationSwitchControllerProvider);
+
+    final WidgetStateProperty<Icon?> thumbIcon =
+        WidgetStateProperty.resolveWith<Icon?>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.disabled)) {
+        return const Icon(
+          Icons.coronavirus_rounded,
+          color: Colors.black,
+        );
+      }
+      return Icon(
+        Icons.heart_broken_rounded,
+      );
+    });
+
     return Switch(
       thumbIcon: thumbIcon,
       value: state.isActive ? state.value : false,
@@ -243,6 +257,7 @@ class TranscriptPlayButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackState = ref.watch(playPauseButtonControllerProvider);
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
 
     IconData buttonIcon = switch (playbackState) {
       KantanPlaybackState.loading ||
@@ -254,6 +269,7 @@ class TranscriptPlayButton extends ConsumerWidget {
     };
 
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () =>
           ref.read(playPauseButtonControllerProvider.notifier).activate(),
       icon: Icon(buttonIcon),
@@ -266,7 +282,9 @@ class TranscriptSkipToPreviousButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () => ref.read(skipToPreviousButtonControllerProvider),
       icon: const Icon(Icons.skip_previous_rounded),
     );
@@ -278,7 +296,9 @@ class TranscriptSkipToNextButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () => ref.read(skipToNextButtonControllerProvider),
       icon: const Icon(Icons.skip_next_rounded),
     );
@@ -290,7 +310,9 @@ class CloseTranscriptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       icon: const Icon(Icons.close_rounded),
       onPressed: () => context.goNamed(AppRoute.player),
     );
