@@ -369,6 +369,39 @@ class TranscriptLineWidgetStyle
 }
 
 @immutable
+class TranscriptScreenButtonStyle
+    extends ThemeExtension<TranscriptScreenButtonStyle> {
+  const TranscriptScreenButtonStyle({
+    this.buttonStyle,
+  });
+
+  final ButtonStyle? buttonStyle;
+
+  @override
+  TranscriptScreenButtonStyle copyWith({
+    ButtonStyle? buttonStyle,
+  }) {
+    return TranscriptScreenButtonStyle(
+      buttonStyle: buttonStyle ?? this.buttonStyle,
+    );
+  }
+
+  @override
+  ThemeExtension<TranscriptScreenButtonStyle> lerp(
+    ThemeExtension<TranscriptScreenButtonStyle>? other,
+    double t,
+  ) {
+    if (other is! TranscriptScreenButtonStyle) {
+      return this;
+    }
+
+    return TranscriptScreenButtonStyle(
+      buttonStyle: ButtonStyle.lerp(buttonStyle, other.buttonStyle, t),
+    );
+  }
+}
+
+@immutable
 class TranscriptScreenSwitchStyle
     extends ThemeExtension<TranscriptScreenSwitchStyle> {
   const TranscriptScreenSwitchStyle({
