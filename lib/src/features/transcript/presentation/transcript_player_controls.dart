@@ -176,65 +176,70 @@ class TranscriptScaleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<PlayerScreenSliderStyle>();
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       icon: const Icon(Icons.text_fields_rounded),
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Adjust text scale'.hardcoded),
-              content: Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final scale = ref.watch(transcriptScaleServiceProvider);
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Scale: ${scale.toStringAsFixed(2)}'),
-                      Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            trackHeight: style?.trackHeight,
-                            tickMarkShape: style?.sliderTickMarkShape,
-                            activeTrackColor: style?.activeTrackColor,
-                            inactiveTrackColor: style?.inactiveTrackColor,
-                            thumbColor: style?.thumbColor,
-                            thumbShape: RoundSliderThumbShape(
-                              enabledThumbRadius: style?.thumbRadius ?? 8.0,
-                              disabledThumbRadius: style?.thumbRadius ?? 8.0,
-                              elevation: style?.elevation ?? 0.0,
-                              pressedElevation: style?.elevation ?? 0.0,
-                            ),
-                            overlayColor: style?.overlayColor,
-                          ),
-                          child: Slider(
-                            value: scale,
-                            min: Config.minTranscriptScale,
-                            max: Config.maxTranscriptScale,
-                            onChanged: (value) {
-                              ref
-                                  .read(transcriptScaleServiceProvider.notifier)
-                                  .setTranscriptScale(value);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              actions: [
-                TextButton(
-                  onPressed: context.pop,
-                  child: Text('Close'.hardcoded),
-                ),
-              ],
-            );
-          },
+          builder: (context) => ScaleSliderDialog(),
         );
       },
+    );
+  }
+}
+
+class ScaleSliderDialog extends ConsumerWidget {
+  const ScaleSliderDialog({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scale = ref.watch(transcriptScaleServiceProvider);
+    final style = Theme.of(context).extension<PlayerScreenSliderStyle>();
+    return AlertDialog(
+      title: Text('Adjust text scale'.hardcoded),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Scale: ${scale.toStringAsFixed(2)}'),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: style?.trackHeight,
+                tickMarkShape: style?.sliderTickMarkShape,
+                activeTrackColor: style?.activeTrackColor,
+                inactiveTrackColor: style?.inactiveTrackColor,
+                thumbColor: style?.thumbColor,
+                thumbShape: RoundSliderThumbShape(
+                  enabledThumbRadius: style?.thumbRadius ?? 8.0,
+                  disabledThumbRadius: style?.thumbRadius ?? 8.0,
+                  elevation: style?.elevation ?? 0.0,
+                  pressedElevation: style?.elevation ?? 0.0,
+                ),
+                overlayColor: style?.overlayColor,
+              ),
+              child: Slider(
+                value: scale,
+                min: Config.minTranscriptScale,
+                max: Config.maxTranscriptScale,
+                onChanged: (value) {
+                  ref
+                      .read(transcriptScaleServiceProvider.notifier)
+                      .setTranscriptScale(value);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: context.pop,
+          child: Text('Close'.hardcoded),
+        ),
+      ],
     );
   }
 }
