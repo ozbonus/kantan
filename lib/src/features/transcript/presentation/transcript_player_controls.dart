@@ -8,8 +8,6 @@ import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/prev_next_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
-import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
-import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:kantan/src/features/transcript/presentation/enable_auto_scroll_switch_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/show_translation_switch_controller.dart';
