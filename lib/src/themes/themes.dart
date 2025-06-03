@@ -118,6 +118,26 @@ abstract final class AppTheme {
           ),
         ),
       ),
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: lightColorScheme.onSecondary,
+          backgroundColor: lightColorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: lightColorScheme.onSecondaryContainer,
+          backgroundColor: lightColorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 1.0,
+            color: lightColorScheme.secondary,
+          ),
+        ),
+      ),
       TranscriptScreenSwitchStyle(
         data: SwitchThemeData(
           thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
