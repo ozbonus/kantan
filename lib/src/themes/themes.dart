@@ -243,6 +243,40 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
       ),
+      TranscriptScreenButtonStyle(
+        buttonStyle: IconButton.styleFrom(
+          foregroundColor: darkColorScheme.onSecondaryContainer,
+          backgroundColor: darkColorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: darkColorScheme.onSecondary,
+          backgroundColor: darkColorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: darkColorScheme.onSecondaryContainer,
+          backgroundColor: darkColorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 2.0,
+            color: darkColorScheme.secondary,
+          ),
+        ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
     ],
   );
 }
