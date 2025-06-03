@@ -137,6 +137,11 @@ abstract final class AppTheme {
             color: lightColorScheme.secondary,
           ),
         ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ),
       TranscriptScreenSwitchStyle(
         data: SwitchThemeData(

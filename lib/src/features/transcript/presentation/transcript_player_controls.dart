@@ -70,7 +70,7 @@ class TranscriptPlayerControls extends StatelessWidget {
                             if (Config.useTranslationFeature)
                               const ShowTranslationToggleButton(),
                             if (Config.useAutoScrollFeature)
-                              const EnableAutoScrollSwitch(),
+                              const EnableAutoScrollToggleButton(),
                             const TranscriptScaleButton(),
                             if (isFullscreen)
                               const CloseTranscriptButton()
@@ -138,6 +138,35 @@ class ShowTranslationToggleButton extends ConsumerWidget {
           ? () => ref
               .read(showTranslationSwitchControllerProvider.notifier)
               .setShowTranslation(!state.value)
+          : null,
+    );
+  }
+}
+
+class EnableAutoScrollToggleButton extends ConsumerWidget {
+  const EnableAutoScrollToggleButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(enableAutoScrollSwitchControllerProvider);
+    final style = Theme.of(context).extension<TranscriptScreenToggleStyle>();
+
+    final ButtonStyle? buttonStyle;
+    if (!state.isActive) {
+      buttonStyle = style?.disabled;
+    } else if (state.value) {
+      buttonStyle = style?.active;
+    } else {
+      buttonStyle = style?.inactive;
+    }
+
+    return IconButton(
+      icon: Icon(Icons.format_line_spacing_rounded),
+      style: buttonStyle,
+      onPressed: state.isActive
+          ? () => ref
+              .read(enableAutoScrollSwitchControllerProvider.notifier)
+              .setEnableAutoScroll(!state.value)
           : null,
     );
   }
