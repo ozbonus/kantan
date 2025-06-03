@@ -41,43 +41,19 @@ class TranscriptPlayerControls extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 16.0),
                       child: TranscriptProgressSlider(),
                     ),
-                  IntrinsicHeight(
-                    child: Flex(
-                      direction: constraints.maxWidth > Config.mediumBreakpoint
-                          ? Axis.horizontal
-                          : Axis.vertical,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      textDirection: TextDirection.ltr,
-                      children: [
-                        if (isFullscreen)
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textDirection: TextDirection.ltr,
-                            children: [
-                              TranscriptSkipToPreviousButton(),
-                              TranscriptPlayButton(),
-                              TranscriptSkipToNextButton(),
-                              VerticalDivider(),
-                            ],
-                          ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          textDirection: TextDirection.ltr,
-                          children: [
-                            if (Config.useTranslationFeature)
-                              const ShowTranslationToggleButton(),
-                            if (Config.useAutoScrollFeature)
-                              const EnableAutoScrollToggleButton(),
-                            const TranscriptScaleButton(),
-                            if (isFullscreen)
-                              const CloseTranscriptButton()
-                            else
-                              const ExpandTranscriptButton(),
-                          ],
-                        ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TranscriptPlayButton(),
+                      TranscriptSkipToPreviousButton(),
+                      TranscriptSkipToNextButton(),
+                      TranscriptScaleButton(),
+                      if (Config.useTranslationFeature)
+                        ShowTranslationToggleButton(),
+                      if (Config.useAutoScrollFeature)
+                        EnableAutoScrollToggleButton(),
+                      if (!isFullscreen) ExpandTranscriptButton(),
+                    ],
                   ),
                 ],
               );
