@@ -407,19 +407,23 @@ class TranscriptScreenToggleStyle
   const TranscriptScreenToggleStyle({
     this.active,
     this.inactive,
+    this.disabled,
   });
 
   final ButtonStyle? active;
   final ButtonStyle? inactive;
+  final ButtonStyle? disabled;
 
   @override
   TranscriptScreenToggleStyle copyWith({
     ButtonStyle? active,
     ButtonStyle? inactive,
+    ButtonStyle? disabled,
   }) {
     return TranscriptScreenToggleStyle(
       active: active ?? this.active,
       inactive: inactive ?? this.inactive,
+      disabled: disabled ?? this.disabled,
     );
   }
 
@@ -435,6 +439,7 @@ class TranscriptScreenToggleStyle
     return TranscriptScreenToggleStyle(
       active: ButtonStyle.lerp(active, other.active, t),
       inactive: ButtonStyle.lerp(inactive, other.inactive, t),
+      disabled: ButtonStyle.lerp(disabled, other.disabled, t),
     );
   }
 }
