@@ -172,27 +172,6 @@ class EnableAutoScrollToggleButton extends ConsumerWidget {
   }
 }
 
-class EnableAutoScrollSwitch extends ConsumerWidget {
-  const EnableAutoScrollSwitch({super.key});
-
-  static const thumbIcon =
-      WidgetStatePropertyAll<Icon>(Icon(Icons.format_line_spacing_rounded));
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(enableAutoScrollSwitchControllerProvider);
-    return Switch(
-      thumbIcon: thumbIcon,
-      value: state.isActive ? state.value : false,
-      onChanged: state.isActive
-          ? (value) => ref
-              .read(enableAutoScrollServiceProvider.notifier)
-              .setEnableAutoScroll(value)
-          : null,
-    );
-  }
-}
-
 class TranscriptScaleButton extends StatelessWidget {
   const TranscriptScaleButton({super.key});
 
