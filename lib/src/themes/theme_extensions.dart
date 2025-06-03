@@ -443,36 +443,3 @@ class TranscriptScreenToggleStyle
     );
   }
 }
-
-@immutable
-class TranscriptScreenSwitchStyle
-    extends ThemeExtension<TranscriptScreenSwitchStyle> {
-  const TranscriptScreenSwitchStyle({
-    this.data,
-  });
-
-  final SwitchThemeData? data;
-
-  @override
-  TranscriptScreenSwitchStyle copyWith({
-    SwitchThemeData? data,
-  }) {
-    return TranscriptScreenSwitchStyle(
-      data: data ?? this.data,
-    );
-  }
-
-  @override
-  ThemeExtension<TranscriptScreenSwitchStyle> lerp(
-    ThemeExtension<TranscriptScreenSwitchStyle>? other,
-    double t,
-  ) {
-    if (other is! TranscriptScreenSwitchStyle) {
-      return this;
-    }
-
-    return TranscriptScreenSwitchStyle(
-      data: SwitchThemeData.lerp(data, other.data, t),
-    );
-  }
-}// 

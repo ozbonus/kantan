@@ -143,18 +143,6 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      TranscriptScreenSwitchStyle(
-        data: SwitchThemeData(
-          thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
-            (Set<WidgetState> states) {
-              if (states.contains(WidgetState.selected)) {
-                return const Icon(Icons.check);
-              }
-              return const Icon(Icons.close);
-            },
-          ),
-        ),
-      ),
     ],
   );
 
