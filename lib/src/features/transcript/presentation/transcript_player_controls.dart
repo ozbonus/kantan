@@ -68,7 +68,7 @@ class TranscriptPlayerControls extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           children: [
                             if (Config.useTranslationFeature)
-                              const ShowTranslationSwitch(),
+                              const ShowTranslationToggleButton(),
                             if (Config.useAutoScrollFeature)
                               const EnableAutoScrollSwitch(),
                             const TranscriptScaleButton(),
@@ -114,37 +114,30 @@ class TranscriptProgressSlider extends ConsumerWidget {
   }
 }
 
-class ShowTranslationSwitch extends ConsumerWidget {
-  const ShowTranslationSwitch({super.key});
-
-  static const thumbIcon = WidgetStatePropertyAll<Icon>(Icon(
-    Icons.translate_rounded,
-  ));
+class ShowTranslationToggleButton extends ConsumerWidget {
+  const ShowTranslationToggleButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(showTranslationSwitchControllerProvider);
+    final style = Theme.of(context).extension<TranscriptScreenToggleStyle>();
 
-    final WidgetStateProperty<Icon?> thumbIcon =
-        WidgetStateProperty.resolveWith<Icon?>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.disabled)) {
-        return const Icon(
-          Icons.coronavirus_rounded,
-          color: Colors.black,
-        );
-      }
-      return Icon(
-        Icons.heart_broken_rounded,
-      );
-    });
+    final ButtonStyle? buttonStyle;
+    if (!state.isActive) {
+      buttonStyle = style?.disabled;
+    } else if (state.value) {
+      buttonStyle = style?.active;
+    } else {
+      buttonStyle = style?.inactive;
+    }
 
-    return Switch(
-      thumbIcon: thumbIcon,
-      value: state.isActive ? state.value : false,
-      onChanged: state.isActive
-          ? (value) => ref
-              .read(showTranslationServiceProvider.notifier)
-              .setShowTranslation(value)
+    return IconButton(
+      icon: Icon(Icons.translate_rounded),
+      style: buttonStyle,
+      onPressed: state.isActive
+          ? () => ref
+              .read(showTranslationSwitchControllerProvider.notifier)
+              .setShowTranslation(!state.value)
           : null,
     );
   }
