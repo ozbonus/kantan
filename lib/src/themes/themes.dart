@@ -111,8 +111,8 @@ abstract final class AppTheme {
       ),
       TranscriptScreenButtonStyle(
         buttonStyle: IconButton.styleFrom(
-          foregroundColor: lightColorScheme.onSecondary,
-          backgroundColor: lightColorScheme.secondary,
+          foregroundColor: lightColorScheme.onSecondaryContainer,
+          backgroundColor: lightColorScheme.secondaryContainer,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -133,7 +133,7 @@ abstract final class AppTheme {
             borderRadius: BorderRadius.circular(8),
           ),
           side: BorderSide(
-            width: 1.0,
+            width: 2.0,
             color: lightColorScheme.secondary,
           ),
         ),
