@@ -39,21 +39,13 @@ class OnSeekFamily extends Family<Object?> {
   const OnSeekFamily();
 
   /// See also [onSeek].
-  OnSeekProvider call(
-    Duration position,
-  ) {
-    return OnSeekProvider(
-      position,
-    );
+  OnSeekProvider call(Duration position) {
+    return OnSeekProvider(position);
   }
 
   @override
-  OnSeekProvider getProviderOverride(
-    covariant OnSeekProvider provider,
-  ) {
-    return call(
-      provider.position,
-    );
+  OnSeekProvider getProviderOverride(covariant OnSeekProvider provider) {
+    return call(provider.position);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -74,23 +66,18 @@ class OnSeekFamily extends Family<Object?> {
 /// See also [onSeek].
 class OnSeekProvider extends AutoDisposeProvider<Object?> {
   /// See also [onSeek].
-  OnSeekProvider(
-    Duration position,
-  ) : this._internal(
-          (ref) => onSeek(
-            ref as OnSeekRef,
-            position,
-          ),
-          from: onSeekProvider,
-          name: r'onSeekProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$onSeekHash,
-          dependencies: OnSeekFamily._dependencies,
-          allTransitiveDependencies: OnSeekFamily._allTransitiveDependencies,
-          position: position,
-        );
+  OnSeekProvider(Duration position)
+    : this._internal(
+        (ref) => onSeek(ref as OnSeekRef, position),
+        from: onSeekProvider,
+        name: r'onSeekProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$onSeekHash,
+        dependencies: OnSeekFamily._dependencies,
+        allTransitiveDependencies: OnSeekFamily._allTransitiveDependencies,
+        position: position,
+      );
 
   OnSeekProvider._internal(
     super._createNotifier, {
@@ -105,9 +92,7 @@ class OnSeekProvider extends AutoDisposeProvider<Object?> {
   final Duration position;
 
   @override
-  Override overrideWith(
-    Object? Function(OnSeekRef provider) create,
-  ) {
+  Override overrideWith(Object? Function(OnSeekRef provider) create) {
     return ProviderOverride(
       origin: this,
       override: OnSeekProvider._internal(
@@ -161,16 +146,19 @@ String _$progressSliderControllerHash() =>
 
 /// See also [ProgressSliderController].
 @ProviderFor(ProgressSliderController)
-final progressSliderControllerProvider = AutoDisposeNotifierProvider<
-    ProgressSliderController, PositionData>.internal(
-  ProgressSliderController.new,
-  name: r'progressSliderControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$progressSliderControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final progressSliderControllerProvider =
+    AutoDisposeNotifierProvider<
+      ProgressSliderController,
+      PositionData
+    >.internal(
+      ProgressSliderController.new,
+      name: r'progressSliderControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$progressSliderControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProgressSliderController = AutoDisposeNotifier<PositionData>;
 // ignore_for_file: type=lint

@@ -148,8 +148,9 @@ class InterfaceLocaleSelector extends StatelessWidget {
       children: [
         ListTile(title: Text(localizations.appLanguageDescription)),
         const InterfaceLocaleSelectorOption(null),
-        ...supportedLocales
-            .map((locale) => InterfaceLocaleSelectorOption(locale)),
+        ...supportedLocales.map(
+          (locale) => InterfaceLocaleSelectorOption(locale),
+        ),
       ],
     );
   }
@@ -213,8 +214,9 @@ class TranslationLocaleSelector extends StatelessWidget {
       children: [
         ListTile(title: Text(localizations.translationLanguageDescription)),
         const TranslationLocaleSelectorOption(null),
-        ...supportedLocales
-            .map((locale) => TranslationLocaleSelectorOption(locale)),
+        ...supportedLocales.map(
+          (locale) => TranslationLocaleSelectorOption(locale),
+        ),
       ],
     );
   }

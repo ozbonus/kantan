@@ -31,8 +31,9 @@ class AudioHandlerService extends BaseAudioHandler {
   final _player = AudioPlayer();
   final _playlist = ConcatenatingAudioSource(children: []);
   final _repeatMode = BehaviorSubject.seeded(RepeatMode.none);
-  final kantanPlaybackState =
-      BehaviorSubject.seeded(KantanPlaybackState.loading);
+  final kantanPlaybackState = BehaviorSubject.seeded(
+    KantanPlaybackState.loading,
+  );
 
   late Timer _saveStateTimer;
   late Ref ref;
@@ -139,8 +140,9 @@ class AudioHandlerService extends BaseAudioHandler {
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
       (timer) async {
-        settingsRepository
-            .setQueueIndex(_player.currentIndex ?? Config.defaultQueueIndex);
+        settingsRepository.setQueueIndex(
+          _player.currentIndex ?? Config.defaultQueueIndex,
+        );
         settingsRepository.setPosition(_player.position);
         settingsRepository.setSpeed(_player.speed);
         settingsRepository.setRepeatMode(_repeatMode.value);
@@ -384,10 +386,10 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   PositionData get lastPositionData => PositionData(
-        _player.position,
-        _player.bufferedPosition,
-        _player.duration ?? Duration.zero,
-      );
+    _player.position,
+    _player.bufferedPosition,
+    _player.duration ?? Duration.zero,
+  );
 
   Stream<PositionData> get positionData {
     return Rx.combineLatest3(

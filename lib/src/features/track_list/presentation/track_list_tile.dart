@@ -31,8 +31,9 @@ class TrackListTile extends ConsumerWidget {
       onTap: () => ref
           .read(trackListTileControllerProvider(index).notifier)
           .skipToTrack(index),
-      trailing:
-          _trailing(selected) ? const Icon(Icons.play_arrow_rounded) : null,
+      trailing: _trailing(selected)
+          ? const Icon(Icons.play_arrow_rounded)
+          : null,
     );
   }
 }

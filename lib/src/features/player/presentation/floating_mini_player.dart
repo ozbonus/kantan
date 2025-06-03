@@ -15,8 +15,7 @@ class FloatingMiniPlayer extends ConsumerWidget {
     IconData buttonIcon = switch (playbackState) {
       KantanPlaybackState.loading ||
       KantanPlaybackState.error ||
-      KantanPlaybackState.playing =>
-        Icons.pause_rounded,
+      KantanPlaybackState.playing => Icons.pause_rounded,
       KantanPlaybackState.paused => Icons.play_arrow_rounded,
       KantanPlaybackState.completed => Icons.replay_rounded,
     };

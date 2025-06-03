@@ -13,14 +13,14 @@ String _$transcriptScaleServiceHash() =>
 @ProviderFor(TranscriptScaleService)
 final transcriptScaleServiceProvider =
     AutoDisposeNotifierProvider<TranscriptScaleService, double>.internal(
-  TranscriptScaleService.new,
-  name: r'transcriptScaleServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$transcriptScaleServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      TranscriptScaleService.new,
+      name: r'transcriptScaleServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$transcriptScaleServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$TranscriptScaleService = AutoDisposeNotifier<double>;
 // ignore_for_file: type=lint

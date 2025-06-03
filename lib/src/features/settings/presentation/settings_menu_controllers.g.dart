@@ -13,14 +13,14 @@ String _$wakelockSwitchControllerHash() =>
 @ProviderFor(WakelockSwitchController)
 final wakelockSwitchControllerProvider =
     AutoDisposeNotifierProvider<WakelockSwitchController, bool>.internal(
-  WakelockSwitchController.new,
-  name: r'wakelockSwitchControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$wakelockSwitchControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      WakelockSwitchController.new,
+      name: r'wakelockSwitchControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$wakelockSwitchControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$WakelockSwitchController = AutoDisposeNotifier<bool>;
 String _$themeModeSwitchControllerHash() =>
@@ -30,14 +30,14 @@ String _$themeModeSwitchControllerHash() =>
 @ProviderFor(ThemeModeSwitchController)
 final themeModeSwitchControllerProvider =
     AutoDisposeNotifierProvider<ThemeModeSwitchController, ThemeMode>.internal(
-  ThemeModeSwitchController.new,
-  name: r'themeModeSwitchControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$themeModeSwitchControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ThemeModeSwitchController.new,
+      name: r'themeModeSwitchControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$themeModeSwitchControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ThemeModeSwitchController = AutoDisposeNotifier<ThemeMode>;
 String _$parentalModeSwitchControllerHash() =>
@@ -47,14 +47,14 @@ String _$parentalModeSwitchControllerHash() =>
 @ProviderFor(ParentalModeSwitchController)
 final parentalModeSwitchControllerProvider =
     AutoDisposeNotifierProvider<ParentalModeSwitchController, bool>.internal(
-  ParentalModeSwitchController.new,
-  name: r'parentalModeSwitchControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$parentalModeSwitchControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ParentalModeSwitchController.new,
+      name: r'parentalModeSwitchControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$parentalModeSwitchControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ParentalModeSwitchController = AutoDisposeNotifier<bool>;
 String _$canSeeTranscriptSwitchControllerHash() =>
@@ -62,16 +62,19 @@ String _$canSeeTranscriptSwitchControllerHash() =>
 
 /// See also [CanSeeTranscriptSwitchController].
 @ProviderFor(CanSeeTranscriptSwitchController)
-final canSeeTranscriptSwitchControllerProvider = AutoDisposeNotifierProvider<
-    CanSeeTranscriptSwitchController, bool>.internal(
-  CanSeeTranscriptSwitchController.new,
-  name: r'canSeeTranscriptSwitchControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$canSeeTranscriptSwitchControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final canSeeTranscriptSwitchControllerProvider =
+    AutoDisposeNotifierProvider<
+      CanSeeTranscriptSwitchController,
+      bool
+    >.internal(
+      CanSeeTranscriptSwitchController.new,
+      name: r'canSeeTranscriptSwitchControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$canSeeTranscriptSwitchControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$CanSeeTranscriptSwitchController = AutoDisposeNotifier<bool>;
 String _$canSeeTranslationSwitchControllerHash() =>
@@ -79,16 +82,19 @@ String _$canSeeTranslationSwitchControllerHash() =>
 
 /// See also [CanSeeTranslationSwitchController].
 @ProviderFor(CanSeeTranslationSwitchController)
-final canSeeTranslationSwitchControllerProvider = AutoDisposeNotifierProvider<
-    CanSeeTranslationSwitchController, bool>.internal(
-  CanSeeTranslationSwitchController.new,
-  name: r'canSeeTranslationSwitchControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$canSeeTranslationSwitchControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final canSeeTranslationSwitchControllerProvider =
+    AutoDisposeNotifierProvider<
+      CanSeeTranslationSwitchController,
+      bool
+    >.internal(
+      CanSeeTranslationSwitchController.new,
+      name: r'canSeeTranslationSwitchControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$canSeeTranslationSwitchControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$CanSeeTranslationSwitchController = AutoDisposeNotifier<bool>;
 String _$interfaceLocaleOptionControllerHash() =>
@@ -96,16 +102,19 @@ String _$interfaceLocaleOptionControllerHash() =>
 
 /// See also [InterfaceLocaleOptionController].
 @ProviderFor(InterfaceLocaleOptionController)
-final interfaceLocaleOptionControllerProvider = AutoDisposeNotifierProvider<
-    InterfaceLocaleOptionController, Object?>.internal(
-  InterfaceLocaleOptionController.new,
-  name: r'interfaceLocaleOptionControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$interfaceLocaleOptionControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final interfaceLocaleOptionControllerProvider =
+    AutoDisposeNotifierProvider<
+      InterfaceLocaleOptionController,
+      Object?
+    >.internal(
+      InterfaceLocaleOptionController.new,
+      name: r'interfaceLocaleOptionControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$interfaceLocaleOptionControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$InterfaceLocaleOptionController = AutoDisposeNotifier<Object?>;
 String _$translationLocaleOptionControllerHash() =>
@@ -113,16 +122,19 @@ String _$translationLocaleOptionControllerHash() =>
 
 /// See also [TranslationLocaleOptionController].
 @ProviderFor(TranslationLocaleOptionController)
-final translationLocaleOptionControllerProvider = AutoDisposeNotifierProvider<
-    TranslationLocaleOptionController, Locale?>.internal(
-  TranslationLocaleOptionController.new,
-  name: r'translationLocaleOptionControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$translationLocaleOptionControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final translationLocaleOptionControllerProvider =
+    AutoDisposeNotifierProvider<
+      TranslationLocaleOptionController,
+      Locale?
+    >.internal(
+      TranslationLocaleOptionController.new,
+      name: r'translationLocaleOptionControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$translationLocaleOptionControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$TranslationLocaleOptionController = AutoDisposeNotifier<Locale?>;
 // ignore_for_file: type=lint

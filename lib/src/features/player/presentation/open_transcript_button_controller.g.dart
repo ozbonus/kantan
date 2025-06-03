@@ -55,10 +55,7 @@ class ShowOpenTranscriptButtonControllerFamily extends Family<bool> {
   ShowOpenTranscriptButtonControllerProvider getProviderOverride(
     covariant ShowOpenTranscriptButtonControllerProvider provider,
   ) {
-    return call(
-      provider.isFullscreen,
-      provider.screenWidth,
-    );
+    return call(provider.isFullscreen, provider.screenWidth);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -84,23 +81,22 @@ class ShowOpenTranscriptButtonControllerProvider
     bool isFullscreen,
     double screenWidth,
   ) : this._internal(
-          (ref) => showOpenTranscriptButtonController(
-            ref as ShowOpenTranscriptButtonControllerRef,
-            isFullscreen,
-            screenWidth,
-          ),
-          from: showOpenTranscriptButtonControllerProvider,
-          name: r'showOpenTranscriptButtonControllerProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$showOpenTranscriptButtonControllerHash,
-          dependencies: ShowOpenTranscriptButtonControllerFamily._dependencies,
-          allTransitiveDependencies: ShowOpenTranscriptButtonControllerFamily
-              ._allTransitiveDependencies,
-          isFullscreen: isFullscreen,
-          screenWidth: screenWidth,
-        );
+        (ref) => showOpenTranscriptButtonController(
+          ref as ShowOpenTranscriptButtonControllerRef,
+          isFullscreen,
+          screenWidth,
+        ),
+        from: showOpenTranscriptButtonControllerProvider,
+        name: r'showOpenTranscriptButtonControllerProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$showOpenTranscriptButtonControllerHash,
+        dependencies: ShowOpenTranscriptButtonControllerFamily._dependencies,
+        allTransitiveDependencies:
+            ShowOpenTranscriptButtonControllerFamily._allTransitiveDependencies,
+        isFullscreen: isFullscreen,
+        screenWidth: screenWidth,
+      );
 
   ShowOpenTranscriptButtonControllerProvider._internal(
     super._createNotifier, {
@@ -179,5 +175,6 @@ class _ShowOpenTranscriptButtonControllerProviderElement
   double get screenWidth =>
       (origin as ShowOpenTranscriptButtonControllerProvider).screenWidth;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

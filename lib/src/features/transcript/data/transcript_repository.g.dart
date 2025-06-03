@@ -13,14 +13,14 @@ String _$transcriptRepositoryHash() =>
 @ProviderFor(transcriptRepository)
 final transcriptRepositoryProvider =
     AutoDisposeProvider<TranscriptRepository>.internal(
-  transcriptRepository,
-  name: r'transcriptRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$transcriptRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      transcriptRepository,
+      name: r'transcriptRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$transcriptRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

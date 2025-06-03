@@ -94,7 +94,7 @@ class TranscriptScreenContents extends ConsumerWidget {
                     translation: data.translation,
                   ),
                 ),
-                TranscriptPlayerControls(isFullscreen: isFullscreen)
+                TranscriptPlayerControls(isFullscreen: isFullscreen),
               ],
             );
           } else {
@@ -197,13 +197,13 @@ class _ScrollingTranscriptScreenContentsState
       _isAutoScrolling = true;
       _scrollController
           .scrollToIndex(
-        index,
-        preferPosition: AutoScrollPosition.middle,
-        duration: Config.scrollDuration,
-      )
+            index,
+            preferPosition: AutoScrollPosition.middle,
+            duration: Config.scrollDuration,
+          )
           .then((_) {
-        _isAutoScrolling = false;
-      });
+            _isAutoScrolling = false;
+          });
     }
   }
 
@@ -215,8 +215,9 @@ class _ScrollingTranscriptScreenContentsState
   void _maybeDisableAutoScroll() async {
     if (!_isAutoScrolling) {
       final autoScrollEnabled = ref.read(enableAutoScrollServiceProvider);
-      final currentlyPlaying =
-          await ref.read(kantanPlaybackStateStreamProvider.future);
+      final currentlyPlaying = await ref.read(
+        kantanPlaybackStateStreamProvider.future,
+      );
       if (autoScrollEnabled &&
           currentlyPlaying == KantanPlaybackState.playing &&
           Config.disableAutoScrollOnUserScroll) {
@@ -242,9 +243,13 @@ class _ScrollingTranscriptScreenContentsState
   @override
   Widget build(BuildContext context) {
     ref.listen<int?>(
-        transcriptIndexControllerProvider, (_, index) => _scrollToIndex(index));
+      transcriptIndexControllerProvider,
+      (_, index) => _scrollToIndex(index),
+    );
     ref.listen(
-        enableAutoScrollServiceProvider, (_, enable) => _enabler(enable));
+      enableAutoScrollServiceProvider,
+      (_, enable) => _enabler(enable),
+    );
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.transcript.lines.length,

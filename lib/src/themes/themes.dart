@@ -95,8 +95,10 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         speakerNameTranslationTextStyle: TextStyle(
-          color: lightColorScheme.onSecondaryContainer
-              .blend(lightColorScheme.secondaryContainer, 50),
+          color: lightColorScheme.onSecondaryContainer.blend(
+            lightColorScheme.secondaryContainer,
+            50,
+          ),
           fontWeight: FontWeight.bold,
         ),
         transcriptTextStyle: TextStyle(
@@ -104,8 +106,10 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         translationTextStyle: TextStyle(
-          color: lightColorScheme.onSecondaryContainer
-              .blend(lightColorScheme.secondaryContainer, 50),
+          color: lightColorScheme.onSecondaryContainer.blend(
+            lightColorScheme.secondaryContainer,
+            50,
+          ),
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -229,8 +233,10 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         speakerNameTranslationTextStyle: TextStyle(
-          color: darkColorScheme.onSecondaryContainer
-              .blend(darkColorScheme.secondaryContainer, 50),
+          color: darkColorScheme.onSecondaryContainer.blend(
+            darkColorScheme.secondaryContainer,
+            50,
+          ),
           fontWeight: FontWeight.bold,
         ),
         transcriptTextStyle: TextStyle(
@@ -238,8 +244,10 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         translationTextStyle: TextStyle(
-          color: darkColorScheme.onSecondaryContainer
-              .blend(darkColorScheme.secondaryContainer, 50),
+          color: darkColorScheme.onSecondaryContainer.blend(
+            darkColorScheme.secondaryContainer,
+            50,
+          ),
           fontWeight: FontWeight.bold,
         ),
       ),

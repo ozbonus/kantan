@@ -34,9 +34,7 @@ abstract class _$TrackListTileController
     extends BuildlessAutoDisposeNotifier<bool?> {
   late final int index;
 
-  bool? build(
-    int index,
-  );
+  bool? build(int index);
 }
 
 /// See also [TrackListTileController].
@@ -49,21 +47,15 @@ class TrackListTileControllerFamily extends Family<bool?> {
   const TrackListTileControllerFamily();
 
   /// See also [TrackListTileController].
-  TrackListTileControllerProvider call(
-    int index,
-  ) {
-    return TrackListTileControllerProvider(
-      index,
-    );
+  TrackListTileControllerProvider call(int index) {
+    return TrackListTileControllerProvider(index);
   }
 
   @override
   TrackListTileControllerProvider getProviderOverride(
     covariant TrackListTileControllerProvider provider,
   ) {
-    return call(
-      provider.index,
-    );
+    return call(provider.index);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -85,21 +77,19 @@ class TrackListTileControllerFamily extends Family<bool?> {
 class TrackListTileControllerProvider
     extends AutoDisposeNotifierProviderImpl<TrackListTileController, bool?> {
   /// See also [TrackListTileController].
-  TrackListTileControllerProvider(
-    int index,
-  ) : this._internal(
-          () => TrackListTileController()..index = index,
-          from: trackListTileControllerProvider,
-          name: r'trackListTileControllerProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$trackListTileControllerHash,
-          dependencies: TrackListTileControllerFamily._dependencies,
-          allTransitiveDependencies:
-              TrackListTileControllerFamily._allTransitiveDependencies,
-          index: index,
-        );
+  TrackListTileControllerProvider(int index)
+    : this._internal(
+        () => TrackListTileController()..index = index,
+        from: trackListTileControllerProvider,
+        name: r'trackListTileControllerProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$trackListTileControllerHash,
+        dependencies: TrackListTileControllerFamily._dependencies,
+        allTransitiveDependencies:
+            TrackListTileControllerFamily._allTransitiveDependencies,
+        index: index,
+      );
 
   TrackListTileControllerProvider._internal(
     super._createNotifier, {
@@ -114,12 +104,8 @@ class TrackListTileControllerProvider
   final int index;
 
   @override
-  bool? runNotifierBuild(
-    covariant TrackListTileController notifier,
-  ) {
-    return notifier.build(
-      index,
-    );
+  bool? runNotifierBuild(covariant TrackListTileController notifier) {
+    return notifier.build(index);
   }
 
   @override
@@ -140,7 +126,7 @@ class TrackListTileControllerProvider
 
   @override
   AutoDisposeNotifierProviderElement<TrackListTileController, bool?>
-      createElement() {
+  createElement() {
     return _TrackListTileControllerProviderElement(this);
   }
 
@@ -173,5 +159,6 @@ class _TrackListTileControllerProviderElement
   @override
   int get index => (origin as TrackListTileControllerProvider).index;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

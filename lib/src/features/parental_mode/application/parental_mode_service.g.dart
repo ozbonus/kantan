@@ -13,14 +13,14 @@ String _$parentalModeServiceHash() =>
 @ProviderFor(ParentalModeService)
 final parentalModeServiceProvider =
     AutoDisposeNotifierProvider<ParentalModeService, bool>.internal(
-  ParentalModeService.new,
-  name: r'parentalModeServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$parentalModeServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ParentalModeService.new,
+      name: r'parentalModeServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$parentalModeServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ParentalModeService = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint

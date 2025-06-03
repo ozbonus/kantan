@@ -39,9 +39,9 @@ class Config {
   static bool get defaultEnableAutoScroll => true;
   static Locale? get defaultInterfaceLocale => const Locale('en');
   static Locale? get defaultTranslationLocale => const Locale.fromSubtags(
-        languageCode: 'zh',
-        countryCode: 'TW',
-      );
+    languageCode: 'zh',
+    countryCode: 'TW',
+  );
   static bool get defaultCanSeeTranscript => true;
   static bool get defaultCanSeeTranslation => true;
   static bool get defaultShowTranslation => true;
@@ -50,12 +50,12 @@ class Config {
   static Locale get transcriptLocale =>
       const Locale.fromSubtags(languageCode: 'en');
   static List<Locale> get translationLocales => const [
-        Locale.fromSubtags(languageCode: 'es'),
-        // Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
-        Locale.fromSubtags(languageCode: 'ar'),
-        Locale.fromSubtags(languageCode: 'he'),
-        Locale.fromSubtags(languageCode: 'ja'),
-      ];
+    Locale.fromSubtags(languageCode: 'es'),
+    // Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
+    Locale.fromSubtags(languageCode: 'ar'),
+    Locale.fromSubtags(languageCode: 'he'),
+    Locale.fromSubtags(languageCode: 'ja'),
+  ];
   static double minTranscriptScale = 1.0;
   static double maxTranscriptScale = 2.5;
   static bool showSpeakerName = true;

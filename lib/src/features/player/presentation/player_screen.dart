@@ -37,7 +37,8 @@ class PlayerScreenContents extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final showOpenTranscriptButton = ref.watch(
-        showOpenTranscriptButtonControllerProvider(isFullscreen, screenWidth));
+      showOpenTranscriptButtonControllerProvider(isFullscreen, screenWidth),
+    );
     return Container(
       constraints: const BoxConstraints.expand(),
       child: SafeArea(
@@ -59,7 +60,7 @@ class PlayerScreenContents extends ConsumerWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -300,7 +301,7 @@ class TrackInfo extends ConsumerWidget {
             children: [
               Text('${track.track} ${track.title}'),
               if (track.displayDescription != null)
-                Text('${track.displayDescription}')
+                Text('${track.displayDescription}'),
             ],
           );
         } else {

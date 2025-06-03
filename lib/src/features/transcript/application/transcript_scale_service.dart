@@ -7,8 +7,10 @@ part 'transcript_scale_service.g.dart';
 class TranscriptScaleService extends _$TranscriptScaleService {
   @override
   double build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.transcriptScale;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .transcriptScale;
     return initialState;
   }
 

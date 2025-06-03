@@ -11,16 +11,19 @@ String _$repeatModeButtonControllerHash() =>
 
 /// See also [RepeatModeButtonController].
 @ProviderFor(RepeatModeButtonController)
-final repeatModeButtonControllerProvider = AutoDisposeNotifierProvider<
-    RepeatModeButtonController, RepeatMode>.internal(
-  RepeatModeButtonController.new,
-  name: r'repeatModeButtonControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$repeatModeButtonControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final repeatModeButtonControllerProvider =
+    AutoDisposeNotifierProvider<
+      RepeatModeButtonController,
+      RepeatMode
+    >.internal(
+      RepeatModeButtonController.new,
+      name: r'repeatModeButtonControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$repeatModeButtonControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$RepeatModeButtonController = AutoDisposeNotifier<RepeatMode>;
 // ignore_for_file: type=lint
