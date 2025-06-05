@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_screen_title_controller.dart';
-import 'package:kantan/src/themes/theme_extensions.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
@@ -13,6 +11,8 @@ import 'package:kantan/src/features/transcript/presentation/transcript_controlle
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_widget.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_player_controls.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_screen_title_controller.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 /// A wrapper widget for small displays, such as smart phones, that show the
 /// transcript as a single screen.
@@ -29,11 +29,7 @@ class TranscriptScreen extends StatelessWidget {
         scrolledUnderElevation: style?.appBarScrolledUnderElevation,
         title: const _TranscriptScreenTitle(),
       ),
-      body: const Center(
-        child: TranscriptScreenContents(
-          isFullscreen: true,
-        ),
-      ),
+      body: const Center(child: TranscriptScreenContents(isFullscreen: true)),
     );
   }
 }
@@ -55,10 +51,7 @@ class _TranscriptScreenTitle extends ConsumerWidget {
 /// * a simple transcript akin to a text document
 /// * a self-scrolling transcript with tappable lines that seek to a position
 class TranscriptScreenContents extends ConsumerWidget {
-  const TranscriptScreenContents({
-    super.key,
-    this.isFullscreen = false,
-  });
+  const TranscriptScreenContents({super.key, this.isFullscreen = false});
 
   final bool isFullscreen;
 
@@ -67,9 +60,7 @@ class TranscriptScreenContents extends ConsumerWidget {
     final transcriptValue = ref.watch(transcriptControllerProvider);
     final style = Theme.of(context).extension<TranscriptScreenStyle>();
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: style?.backgroundColor,
-      ),
+      decoration: BoxDecoration(color: style?.backgroundColor),
       child: transcriptValue.when(
         skipLoadingOnReload: true,
         loading: () => const CircularProgressIndicator.adaptive(),
@@ -79,9 +70,7 @@ class TranscriptScreenContents extends ConsumerWidget {
             // return const NoTranscript();
             return Column(
               children: [
-                const Expanded(
-                  child: NoTranscript(),
-                ),
+                const Expanded(child: NoTranscript()),
                 TranscriptPlayerControls(isFullscreen: isFullscreen),
               ],
             );
@@ -94,7 +83,7 @@ class TranscriptScreenContents extends ConsumerWidget {
                     translation: data.translation,
                   ),
                 ),
-                TranscriptPlayerControls(isFullscreen: isFullscreen)
+                TranscriptPlayerControls(isFullscreen: isFullscreen),
               ],
             );
           } else {
@@ -122,9 +111,7 @@ class NoTranscript extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    return Center(
-      child: Text(localizations!.noTranscriptMessage),
-    );
+    return Center(child: Text(localizations!.noTranscriptMessage));
   }
 }
 
@@ -197,13 +184,13 @@ class _ScrollingTranscriptScreenContentsState
       _isAutoScrolling = true;
       _scrollController
           .scrollToIndex(
-        index,
-        preferPosition: AutoScrollPosition.middle,
-        duration: Config.scrollDuration,
-      )
+            index,
+            preferPosition: AutoScrollPosition.middle,
+            duration: Config.scrollDuration,
+          )
           .then((_) {
-        _isAutoScrolling = false;
-      });
+            _isAutoScrolling = false;
+          });
     }
   }
 
@@ -215,8 +202,9 @@ class _ScrollingTranscriptScreenContentsState
   void _maybeDisableAutoScroll() async {
     if (!_isAutoScrolling) {
       final autoScrollEnabled = ref.read(enableAutoScrollServiceProvider);
-      final currentlyPlaying =
-          await ref.read(kantanPlaybackStateStreamProvider.future);
+      final currentlyPlaying = await ref.read(
+        kantanPlaybackStateStreamProvider.future,
+      );
       if (autoScrollEnabled &&
           currentlyPlaying == KantanPlaybackState.playing &&
           Config.disableAutoScrollOnUserScroll) {
@@ -242,9 +230,13 @@ class _ScrollingTranscriptScreenContentsState
   @override
   Widget build(BuildContext context) {
     ref.listen<int?>(
-        transcriptIndexControllerProvider, (_, index) => _scrollToIndex(index));
+      transcriptIndexControllerProvider,
+      (_, index) => _scrollToIndex(index),
+    );
     ref.listen(
-        enableAutoScrollServiceProvider, (_, enable) => _enabler(enable));
+      enableAutoScrollServiceProvider,
+      (_, enable) => _enabler(enable),
+    );
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.transcript.lines.length,

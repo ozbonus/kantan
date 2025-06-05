@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider_controller.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
@@ -29,9 +29,7 @@ class SpeedSlider extends ConsumerWidget {
                 data: (speed) => _speedValueString(context, speed),
               ),
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontFeatures: [
-                  FontFeature.tabularFigures(),
-                ],
+                fontFeatures: [FontFeature.tabularFigures()],
               ),
             ),
             Expanded(
