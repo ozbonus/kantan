@@ -7,8 +7,10 @@ part 'can_see_translation_service.g.dart';
 class CanSeeTranslationService extends _$CanSeeTranslationService {
   @override
   bool build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.canSeeTranslation;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .canSeeTranslation;
     return initialState;
   }
 

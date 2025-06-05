@@ -13,8 +13,9 @@ String _$speedHash() => r'6dd5b88446e6f442a9e607265f005c5a21d6b1d3';
 final speedProvider = AutoDisposeProvider<AsyncValue<double>>.internal(
   speed,
   name: r'speedProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$speedHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$speedHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -55,21 +56,13 @@ class SetSpeedFamily extends Family<Object?> {
   const SetSpeedFamily();
 
   /// See also [setSpeed].
-  SetSpeedProvider call(
-    double speed,
-  ) {
-    return SetSpeedProvider(
-      speed,
-    );
+  SetSpeedProvider call(double speed) {
+    return SetSpeedProvider(speed);
   }
 
   @override
-  SetSpeedProvider getProviderOverride(
-    covariant SetSpeedProvider provider,
-  ) {
-    return call(
-      provider.speed,
-    );
+  SetSpeedProvider getProviderOverride(covariant SetSpeedProvider provider) {
+    return call(provider.speed);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -90,23 +83,18 @@ class SetSpeedFamily extends Family<Object?> {
 /// See also [setSpeed].
 class SetSpeedProvider extends AutoDisposeProvider<Object?> {
   /// See also [setSpeed].
-  SetSpeedProvider(
-    double speed,
-  ) : this._internal(
-          (ref) => setSpeed(
-            ref as SetSpeedRef,
-            speed,
-          ),
-          from: setSpeedProvider,
-          name: r'setSpeedProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$setSpeedHash,
-          dependencies: SetSpeedFamily._dependencies,
-          allTransitiveDependencies: SetSpeedFamily._allTransitiveDependencies,
-          speed: speed,
-        );
+  SetSpeedProvider(double speed)
+    : this._internal(
+        (ref) => setSpeed(ref as SetSpeedRef, speed),
+        from: setSpeedProvider,
+        name: r'setSpeedProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$setSpeedHash,
+        dependencies: SetSpeedFamily._dependencies,
+        allTransitiveDependencies: SetSpeedFamily._allTransitiveDependencies,
+        speed: speed,
+      );
 
   SetSpeedProvider._internal(
     super._createNotifier, {
@@ -121,9 +109,7 @@ class SetSpeedProvider extends AutoDisposeProvider<Object?> {
   final double speed;
 
   @override
-  Override overrideWith(
-    Object? Function(SetSpeedRef provider) create,
-  ) {
+  Override overrideWith(Object? Function(SetSpeedRef provider) create) {
     return ProviderOverride(
       origin: this,
       override: SetSpeedProvider._internal(
@@ -171,5 +157,6 @@ class _SetSpeedProviderElement extends AutoDisposeProviderElement<Object?>
   @override
   double get speed => (origin as SetSpeedProvider).speed;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -11,7 +11,9 @@ class ProgressSliderController extends _$ProgressSliderController {
   PositionData build() {
     // If the stream isn't active when the widget loads, get the most recent
     // position data from the audio handler service.
-    return ref.watch(positionDataStreamProvider).when(
+    return ref
+        .watch(positionDataStreamProvider)
+        .when(
           loading: () =>
               ref.read(audioHandlerProvider).requireValue.lastPositionData,
           error: (_, __) =>

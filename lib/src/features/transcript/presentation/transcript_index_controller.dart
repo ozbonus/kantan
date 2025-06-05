@@ -17,26 +17,31 @@ part 'transcript_index_controller.g.dart';
 /// * the index is out of bounds of the transcript (possible when seeking)
 @riverpod
 int? transcriptIndexController(Ref ref) {
-  return ref.watch(transcriptControllerProvider).whenOrNull(
+  return ref
+      .watch(transcriptControllerProvider)
+      .whenOrNull(
         error: (e, st) => throw Exception('$e $st'),
         data: (transcriptData) {
           final transcript = transcriptData.transcript;
           if (transcript == null || transcript.endTimes == null) {
             return null;
           }
-          return ref.watch(positionDataStreamProvider).whenOrNull(
-            data: (positionData) {
-              final currentPosition = positionData.position;
-              final endTimes = transcript.endTimes!;
-              final index =
-                  endTimes.indexWhere((endTime) => currentPosition < endTime);
-              if (index >= 0) {
-                return index;
-              } else {
-                return null;
-              }
-            },
-          );
+          return ref
+              .watch(positionDataStreamProvider)
+              .whenOrNull(
+                data: (positionData) {
+                  final currentPosition = positionData.position;
+                  final endTimes = transcript.endTimes!;
+                  final index = endTimes.indexWhere(
+                    (endTime) => currentPosition < endTime,
+                  );
+                  if (index >= 0) {
+                    return index;
+                  } else {
+                    return null;
+                  }
+                },
+              );
         },
       );
 }

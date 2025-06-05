@@ -13,8 +13,9 @@ String _$appStartupHash() => r'5fb2be0f15a36d30704d2064a5896b4de960031e';
 final appStartupProvider = FutureProvider<void>.internal(
   appStartup,
   name: r'appStartupProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$appStartupHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appStartupHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

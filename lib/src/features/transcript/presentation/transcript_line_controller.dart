@@ -37,7 +37,8 @@ class TranscriptLineController extends _$TranscriptLineController {
     final translationExists = translationLine != null;
     final canSeeTranslation = ref.watch(canSeeTranslationServiceProvider);
     final userShowTranslation = ref.watch(showTranslationServiceProvider);
-    final showTranslation = Config.useTranslationFeature &&
+    final showTranslation =
+        Config.useTranslationFeature &&
         translationExists &&
         canSeeTranslation &&
         userShowTranslation;

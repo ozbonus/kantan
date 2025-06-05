@@ -13,14 +13,14 @@ String _$showTranslationServiceHash() =>
 @ProviderFor(ShowTranslationService)
 final showTranslationServiceProvider =
     AutoDisposeNotifierProvider<ShowTranslationService, bool>.internal(
-  ShowTranslationService.new,
-  name: r'showTranslationServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$showTranslationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ShowTranslationService.new,
+      name: r'showTranslationServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$showTranslationServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ShowTranslationService = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint

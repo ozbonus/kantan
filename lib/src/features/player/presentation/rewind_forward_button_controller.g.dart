@@ -49,14 +49,14 @@ String _$rewindForwardButtonControllerHash() =>
 @ProviderFor(RewindForwardButtonController)
 final rewindForwardButtonControllerProvider =
     AutoDisposeNotifierProvider<RewindForwardButtonController, void>.internal(
-  RewindForwardButtonController.new,
-  name: r'rewindForwardButtonControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$rewindForwardButtonControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      RewindForwardButtonController.new,
+      name: r'rewindForwardButtonControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$rewindForwardButtonControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$RewindForwardButtonController = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

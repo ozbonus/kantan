@@ -110,8 +110,8 @@ class ShowTranslationToggleButton extends ConsumerWidget {
       style: buttonStyle,
       onPressed: state.isActive
           ? () => ref
-              .read(showTranslationSwitchControllerProvider.notifier)
-              .setShowTranslation(!state.value)
+                .read(showTranslationSwitchControllerProvider.notifier)
+                .setShowTranslation(!state.value)
           : null,
     );
   }
@@ -139,8 +139,8 @@ class EnableAutoScrollToggleButton extends ConsumerWidget {
       style: buttonStyle,
       onPressed: state.isActive
           ? () => ref
-              .read(enableAutoScrollSwitchControllerProvider.notifier)
-              .setEnableAutoScroll(!state.value)
+                .read(enableAutoScrollSwitchControllerProvider.notifier)
+                .setEnableAutoScroll(!state.value)
           : null,
     );
   }
@@ -242,8 +242,7 @@ class TranscriptPlayButton extends ConsumerWidget {
     IconData buttonIcon = switch (playbackState) {
       KantanPlaybackState.loading ||
       KantanPlaybackState.error ||
-      KantanPlaybackState.playing =>
-        Icons.pause_rounded,
+      KantanPlaybackState.playing => Icons.pause_rounded,
       KantanPlaybackState.paused => Icons.play_arrow_rounded,
       KantanPlaybackState.completed => Icons.replay_rounded,
     };

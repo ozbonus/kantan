@@ -13,14 +13,14 @@ String _$enableAutoScrollServiceHash() =>
 @ProviderFor(EnableAutoScrollService)
 final enableAutoScrollServiceProvider =
     AutoDisposeNotifierProvider<EnableAutoScrollService, bool>.internal(
-  EnableAutoScrollService.new,
-  name: r'enableAutoScrollServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$enableAutoScrollServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      EnableAutoScrollService.new,
+      name: r'enableAutoScrollServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$enableAutoScrollServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$EnableAutoScrollService = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint

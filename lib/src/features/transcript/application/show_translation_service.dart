@@ -7,8 +7,10 @@ part 'show_translation_service.g.dart';
 class ShowTranslationService extends _$ShowTranslationService {
   @override
   bool build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.showTranslation;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .showTranslation;
     return initialState;
   }
 

@@ -145,8 +145,11 @@ class PlayerScreenSliderStyle extends ThemeExtension<PlayerScreenSliderStyle> {
       thumbRadius: lerpDouble(thumbRadius, other.thumbRadius, t),
       glowRadius: lerpDouble(glowRadius, other.glowRadius, t),
       activeTrackColor: Color.lerp(activeTrackColor, other.activeTrackColor, t),
-      inactiveTrackColor:
-          Color.lerp(inactiveTrackColor, other.inactiveTrackColor, t),
+      inactiveTrackColor: Color.lerp(
+        inactiveTrackColor,
+        other.inactiveTrackColor,
+        t,
+      ),
       overlayColor: Color.lerp(overlayColor, other.overlayColor, t),
       overlayRadius: lerpDouble(overlayRadius, other.overlayRadius, t),
       sliderTickMarkShape: t < 0.5
@@ -226,8 +229,11 @@ class TranscriptProgressSliderStyle
       thumbRadius: lerpDouble(thumbRadius, other.thumbRadius, t),
       glowRadius: lerpDouble(glowRadius, other.glowRadius, t),
       activeTrackColor: Color.lerp(activeTrackColor, other.activeTrackColor, t),
-      inactiveTrackColor:
-          Color.lerp(inactiveTrackColor, other.inactiveTrackColor, t),
+      inactiveTrackColor: Color.lerp(
+        inactiveTrackColor,
+        other.inactiveTrackColor,
+        t,
+      ),
       overlayColor: Color.lerp(overlayColor, other.overlayColor, t),
       overlayRadius: lerpDouble(overlayRadius, other.overlayRadius, t),
       sliderTickMarkShape: t < 0.5
@@ -278,7 +284,10 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       appBarElevation: lerpDouble(appBarElevation, other.appBarElevation, t),
       appBarScrolledUnderElevation: lerpDouble(
-          appBarScrolledUnderElevation, other.appBarScrolledUnderElevation, t),
+        appBarScrolledUnderElevation,
+        other.appBarScrolledUnderElevation,
+        t,
+      ),
     );
   }
 }
@@ -327,7 +336,8 @@ class TranscriptLineWidgetStyle
       activeColor: activeColor ?? this.activeColor,
       inactiveColor: inactiveColor ?? this.inactiveColor,
       speakerNameTextStyle: speakerNameTextStyle ?? this.speakerNameTextStyle,
-      speakerNameTranslationTextStyle: speakerNameTranslationTextStyle ??
+      speakerNameTranslationTextStyle:
+          speakerNameTranslationTextStyle ??
           this.speakerNameTranslationTextStyle,
       transcriptTextStyle: transcriptTextStyle ?? this.transcriptTextStyle,
       translationTextStyle: translationTextStyle ?? this.translationTextStyle,
@@ -350,16 +360,26 @@ class TranscriptLineWidgetStyle
     return TranscriptLineWidgetStyle(
       activeColor: Color.lerp(activeColor, other.activeColor, t),
       inactiveColor: Color.lerp(inactiveColor, other.inactiveColor, t),
-      speakerNameTextStyle:
-          TextStyle.lerp(speakerNameTextStyle, other.speakerNameTextStyle, t),
+      speakerNameTextStyle: TextStyle.lerp(
+        speakerNameTextStyle,
+        other.speakerNameTextStyle,
+        t,
+      ),
       speakerNameTranslationTextStyle: TextStyle.lerp(
-          speakerNameTranslationTextStyle,
-          other.speakerNameTranslationTextStyle,
-          t),
-      transcriptTextStyle:
-          TextStyle.lerp(transcriptTextStyle, other.transcriptTextStyle, t),
-      translationTextStyle:
-          TextStyle.lerp(translationTextStyle, other.translationTextStyle, t),
+        speakerNameTranslationTextStyle,
+        other.speakerNameTranslationTextStyle,
+        t,
+      ),
+      transcriptTextStyle: TextStyle.lerp(
+        transcriptTextStyle,
+        other.transcriptTextStyle,
+        t,
+      ),
+      translationTextStyle: TextStyle.lerp(
+        translationTextStyle,
+        other.translationTextStyle,
+        t,
+      ),
       splashColor: Color.lerp(splashColor, other.splashColor, t),
       borderColor: Color.lerp(borderColor, other.borderColor, t),
       borderRadius: lerpDouble(borderRadius, other.borderRadius, t),

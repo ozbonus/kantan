@@ -22,11 +22,13 @@ class TranscriptLineWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(transcriptLineControllerProvider(
-      index,
-      transcriptLine,
-      translationLine,
-    ));
+    final controller = ref.watch(
+      transcriptLineControllerProvider(
+        index,
+        transcriptLine,
+        translationLine,
+      ),
+    );
     final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
     final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
     final showNames =

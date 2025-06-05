@@ -8,8 +8,10 @@ part 'theme_mode_service.g.dart';
 class ThemeModeService extends _$ThemeModeService {
   @override
   ThemeMode build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.themeMode;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .themeMode;
     return initialState;
   }
 
