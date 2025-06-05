@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/presentation/player_screen.dart';
 import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
