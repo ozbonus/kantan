@@ -107,7 +107,7 @@ class ButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
+    final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
       mainAxisSpacing: style?.mainAxisSpacing ?? 0,
@@ -173,7 +173,7 @@ class SmallButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
+    final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
       mainAxisSpacing: style?.mainAxisSpacing ?? 0,
@@ -239,7 +239,7 @@ class VerySmallButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<PlayerScreenContainerStyle>();
+    final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
     return StaggeredGrid.count(
       crossAxisCount: 4,
       mainAxisSpacing: style?.mainAxisSpacing ?? 0,

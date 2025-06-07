@@ -76,9 +76,9 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
 }
 
 @immutable
-class PlayerScreenContainerStyle
-    extends ThemeExtension<PlayerScreenContainerStyle> {
-  const PlayerScreenContainerStyle({
+class PlayerScreenControlsStyle
+    extends ThemeExtension<PlayerScreenControlsStyle> {
+  const PlayerScreenControlsStyle({
     this.decoration,
     this.foregroundDecoration,
     this.mainAxisSpacing,
@@ -93,14 +93,14 @@ class PlayerScreenContainerStyle
   final Color? iconColor;
 
   @override
-  PlayerScreenContainerStyle copyWith({
+  PlayerScreenControlsStyle copyWith({
     BoxDecoration? decoration,
     BoxDecoration? foregroundDecoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
     Color? iconColor,
   }) {
-    return PlayerScreenContainerStyle(
+    return PlayerScreenControlsStyle(
       decoration: decoration ?? this.decoration,
       foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
@@ -110,15 +110,15 @@ class PlayerScreenContainerStyle
   }
 
   @override
-  ThemeExtension<PlayerScreenContainerStyle> lerp(
-    ThemeExtension<PlayerScreenContainerStyle>? other,
+  ThemeExtension<PlayerScreenControlsStyle> lerp(
+    ThemeExtension<PlayerScreenControlsStyle>? other,
     double t,
   ) {
-    if (other is! PlayerScreenContainerStyle) {
+    if (other is! PlayerScreenControlsStyle) {
       return this;
     }
 
-    return PlayerScreenContainerStyle(
+    return PlayerScreenControlsStyle(
       decoration: BoxDecoration.lerp(
         decoration,
         other.decoration,

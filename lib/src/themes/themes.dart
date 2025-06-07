@@ -68,7 +68,7 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(24.0),
         ),
       ),
-      PlayerScreenContainerStyle(
+      PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
           borderRadius: BorderRadius.circular(16.0),
@@ -249,7 +249,7 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(24.0),
         ),
       ),
-      PlayerScreenContainerStyle(
+      PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(16.0),
