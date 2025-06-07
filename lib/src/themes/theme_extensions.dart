@@ -2,6 +2,48 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 @immutable
+class TrackListScreenPaneStyle
+    extends ThemeExtension<TrackListScreenPaneStyle> {
+  const TrackListScreenPaneStyle({
+    this.decoration,
+    this.foregroundDecoration,
+  });
+
+  final BoxDecoration? decoration;
+  final BoxDecoration? foregroundDecoration;
+
+  @override
+  TrackListScreenPaneStyle copyWith({
+    BoxDecoration? decoration,
+    BoxDecoration? foregroundDecoration,
+  }) {
+    return TrackListScreenPaneStyle(
+      decoration: decoration ?? this.decoration,
+      foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
+    );
+  }
+
+  @override
+  ThemeExtension<TrackListScreenPaneStyle> lerp(
+    ThemeExtension<TrackListScreenPaneStyle>? other,
+    double t,
+  ) {
+    if (other is! TrackListScreenPaneStyle) {
+      return this;
+    }
+
+    return TrackListScreenPaneStyle(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      foregroundDecoration: BoxDecoration.lerp(
+        foregroundDecoration,
+        other.foregroundDecoration,
+        t,
+      ),
+    );
+  }
+}
+
+@immutable
 class PlayerScreenContainerStyle
     extends ThemeExtension<PlayerScreenContainerStyle> {
   const PlayerScreenContainerStyle({

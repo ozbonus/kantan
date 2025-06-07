@@ -3,12 +3,12 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
 final lightColorScheme = FlexColorScheme.light(
-  blendLevel: 5,
+  blendLevel: 24,
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
 final darkColorScheme = FlexColorScheme.dark(
-  blendLevel: 5,
+  blendLevel: 24,
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
@@ -17,14 +17,46 @@ abstract final class AppTheme {
     colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
     fontFamily: 'Atkinson Hyperlegible Next',
+    scaffoldBackground: lightColorScheme.primaryContainer,
     subThemesData: FlexSubThemesData(
       interactionEffects: true,
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
+      TrackListScreenPaneStyle(
+        decoration: BoxDecoration(
+          color: lightColorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+        foregroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      ),
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
-          color: lightColorScheme.surfaceContainer,
+          // color: lightColorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(20.0),
         ),
         foregroundDecoration: BoxDecoration(
@@ -154,12 +186,41 @@ abstract final class AppTheme {
     colorScheme: darkColorScheme,
     applyElevationOverlayColor: false,
     fontFamily: 'Atkinson Hyperlegible Next',
+    scaffoldBackground: Colors.black,
     variant: FlexSchemeVariant.fidelity,
     subThemesData: FlexSubThemesData(
       interactionEffects: true,
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
+      TrackListScreenPaneStyle(
+        decoration: BoxDecoration(
+          color: darkColorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: darkColorScheme.primaryContainer,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: darkColorScheme.primaryContainer,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: darkColorScheme.primaryContainer,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: darkColorScheme.primaryContainer,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      ),
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
           color: darkColorScheme.surfaceContainer,

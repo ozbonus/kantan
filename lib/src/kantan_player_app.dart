@@ -9,6 +9,7 @@ import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 import 'package:kantan/src/themes/theme_mode_service.dart';
 import 'package:kantan/src/themes/themes.dart';
 
@@ -72,7 +73,6 @@ class MediumLayout extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                color: Colors.red[100],
                 child: const TrackListScreenContents(),
               ),
             ),
@@ -105,10 +105,14 @@ class LargeLayout extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                color: Colors.red[100],
-                child: const TrackListScreenContents(),
-              ),
+              child: const TrackListScreenPane(),
+              // child: Container(
+              //   child: ClipRRect(
+              //     clipBehavior: Clip.antiAlias,
+              //     borderRadius: BorderRadiusGeometry.circular(24.0),
+              //     child: const TrackListScreenContents(),
+              //   ),
+              // ),
             ),
             Expanded(
               flex: 1,
@@ -124,6 +128,23 @@ class LargeLayout extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TrackListScreenPane extends StatelessWidget {
+  const TrackListScreenPane({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(
+      context,
+    ).extension<TrackListScreenPaneStyle>();
+    return Container(
+      decoration: style?.decoration ?? BoxDecoration(),
+      foregroundDecoration: style?.foregroundDecoration ?? BoxDecoration(),
+      clipBehavior: Clip.antiAlias,
+      child: const TrackListScreenContents(),
     );
   }
 }
