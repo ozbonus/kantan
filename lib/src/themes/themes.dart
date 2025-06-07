@@ -8,7 +8,7 @@ final lightColorScheme = FlexColorScheme.light(
 ).toScheme;
 
 final darkColorScheme = FlexColorScheme.dark(
-  blendLevel: 24,
+  blendLevel: 32,
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
@@ -17,7 +17,7 @@ abstract final class AppTheme {
     colorScheme: lightColorScheme,
     applyElevationOverlayColor: false,
     fontFamily: 'Atkinson Hyperlegible Next',
-    scaffoldBackground: lightColorScheme.primaryContainer,
+    scaffoldBackground: lightColorScheme.primary,
     subThemesData: FlexSubThemesData(
       interactionEffects: true,
       splashType: FlexSplashType.inkSparkle,
@@ -55,8 +55,8 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              lightColorScheme.primary,
               lightColorScheme.primaryContainer,
+              lightColorScheme.primary,
             ],
             stops: [0.0, 0.5],
             begin: Alignment.topRight,
