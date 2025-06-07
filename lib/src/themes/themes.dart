@@ -233,28 +233,6 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
-          border: Border(
-            top: BorderSide(
-              width: 4,
-              color: darkColorScheme.primaryContainer,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            right: BorderSide(
-              width: 4,
-              color: darkColorScheme.primaryContainer,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            bottom: BorderSide(
-              width: 12,
-              color: darkColorScheme.primaryContainer,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            left: BorderSide(
-              width: 4,
-              color: darkColorScheme.primaryContainer,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-          ),
         ),
       ),
       PlayerPaneStyle(
