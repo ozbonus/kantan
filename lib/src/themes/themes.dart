@@ -70,11 +70,11 @@ abstract final class AppTheme {
       ),
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
-          // color: lightColorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(20.0),
+          color: lightColorScheme.surface,
+          borderRadius: BorderRadius.circular(16.0),
         ),
         foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(16.0),
           border: Border(
             top: BorderSide(
               width: 4,
@@ -239,8 +239,8 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              darkColorScheme.primaryContainer,
-              darkColorScheme.surfaceContainerLow,
+              darkColorScheme.surface,
+              Colors.black,
             ],
             stops: [0.0, 0.5],
             begin: Alignment.topRight,
@@ -251,30 +251,30 @@ abstract final class AppTheme {
       ),
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
-          color: darkColorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(24.0),
+          color: darkColorScheme.surface,
+          borderRadius: BorderRadius.circular(16.0),
         ),
         foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(16.0),
           border: Border(
             top: BorderSide(
               width: 4,
-              color: darkColorScheme.shadow,
+              color: darkColorScheme.surfaceBright,
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
             right: BorderSide(
               width: 4,
-              color: darkColorScheme.shadow,
+              color: darkColorScheme.surfaceBright,
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
             bottom: BorderSide(
               width: 8,
-              color: darkColorScheme.shadow,
+              color: darkColorScheme.surfaceBright,
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
             left: BorderSide(
               width: 4,
-              color: darkColorScheme.shadow,
+              color: darkColorScheme.surfaceBright,
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
           ),
@@ -286,7 +286,7 @@ abstract final class AppTheme {
       PlayerScreenSliderStyle(
         trackHeight: 8.0,
         activeTrackColor: darkColorScheme.primary,
-        inactiveTrackColor: darkColorScheme.surfaceContainerHighest,
+        inactiveTrackColor: darkColorScheme.surfaceBright,
         sliderTickMarkShape: SliderTickMarkShape.noTickMark,
         thumbColor: darkColorScheme.primary,
         thumbRadius: 12.0,
