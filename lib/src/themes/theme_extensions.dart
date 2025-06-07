@@ -66,6 +66,38 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
 }
 
 @immutable
+class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
+  const TranscriptPaneStyle({
+    this.decoration,
+  });
+
+  final BoxDecoration? decoration;
+
+  @override
+  TranscriptPaneStyle copyWith({
+    BoxDecoration? decoration,
+  }) {
+    return TranscriptPaneStyle(
+      decoration: decoration ?? this.decoration,
+    );
+  }
+
+  @override
+  ThemeExtension<TranscriptPaneStyle> lerp(
+    ThemeExtension<TranscriptPaneStyle>? other,
+    double t,
+  ) {
+    if (other is! TranscriptPaneStyle) {
+      return this;
+    }
+
+    return TranscriptPaneStyle(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+    );
+  }
+}
+
+@immutable
 class PlayerScreenControlsStyle
     extends ThemeExtension<PlayerScreenControlsStyle> {
   const PlayerScreenControlsStyle({

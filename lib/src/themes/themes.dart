@@ -65,6 +65,34 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(24.0),
         ),
       ),
+      TranscriptPaneStyle(
+        decoration: BoxDecoration(
+          color: lightColorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      ),
       PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
@@ -240,6 +268,12 @@ abstract final class AppTheme {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+      ),
+      TranscriptPaneStyle(
+        decoration: BoxDecoration(
+          color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
         ),
       ),

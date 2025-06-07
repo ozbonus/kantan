@@ -113,7 +113,7 @@ class LargeLayout extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Container(child: const TranscriptScreenContents()),
+              child: const TranscriptPane(),
             ),
           ],
         ),
@@ -148,6 +148,20 @@ class PlayerPane extends StatelessWidget {
       decoration: style?.decoration ?? BoxDecoration(),
       clipBehavior: Clip.antiAlias,
       child: const PlayerScreenContents(),
+    );
+  }
+}
+
+class TranscriptPane extends StatelessWidget {
+  const TranscriptPane({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<TranscriptPaneStyle>();
+    return Container(
+      decoration: style?.decoration ?? BoxDecoration(),
+      clipBehavior: Clip.antiAlias,
+      child: const TranscriptScreenContents(),
     );
   }
 }
