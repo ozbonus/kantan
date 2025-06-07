@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,10 +97,17 @@ class LargeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewPadding = MediaQuery.viewPaddingOf(context);
     return Scaffold(
       drawer: const SettingsMenu(),
       body: SafeArea(
-        minimum: EdgeInsets.all(Config.layoutOuterPadding),
+        minimum: EdgeInsets.only(
+          left: viewPadding.left + Config.layoutOuterPadding,
+          right: viewPadding.right + Config.layoutOuterPadding,
+          bottom: viewPadding.left + Config.layoutOuterPadding,
+          top: viewPadding.bottom + Config.layoutOuterPadding,
+        ),
+        // minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
           textDirection: TextDirection.ltr,
           spacing: Config.layoutSpacing,
