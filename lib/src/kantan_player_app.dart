@@ -106,13 +106,6 @@ class LargeLayout extends StatelessWidget {
             Expanded(
               flex: 1,
               child: const TrackListScreenPane(),
-              // child: Container(
-              //   child: ClipRRect(
-              //     clipBehavior: Clip.antiAlias,
-              //     borderRadius: BorderRadiusGeometry.circular(24.0),
-              //     child: const TrackListScreenContents(),
-              //   ),
-              // ),
             ),
             Expanded(
               flex: 1,
