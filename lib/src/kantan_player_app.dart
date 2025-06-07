@@ -109,10 +109,7 @@ class LargeLayout extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Container(
-                color: Colors.green[100],
-                child: const PlayerScreenContents(),
-              ),
+              child: const PlayerPane(),
             ),
             Expanded(
               flex: 1,
@@ -138,6 +135,20 @@ class TrackListScreenPane extends StatelessWidget {
       foregroundDecoration: style?.foregroundDecoration ?? BoxDecoration(),
       clipBehavior: Clip.antiAlias,
       child: const TrackListScreenContents(),
+    );
+  }
+}
+
+class PlayerPane extends StatelessWidget {
+  const PlayerPane({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerPaneStyle>();
+    return Container(
+      decoration: style?.decoration ?? BoxDecoration(),
+      clipBehavior: Clip.antiAlias,
+      child: const PlayerScreenContents(),
     );
   }
 }

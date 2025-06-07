@@ -54,6 +54,20 @@ abstract final class AppTheme {
           ),
         ),
       ),
+      PlayerPaneStyle(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              lightColorScheme.primary,
+              lightColorScheme.primaryContainer,
+            ],
+            stops: [0.0, 0.5],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+      ),
       PlayerScreenContainerStyle(
         decoration: BoxDecoration(
           // color: lightColorScheme.surfaceContainer,
@@ -219,6 +233,20 @@ abstract final class AppTheme {
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
           ),
+        ),
+      ),
+      PlayerPaneStyle(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              darkColorScheme.primaryContainer,
+              darkColorScheme.surfaceContainerLow,
+            ],
+            stops: [0.0, 0.5],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+          borderRadius: BorderRadius.circular(24.0),
         ),
       ),
       PlayerScreenContainerStyle(

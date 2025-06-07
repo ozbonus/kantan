@@ -44,6 +44,38 @@ class TrackListScreenPaneStyle
 }
 
 @immutable
+class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
+  const PlayerPaneStyle({
+    this.decoration,
+  });
+
+  final BoxDecoration? decoration;
+
+  @override
+  PlayerPaneStyle copyWith({
+    BoxDecoration? decoration,
+  }) {
+    return PlayerPaneStyle(
+      decoration: decoration ?? this.decoration,
+    );
+  }
+
+  @override
+  ThemeExtension<PlayerPaneStyle> lerp(
+    ThemeExtension<PlayerPaneStyle>? other,
+    double t,
+  ) {
+    if (other is! PlayerPaneStyle) {
+      return this;
+    }
+
+    return PlayerPaneStyle(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+    );
+  }
+}
+
+@immutable
 class PlayerScreenContainerStyle
     extends ThemeExtension<PlayerScreenContainerStyle> {
   const PlayerScreenContainerStyle({
