@@ -105,7 +105,7 @@ class LargeLayout extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: const TrackListScreenPane(),
+              child: const TrackListPane(),
             ),
             Expanded(
               flex: 1,
@@ -122,14 +122,14 @@ class LargeLayout extends StatelessWidget {
   }
 }
 
-class TrackListScreenPane extends StatelessWidget {
-  const TrackListScreenPane({super.key});
+class TrackListPane extends StatelessWidget {
+  const TrackListPane({super.key});
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(
       context,
-    ).extension<TrackListScreenPaneStyle>();
+    ).extension<TrackListPaneStyle>();
     return Container(
       decoration: style?.decoration ?? BoxDecoration(),
       clipBehavior: Clip.antiAlias,

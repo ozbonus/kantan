@@ -23,7 +23,7 @@ abstract final class AppTheme {
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
-      TrackListScreenPaneStyle(
+      TrackListPaneStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
@@ -201,7 +201,7 @@ abstract final class AppTheme {
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
-      TrackListScreenPaneStyle(
+      TrackListPaneStyle(
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),

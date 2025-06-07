@@ -2,33 +2,32 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 @immutable
-class TrackListScreenPaneStyle
-    extends ThemeExtension<TrackListScreenPaneStyle> {
-  const TrackListScreenPaneStyle({
+class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
+  const TrackListPaneStyle({
     this.decoration,
   });
 
   final BoxDecoration? decoration;
 
   @override
-  TrackListScreenPaneStyle copyWith({
+  TrackListPaneStyle copyWith({
     BoxDecoration? decoration,
   }) {
-    return TrackListScreenPaneStyle(
+    return TrackListPaneStyle(
       decoration: decoration ?? this.decoration,
     );
   }
 
   @override
-  ThemeExtension<TrackListScreenPaneStyle> lerp(
-    ThemeExtension<TrackListScreenPaneStyle>? other,
+  ThemeExtension<TrackListPaneStyle> lerp(
+    ThemeExtension<TrackListPaneStyle>? other,
     double t,
   ) {
-    if (other is! TrackListScreenPaneStyle) {
+    if (other is! TrackListPaneStyle) {
       return this;
     }
 
-    return TrackListScreenPaneStyle(
+    return TrackListPaneStyle(
       decoration: BoxDecoration.lerp(decoration, other.decoration, t),
     );
   }
