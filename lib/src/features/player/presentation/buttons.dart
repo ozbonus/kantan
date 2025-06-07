@@ -23,7 +23,6 @@ class ButtonContainer extends StatelessWidget {
     final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
     return Container(
       decoration: style?.decoration ?? BoxDecoration(),
-      foregroundDecoration: style?.foregroundDecoration,
       clipBehavior: Clip.antiAlias,
       child: child,
     );

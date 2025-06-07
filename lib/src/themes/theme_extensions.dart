@@ -6,20 +6,16 @@ class TrackListScreenPaneStyle
     extends ThemeExtension<TrackListScreenPaneStyle> {
   const TrackListScreenPaneStyle({
     this.decoration,
-    this.foregroundDecoration,
   });
 
   final BoxDecoration? decoration;
-  final BoxDecoration? foregroundDecoration;
 
   @override
   TrackListScreenPaneStyle copyWith({
     BoxDecoration? decoration,
-    BoxDecoration? foregroundDecoration,
   }) {
     return TrackListScreenPaneStyle(
       decoration: decoration ?? this.decoration,
-      foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
     );
   }
 
@@ -34,11 +30,6 @@ class TrackListScreenPaneStyle
 
     return TrackListScreenPaneStyle(
       decoration: BoxDecoration.lerp(decoration, other.decoration, t),
-      foregroundDecoration: BoxDecoration.lerp(
-        foregroundDecoration,
-        other.foregroundDecoration,
-        t,
-      ),
     );
   }
 }
@@ -80,14 +71,12 @@ class PlayerScreenControlsStyle
     extends ThemeExtension<PlayerScreenControlsStyle> {
   const PlayerScreenControlsStyle({
     this.decoration,
-    this.foregroundDecoration,
     this.mainAxisSpacing,
     this.crossAxisSpacing,
     this.iconColor,
   });
 
   final BoxDecoration? decoration;
-  final BoxDecoration? foregroundDecoration;
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
   final Color? iconColor;
@@ -95,14 +84,12 @@ class PlayerScreenControlsStyle
   @override
   PlayerScreenControlsStyle copyWith({
     BoxDecoration? decoration,
-    BoxDecoration? foregroundDecoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
     Color? iconColor,
   }) {
     return PlayerScreenControlsStyle(
       decoration: decoration ?? this.decoration,
-      foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing ?? this.crossAxisSpacing,
       iconColor: iconColor ?? this.iconColor,
@@ -119,31 +106,10 @@ class PlayerScreenControlsStyle
     }
 
     return PlayerScreenControlsStyle(
-      decoration: BoxDecoration.lerp(
-        decoration,
-        other.decoration,
-        t,
-      ),
-      foregroundDecoration: BoxDecoration.lerp(
-        foregroundDecoration,
-        other.foregroundDecoration,
-        t,
-      ),
-      mainAxisSpacing: lerpDouble(
-        mainAxisSpacing,
-        other.mainAxisSpacing,
-        t,
-      ),
-      crossAxisSpacing: lerpDouble(
-        crossAxisSpacing,
-        other.crossAxisSpacing,
-        t,
-      ),
-      iconColor: Color.lerp(
-        iconColor,
-        other.iconColor,
-        t,
-      ),
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      mainAxisSpacing: lerpDouble(mainAxisSpacing, other.mainAxisSpacing, t),
+      crossAxisSpacing: lerpDouble(crossAxisSpacing, other.crossAxisSpacing, t),
+      iconColor: Color.lerp(iconColor, other.iconColor, t),
     );
   }
 }

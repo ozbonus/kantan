@@ -27,9 +27,6 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
-        ),
-        foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24.0),
           border: Border(
             top: BorderSide(
               width: 4,
@@ -71,9 +68,6 @@ abstract final class AppTheme {
       PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
           border: Border(
             top: BorderSide(
@@ -252,9 +246,6 @@ abstract final class AppTheme {
       PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
           border: Border(
             top: BorderSide(

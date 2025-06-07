@@ -132,7 +132,6 @@ class TrackListScreenPane extends StatelessWidget {
     ).extension<TrackListScreenPaneStyle>();
     return Container(
       decoration: style?.decoration ?? BoxDecoration(),
-      foregroundDecoration: style?.foregroundDecoration ?? BoxDecoration(),
       clipBehavior: Clip.antiAlias,
       child: const TrackListScreenContents(),
     );
