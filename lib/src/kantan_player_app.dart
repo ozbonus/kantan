@@ -74,16 +74,11 @@ class MediumLayout extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                child: const TrackListScreenContents(),
-              ),
+              child: const TrackListPane(),
             ),
             Expanded(
               flex: 1,
-              child: Container(
-                color: Colors.green[100],
-                child: const PlayerScreenContents(),
-              ),
+              child: const PlayerPane(),
             ),
           ],
         ),
