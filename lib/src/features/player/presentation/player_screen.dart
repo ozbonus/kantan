@@ -50,7 +50,9 @@ class PlayerScreenContents extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 420),
+                  constraints: BoxConstraints(
+                    maxWidth: Config.buttonGridMaxWidth,
+                  ),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: ResponsiveButtonGrid(
