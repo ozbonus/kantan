@@ -17,7 +17,8 @@ class PlayerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Player Screen'),
+        backgroundColor: Colors.transparent,
+        // title: const Text('Player Screen'),
       ),
       body: const PlayerScreenContents(),
       extendBodyBehindAppBar: true,
