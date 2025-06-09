@@ -30,37 +30,34 @@ class TranscriptPlayerControls extends StatelessWidget {
         color: style?.backgroundColor,
       ),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Column(
-                children: [
-                  if (isFullscreen)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: TranscriptProgressSlider(),
-                    ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (isFullscreen) ...[
-                        TranscriptPlayButton(),
-                        TranscriptSkipToPreviousButton(),
-                        TranscriptSkipToNextButton(),
-                        TranscriptScaleButton(),
-                      ],
-                      if (Config.useTranslationFeature)
-                        ShowTranslationToggleButton(),
-                      if (Config.useAutoScrollFeature)
-                        EnableAutoScrollToggleButton(),
-                      if (!isFullscreen) ExpandTranscriptButton(),
+        minimum: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              children: [
+                if (isFullscreen) TranscriptProgressSlider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isFullscreen) ...[
+                      TranscriptPlayButton(),
+                      TranscriptSkipToPreviousButton(),
+                      TranscriptSkipToNextButton(),
+                      TranscriptScaleButton(),
                     ],
-                  ),
-                ],
-              );
-            },
-          ),
+                    if (Config.useTranslationFeature)
+                      ShowTranslationToggleButton(),
+                    if (Config.useAutoScrollFeature)
+                      EnableAutoScrollToggleButton(),
+                    if (!isFullscreen) ExpandTranscriptButton(),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
