@@ -6,13 +6,16 @@ import 'package:kantan/src/features/player/presentation/floating_mini_player.dar
 import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_tile.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TrackListScreen extends ConsumerWidget {
   const TrackListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
+    final style = Theme.of(context).extension<TrackListPaneStyle>();
+    return Scaffold(
+      backgroundColor: style?.decoration?.color,
       body: TrackListScreenContents(),
       floatingActionButton: FloatingMiniPlayer(),
       drawer: SettingsMenu(),

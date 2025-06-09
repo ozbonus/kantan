@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+/// This theme extension is also used to set the scaffold color on the track
+/// list screen.
 @immutable
 class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
   const TrackListPaneStyle({
