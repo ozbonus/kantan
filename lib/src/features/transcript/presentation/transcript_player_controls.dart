@@ -44,10 +44,12 @@ class TranscriptPlayerControls extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TranscriptPlayButton(),
-                      TranscriptSkipToPreviousButton(),
-                      TranscriptSkipToNextButton(),
-                      TranscriptScaleButton(),
+                      if (isFullscreen) ...[
+                        TranscriptPlayButton(),
+                        TranscriptSkipToPreviousButton(),
+                        TranscriptSkipToNextButton(),
+                        TranscriptScaleButton(),
+                      ],
                       if (Config.useTranslationFeature)
                         ShowTranslationToggleButton(),
                       if (Config.useAutoScrollFeature)
