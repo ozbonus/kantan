@@ -51,7 +51,7 @@ class PlayerScreenContents extends ConsumerWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end, // Removable?
           children: [
-            TrackInfo(),
+            const TrackInfo(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
