@@ -20,6 +20,7 @@ class PlayerScreen extends StatelessWidget {
         title: const Text('Player Screen'),
       ),
       body: const PlayerScreenContents(),
+      extendBodyBehindAppBar: true,
     );
   }
 }
@@ -38,8 +39,12 @@ class PlayerScreenContents extends ConsumerWidget {
     final showOpenTranscriptButton = ref.watch(
       showOpenTranscriptButtonControllerProvider(isFullscreen, screenWidth),
     );
+    final style = Theme.of(context).extension<PlayerPaneStyle>();
     return Container(
       constraints: const BoxConstraints.expand(),
+      decoration: BoxDecoration(
+        gradient: style?.decoration?.gradient,
+      ),
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
