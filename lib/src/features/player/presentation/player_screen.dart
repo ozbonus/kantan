@@ -20,7 +20,7 @@ class PlayerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        // title: const Text('Player Screen'),
+        title: Text(Config.appTitle),
       ),
       body: const PlayerScreenContents(),
       extendBodyBehindAppBar: true,
