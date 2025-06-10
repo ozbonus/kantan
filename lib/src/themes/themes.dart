@@ -58,10 +58,43 @@ abstract final class AppTheme {
               lightColorScheme.primaryContainer,
               lightColorScheme.primary,
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
           ),
           borderRadius: BorderRadius.circular(24.0),
+        ),
+        trackNumberTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: lightColorScheme.surface,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        trackTitleTextStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: lightColorScheme.surface,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        trackDescriptionTextStyle: TextStyle(
+          color: lightColorScheme.surface,
+          fontWeight: FontWeight.bold,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
         ),
       ),
       TranscriptPaneStyle(

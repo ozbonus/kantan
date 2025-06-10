@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/presentation/buttons.dart';
 import 'package:kantan/src/features/player/presentation/open_transcript_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider.dart';
 import 'package:kantan/src/features/player/presentation/speed_slider.dart';
+import 'package:kantan/src/features/track_list/domain/track.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
 class PlayerScreen extends StatelessWidget {
@@ -300,21 +302,73 @@ class TrackInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final trackValue = ref.watch(currentTrackStreamProvider);
-    return AsyncValueWidget(
-      value: trackValue,
-      data: (track) {
-        if (track != null) {
-          return Column(
-            children: [
-              Text('${track.track} ${track.title}'),
-              if (track.displayDescription != null)
-                Text('${track.displayDescription}'),
-            ],
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
+    final localizations = AppLocalizations.of(context)!;
+    final style = Theme.of(context).extension<PlayerPaneStyle>();
+    final trackNumberTextStyle = style?.trackNumberTextStyle;
+    final trackTitleTextStyle = style?.trackTitleTextStyle;
+    final trackDescriptionTextStyle = style?.trackDescriptionTextStyle;
+
+    String _trackNumberString(Track track) {
+      final trackObject = localizations.trackObject;
+      final discObject = localizations.discObject;
+      final trackNumber = track.track;
+      final discNumber = track.disc;
+      final multiDisc = track.discTotal != '1';
+
+      if (multiDisc) {
+        return '$discObject $discNumber $trackObject $trackNumber';
+      } else {
+        return '$trackObject $trackNumber';
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 24.0,
+      ),
+      child: AsyncValueWidget(
+        value: trackValue,
+        data: (track) {
+          if (track != null) {
+            return Localizations.override(
+              context: context,
+              locale: Config.transcriptLocale,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    _trackNumberString(track),
+                    style: Theme.of(context).textTheme.titleLarge?.merge(
+                      trackNumberTextStyle,
+                    ),
+                  ),
+                  Text(
+                    track.title,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleLarge?.merge(trackTitleTextStyle),
+                    softWrap: false,
+                    overflow: TextOverflow.fade,
+                  ),
+                  if (track.displayDescription != null)
+                    Text(
+                      track.displayDescription!,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleLarge?.merge(trackDescriptionTextStyle),
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }

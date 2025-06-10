@@ -39,16 +39,29 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   const PlayerPaneStyle({
     this.containerDecoration,
+    this.trackNumberTextStyle,
+    this.trackTitleTextStyle,
+    this.trackDescriptionTextStyle,
   });
 
   final BoxDecoration? containerDecoration;
+  final TextStyle? trackNumberTextStyle;
+  final TextStyle? trackTitleTextStyle;
+  final TextStyle? trackDescriptionTextStyle;
 
   @override
   PlayerPaneStyle copyWith({
     BoxDecoration? containerDecoration,
+    TextStyle? trackNumberTextStyle,
+    TextStyle? trackTitleTextStyle,
+    TextStyle? trackDescriptionTextStyle,
   }) {
     return PlayerPaneStyle(
       containerDecoration: containerDecoration ?? this.containerDecoration,
+      trackNumberTextStyle: trackNumberTextStyle ?? this.trackNumberTextStyle,
+      trackTitleTextStyle: trackTitleTextStyle ?? this.trackTitleTextStyle,
+      trackDescriptionTextStyle:
+          trackDescriptionTextStyle ?? this.trackDescriptionTextStyle,
     );
   }
 
@@ -65,6 +78,21 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
       containerDecoration: BoxDecoration.lerp(
         containerDecoration,
         other.containerDecoration,
+        t,
+      ),
+      trackNumberTextStyle: TextStyle.lerp(
+        trackNumberTextStyle,
+        other.trackNumberTextStyle,
+        t,
+      ),
+      trackTitleTextStyle: TextStyle.lerp(
+        trackTitleTextStyle,
+        other.trackTitleTextStyle,
+        t,
+      ),
+      trackDescriptionTextStyle: TextStyle.lerp(
+        trackDescriptionTextStyle,
+        other.trackDescriptionTextStyle,
         t,
       ),
     );
