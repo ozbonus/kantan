@@ -337,7 +337,7 @@ class TrackInfo extends ConsumerWidget {
               locale: Config.transcriptLocale,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     _trackNumberString(track),
