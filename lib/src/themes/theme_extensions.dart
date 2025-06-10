@@ -161,13 +161,13 @@ class PlayerScreenControlsStyle
     BoxDecoration? containerDecoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
-    Color? iconColor,
+    Color? foregroundColor,
   }) {
     return PlayerScreenControlsStyle(
       decoration: containerDecoration ?? this.decoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing ?? this.crossAxisSpacing,
-      iconColor: iconColor ?? this.iconColor,
+      iconColor: foregroundColor ?? this.iconColor,
     );
   }
 
@@ -185,6 +185,44 @@ class PlayerScreenControlsStyle
       mainAxisSpacing: lerpDouble(mainAxisSpacing, other.mainAxisSpacing, t),
       crossAxisSpacing: lerpDouble(crossAxisSpacing, other.crossAxisSpacing, t),
       iconColor: Color.lerp(iconColor, other.iconColor, t),
+    );
+  }
+}
+
+@immutable
+class OpenTranscriptButtonStyle
+    extends ThemeExtension<OpenTranscriptButtonStyle> {
+  const OpenTranscriptButtonStyle({
+    this.decoration,
+    this.foregroundColor,
+  });
+
+  final BoxDecoration? decoration;
+  final Color? foregroundColor;
+
+  @override
+  OpenTranscriptButtonStyle copyWith({
+    BoxDecoration? decoration,
+    Color? foregroundColor,
+  }) {
+    return OpenTranscriptButtonStyle(
+      decoration: decoration ?? this.decoration,
+      foregroundColor: foregroundColor ?? this.foregroundColor,
+    );
+  }
+
+  @override
+  ThemeExtension<OpenTranscriptButtonStyle> lerp(
+    ThemeExtension<OpenTranscriptButtonStyle>? other,
+    double t,
+  ) {
+    if (other is! OpenTranscriptButtonStyle) {
+      return this;
+    }
+
+    return OpenTranscriptButtonStyle(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      foregroundColor: Color.lerp(foregroundColor, other.foregroundColor, t),
     );
   }
 }

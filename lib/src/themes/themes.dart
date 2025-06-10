@@ -157,6 +157,35 @@ abstract final class AppTheme {
         crossAxisSpacing: 24.0,
         iconColor: lightColorScheme.primary,
       ),
+      OpenTranscriptButtonStyle(
+        decoration: BoxDecoration(
+          color: lightColorScheme.secondary,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        foregroundColor: lightColorScheme.onSecondary,
+      ),
       PlayerScreenSliderStyle(
         trackHeight: 8.0,
         activeTrackColor: lightColorScheme.primary,

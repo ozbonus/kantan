@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
@@ -178,18 +178,32 @@ class OpenTranscriptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(32),
-      child: Ink(
-        child: InkWell(
-          borderRadius: BorderRadius.circular(32),
-          onTap: () => context.pushNamed(AppRoute.transcript),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: iconOnly
-                  ? const Icon(Icons.message_rounded)
-                  : Text('Transcript'.hardcoded),
+    final style = Theme.of(context).extension<OpenTranscriptButtonStyle>();
+    final localizations = AppLocalizations.of(context)!;
+    return Container(
+      decoration: style?.decoration,
+      child: Material(
+        type: MaterialType.transparency,
+        borderRadius: BorderRadius.circular(32),
+        child: Ink(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(32),
+            onTap: () => context.pushNamed(AppRoute.transcript),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: iconOnly
+                    ? Icon(
+                        Icons.message_rounded,
+                        color: style?.foregroundColor,
+                      )
+                    : Text(
+                        localizations.transcriptButtonLabel,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: style?.foregroundColor,
+                        ),
+                      ),
+              ),
             ),
           ),
         ),
