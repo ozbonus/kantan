@@ -12,7 +12,7 @@ class Config {
   static double get buttonGridMaxWidth => 360;
   static int get mediumBreakpoint => 590;
   static int get largeBreakpoint => 1000;
-  static int get fullButtonGridBreakpoint => 600;
+  static int get fullButtonGridBreakpoint => 500;
   static int get smallButtonGridBreakpoint => 400;
 
   static Duration get saveStateUpdateDuration => const Duration(seconds: 2);
