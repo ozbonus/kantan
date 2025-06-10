@@ -13,10 +13,10 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 
   @override
   TrackListPaneStyle copyWith({
-    BoxDecoration? decoration,
+    BoxDecoration? containerDecoration,
   }) {
     return TrackListPaneStyle(
-      decoration: decoration ?? this.decoration,
+      decoration: containerDecoration ?? this.decoration,
     );
   }
 
@@ -38,17 +38,17 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 @immutable
 class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   const PlayerPaneStyle({
-    this.decoration,
+    this.containerDecoration,
   });
 
-  final BoxDecoration? decoration;
+  final BoxDecoration? containerDecoration;
 
   @override
   PlayerPaneStyle copyWith({
-    BoxDecoration? decoration,
+    BoxDecoration? containerDecoration,
   }) {
     return PlayerPaneStyle(
-      decoration: decoration ?? this.decoration,
+      containerDecoration: containerDecoration ?? this.containerDecoration,
     );
   }
 
@@ -62,7 +62,11 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
     }
 
     return PlayerPaneStyle(
-      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      containerDecoration: BoxDecoration.lerp(
+        containerDecoration,
+        other.containerDecoration,
+        t,
+      ),
     );
   }
 }
@@ -77,10 +81,10 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
 
   @override
   TranscriptPaneStyle copyWith({
-    BoxDecoration? decoration,
+    BoxDecoration? containerDecoration,
   }) {
     return TranscriptPaneStyle(
-      decoration: decoration ?? this.decoration,
+      decoration: containerDecoration ?? this.decoration,
     );
   }
 
@@ -116,13 +120,13 @@ class PlayerScreenControlsStyle
 
   @override
   PlayerScreenControlsStyle copyWith({
-    BoxDecoration? decoration,
+    BoxDecoration? containerDecoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
     Color? iconColor,
   }) {
     return PlayerScreenControlsStyle(
-      decoration: decoration ?? this.decoration,
+      decoration: containerDecoration ?? this.decoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing ?? this.crossAxisSpacing,
       iconColor: iconColor ?? this.iconColor,

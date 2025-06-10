@@ -52,7 +52,7 @@ abstract final class AppTheme {
         ),
       ),
       PlayerPaneStyle(
-        decoration: BoxDecoration(
+        containerDecoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
               lightColorScheme.primaryContainer,
@@ -235,7 +235,7 @@ abstract final class AppTheme {
         ),
       ),
       PlayerPaneStyle(
-        decoration: BoxDecoration(
+        containerDecoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
               darkColorScheme.surface,

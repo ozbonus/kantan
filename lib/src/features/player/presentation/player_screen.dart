@@ -44,7 +44,7 @@ class PlayerScreenContents extends ConsumerWidget {
     return Container(
       constraints: const BoxConstraints.expand(),
       decoration: BoxDecoration(
-        gradient: style?.decoration?.gradient,
+        gradient: style?.containerDecoration?.gradient,
       ),
       child: SafeArea(
         child: Column(

@@ -149,7 +149,7 @@ class PlayerPane extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = Theme.of(context).extension<PlayerPaneStyle>();
     return Container(
-      decoration: style?.decoration ?? BoxDecoration(),
+      decoration: style?.containerDecoration ?? BoxDecoration(),
       clipBehavior: Clip.antiAlias,
       child: const PlayerScreenContents(),
     );
