@@ -78,9 +78,12 @@ class TranscriptScreenContents extends ConsumerWidget {
             return Column(
               children: [
                 Expanded(
-                  child: StaticTranscript(
-                    transcript: data.transcript!,
-                    translation: data.translation,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: StaticTranscript(
+                      transcript: data.transcript!,
+                      translation: data.translation,
+                    ),
                   ),
                 ),
                 TranscriptPlayerControls(isFullscreen: isFullscreen),
@@ -90,9 +93,12 @@ class TranscriptScreenContents extends ConsumerWidget {
             return Column(
               children: [
                 Expanded(
-                  child: DynamicScrollingTranscript(
-                    transcript: data.transcript!,
-                    translation: data.translation,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: DynamicScrollingTranscript(
+                      transcript: data.transcript!,
+                      translation: data.translation,
+                    ),
                   ),
                 ),
                 TranscriptPlayerControls(isFullscreen: isFullscreen),

@@ -71,79 +71,76 @@ class TranscriptLineWidget extends ConsumerWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          color: controller.isActive ? style?.activeColor : null,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        color: controller.isActive ? style?.activeColor : null,
+        borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+      ),
+      foregroundDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+        border: controller.isActive
+            ? Border.all(
+                width: style?.borderWidth ?? 0,
+                color: style?.borderColor ?? Colors.transparent,
+              )
+            : null,
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          splashColor: style?.splashColor,
           borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-        ),
-        foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-          border: controller.isActive
-              ? Border.all(
-                  width: style?.borderWidth ?? 0,
-                  color: style?.borderColor ?? Colors.transparent,
-                )
-              : null,
-        ),
-        child: Material(
-          type: MaterialType.transparency,
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            splashColor: style?.splashColor,
-            borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-            onTap: () => ref
-                .read(
-                  transcriptLineControllerProvider(
-                    index,
-                    transcriptLine,
-                    translationLine,
-                  ).notifier,
-                )
-                .seekToLine(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 24.0,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                spacing: 8.0,
-                children: [
-                  if (showNames)
-                    Localizations.override(
-                      context: context,
-                      locale: transcriptLineLocale,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 8.0,
-                        children: [
-                          if (speakerName != null) speakerName,
-                          if (speakerNameTranslation != null)
-                            Localizations.override(
-                              context: context,
-                              locale: translationLineLocale,
-                              child: speakerNameTranslation,
-                            ),
-                        ],
-                      ),
-                    ),
+          onTap: () => ref
+              .read(
+                transcriptLineControllerProvider(
+                  index,
+                  transcriptLine,
+                  translationLine,
+                ).notifier,
+              )
+              .seekToLine(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 8.0,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 4.0,
+              children: [
+                if (showNames)
                   Localizations.override(
                     context: context,
                     locale: transcriptLineLocale,
-                    child: transcriptText,
-                  ),
-                  if (controller.showTranslation)
-                    Localizations.override(
-                      context: context,
-                      locale: translationLineLocale,
-                      child: translationText,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 8.0,
+                      children: [
+                        if (speakerName != null) speakerName,
+                        if (speakerNameTranslation != null)
+                          Localizations.override(
+                            context: context,
+                            locale: translationLineLocale,
+                            child: speakerNameTranslation,
+                          ),
+                      ],
                     ),
-                ],
-              ),
+                  ),
+                Localizations.override(
+                  context: context,
+                  locale: transcriptLineLocale,
+                  child: transcriptText,
+                ),
+                if (controller.showTranslation)
+                  Localizations.override(
+                    context: context,
+                    locale: translationLineLocale,
+                    child: translationText,
+                  ),
+              ],
             ),
           ),
         ),

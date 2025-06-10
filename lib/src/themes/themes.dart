@@ -216,7 +216,7 @@ abstract final class AppTheme {
       TranscriptLineWidgetStyle(
         inactiveColor: lightColorScheme.secondaryContainer,
         activeColor: lightColorScheme.secondaryContainer.darken(5),
-        borderRadius: 24.0,
+        borderRadius: 16.0,
         borderColor: lightColorScheme.secondaryContainer.darken(50),
         borderWidth: 2.0,
         splashColor: lightColorScheme.secondary.withAlpha(128),
