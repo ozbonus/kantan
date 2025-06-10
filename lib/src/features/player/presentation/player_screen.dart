@@ -53,23 +53,21 @@ class PlayerScreenContents extends ConsumerWidget {
         gradient: style?.containerDecoration?.gradient,
       ),
       child: SafeArea(
+        minimum: EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end, // Removable?
           children: [
             const TrackInfo(),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: Config.buttonGridMaxWidth,
-                  ),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ResponsiveButtonGrid(
-                      showOpenTranscriptButton: showOpenTranscriptButton,
-                    ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: Config.buttonGridMaxWidth,
+                ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ResponsiveButtonGrid(
+                    showOpenTranscriptButton: showOpenTranscriptButton,
                   ),
                 ),
               ),
@@ -329,7 +327,6 @@ class TrackInfo extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 16.0,
-        horizontal: 24.0,
       ),
       child: AsyncValueWidget(
         value: trackValue,
