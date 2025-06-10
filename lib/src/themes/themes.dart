@@ -63,6 +63,7 @@ abstract final class AppTheme {
           ),
           borderRadius: BorderRadius.circular(24.0),
         ),
+        appBarForegroundColor: lightColorScheme.surface,
         trackNumberTextStyle: TextStyle(
           fontWeight: FontWeight.bold,
           color: lightColorScheme.surface,

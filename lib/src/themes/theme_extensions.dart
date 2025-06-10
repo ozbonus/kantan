@@ -39,12 +39,14 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   const PlayerPaneStyle({
     this.containerDecoration,
+    this.appBarForegroundColor,
     this.trackNumberTextStyle,
     this.trackTitleTextStyle,
     this.trackDescriptionTextStyle,
   });
 
   final BoxDecoration? containerDecoration;
+  final Color? appBarForegroundColor;
   final TextStyle? trackNumberTextStyle;
   final TextStyle? trackTitleTextStyle;
   final TextStyle? trackDescriptionTextStyle;
@@ -52,12 +54,15 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   @override
   PlayerPaneStyle copyWith({
     BoxDecoration? containerDecoration,
+    Color? appBarForegroundColor,
     TextStyle? trackNumberTextStyle,
     TextStyle? trackTitleTextStyle,
     TextStyle? trackDescriptionTextStyle,
   }) {
     return PlayerPaneStyle(
       containerDecoration: containerDecoration ?? this.containerDecoration,
+      appBarForegroundColor:
+          appBarForegroundColor ?? this.appBarForegroundColor,
       trackNumberTextStyle: trackNumberTextStyle ?? this.trackNumberTextStyle,
       trackTitleTextStyle: trackTitleTextStyle ?? this.trackTitleTextStyle,
       trackDescriptionTextStyle:
@@ -78,6 +83,11 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
       containerDecoration: BoxDecoration.lerp(
         containerDecoration,
         other.containerDecoration,
+        t,
+      ),
+      appBarForegroundColor: Color.lerp(
+        appBarForegroundColor,
+        other.appBarForegroundColor,
         t,
       ),
       trackNumberTextStyle: TextStyle.lerp(

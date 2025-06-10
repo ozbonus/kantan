@@ -17,9 +17,13 @@ class PlayerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerPaneStyle>();
+    final foregroundColor = style?.appBarForegroundColor;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: foregroundColor,
+        iconTheme: IconThemeData(color: foregroundColor),
         title: Text(Config.appTitle),
       ),
       body: const PlayerScreenContents(),
