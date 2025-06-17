@@ -89,22 +89,26 @@ class ResponsiveButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
-          return ButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        } else if (constraints.maxHeight >= Config.smallButtonGridBreakpoint) {
-          return SmallButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        } else {
-          return VerySmallButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        }
-      },
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
+            return ButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          } else if (constraints.maxHeight >=
+              Config.smallButtonGridBreakpoint) {
+            return SmallButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          } else {
+            return VerySmallButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          }
+        },
+      ),
     );
   }
 }
@@ -310,7 +314,7 @@ class TrackInfo extends ConsumerWidget {
     final trackTitleTextStyle = style?.trackTitleTextStyle;
     final trackDescriptionTextStyle = style?.trackDescriptionTextStyle;
 
-    String _trackNumberString(Track track) {
+    String trackNumberString(Track track) {
       final trackObject = localizations.trackObject;
       final discObject = localizations.discObject;
       final trackNumber = track.track;
@@ -340,7 +344,7 @@ class TrackInfo extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    _trackNumberString(track),
+                    trackNumberString(track),
                     style: Theme.of(context).textTheme.titleLarge?.merge(
                       trackNumberTextStyle,
                     ),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,7 +68,6 @@ class MediumLayout extends StatelessWidget {
         minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
           spacing: Config.layoutSpacing,
-          textDirection: TextDirection.ltr,
           children: [
             Expanded(
               flex: 1,
@@ -104,7 +101,6 @@ class LargeLayout extends StatelessWidget {
         ),
         // minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
-          textDirection: TextDirection.ltr,
           spacing: Config.layoutSpacing,
           children: [
             Expanded(
