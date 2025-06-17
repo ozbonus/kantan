@@ -40,6 +40,7 @@ class TranscriptPlayerControls extends StatelessWidget {
               children: [
                 if (isFullscreen) TranscriptProgressSlider(),
                 Row(
+                  textDirection: TextDirection.ltr,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (isFullscreen) ...[

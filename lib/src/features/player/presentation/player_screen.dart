@@ -89,22 +89,26 @@ class ResponsiveButtonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
-          return ButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        } else if (constraints.maxHeight >= Config.smallButtonGridBreakpoint) {
-          return SmallButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        } else {
-          return VerySmallButtonGrid(
-            showOpenTranscriptButton: showOpenTranscriptButton,
-          );
-        }
-      },
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxHeight > Config.fullButtonGridBreakpoint) {
+            return ButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          } else if (constraints.maxHeight >=
+              Config.smallButtonGridBreakpoint) {
+            return SmallButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          } else {
+            return VerySmallButtonGrid(
+              showOpenTranscriptButton: showOpenTranscriptButton,
+            );
+          }
+        },
+      ),
     );
   }
 }
