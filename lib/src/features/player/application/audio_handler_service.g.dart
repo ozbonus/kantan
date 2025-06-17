@@ -13,8 +13,9 @@ String _$audioHandlerHash() => r'587a7b2ca90da8f0147723fe7013ee5072b27f23';
 final audioHandlerProvider = FutureProvider<AudioHandlerService>.internal(
   audioHandler,
   name: r'audioHandlerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$audioHandlerHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$audioHandlerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -29,19 +30,19 @@ String _$kantanPlaybackStateStreamHash() =>
 @ProviderFor(kantanPlaybackStateStream)
 final kantanPlaybackStateStreamProvider =
     AutoDisposeStreamProvider<KantanPlaybackState>.internal(
-  kantanPlaybackStateStream,
-  name: r'kantanPlaybackStateStreamProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$kantanPlaybackStateStreamHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      kantanPlaybackStateStream,
+      name: r'kantanPlaybackStateStreamProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$kantanPlaybackStateStreamHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef KantanPlaybackStateStreamRef
-    = AutoDisposeStreamProviderRef<KantanPlaybackState>;
+typedef KantanPlaybackStateStreamRef =
+    AutoDisposeStreamProviderRef<KantanPlaybackState>;
 String _$queueIndexStreamHash() => r'a57636d1737552cae284a23dfd1a5958057dce62';
 
 /// See also [queueIndexStream].
@@ -83,14 +84,14 @@ String _$positionDataStreamHash() =>
 @ProviderFor(positionDataStream)
 final positionDataStreamProvider =
     AutoDisposeStreamProvider<PositionData>.internal(
-  positionDataStream,
-  name: r'positionDataStreamProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$positionDataStreamHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      positionDataStream,
+      name: r'positionDataStreamProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$positionDataStreamHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -102,8 +103,9 @@ String _$speedStreamHash() => r'6fa6a1cac81b87761510b7939342f3804871e3df';
 final speedStreamProvider = AutoDisposeStreamProvider<double>.internal(
   speedStream,
   name: r'speedStreamProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$speedStreamHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$speedStreamHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

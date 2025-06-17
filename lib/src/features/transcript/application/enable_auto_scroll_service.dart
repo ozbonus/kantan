@@ -7,8 +7,10 @@ part 'enable_auto_scroll_service.g.dart';
 class EnableAutoScrollService extends _$EnableAutoScrollService {
   @override
   bool build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.enableAutoScroll;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .enableAutoScroll;
     return initialState;
   }
 

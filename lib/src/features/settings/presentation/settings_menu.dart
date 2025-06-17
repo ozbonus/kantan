@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
 class SettingsMenu extends StatelessWidget {
@@ -148,18 +148,16 @@ class InterfaceLocaleSelector extends StatelessWidget {
       children: [
         ListTile(title: Text(localizations.appLanguageDescription)),
         const InterfaceLocaleSelectorOption(null),
-        ...supportedLocales
-            .map((locale) => InterfaceLocaleSelectorOption(locale)),
+        ...supportedLocales.map(
+          (locale) => InterfaceLocaleSelectorOption(locale),
+        ),
       ],
     );
   }
 }
 
 class InterfaceLocaleSelectorOption extends ConsumerWidget {
-  const InterfaceLocaleSelectorOption(
-    this.locale, {
-    super.key,
-  });
+  const InterfaceLocaleSelectorOption(this.locale, {super.key});
   final Locale? locale;
 
   String nativeLocaleString(BuildContext context, Locale locale) {
@@ -213,18 +211,16 @@ class TranslationLocaleSelector extends StatelessWidget {
       children: [
         ListTile(title: Text(localizations.translationLanguageDescription)),
         const TranslationLocaleSelectorOption(null),
-        ...supportedLocales
-            .map((locale) => TranslationLocaleSelectorOption(locale)),
+        ...supportedLocales.map(
+          (locale) => TranslationLocaleSelectorOption(locale),
+        ),
       ],
     );
   }
 }
 
 class TranslationLocaleSelectorOption extends ConsumerWidget {
-  const TranslationLocaleSelectorOption(
-    this.locale, {
-    super.key,
-  });
+  const TranslationLocaleSelectorOption(this.locale, {super.key});
   final Locale? locale;
 
   String nativeLocaleString(BuildContext context, Locale locale) {

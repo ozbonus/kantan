@@ -22,16 +22,19 @@ String _$transcriptControllerHash() =>
 ///
 /// Copied from [TranscriptController].
 @ProviderFor(TranscriptController)
-final transcriptControllerProvider = AutoDisposeAsyncNotifierProvider<
-    TranscriptController, TranscriptBundle>.internal(
-  TranscriptController.new,
-  name: r'transcriptControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$transcriptControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final transcriptControllerProvider =
+    AutoDisposeAsyncNotifierProvider<
+      TranscriptController,
+      TranscriptBundle
+    >.internal(
+      TranscriptController.new,
+      name: r'transcriptControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$transcriptControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$TranscriptController = AutoDisposeAsyncNotifier<TranscriptBundle>;
 // ignore_for_file: type=lint

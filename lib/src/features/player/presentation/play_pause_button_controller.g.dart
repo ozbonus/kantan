@@ -11,16 +11,19 @@ String _$playPauseButtonControllerHash() =>
 
 /// See also [PlayPauseButtonController].
 @ProviderFor(PlayPauseButtonController)
-final playPauseButtonControllerProvider = AutoDisposeNotifierProvider<
-    PlayPauseButtonController, KantanPlaybackState>.internal(
-  PlayPauseButtonController.new,
-  name: r'playPauseButtonControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$playPauseButtonControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final playPauseButtonControllerProvider =
+    AutoDisposeNotifierProvider<
+      PlayPauseButtonController,
+      KantanPlaybackState
+    >.internal(
+      PlayPauseButtonController.new,
+      name: r'playPauseButtonControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$playPauseButtonControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$PlayPauseButtonController = AutoDisposeNotifier<KantanPlaybackState>;
 // ignore_for_file: type=lint

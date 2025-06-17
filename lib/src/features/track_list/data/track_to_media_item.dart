@@ -3,17 +3,17 @@ import 'package:kantan/src/features/track_list/domain/track.dart';
 
 extension TrackToMediaItem on Track {
   MediaItem get mediaItem => MediaItem(
-        id: filename,
-        album: album,
-        title: title,
-        displayDescription: displayDescription,
-        artist: artist,
-        duration: Duration(milliseconds: duration),
-        extras: {
-          'disc': disc,
-          'discTotal': discTotal,
-          'track': track,
-          'trackTotal': trackTotal,
-        },
-      );
+    id: filename,
+    album: album,
+    title: title,
+    displayDescription: displayDescription,
+    artist: artist,
+    duration: Duration(milliseconds: duration),
+    extras: {
+      'disc': disc,
+      'discTotal': discTotal,
+      'track': track,
+      'trackTotal': trackTotal,
+    },
+  );
 }

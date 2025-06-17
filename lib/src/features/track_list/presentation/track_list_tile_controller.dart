@@ -7,7 +7,9 @@ part 'track_list_tile_controller.g.dart';
 class TrackListTileController extends _$TrackListTileController {
   @override
   bool? build(int index) {
-    return ref.watch(queueIndexStreamProvider).whenOrNull(
+    return ref
+        .watch(queueIndexStreamProvider)
+        .whenOrNull(
           data: (queueIndex) => queueIndex == index,
         );
   }

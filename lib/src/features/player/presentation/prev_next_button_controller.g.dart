@@ -13,14 +13,14 @@ String _$skipToPreviousButtonControllerHash() =>
 @ProviderFor(skipToPreviousButtonController)
 final skipToPreviousButtonControllerProvider =
     AutoDisposeProvider<void>.internal(
-  skipToPreviousButtonController,
-  name: r'skipToPreviousButtonControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$skipToPreviousButtonControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      skipToPreviousButtonController,
+      name: r'skipToPreviousButtonControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$skipToPreviousButtonControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

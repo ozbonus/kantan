@@ -8,8 +8,10 @@ part 'translation_locale_service.g.dart';
 class TranslationLocaleService extends _$TranslationLocaleService {
   @override
   Locale? build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.translationLocale;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .translationLocale;
     return initialState;
   }
 

@@ -13,14 +13,14 @@ String _$interfaceLocaleServiceHash() =>
 @ProviderFor(InterfaceLocaleService)
 final interfaceLocaleServiceProvider =
     AutoDisposeNotifierProvider<InterfaceLocaleService, Locale?>.internal(
-  InterfaceLocaleService.new,
-  name: r'interfaceLocaleServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$interfaceLocaleServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      InterfaceLocaleService.new,
+      name: r'interfaceLocaleServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$interfaceLocaleServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$InterfaceLocaleService = AutoDisposeNotifier<Locale?>;
 // ignore_for_file: type=lint

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kantan/l10n/string_hardcoded.dart';
+import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/domain/repeat_mode.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
@@ -9,16 +9,21 @@ import 'package:kantan/src/features/player/presentation/prev_next_button_control
 import 'package:kantan/src/features/player/presentation/repeat_mode_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/rewind_forward_button_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
-class _ButtonContainer extends StatelessWidget {
-  const _ButtonContainer({
+class ButtonContainer extends StatelessWidget {
+  const ButtonContainer({
+    super.key,
     required this.child,
   });
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
     return Container(
+      decoration: style?.decoration ?? BoxDecoration(),
+      clipBehavior: Clip.antiAlias,
       child: child,
     );
   }
@@ -35,19 +40,37 @@ class _TappableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ButtonContainer(
+    return ButtonContainer(
       child: Material(
+        type: MaterialType.transparency,
+        clipBehavior: Clip.antiAlias,
         child: Ink(
           child: InkWell(
             onTap: onTap,
             child: SizedBox.expand(
-                child: FittedBox(
-              fit: BoxFit.contain,
-              child: child,
-            )),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: child,
+              ),
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TappableButtonIcon extends StatelessWidget {
+  const _TappableButtonIcon(this.iconData);
+
+  final IconData iconData;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<PlayerScreenControlsStyle>();
+    return Icon(
+      color: style?.iconColor,
+      iconData,
     );
   }
 }
@@ -58,17 +81,19 @@ class PlayPauseButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackState = ref.watch(playPauseButtonControllerProvider);
+
+    IconData buttonIcon = switch (playbackState) {
+      KantanPlaybackState.loading ||
+      KantanPlaybackState.error ||
+      KantanPlaybackState.playing => Icons.pause_rounded,
+      KantanPlaybackState.paused => Icons.play_arrow_rounded,
+      KantanPlaybackState.completed => Icons.replay_rounded,
+    };
+
     return _TappableButton(
       onTap: () =>
           ref.read(playPauseButtonControllerProvider.notifier).activate(),
-      child: switch (playbackState) {
-        KantanPlaybackState.loading ||
-        KantanPlaybackState.error ||
-        KantanPlaybackState.paused =>
-          Icon(Icons.play_arrow_rounded),
-        KantanPlaybackState.playing => Icon(Icons.pause_rounded),
-        KantanPlaybackState.completed => Icon(Icons.replay_rounded),
-      },
+      child: _TappableButtonIcon(buttonIcon),
     );
   }
 }
@@ -80,7 +105,7 @@ class SkipToPreviousButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(skipToPreviousButtonControllerProvider),
-      child: const Icon(Icons.skip_previous_rounded),
+      child: _TappableButtonIcon(Icons.skip_previous_rounded),
     );
   }
 }
@@ -92,7 +117,7 @@ class SkipToNextButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(skipToNextButtonControllerProvider),
-      child: const Icon(Icons.skip_next_rounded),
+      child: _TappableButtonIcon(Icons.skip_next_rounded),
     );
   }
 }
@@ -104,7 +129,7 @@ class RewindButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(rewindButtonControllerProvider),
-      child: const Icon(Icons.replay_5_rounded),
+      child: _TappableButtonIcon(Icons.replay_5_rounded),
     );
   }
 }
@@ -116,7 +141,7 @@ class FastForwardButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return _TappableButton(
       onTap: () => ref.read(fastForwardButtonControllerProvider),
-      child: const Icon(Icons.forward_5_rounded),
+      child: _TappableButtonIcon(Icons.forward_5_rounded),
     );
   }
 }
@@ -127,15 +152,18 @@ class RepeatModeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final repeatMode = ref.watch(repeatModeButtonControllerProvider);
+
+    IconData buttonIcon = switch (repeatMode) {
+      RepeatMode.one => Icons.repeat_one_rounded,
+      RepeatMode.all => Icons.repeat_rounded,
+      RepeatMode.none => Icons.arrow_right_alt_rounded,
+    };
+
     return _TappableButton(
       onTap: () => ref
           .read(repeatModeButtonControllerProvider.notifier)
           .nextRepeatMode(),
-      child: switch (repeatMode) {
-        RepeatMode.one => const Icon(Icons.repeat_one_rounded),
-        RepeatMode.all => const Icon(Icons.repeat_rounded),
-        RepeatMode.none => const Icon(Icons.arrow_right_alt_rounded),
-      },
+      child: _TappableButtonIcon(buttonIcon),
     );
   }
 }
@@ -150,9 +178,12 @@ class OpenTranscriptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<OpenTranscriptButtonStyle>();
+    final localizations = AppLocalizations.of(context)!;
     return Container(
+      decoration: style?.decoration,
       child: Material(
-        // type: MaterialType.button,
+        type: MaterialType.transparency,
         borderRadius: BorderRadius.circular(32),
         child: Ink(
           child: InkWell(
@@ -162,8 +193,16 @@ class OpenTranscriptButton extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: iconOnly
-                    ? const Icon(Icons.message_rounded)
-                    : Text('Transcript'.hardcoded),
+                    ? Icon(
+                        Icons.message_rounded,
+                        color: style?.foregroundColor,
+                      )
+                    : Text(
+                        localizations.transcriptButtonLabel,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: style?.foregroundColor,
+                        ),
+                      ),
               ),
             ),
           ),

@@ -8,7 +8,9 @@ part 'play_pause_button_controller.g.dart';
 class PlayPauseButtonController extends _$PlayPauseButtonController {
   @override
   KantanPlaybackState build() {
-    return ref.watch(kantanPlaybackStateStreamProvider).when(
+    return ref
+        .watch(kantanPlaybackStateStreamProvider)
+        .when(
           skipLoadingOnReload: true,
           loading: () => KantanPlaybackState.loading,
           error: (_, __) => KantanPlaybackState.error,

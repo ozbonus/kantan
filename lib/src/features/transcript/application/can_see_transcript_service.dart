@@ -7,8 +7,10 @@ part 'can_see_transcript_service.g.dart';
 class CanSeeTranscriptService extends _$CanSeeTranscriptService {
   @override
   bool build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.canSeeTranscript;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .canSeeTranscript;
     return initialState;
   }
 

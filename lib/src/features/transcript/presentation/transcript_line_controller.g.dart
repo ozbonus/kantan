@@ -33,16 +33,10 @@ class _SystemHash {
 abstract class _$TranscriptLineController
     extends BuildlessAutoDisposeNotifier<TranscriptLineState> {
   late final int index;
-  late final ({
-    String? speaker,
-    Duration? startTime,
-    String text
-  }) transcriptLine;
-  late final ({
-    String? speaker,
-    Duration? startTime,
-    String text
-  })? translationLine;
+  late final ({String? speaker, Duration? startTime, String text})
+  transcriptLine;
+  late final ({String? speaker, Duration? startTime, String text})?
+  translationLine;
 
   TranscriptLineState build(
     int index,
@@ -100,31 +94,34 @@ class TranscriptLineControllerFamily extends Family<TranscriptLineState> {
 }
 
 /// See also [TranscriptLineController].
-class TranscriptLineControllerProvider extends AutoDisposeNotifierProviderImpl<
-    TranscriptLineController, TranscriptLineState> {
+class TranscriptLineControllerProvider
+    extends
+        AutoDisposeNotifierProviderImpl<
+          TranscriptLineController,
+          TranscriptLineState
+        > {
   /// See also [TranscriptLineController].
   TranscriptLineControllerProvider(
     int index,
     ({String? speaker, Duration? startTime, String text}) transcriptLine,
     ({String? speaker, Duration? startTime, String text})? translationLine,
   ) : this._internal(
-          () => TranscriptLineController()
-            ..index = index
-            ..transcriptLine = transcriptLine
-            ..translationLine = translationLine,
-          from: transcriptLineControllerProvider,
-          name: r'transcriptLineControllerProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$transcriptLineControllerHash,
-          dependencies: TranscriptLineControllerFamily._dependencies,
-          allTransitiveDependencies:
-              TranscriptLineControllerFamily._allTransitiveDependencies,
-          index: index,
-          transcriptLine: transcriptLine,
-          translationLine: translationLine,
-        );
+        () => TranscriptLineController()
+          ..index = index
+          ..transcriptLine = transcriptLine
+          ..translationLine = translationLine,
+        from: transcriptLineControllerProvider,
+        name: r'transcriptLineControllerProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$transcriptLineControllerHash,
+        dependencies: TranscriptLineControllerFamily._dependencies,
+        allTransitiveDependencies:
+            TranscriptLineControllerFamily._allTransitiveDependencies,
+        index: index,
+        transcriptLine: transcriptLine,
+        translationLine: translationLine,
+      );
 
   TranscriptLineControllerProvider._internal(
     super._createNotifier, {
@@ -146,11 +143,7 @@ class TranscriptLineControllerProvider extends AutoDisposeNotifierProviderImpl<
   TranscriptLineState runNotifierBuild(
     covariant TranscriptLineController notifier,
   ) {
-    return notifier.build(
-      index,
-      transcriptLine,
-      translationLine,
-    );
+    return notifier.build(index, transcriptLine, translationLine);
   }
 
   @override
@@ -175,8 +168,11 @@ class TranscriptLineControllerProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<TranscriptLineController,
-      TranscriptLineState> createElement() {
+  AutoDisposeNotifierProviderElement<
+    TranscriptLineController,
+    TranscriptLineState
+  >
+  createElement() {
     return _TranscriptLineControllerProviderElement(this);
   }
 
@@ -214,8 +210,12 @@ mixin TranscriptLineControllerRef
 }
 
 class _TranscriptLineControllerProviderElement
-    extends AutoDisposeNotifierProviderElement<TranscriptLineController,
-        TranscriptLineState> with TranscriptLineControllerRef {
+    extends
+        AutoDisposeNotifierProviderElement<
+          TranscriptLineController,
+          TranscriptLineState
+        >
+    with TranscriptLineControllerRef {
   _TranscriptLineControllerProviderElement(super.provider);
 
   @override
@@ -227,5 +227,6 @@ class _TranscriptLineControllerProviderElement
   ({String? speaker, Duration? startTime, String text})? get translationLine =>
       (origin as TranscriptLineControllerProvider).translationLine;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

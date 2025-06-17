@@ -8,8 +8,10 @@ part 'interface_locale_service.g.dart';
 class InterfaceLocaleService extends _$InterfaceLocaleService {
   @override
   Locale? build() {
-    final initialState =
-        ref.watch(settingsRepositoryProvider).requireValue.interfaceLocale;
+    final initialState = ref
+        .watch(settingsRepositoryProvider)
+        .requireValue
+        .interfaceLocale;
     return initialState;
   }
 

@@ -7,8 +7,10 @@ part 'parental_mode_service.g.dart';
 class ParentalModeService extends _$ParentalModeService {
   @override
   bool build() {
-    final initialState =
-        ref.read(settingsRepositoryProvider).requireValue.isParentalModeOn;
+    final initialState = ref
+        .read(settingsRepositoryProvider)
+        .requireValue
+        .isParentalModeOn;
     return initialState;
   }
 

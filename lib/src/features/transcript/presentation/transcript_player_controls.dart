@@ -8,12 +8,11 @@ import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/player/presentation/play_pause_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/prev_next_button_controller.dart';
 import 'package:kantan/src/features/player/presentation/progress_slider_controller.dart';
-import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
-import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:kantan/src/features/transcript/presentation/enable_auto_scroll_switch_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/show_translation_switch_controller.dart';
 import 'package:kantan/src/routing/app_router.dart';
+import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TranscriptPlayerControls extends StatelessWidget {
   const TranscriptPlayerControls({
@@ -25,62 +24,40 @@ class TranscriptPlayerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
+    final style = Theme.of(context).extension<TranscriptScreenStyle>();
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: style?.backgroundColor,
+      ),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Column(
-                children: [
-                  if (isFullscreen)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: TranscriptProgressSlider(),
-                    ),
-                  IntrinsicHeight(
-                    child: Flex(
-                      direction: constraints.maxWidth > Config.mediumBreakpoint
-                          ? Axis.horizontal
-                          : Axis.vertical,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      textDirection: TextDirection.ltr,
-                      children: [
-                        if (isFullscreen)
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textDirection: TextDirection.ltr,
-                            children: [
-                              TranscriptSkipToPreviousButton(),
-                              TranscriptPlayButton(),
-                              TranscriptSkipToNextButton(),
-                              VerticalDivider(),
-                            ],
-                          ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          textDirection: TextDirection.ltr,
-                          children: [
-                            if (Config.useTranslationFeature)
-                              const ShowTranslationSwitch(),
-                            if (Config.useAutoScrollFeature)
-                              const EnableAutoScrollSwitch(),
-                            const TranscriptScaleButton(),
-                            if (isFullscreen)
-                              const CloseTranscriptButton()
-                            else
-                              const ExpandTranscriptButton(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+        minimum: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              children: [
+                if (isFullscreen) TranscriptProgressSlider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isFullscreen) ...[
+                      TranscriptPlayButton(),
+                      TranscriptSkipToPreviousButton(),
+                      TranscriptSkipToNextButton(),
+                      TranscriptScaleButton(),
+                    ],
+                    if (Config.useTranslationFeature)
+                      ShowTranslationToggleButton(),
+                    if (Config.useAutoScrollFeature)
+                      EnableAutoScrollToggleButton(),
+                    if (!isFullscreen) ExpandTranscriptButton(),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -93,52 +70,76 @@ class TranscriptProgressSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final positionData = ref.watch(progressSliderControllerProvider);
+    final style = Theme.of(context).extension<TranscriptProgressSliderStyle>();
     return ProgressBar(
       progress: positionData.position,
       timeLabelLocation: TimeLabelLocation.none,
       total: positionData.duration,
+      barHeight: style?.trackHeight ?? 2.0,
+      baseBarColor: style?.inactiveTrackColor,
+      progressBarColor: style?.activeTrackColor,
+      thumbColor: style?.thumbColor,
+      thumbRadius: style?.thumbRadius ?? 3.0,
+      thumbGlowColor: style?.overlayColor,
+      thumbGlowRadius: style?.overlayRadius ?? 4.0,
       onSeek: (position) => ref.read(onSeekProvider(position)),
     );
   }
 }
 
-class ShowTranslationSwitch extends ConsumerWidget {
-  const ShowTranslationSwitch({super.key});
-
-  static const thumbIcon =
-      WidgetStatePropertyAll<Icon>(Icon(Icons.translate_rounded));
+class ShowTranslationToggleButton extends ConsumerWidget {
+  const ShowTranslationToggleButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(showTranslationSwitchControllerProvider);
-    return Switch(
-      thumbIcon: thumbIcon,
-      value: state.isActive ? state.value : false,
-      onChanged: state.isActive
-          ? (value) => ref
-              .read(showTranslationServiceProvider.notifier)
-              .setShowTranslation(value)
+    final style = Theme.of(context).extension<TranscriptScreenToggleStyle>();
+
+    final ButtonStyle? buttonStyle;
+    if (!state.isActive) {
+      buttonStyle = style?.disabled;
+    } else if (state.value) {
+      buttonStyle = style?.active;
+    } else {
+      buttonStyle = style?.inactive;
+    }
+
+    return IconButton(
+      icon: Icon(Icons.translate_rounded),
+      style: buttonStyle,
+      onPressed: state.isActive
+          ? () => ref
+                .read(showTranslationSwitchControllerProvider.notifier)
+                .setShowTranslation(!state.value)
           : null,
     );
   }
 }
 
-class EnableAutoScrollSwitch extends ConsumerWidget {
-  const EnableAutoScrollSwitch({super.key});
-
-  static const thumbIcon =
-      WidgetStatePropertyAll<Icon>(Icon(Icons.format_line_spacing_rounded));
+class EnableAutoScrollToggleButton extends ConsumerWidget {
+  const EnableAutoScrollToggleButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(enableAutoScrollSwitchControllerProvider);
-    return Switch(
-      thumbIcon: thumbIcon,
-      value: state.isActive ? state.value : false,
-      onChanged: state.isActive
-          ? (value) => ref
-              .read(enableAutoScrollServiceProvider.notifier)
-              .setEnableAutoScroll(value)
+    final style = Theme.of(context).extension<TranscriptScreenToggleStyle>();
+
+    final ButtonStyle? buttonStyle;
+    if (!state.isActive) {
+      buttonStyle = style?.disabled;
+    } else if (state.value) {
+      buttonStyle = style?.active;
+    } else {
+      buttonStyle = style?.inactive;
+    }
+
+    return IconButton(
+      icon: Icon(Icons.format_line_spacing_rounded),
+      style: buttonStyle,
+      onPressed: state.isActive
+          ? () => ref
+                .read(enableAutoScrollSwitchControllerProvider.notifier)
+                .setEnableAutoScroll(!state.value)
           : null,
     );
   }
@@ -149,50 +150,70 @@ class TranscriptScaleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       icon: const Icon(Icons.text_fields_rounded),
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Adjust text scale'.hardcoded),
-              content: Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final scale = ref.watch(transcriptScaleServiceProvider);
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Scale: ${scale.toStringAsFixed(2)}'),
-                      Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Slider(
-                          label: 'hello',
-                          value: scale,
-                          min: Config.minTranscriptScale,
-                          max: Config.maxTranscriptScale,
-                          // divisions: Config.transcriptScaleDivisions,
-                          onChanged: (value) {
-                            ref
-                                .read(transcriptScaleServiceProvider.notifier)
-                                .setTranscriptScale(value);
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              actions: [
-                TextButton(
-                  onPressed: context.pop,
-                  child: Text('Close'.hardcoded),
-                ),
-              ],
-            );
-          },
+          builder: (context) => ScaleSliderDialog(),
         );
       },
+    );
+  }
+}
+
+class ScaleSliderDialog extends ConsumerWidget {
+  const ScaleSliderDialog({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scale = ref.watch(transcriptScaleServiceProvider);
+    final style = Theme.of(context).extension<PlayerScreenSliderStyle>();
+    return AlertDialog(
+      title: Text('Adjust text scale'.hardcoded),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Scale: ${scale.toStringAsFixed(2)}'),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: style?.trackHeight,
+                tickMarkShape: style?.sliderTickMarkShape,
+                activeTrackColor: style?.activeTrackColor,
+                inactiveTrackColor: style?.inactiveTrackColor,
+                thumbColor: style?.thumbColor,
+                thumbShape: RoundSliderThumbShape(
+                  enabledThumbRadius: style?.thumbRadius ?? 8.0,
+                  disabledThumbRadius: style?.thumbRadius ?? 8.0,
+                  elevation: style?.elevation ?? 0.0,
+                  pressedElevation: style?.elevation ?? 0.0,
+                ),
+                overlayColor: style?.overlayColor,
+              ),
+              child: Slider(
+                value: scale,
+                min: Config.minTranscriptScale,
+                max: Config.maxTranscriptScale,
+                onChanged: (value) {
+                  ref
+                      .read(transcriptScaleServiceProvider.notifier)
+                      .setTranscriptScale(value);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: context.pop,
+          child: Text('Close'.hardcoded),
+        ),
+      ],
     );
   }
 }
@@ -215,17 +236,18 @@ class TranscriptPlayButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackState = ref.watch(playPauseButtonControllerProvider);
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
 
     IconData buttonIcon = switch (playbackState) {
       KantanPlaybackState.loading ||
       KantanPlaybackState.error ||
-      KantanPlaybackState.playing =>
-        Icons.pause_rounded,
+      KantanPlaybackState.playing => Icons.pause_rounded,
       KantanPlaybackState.paused => Icons.play_arrow_rounded,
       KantanPlaybackState.completed => Icons.replay_rounded,
     };
 
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () =>
           ref.read(playPauseButtonControllerProvider.notifier).activate(),
       icon: Icon(buttonIcon),
@@ -238,7 +260,9 @@ class TranscriptSkipToPreviousButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () => ref.read(skipToPreviousButtonControllerProvider),
       icon: const Icon(Icons.skip_previous_rounded),
     );
@@ -250,7 +274,9 @@ class TranscriptSkipToNextButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       onPressed: () => ref.read(skipToNextButtonControllerProvider),
       icon: const Icon(Icons.skip_next_rounded),
     );
@@ -262,7 +288,9 @@ class CloseTranscriptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
     return IconButton(
+      style: style?.buttonStyle,
       icon: const Icon(Icons.close_rounded),
       onPressed: () => context.goNamed(AppRoute.player),
     );

@@ -3,11 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 
 /// A record to hold essential information about a single line of a transcript.
-typedef TranscriptLine = ({
-  Duration? startTime,
-  String? speaker,
-  String text,
-});
+typedef TranscriptLine = ({Duration? startTime, String? speaker, String text});
 
 /// A data class that contains all of the essential information about a
 /// transcript for a single track, for a single locale.
