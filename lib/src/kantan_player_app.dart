@@ -68,7 +68,6 @@ class MediumLayout extends StatelessWidget {
         minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
           spacing: Config.layoutSpacing,
-          textDirection: TextDirection.ltr,
           children: [
             Expanded(
               flex: 1,
@@ -102,7 +101,6 @@ class LargeLayout extends StatelessWidget {
         ),
         // minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
-          textDirection: TextDirection.ltr,
           spacing: Config.layoutSpacing,
           children: [
             Expanded(
