@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
@@ -6,6 +5,7 @@ import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/presentation/floating_mini_player.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
+import 'package:kantan/src/features/track_list/presentation/book_cover.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_tile.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
@@ -64,47 +64,11 @@ class _TrackListScreenContentsState extends State<TrackListScreenContents> {
                 duration: const Duration(milliseconds: 200),
                 child: Text(Config.appTitle),
               ),
-              background: const _BookCover(),
+              background: const BookCover(),
             ),
           ),
           const TracksList(),
         ],
-      ),
-    );
-  }
-}
-
-class _BookCover extends StatelessWidget {
-  const _BookCover();
-
-  @override
-  Widget build(BuildContext context) {
-    final style = Theme.of(context).extension<BookCoverStyle>();
-    final backgroundContainerDecoration =
-        style?.backgroundContainerDecoration ?? BoxDecoration();
-    final imageContainerDecoration =
-        style?.imageContainerDecoration ?? BoxDecoration();
-    final imageContainerForegroundDecoration =
-        style?.imageContainerForegroundDecoration ?? BoxDecoration();
-
-    return Container(
-      decoration: backgroundContainerDecoration,
-      child: SafeArea(
-        minimum: EdgeInsets.all(Config.bookCoverPadding),
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: imageContainerDecoration,
-            foregroundDecoration: imageContainerForegroundDecoration,
-            child: Image(
-              image: AssetImage(
-                'assets/images/cover.webp',
-                package: Config.assetsPackage,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

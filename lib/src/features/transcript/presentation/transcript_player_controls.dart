@@ -46,8 +46,8 @@ class TranscriptPlayerControls extends StatelessWidget {
                       TranscriptPlayButton(),
                       TranscriptSkipToPreviousButton(),
                       TranscriptSkipToNextButton(),
-                      TranscriptScaleButton(),
                     ],
+                    TranscriptScaleButton(),
                     if (Config.useTranslationFeature)
                       ShowTranslationToggleButton(),
                     if (Config.useAutoScrollFeature)
