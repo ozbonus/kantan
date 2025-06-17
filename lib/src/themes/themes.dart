@@ -51,6 +51,37 @@ abstract final class AppTheme {
           ),
         ),
       ),
+      BookCoverStyle(
+        backgroundContainerDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              lightColorScheme.surface.blend(lightColorScheme.primary, 20),
+              lightColorScheme.surface,
+            ],
+            stops: [0.8, 0.8],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        imageContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: lightColorScheme.shadow.withAlpha(64),
+              blurRadius: 4.0,
+              offset: const Offset(0.0, 2.0),
+            ),
+          ],
+        ),
+        imageContainerForegroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignInside,
+            width: 2.0,
+            color: lightColorScheme.outline,
+          ),
+        ),
+      ),
       PlayerPaneStyle(
         containerDecoration: BoxDecoration(
           gradient: LinearGradient(
@@ -295,6 +326,30 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
+        ),
+      ),
+      BookCoverStyle(
+        backgroundContainerDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              darkColorScheme.surface.blend(darkColorScheme.primary, 50),
+              darkColorScheme.surface,
+            ],
+            stops: [0.8, 0.8],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        imageContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        imageContainerForegroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignInside,
+            width: 2.0,
+            color: darkColorScheme.outline,
+          ),
         ),
       ),
       PlayerPaneStyle(

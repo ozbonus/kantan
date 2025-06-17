@@ -36,6 +36,64 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 }
 
 @immutable
+class BookCoverStyle extends ThemeExtension<BookCoverStyle> {
+  const BookCoverStyle({
+    this.backgroundContainerDecoration,
+    this.imageContainerDecoration,
+    this.imageContainerForegroundDecoration,
+  });
+
+  final BoxDecoration? backgroundContainerDecoration;
+  final BoxDecoration? imageContainerDecoration;
+  final BoxDecoration? imageContainerForegroundDecoration;
+
+  @override
+  BookCoverStyle copyWith({
+    BoxDecoration? backgroundContainerDecoration,
+    BoxDecoration? imageContainerDecoration,
+    BoxDecoration? imageContainerForegroundDecoration,
+  }) {
+    return BookCoverStyle(
+      backgroundContainerDecoration:
+          backgroundContainerDecoration ?? this.backgroundContainerDecoration,
+      imageContainerDecoration:
+          imageContainerDecoration ?? this.imageContainerDecoration,
+      imageContainerForegroundDecoration:
+          imageContainerForegroundDecoration ??
+          this.imageContainerForegroundDecoration,
+    );
+  }
+
+  @override
+  ThemeExtension<BookCoverStyle> lerp(
+    ThemeExtension<BookCoverStyle>? other,
+    double t,
+  ) {
+    if (other is! BookCoverStyle) {
+      return this;
+    }
+
+    return BookCoverStyle(
+      backgroundContainerDecoration: BoxDecoration.lerp(
+        backgroundContainerDecoration,
+        other.backgroundContainerDecoration,
+        t,
+      ),
+      imageContainerDecoration: BoxDecoration.lerp(
+        imageContainerDecoration,
+        other.imageContainerDecoration,
+        t,
+      ),
+      imageContainerForegroundDecoration: BoxDecoration.lerp(
+        imageContainerForegroundDecoration,
+        other.imageContainerForegroundDecoration,
+        t,
+      ),
+    );
+  }
+}
+
+@immutable
 class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   const PlayerPaneStyle({
     this.containerDecoration,

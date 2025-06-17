@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
@@ -78,17 +79,31 @@ class _BookCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: Config.bookCoverPadding,
-        right: Config.bookCoverPadding,
-        bottom: Config.bookCoverPadding,
-        top: MediaQuery.paddingOf(context).top,
-      ),
-      child: Image(
-        image: AssetImage(
-          'assets/images/cover.webp',
-          package: Config.assetsPackage,
+    final style = Theme.of(context).extension<BookCoverStyle>();
+    final backgroundContainerDecoration =
+        style?.backgroundContainerDecoration ?? BoxDecoration();
+    final imageContainerDecoration =
+        style?.imageContainerDecoration ?? BoxDecoration();
+    final imageContainerForegroundDecoration =
+        style?.imageContainerForegroundDecoration ?? BoxDecoration();
+
+    return Container(
+      decoration: backgroundContainerDecoration,
+      child: SafeArea(
+        minimum: EdgeInsets.all(Config.bookCoverPadding),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: imageContainerDecoration,
+            foregroundDecoration: imageContainerForegroundDecoration,
+            child: Image(
+              image: AssetImage(
+                'assets/images/cover.webp',
+                package: Config.assetsPackage,
+              ),
+            ),
+          ),
         ),
       ),
     );
