@@ -8,7 +8,7 @@ final lightColorScheme = FlexColorScheme.light(
 ).toScheme;
 
 final darkColorScheme = FlexColorScheme.dark(
-  blendLevel: 32,
+  blendLevel: 8,
   scheme: FlexScheme.mandyRed,
 ).toScheme;
 
