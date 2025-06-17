@@ -301,14 +301,48 @@ abstract final class AppTheme {
         containerDecoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              darkColorScheme.surface,
+              darkColorScheme.primaryContainer.blend(Colors.black, 70),
               Colors.black,
             ],
-            stops: [0.0, 0.5],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            stops: [0.0, 0.6],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
           borderRadius: BorderRadius.circular(24.0),
+        ),
+        appBarForegroundColor: darkColorScheme.onPrimary,
+        trackNumberTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: darkColorScheme.onPrimary,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        trackTitleTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: darkColorScheme.onPrimary,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        trackDescriptionTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: darkColorScheme.onPrimary,
+          shadows: [
+            Shadow(
+              color: lightColorScheme.shadow,
+              offset: Offset(0.0, 1.5),
+              blurRadius: 4.0,
+            ),
+          ],
         ),
       ),
       TranscriptPaneStyle(
@@ -319,34 +353,23 @@ abstract final class AppTheme {
       ),
       PlayerScreenControlsStyle(
         decoration: BoxDecoration(
-          color: darkColorScheme.surface,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(16.0),
-          border: Border(
-            top: BorderSide(
-              width: 4,
-              color: darkColorScheme.surfaceBright,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            right: BorderSide(
-              width: 4,
-              color: darkColorScheme.surfaceBright,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            bottom: BorderSide(
-              width: 8,
-              color: darkColorScheme.surfaceBright,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            left: BorderSide(
-              width: 4,
-              color: darkColorScheme.surfaceBright,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
+          border: Border.all(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: darkColorScheme.primary.blend(darkColorScheme.onSurface, 50),
           ),
         ),
         mainAxisSpacing: 24.0,
         crossAxisSpacing: 24.0,
         iconColor: darkColorScheme.primary,
+      ),
+      OpenTranscriptButtonStyle(
+        decoration: BoxDecoration(
+          color: darkColorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
       ),
       PlayerScreenSliderStyle(
         trackHeight: 8.0,
@@ -378,7 +401,7 @@ abstract final class AppTheme {
       TranscriptLineWidgetStyle(
         inactiveColor: darkColorScheme.secondaryContainer,
         activeColor: darkColorScheme.secondaryContainer.darken(4),
-        borderRadius: 24.0,
+        borderRadius: 16.0,
         borderColor: darkColorScheme.secondaryContainer.darken(8),
         borderWidth: 2.0,
         splashColor: darkColorScheme.secondary.withAlpha(128),
