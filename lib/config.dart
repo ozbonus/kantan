@@ -33,6 +33,9 @@ class Config {
   static double get defaultSpeed => 1.0;
   static RepeatMode get defaultRepeatMode => RepeatMode.none;
 
+  // Floating Mini Player
+  static double get miniPlayerWidthProportion => 0.75;
+
   // Default values for user-accessible settings.
   static ThemeMode get defaultThemeMode => ThemeMode.system;
   static bool get defaultIsWakelockOn => false;
