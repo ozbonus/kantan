@@ -18,8 +18,8 @@ class TrackListScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: style?.decoration?.color,
       body: TrackListScreenContents(),
-      floatingActionButton: FloatingMiniPlayer(),
-      drawer: SettingsMenu(),
+      floatingActionButton: const FloatingMiniPlayer(),
+      drawer: const SettingsMenu(),
     );
   }
 }
