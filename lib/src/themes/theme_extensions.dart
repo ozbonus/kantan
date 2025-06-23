@@ -177,10 +177,10 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
 
   @override
   TranscriptPaneStyle copyWith({
-    BoxDecoration? containerDecoration,
+    BoxDecoration? decoration,
   }) {
     return TranscriptPaneStyle(
-      decoration: containerDecoration ?? this.decoration,
+      decoration: decoration ?? this.decoration,
     );
   }
 
