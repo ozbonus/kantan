@@ -22,13 +22,13 @@ class FloatingMiniPlayer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         spacing: 16.0,
         children: [
+          Expanded(
+            child: const MiniPlayerTrackInfoButton(),
+          ),
           SizedBox(
             width: Config.miniPlayerButtonSize,
             height: Config.miniPlayerButtonSize,
             child: const MiniPlayerPlayPauseButton(),
-          ),
-          Expanded(
-            child: const MiniPlayerTrackInfoButton(),
           ),
         ],
       ),
