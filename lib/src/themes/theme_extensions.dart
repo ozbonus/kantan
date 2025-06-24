@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// This theme extension is also used to set the scaffold color on the track
 /// list screen.
@@ -36,24 +37,39 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 }
 
 @immutable
-class BookCoverStyle extends ThemeExtension<BookCoverStyle> {
-  const BookCoverStyle({
+class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
+  const TrackListAppBarStyle({
+    this.systemUiOverlayStyle,
+    this.fullscreenAppBarCollapsedColor,
+    this.contentsOnlyAppBarCollapsedColor,
     this.backgroundContainerDecoration,
     this.imageContainerDecoration,
     this.imageContainerForegroundDecoration,
   });
 
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
+  final Color? fullscreenAppBarCollapsedColor;
+  final Color? contentsOnlyAppBarCollapsedColor;
   final BoxDecoration? backgroundContainerDecoration;
   final BoxDecoration? imageContainerDecoration;
   final BoxDecoration? imageContainerForegroundDecoration;
 
   @override
-  BookCoverStyle copyWith({
+  TrackListAppBarStyle copyWith({
+    SystemUiOverlayStyle? systemUiOverlayStyle,
+    Color? fullscreenAppBarCollapsedColor,
+    Color? contentsOnlyAppBarCollapsedColor,
     BoxDecoration? backgroundContainerDecoration,
     BoxDecoration? imageContainerDecoration,
     BoxDecoration? imageContainerForegroundDecoration,
   }) {
-    return BookCoverStyle(
+    return TrackListAppBarStyle(
+      systemUiOverlayStyle: systemUiOverlayStyle ?? this.systemUiOverlayStyle,
+      fullscreenAppBarCollapsedColor:
+          fullscreenAppBarCollapsedColor ?? this.fullscreenAppBarCollapsedColor,
+      contentsOnlyAppBarCollapsedColor:
+          contentsOnlyAppBarCollapsedColor ??
+          this.contentsOnlyAppBarCollapsedColor,
       backgroundContainerDecoration:
           backgroundContainerDecoration ?? this.backgroundContainerDecoration,
       imageContainerDecoration:
@@ -65,15 +81,28 @@ class BookCoverStyle extends ThemeExtension<BookCoverStyle> {
   }
 
   @override
-  ThemeExtension<BookCoverStyle> lerp(
-    ThemeExtension<BookCoverStyle>? other,
+  ThemeExtension<TrackListAppBarStyle> lerp(
+    ThemeExtension<TrackListAppBarStyle>? other,
     double t,
   ) {
-    if (other is! BookCoverStyle) {
+    if (other is! TrackListAppBarStyle) {
       return this;
     }
 
-    return BookCoverStyle(
+    return TrackListAppBarStyle(
+      systemUiOverlayStyle: t < 0.5
+          ? systemUiOverlayStyle
+          : other.systemUiOverlayStyle,
+      fullscreenAppBarCollapsedColor: Color.lerp(
+        fullscreenAppBarCollapsedColor,
+        other.fullscreenAppBarCollapsedColor,
+        t,
+      ),
+      contentsOnlyAppBarCollapsedColor: Color.lerp(
+        contentsOnlyAppBarCollapsedColor,
+        other.contentsOnlyAppBarCollapsedColor,
+        t,
+      ),
       backgroundContainerDecoration: BoxDecoration.lerp(
         backgroundContainerDecoration,
         other.backgroundContainerDecoration,
