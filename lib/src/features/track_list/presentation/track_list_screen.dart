@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
-import 'package:kantan/src/common_widgets/async_value_widget.dart';
 import 'package:kantan/src/features/player/presentation/floating_mini_player.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
-import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
-import 'package:kantan/src/features/track_list/presentation/book_cover.dart';
-import 'package:kantan/src/features/track_list/presentation/track_list_tile.dart';
+import 'package:kantan/src/features/track_list/presentation/track_list_app_bar.dart';
+import 'package:kantan/src/features/track_list/presentation/tracks_list.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TrackListScreen extends ConsumerWidget {
@@ -17,7 +15,7 @@ class TrackListScreen extends ConsumerWidget {
     final style = Theme.of(context).extension<TrackListPaneStyle>();
     return Scaffold(
       backgroundColor: style?.decoration?.color,
-      body: TrackListScreenContents(),
+      body: TrackListScreenContents(isFullscreen: true),
       floatingActionButton: const FloatingMiniPlayer(),
       drawer: const SettingsMenu(),
     );
@@ -25,7 +23,12 @@ class TrackListScreen extends ConsumerWidget {
 }
 
 class TrackListScreenContents extends StatefulWidget {
-  const TrackListScreenContents({super.key});
+  const TrackListScreenContents({
+    super.key,
+    this.isFullscreen = false,
+  });
+
+  final bool isFullscreen;
 
   @override
   State<TrackListScreenContents> createState() =>
@@ -52,20 +55,9 @@ class _TrackListScreenContentsState extends State<TrackListScreenContents> {
       },
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            snap: false,
-            floating: false,
-            stretch: true,
-            expandedHeight: 400.0,
-            flexibleSpace: FlexibleSpaceBar(
-              title: AnimatedOpacity(
-                opacity: collapsed ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 200),
-                child: Text(Config.appTitle),
-              ),
-              background: const BookCover(),
-            ),
+          TrackListAppBar(
+            isFullscreen: widget.isFullscreen,
+            collapsed: collapsed,
           ),
           const TracksList(),
           SliverToBoxAdapter(
@@ -75,29 +67,6 @@ class _TrackListScreenContentsState extends State<TrackListScreenContents> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class TracksList extends ConsumerWidget {
-  const TracksList({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final tracksList = ref.watch(tracksRepositoryProvider);
-    return AsyncValueSliverWidget(
-      value: tracksList,
-      data: (tracks) {
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: tracks.length,
-            (context, index) => TrackListTile(
-              track: tracks[index],
-              index: index,
-            ),
-          ),
-        );
-      },
     );
   }
 }
