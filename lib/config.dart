@@ -37,6 +37,7 @@ class Config {
   static double get miniPlayerWidthProportion => 0.75;
   static double get miniPlayerMaxWidth => 250;
   static double get miniPlayerButtonSize => 72;
+  static double get trackListScrollBottomPadding => 120;
 
   // Default values for user-accessible settings.
   static ThemeMode get defaultThemeMode => ThemeMode.system;
