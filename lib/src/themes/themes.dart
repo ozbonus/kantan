@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
@@ -51,7 +52,9 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      BookCoverStyle(
+      TrackListAppBarStyle(
+        systemUiOverlayStyle: SystemUiOverlayStyle.dark,
+        fullscreenAppBarCollapsedColor: lightColorScheme.primaryContainer,
         backgroundContainerDecoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -385,7 +388,9 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(24.0),
         ),
       ),
-      BookCoverStyle(
+      TrackListAppBarStyle(
+        systemUiOverlayStyle: SystemUiOverlayStyle.light,
+        fullscreenAppBarCollapsedColor: lightColorScheme.primary,
         backgroundContainerDecoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
