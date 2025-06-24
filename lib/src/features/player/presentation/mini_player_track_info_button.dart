@@ -46,7 +46,9 @@ class MiniPlayerTrackInfoButton extends ConsumerWidget {
           child: InkWell(
             onTap: () => context.goNamed(AppRoute.player),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
               child: AsyncValueWidget(
                 value: trackValue,
                 data: (track) {
