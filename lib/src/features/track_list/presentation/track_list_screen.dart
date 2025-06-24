@@ -68,6 +68,11 @@ class _TrackListScreenContentsState extends State<TrackListScreenContents> {
             ),
           ),
           const TracksList(),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: Config.trackListScrollBottomPadding,
+            ),
+          ),
         ],
       ),
     );
