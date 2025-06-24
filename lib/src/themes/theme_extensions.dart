@@ -168,6 +168,95 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
 }
 
 @immutable
+class FloatingMiniPlayerPlayPauseButtonStyle
+    extends ThemeExtension<FloatingMiniPlayerPlayPauseButtonStyle> {
+  const FloatingMiniPlayerPlayPauseButtonStyle({
+    this.decoration,
+    this.iconColor,
+  });
+
+  final BoxDecoration? decoration;
+  final Color? iconColor;
+
+  @override
+  FloatingMiniPlayerPlayPauseButtonStyle copyWith({
+    BoxDecoration? decoration,
+    Color? iconColor,
+  }) {
+    return FloatingMiniPlayerPlayPauseButtonStyle(
+      decoration: decoration ?? this.decoration,
+      iconColor: iconColor ?? this.iconColor,
+    );
+  }
+
+  @override
+  ThemeExtension<FloatingMiniPlayerPlayPauseButtonStyle> lerp(
+    ThemeExtension<FloatingMiniPlayerPlayPauseButtonStyle>? other,
+    double t,
+  ) {
+    if (other is! FloatingMiniPlayerPlayPauseButtonStyle) {
+      return this;
+    }
+
+    return FloatingMiniPlayerPlayPauseButtonStyle(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      iconColor: Color.lerp(iconColor, other.iconColor, t),
+    );
+  }
+}
+
+@immutable
+class FloatingMiniPlayerTrackInfoButton
+    extends ThemeExtension<FloatingMiniPlayerTrackInfoButton> {
+  const FloatingMiniPlayerTrackInfoButton({
+    this.decoration,
+    this.trackNumberTextStyle,
+    this.trackNameTextStyle,
+  });
+
+  final BoxDecoration? decoration;
+  final TextStyle? trackNumberTextStyle;
+  final TextStyle? trackNameTextStyle;
+
+  @override
+  FloatingMiniPlayerTrackInfoButton copyWith({
+    BoxDecoration? decoration,
+    TextStyle? trackNumberTextStyle,
+    TextStyle? trackNameTextStyle,
+  }) {
+    return FloatingMiniPlayerTrackInfoButton(
+      decoration: decoration ?? this.decoration,
+      trackNumberTextStyle: trackNumberTextStyle ?? this.trackNumberTextStyle,
+      trackNameTextStyle: trackNameTextStyle ?? this.trackNameTextStyle,
+    );
+  }
+
+  @override
+  ThemeExtension<FloatingMiniPlayerTrackInfoButton> lerp(
+    ThemeExtension<FloatingMiniPlayerTrackInfoButton>? other,
+    double t,
+  ) {
+    if (other is! FloatingMiniPlayerTrackInfoButton) {
+      return this;
+    }
+
+    return FloatingMiniPlayerTrackInfoButton(
+      decoration: BoxDecoration.lerp(decoration, other.decoration, t),
+      trackNumberTextStyle: TextStyle.lerp(
+        trackNumberTextStyle,
+        other.trackNumberTextStyle,
+        t,
+      ),
+      trackNameTextStyle: TextStyle.lerp(
+        trackNameTextStyle,
+        other.trackNameTextStyle,
+        t,
+      ),
+    );
+  }
+}
+
+@immutable
 class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
   const TranscriptPaneStyle({
     this.decoration,
@@ -177,10 +266,10 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
 
   @override
   TranscriptPaneStyle copyWith({
-    BoxDecoration? containerDecoration,
+    BoxDecoration? decoration,
   }) {
     return TranscriptPaneStyle(
-      decoration: containerDecoration ?? this.decoration,
+      decoration: decoration ?? this.decoration,
     );
   }
 

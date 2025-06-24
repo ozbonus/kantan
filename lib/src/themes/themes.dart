@@ -157,6 +157,63 @@ abstract final class AppTheme {
           ),
         ),
       ),
+      FloatingMiniPlayerPlayPauseButtonStyle(
+        decoration: BoxDecoration(
+          color: lightColorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        iconColor: lightColorScheme.onSecondaryContainer,
+      ),
+      FloatingMiniPlayerTrackInfoButton(
+        decoration: BoxDecoration(
+          color: lightColorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: lightColorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      ),
       PlayerScreenControlsStyle(
         decoration: BoxDecoration(
           color: lightColorScheme.surface,
@@ -404,6 +461,29 @@ abstract final class AppTheme {
         decoration: BoxDecoration(
           color: darkColorScheme.surface,
           borderRadius: BorderRadius.circular(24.0),
+        ),
+      ),
+      FloatingMiniPlayerPlayPauseButtonStyle(
+        decoration: BoxDecoration(
+          color: darkColorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: darkColorScheme.secondary,
+          ),
+        ),
+        iconColor: darkColorScheme.onSecondaryContainer,
+      ),
+      FloatingMiniPlayerTrackInfoButton(
+        decoration: BoxDecoration(
+          color: darkColorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: darkColorScheme.secondary,
+          ),
         ),
       ),
       PlayerScreenControlsStyle(
