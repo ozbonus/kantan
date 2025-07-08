@@ -231,12 +231,49 @@ class ExpandTranscriptButton extends StatelessWidget {
   }
 }
 
-class TranscriptPlayButton extends ConsumerWidget {
+/// In this version of Kantan Player all of the audio files are stored on device
+/// which means that loading is nearly instantaneous. However, when skipping
+/// tracks the app does very briefly pass through a loading state. Because this
+/// loading state is so brief, it's not helpful to communicate to the user. The
+/// design of this `StatefulWidget` prevents the icon from ever showing the
+/// loading state. In a future version of Kantan Player which can load audio
+/// over the web, showing the loading state can be re-enabled.
+class TranscriptPlayButton extends ConsumerStatefulWidget {
   const TranscriptPlayButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final playbackState = ref.watch(playPauseButtonControllerProvider);
+  ConsumerState<TranscriptPlayButton> createState() =>
+      _TranscriptPlayButtonState();
+}
+
+class _TranscriptPlayButtonState extends ConsumerState<TranscriptPlayButton> {
+  late KantanPlaybackState playbackState;
+
+  @override
+  void initState() {
+    super.initState();
+    final initState = ref.read(playPauseButtonControllerProvider);
+    setState(() => playbackState = initState);
+  }
+
+  @override
+  void dispose() => super.dispose();
+
+  void resolveState(KantanPlaybackState state) {
+    if (state == KantanPlaybackState.loading) {
+      return;
+    } else {
+      setState(() => playbackState = state);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen<KantanPlaybackState>(
+      playPauseButtonControllerProvider,
+      (_, state) => resolveState(state),
+    );
+
     final style = Theme.of(context).extension<TranscriptScreenButtonStyle>();
 
     IconData buttonIcon = switch (playbackState) {
