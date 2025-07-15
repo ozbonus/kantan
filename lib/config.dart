@@ -21,6 +21,8 @@ class Config {
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
   // Feature flags
+  static bool useParentalMode = true;
+  static bool useParentalModeChallenge = true;
   static bool get useTranscriptFeature => true;
   static bool get useTranscriptLineSeekFeature => true;
   static bool get useTranslationFeature => true;
