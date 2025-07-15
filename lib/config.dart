@@ -74,4 +74,5 @@ class Config {
   static double get layoutSpacing => 24.0;
   static double get bookCoverPadding => 24.0;
   static Duration get scrollDuration => const Duration(milliseconds: 200);
+  static Duration shakeDuration = Duration(seconds: 1);
 }
