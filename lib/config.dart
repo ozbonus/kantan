@@ -29,6 +29,9 @@ class Config {
   static bool get useAutoScrollFeature => true;
   static bool get disableAutoScrollOnUserScroll => true;
 
+  // Parental mode challenge settings
+  static int parentalModeChallengeMaxAttempts = 3;
+  static double shakeHz = 10.0;
   // Default values for player state.
   static int get defaultQueueIndex => 0;
   static Duration get defaultPosition => Duration.zero;
