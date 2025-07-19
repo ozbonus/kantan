@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/app_localizations.dart';
+import 'package:kantan/src/features/parental_mode/presentation/math_challenge_screen.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
 class SettingsMenu extends StatelessWidget {
@@ -84,6 +87,24 @@ class WakelockSwitch extends ConsumerWidget {
 class ParentalModeSwitch extends ConsumerWidget {
   const ParentalModeSwitch({super.key});
 
+  Widget adaptiveAction({
+    required BuildContext context,
+    required VoidCallback onPressed,
+    required Widget child,
+  }) {
+    final ThemeData theme = Theme.of(context);
+    switch (theme.platform) {
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        return TextButton(onPressed: onPressed, child: child);
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+        return CupertinoDialogAction(onPressed: onPressed, child: child);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
@@ -92,9 +113,52 @@ class ParentalModeSwitch extends ConsumerWidget {
       title: Text(localizations.parentAndTeacherModeTileLabel),
       secondary: const Icon(Icons.family_restroom_rounded),
       value: isParentalModeOn,
-      onChanged: (value) => ref
-          .read(parentalModeSwitchControllerProvider.notifier)
-          .setIsParentalModeOn(value),
+      onChanged: (value) async {
+        if (Config.useParentalModeChallenge && value) {
+          final bool? challengePassed = await showModalBottomSheet<bool>(
+            context: context,
+            enableDrag: true,
+            showDragHandle: true,
+            isDismissible: true,
+            isScrollControlled: true,
+            builder: (context) => const MathChallengeScreen(),
+          );
+          ref
+              .read(parentalModeSwitchControllerProvider.notifier)
+              .setIsParentalModeOn(challengePassed ?? false);
+        } else if (Config.useParentalModeChallenge && !value) {
+          final bool newValue = await showAdaptiveDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              final localizations = AppLocalizations.of(context)!;
+              return AlertDialog.adaptive(
+                title: Text(localizations.disableModeWindowTitle),
+                content: Text(localizations.mathChallengeWarning),
+                actions: [
+                  adaptiveAction(
+                    context: context,
+                    onPressed: () => context.pop(true),
+                    child: Text(localizations.cancelButtonLabel),
+                  ),
+                  adaptiveAction(
+                    context: context,
+                    onPressed: () => context.pop(false),
+                    child: Text(localizations.okButtonText),
+                  ),
+                ],
+              );
+            },
+          );
+          ref
+              .read(parentalModeSwitchControllerProvider.notifier)
+              .setIsParentalModeOn(newValue);
+        } else {
+          ref
+              .read(parentalModeSwitchControllerProvider.notifier)
+              .setIsParentalModeOn(value);
+        }
+      },
     );
   }
 }
