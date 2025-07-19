@@ -1,6 +1,6 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:kantan/src/features/parental_mode/data/equations_repository.dart';
 import 'package:kantan/src/features/parental_mode/domain/equation.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'math_challenge_service.g.dart';
 
