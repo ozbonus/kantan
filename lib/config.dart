@@ -29,6 +29,15 @@ class Config {
   static bool get useAutoScrollFeature => true;
   static bool get disableAutoScrollOnUserScroll => true;
 
+  // Parental mode domain features
+  static bool themeModeIsParentalMode = false;
+  static bool wakelockIsParentalMode = true;
+  static bool canSeeTranscriptIsParentalMode = true;
+  static bool canSeeTranslationIsParentalMode = true;
+  static bool interfaceLanguageIsParentalMode = true;
+  static bool translationLanguageIsParentalMode = true;
+  static bool transcriptScaleIsParentalMode = false;
+
   // Parental mode challenge settings
   static int parentalModeChallengeMaxAttempts = 3;
   static double shakeHz = 10.0;
