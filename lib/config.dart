@@ -21,11 +21,36 @@ class Config {
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
   // Feature flags
+  // If a feature is disabled here is must also be disabled in the section below
+  // that determines if it under the domain of the parental mode.
+  static bool useThemeModeFeature = true;
+  static bool useWakelockFeature = true;
+  static bool useParentalModeFeature = true;
+  static bool useParentalModeChallengeFeature = true;
   static bool get useTranscriptFeature => true;
   static bool get useTranscriptLineSeekFeature => true;
   static bool get useTranslationFeature => true;
   static bool get useAutoScrollFeature => true;
   static bool get disableAutoScrollOnUserScroll => true;
+  static bool useInterfaceLanguageSelectorFeature = true;
+  static bool useTranslationLanguageSelectorFeature = true;
+
+  // Parental mode domain features
+  // If the parental mode feature is disabled, then all of these values must be
+  // set to false.
+  static bool themeModeIsParentalMode = false;
+  static bool wakelockIsParentalMode = true;
+  static bool canSeeTranscriptIsParentalMode = true;
+  static bool canSeeTranslationIsParentalMode = true;
+  static bool interfaceLanguageIsParentalMode = true;
+  static bool translationLanguageIsParentalMode = true;
+  static bool transcriptScaleIsParentalMode = false;
+
+  // Parental mode challenge settings
+  static int parentalModeChallengeMaxAttempts = 3;
+  static String parentalModeBypassCode = '001100';
+  static double shakeHz = 10.0;
+  static Duration shakeDuration = Duration(seconds: 1);
 
   // Default values for player state.
   static int get defaultQueueIndex => 0;
