@@ -21,6 +21,8 @@ class Config {
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 
   // Feature flags
+  // If a feature is disabled here is must also be disabled in the section below
+  // that determines if it under the domain of the parental mode.
   static bool useThemeMode = true;
   static bool useWakelock = true;
   static bool useParentalMode = true;
@@ -32,6 +34,8 @@ class Config {
   static bool get disableAutoScrollOnUserScroll => true;
 
   // Parental mode domain features
+  // If the parental mode feature is disabled, then all of these values must be
+  // set to false.
   static bool themeModeIsParentalMode = false;
   static bool wakelockIsParentalMode = true;
   static bool canSeeTranscriptIsParentalMode = true;
