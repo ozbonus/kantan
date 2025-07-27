@@ -6,33 +6,38 @@ import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/parental_mode/presentation/math_challenge_screen.dart';
+import 'package:kantan/src/features/settings/presentation/settings_menu_controller.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
-class SettingsMenu extends StatelessWidget {
+class SettingsMenu extends ConsumerWidget {
   const SettingsMenu({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(settingsMenuControllerProvider);
+    final localizations = AppLocalizations.of(context)!;
     return Drawer(
       child: ListView(
         children: [
           DrawerHeader(
-            duration: const Duration(seconds: 2),
             child: Center(
               child: Text(
-                localizations!.settingsAndInfoMenuTitle,
+                localizations.settingsAndInfoMenuTitle,
                 style: Theme.of(context).textTheme.displaySmall!,
               ),
             ),
           ),
-          const ThemeModeSwitch(),
-          const WakelockSwitch(),
-          const ParentalModeSwitch(),
-          const CanSeeTranscriptSwitch(),
-          const CanSeeTranslationSwitch(),
-          const InterfaceLocaleSelector(),
-          const TranslationLocaleSelector(),
+          if (controller.showThemeModeSwitch) const ThemeModeSwitch(),
+          if (controller.showWakelockSwitch) const WakelockSwitch(),
+          if (controller.showParentalModeSwitch) const ParentalModeSwitch(),
+          if (controller.showCanSeeTranscriptSwitch)
+            const CanSeeTranscriptSwitch(),
+          if (controller.showCanSeeTranslationSwitch)
+            const CanSeeTranslationSwitch(),
+          if (controller.showInterfaceLanguageSelector)
+            const InterfaceLocaleSelector(),
+          if (controller.showTranslationLanguageSelector)
+            const TranslationLocaleSelector(),
         ],
       ),
     );
@@ -114,7 +119,7 @@ class ParentalModeSwitch extends ConsumerWidget {
       secondary: const Icon(Icons.family_restroom_rounded),
       value: isParentalModeOn,
       onChanged: (value) async {
-        if (Config.useParentalModeChallenge && value) {
+        if (Config.useParentalModeChallengeFeature && value) {
           final bool? challengePassed = await showModalBottomSheet<bool>(
             context: context,
             enableDrag: true,
@@ -126,7 +131,7 @@ class ParentalModeSwitch extends ConsumerWidget {
           ref
               .read(parentalModeSwitchControllerProvider.notifier)
               .setIsParentalModeOn(challengePassed ?? false);
-        } else if (Config.useParentalModeChallenge && !value) {
+        } else if (Config.useParentalModeChallengeFeature && !value) {
           final bool newValue = await showAdaptiveDialog(
             context: context,
             barrierDismissible: false,
