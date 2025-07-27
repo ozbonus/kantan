@@ -7,5 +7,4 @@ const equationsList = <Equation>[
   (tex: r'\sqrt{x} + 1 = 7', ans: '36'),
   (tex: r'\sqrt{81} \times 2 = x', ans: '18'),
   (tex: r'5^2 + x = 36', ans: '11'),
-  (tex: r'2^5 = x', ans: '32'),
 ];
