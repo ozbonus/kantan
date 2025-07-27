@@ -48,6 +48,7 @@ class Config {
 
   // Parental mode challenge settings
   static int parentalModeChallengeMaxAttempts = 3;
+  static String parentalModeBypassCode = '001100';
   static double shakeHz = 10.0;
   static Duration shakeDuration = Duration(seconds: 1);
 

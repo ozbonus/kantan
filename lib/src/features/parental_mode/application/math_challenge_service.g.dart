@@ -7,7 +7,7 @@ part of 'math_challenge_service.dart';
 // **************************************************************************
 
 String _$mathChallengeServiceHash() =>
-    r'6c27aa6979097b4f35f572582d96763683743357';
+    r'0a94ae9f1596961d4e24119b3def86d5a5ede28b';
 
 /// See also [MathChallengeService].
 @ProviderFor(MathChallengeService)
