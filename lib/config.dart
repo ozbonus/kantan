@@ -22,6 +22,7 @@ class Config {
 
   // Feature flags
   static bool useThemeMode = true;
+  static bool useWakelock = true;
   static bool useParentalMode = true;
   static bool useParentalModeChallenge = true;
   static bool get useTranscriptFeature => true;
