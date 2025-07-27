@@ -32,6 +32,8 @@ class Config {
   static bool get useTranslationFeature => true;
   static bool get useAutoScrollFeature => true;
   static bool get disableAutoScrollOnUserScroll => true;
+  static bool useInterfaceLanguageSelector = true;
+  static bool useTranslationLanguageSelector = true;
 
   // Parental mode domain features
   // If the parental mode feature is disabled, then all of these values must be
