@@ -23,17 +23,17 @@ class Config {
   // Feature flags
   // If a feature is disabled here is must also be disabled in the section below
   // that determines if it under the domain of the parental mode.
-  static bool useThemeMode = true;
-  static bool useWakelock = true;
-  static bool useParentalMode = true;
-  static bool useParentalModeChallenge = true;
+  static bool useThemeModeFeature = true;
+  static bool useWakelockFeature = true;
+  static bool useParentalModeFeature = true;
+  static bool useParentalModeChallengeFeature = true;
   static bool get useTranscriptFeature => true;
   static bool get useTranscriptLineSeekFeature => true;
   static bool get useTranslationFeature => true;
   static bool get useAutoScrollFeature => true;
   static bool get disableAutoScrollOnUserScroll => true;
-  static bool useInterfaceLanguageSelector = true;
-  static bool useTranslationLanguageSelector = true;
+  static bool useInterfaceLanguageSelectorFeature = true;
+  static bool useTranslationLanguageSelectorFeature = true;
 
   // Parental mode domain features
   // If the parental mode feature is disabled, then all of these values must be
