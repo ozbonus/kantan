@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/transcript/presentation/no_transcript.dart';
+import 'package:kantan/src/features/transcript/presentation/static_transcript.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
-import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
@@ -106,40 +107,6 @@ class TranscriptScreenContents extends ConsumerWidget {
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class NoTranscript extends StatelessWidget {
-  const NoTranscript({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    return Center(child: Text(localizations!.noTranscriptMessage));
-  }
-}
-
-class StaticTranscript extends ConsumerWidget {
-  const StaticTranscript({
-    super.key,
-    required this.transcript,
-    this.translation,
-  });
-  final Transcript transcript;
-  final Transcript? translation;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ListView.builder(
-      itemCount: transcript.lines.length,
-      itemBuilder: (context, index) => TranscriptLineWidget(
-        index: index,
-        transcriptLine: transcript.lines[index],
-        transcriptLineLocale: transcript.locale,
-        translationLine: translation?.lines[index],
-        translationLineLocale: translation?.locale,
       ),
     );
   }
