@@ -27,20 +27,16 @@ class TranscriptScreen extends StatelessWidget {
         backgroundColor: style?.backgroundColor,
         elevation: style?.appBarElevation,
         scrolledUnderElevation: style?.appBarScrolledUnderElevation,
-        title: const _TranscriptScreenTitle(),
+        title: Consumer(
+          // Use the title of the current track, or nothing if null.
+          builder: (context, ref, _) {
+            final title = ref.watch(transcriptScreenTitleControllerProvider);
+            return Text(title ?? '');
+          },
+        ),
       ),
       body: const Center(child: TranscriptScreenContents(isFullscreen: true)),
     );
-  }
-}
-
-class _TranscriptScreenTitle extends ConsumerWidget {
-  const _TranscriptScreenTitle();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final trackTitle = ref.watch(transcriptScreenTitleControllerProvider);
-    return Text(trackTitle ?? '');
   }
 }
 
