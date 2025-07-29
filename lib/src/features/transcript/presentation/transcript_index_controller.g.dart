@@ -7,7 +7,7 @@ part of 'transcript_index_controller.dart';
 // **************************************************************************
 
 String _$transcriptIndexControllerHash() =>
-    r'8c54c2517de2960f064703f778d46cc14a4551e2';
+    r'59f711e3652cc1a90f592cf1b0c682999c9b5ba5';
 
 /// Provides the index of the transcript line presently being spoken.
 ///
