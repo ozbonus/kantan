@@ -33,13 +33,17 @@ class TranscriptController extends _$TranscriptController {
         if (track == null) {
           return (transcript: null, translation: null);
         }
-        final transcript = await ref
-            .read(transcriptRepositoryProvider)
-            .getTranscript(track, Config.transcriptLocale);
-        final translation = await ref
-            .read(transcriptRepositoryProvider)
-            .getTranscript(track, translationLocale);
-        return (transcript: transcript, translation: translation);
+
+        final results = await Future.wait([
+          ref
+              .read(transcriptRepositoryProvider)
+              .getTranscript(track, Config.transcriptLocale),
+          ref
+              .read(transcriptRepositoryProvider)
+              .getTranscript(track, translationLocale),
+        ]);
+
+        return (transcript: results[0], translation: results[1]);
       },
     );
   }

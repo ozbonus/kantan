@@ -7,7 +7,7 @@ part of 'transcript_controller.dart';
 // **************************************************************************
 
 String _$transcriptControllerHash() =>
-    r'31619dfdd7c4b6b90f04bc8000c7070681a432e2';
+    r'a19cae9e4fbcb364a1ec509596ffd82be070567b';
 
 /// Provides a transcript and translation for the current track, if either are
 /// available.
