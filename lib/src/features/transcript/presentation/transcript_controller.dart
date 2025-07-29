@@ -23,8 +23,9 @@ typedef TranscriptBundle = ({Transcript? transcript, Transcript? translation});
 class TranscriptController extends _$TranscriptController {
   @override
   FutureOr<TranscriptBundle> build() {
-    ref.watch(translationLocaleServiceProvider); // Trigger rebuild on change.
     final trackValue = ref.watch(currentTrackStreamProvider);
+    final translationLocale = ref.watch(translationLocaleServiceProvider);
+
     return trackValue.when(
       loading: () => (transcript: null, translation: null),
       error: (e, st) => (transcript: null, translation: null),
@@ -35,7 +36,6 @@ class TranscriptController extends _$TranscriptController {
         final transcript = await ref
             .read(transcriptRepositoryProvider)
             .getTranscript(track, Config.transcriptLocale);
-        final translationLocale = ref.watch(translationLocaleServiceProvider);
         final translation = await ref
             .read(transcriptRepositoryProvider)
             .getTranscript(track, translationLocale);
