@@ -35,7 +35,11 @@ class TranscriptScreen extends StatelessWidget {
           },
         ),
       ),
-      body: const Center(child: TranscriptScreenContents(isFullscreen: true)),
+      body: const Center(
+        child: TranscriptScreenContents(
+          isFullscreen: true,
+        ),
+      ),
     );
   }
 }
