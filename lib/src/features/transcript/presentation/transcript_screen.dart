@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kantan/src/features/transcript/presentation/no_transcript.dart';
-import 'package:kantan/src/features/transcript/presentation/static_transcript.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_widget.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_player_controls.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_screen_contents.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_screen_title_controller.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
@@ -40,73 +37,6 @@ class TranscriptScreen extends StatelessWidget {
         child: TranscriptScreenContents(
           isFullscreen: true,
         ),
-      ),
-    );
-  }
-}
-
-/// The core contents of the transcript screen that can be shown on displays of
-/// any size. Depending on what `transcriptValue` resolves to, one three types
-/// of content can be shown:
-/// * a notification that no transcript is available
-/// * a simple transcript akin to a text document
-/// * a self-scrolling transcript with tappable lines that seek to a position
-class TranscriptScreenContents extends ConsumerWidget {
-  const TranscriptScreenContents({super.key, this.isFullscreen = false});
-
-  final bool isFullscreen;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final transcriptValue = ref.watch(transcriptControllerProvider);
-    final style = Theme.of(context).extension<TranscriptScreenStyle>();
-    return DecoratedBox(
-      decoration: BoxDecoration(color: style?.backgroundColor),
-      child: transcriptValue.when(
-        skipLoadingOnReload: true,
-        loading: () => const CircularProgressIndicator.adaptive(),
-        error: (e, st) => throw Exception('$e $st'),
-        data: (data) {
-          if (data.transcript == null) {
-            // return const NoTranscript();
-            return Column(
-              children: [
-                const Expanded(child: NoTranscript()),
-                TranscriptPlayerControls(isFullscreen: isFullscreen),
-              ],
-            );
-          } else if (data.transcript!.endTimes == null) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: StaticTranscript(
-                      transcript: data.transcript!,
-                      translation: data.translation,
-                    ),
-                  ),
-                ),
-                TranscriptPlayerControls(isFullscreen: isFullscreen),
-              ],
-            );
-          } else {
-            return Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: DynamicScrollingTranscript(
-                      transcript: data.transcript!,
-                      translation: data.translation,
-                    ),
-                  ),
-                ),
-                TranscriptPlayerControls(isFullscreen: isFullscreen),
-              ],
-            );
-          }
-        },
       ),
     );
   }

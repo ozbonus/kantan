@@ -7,7 +7,7 @@ import 'package:kantan/src/features/player/presentation/player_screen.dart';
 import 'package:kantan/src/features/settings/application/interface_locale_service.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu.dart';
 import 'package:kantan/src/features/track_list/presentation/track_list_screen.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
+import 'package:kantan/src/features/transcript/presentation/transcript_screen_contents.dart';
 import 'package:kantan/src/routing/app_router.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 import 'package:kantan/src/themes/theme_mode_service.dart';
