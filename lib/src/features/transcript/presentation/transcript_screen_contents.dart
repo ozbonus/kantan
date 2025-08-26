@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/transcript/presentation/dynamic_scrolling_transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/no_transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/static_transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_player_controls.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_screen.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
 /// The core contents of the transcript screen that can be shown on displays of

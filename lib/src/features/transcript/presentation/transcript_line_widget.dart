@@ -1,85 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
-import 'package:kantan/src/features/transcript/presentation/transcript_line_controller.dart';
 import 'package:kantan/src/themes/theme_extensions.dart';
 
 class TranscriptLineWidget extends ConsumerWidget {
   const TranscriptLineWidget({
     super.key,
     required this.index,
-    required this.transcriptLine,
-    required this.transcriptLineLocale,
-    this.translationLine,
-    this.translationLineLocale,
+    required this.transcript,
+    this.translation,
+    this.scale,
+    this.selected = false,
+    this.onTap,
   });
 
   final int index;
-  final TranscriptLine transcriptLine;
-  final Locale transcriptLineLocale;
-  final TranscriptLine? translationLine;
-  final Locale? translationLineLocale;
+  final Transcript transcript;
+  final Transcript? translation;
+  final double? scale;
+  final bool selected;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(
-      transcriptLineControllerProvider(
-        index,
-        transcriptLine,
-        translationLine,
-      ),
-    );
     final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
     final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
-    final showNames =
-        controller.showSpeakerName || controller.showSpeakerNameTranslation;
 
-    TextScaler? textScaler = TextScaler.linear(controller.scale).clamp(
-      maxScaleFactor: 3.0,
-    );
+    /// Only create a [TextScaler] if there a non-null scale.
+    final TextScaler? textScaler = scale != null
+        ? TextScaler.linear(scale!).clamp(maxScaleFactor: 3.0)
+        : null;
 
-    Widget? speakerName;
-    if (controller.showSpeakerName) {
-      speakerName = Text(
-        transcriptLine.speaker!,
-        style: baseTextStyle?.merge(style?.speakerNameTextStyle).apply(),
-        textScaler: textScaler,
-      );
-    }
+    final String? speakerName = transcript.lines[index].speaker;
+    final Widget? speakerNameWidget = speakerName != null
+        ? Text(
+            speakerName,
+            style: baseTextStyle?.merge(style?.speakerNameTextStyle),
+            textScaler: textScaler,
+          )
+        : null;
 
-    Widget? speakerNameTranslation;
-    if (controller.showSpeakerNameTranslation) {
-      speakerNameTranslation = Text(
-        translationLine!.speaker!,
-        style: baseTextStyle?.merge(style?.speakerNameTranslationTextStyle),
-        textScaler: textScaler,
-      );
-    }
+    final String? speakerNameTranslation = translation?.lines[index].speaker;
+    final Widget? speakerNameTranslationWidget = speakerNameTranslation != null
+        ? Text(
+            speakerNameTranslation,
+            style: baseTextStyle?.merge(style?.speakerNameTranslationTextStyle),
+            textScaler: textScaler,
+          )
+        : null;
 
-    Widget transcriptText = Text(
-      transcriptLine.text,
+    Widget transcriptTextWidget = Text(
+      transcript.lines[index].text,
       style: baseTextStyle?.merge(style?.transcriptTextStyle),
       textScaler: textScaler,
     );
 
-    Widget? translationText;
-    if (controller.showTranslation) {
-      translationText = Text(
-        translationLine!.text,
-        style: baseTextStyle?.merge(style?.translationTextStyle),
-        textScaler: textScaler,
-      );
-    }
+    final String? translationText = translation?.lines[index].text;
+    final translationTextWidget = translationText != null
+        ? Text(
+            translationText,
+            style: baseTextStyle?.merge(style?.translationTextStyle),
+            textScaler: textScaler,
+          )
+        : null;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: controller.isActive ? style?.activeColor : null,
+        color: selected ? style?.activeColor : null,
         borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
       ),
       foregroundDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-        border: controller.isActive
+        border: selected
             ? Border.all(
                 width: style?.borderWidth ?? 0,
                 color: style?.borderColor ?? Colors.transparent,
@@ -92,15 +85,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         child: InkWell(
           splashColor: style?.splashColor,
           borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
-          onTap: () => ref
-              .read(
-                transcriptLineControllerProvider(
-                  index,
-                  transcriptLine,
-                  translationLine,
-                ).notifier,
-              )
-              .seekToLine(),
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -111,34 +96,34 @@ class TranscriptLineWidget extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 4.0,
               children: [
-                if (showNames)
+                if (speakerName != null || speakerNameTranslation != null)
                   Localizations.override(
                     context: context,
-                    locale: transcriptLineLocale,
+                    locale: transcript.locale,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       spacing: 8.0,
                       children: [
-                        if (speakerName != null) speakerName,
-                        if (speakerNameTranslation != null)
+                        if (speakerNameWidget != null) speakerNameWidget,
+                        if (speakerNameTranslationWidget != null)
                           Localizations.override(
                             context: context,
-                            locale: translationLineLocale,
-                            child: speakerNameTranslation,
+                            locale: translation?.locale,
+                            child: speakerNameTranslationWidget,
                           ),
                       ],
                     ),
                   ),
                 Localizations.override(
                   context: context,
-                  locale: transcriptLineLocale,
-                  child: transcriptText,
+                  locale: transcript.locale,
+                  child: transcriptTextWidget,
                 ),
-                if (controller.showTranslation)
+                if (translationTextWidget != null)
                   Localizations.override(
                     context: context,
-                    locale: translationLineLocale,
-                    child: translationText,
+                    locale: translation?.locale,
+                    child: translationTextWidget,
                   ),
               ],
             ),

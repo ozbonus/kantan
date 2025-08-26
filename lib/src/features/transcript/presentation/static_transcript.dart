@@ -18,10 +18,8 @@ class StaticTranscript extends ConsumerWidget {
       itemCount: transcript.lines.length,
       itemBuilder: (context, index) => TranscriptLineWidget(
         index: index,
-        transcriptLine: transcript.lines[index],
-        transcriptLineLocale: transcript.locale,
-        translationLine: translation?.lines[index],
-        translationLineLocale: translation?.locale,
+        transcript: transcript,
+        translation: translation,
       ),
     );
   }
