@@ -72,7 +72,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         : null;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: style?.animationDuration ?? const Duration(milliseconds: 200),
       decoration: BoxDecoration(
         color: selected ? style?.activeColor : null,
         borderRadius: borderRadius,
@@ -94,14 +94,11 @@ class TranscriptLineWidget extends ConsumerWidget {
           borderRadius: borderRadius,
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-              vertical: 8.0,
-            ),
+            padding: EdgeInsets.all(style?.padding ?? 8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 4.0,
+              spacing: style?.verticalSpacing ?? 4.0,
               children: [
                 if (speakerName != null || speakerNameTranslation != null)
                   Localizations.override(
@@ -109,7 +106,7 @@ class TranscriptLineWidget extends ConsumerWidget {
                     locale: transcript.locale,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      spacing: 8.0,
+                      spacing: style?.horizontalSpacing ?? 8.0,
                       children: [
                         if (speakerNameWidget != null) speakerNameWidget,
                         if (speakerNameTranslationWidget != null)

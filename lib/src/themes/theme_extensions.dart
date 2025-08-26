@@ -635,6 +635,10 @@ class TranscriptLineWidgetStyle
     this.borderColor,
     this.borderRadius,
     this.borderWidth,
+    this.animationDuration,
+    this.padding,
+    this.horizontalSpacing,
+    this.verticalSpacing,
   });
 
   final Color? activeColor;
@@ -647,6 +651,10 @@ class TranscriptLineWidgetStyle
   final Color? borderColor;
   final double? borderRadius;
   final double? borderWidth;
+  final Duration? animationDuration;
+  final double? padding;
+  final double? horizontalSpacing;
+  final double? verticalSpacing;
 
   @override
   TranscriptLineWidgetStyle copyWith({
@@ -660,6 +668,10 @@ class TranscriptLineWidgetStyle
     Color? borderColor,
     double? borderRadius,
     double? borderWidth,
+    Duration? animationDuration,
+    double? padding,
+    double? horizontalSpacing,
+    double? verticalSpacing,
   }) {
     return TranscriptLineWidgetStyle(
       activeColor: activeColor ?? this.activeColor,
@@ -674,6 +686,10 @@ class TranscriptLineWidgetStyle
       borderColor: borderColor ?? this.borderColor,
       borderRadius: borderRadius ?? this.borderRadius,
       borderWidth: borderWidth ?? this.borderWidth,
+      animationDuration: animationDuration ?? this.animationDuration,
+      padding: padding ?? this.padding,
+      horizontalSpacing: horizontalSpacing ?? this.horizontalSpacing,
+      verticalSpacing: verticalSpacing ?? this.verticalSpacing,
     );
   }
 
@@ -713,6 +729,14 @@ class TranscriptLineWidgetStyle
       borderColor: Color.lerp(borderColor, other.borderColor, t),
       borderRadius: lerpDouble(borderRadius, other.borderRadius, t),
       borderWidth: lerpDouble(borderWidth, other.borderWidth, t),
+      animationDuration: t < 0.5 ? animationDuration : other.animationDuration,
+      padding: lerpDouble(padding, other.padding, t),
+      horizontalSpacing: lerpDouble(
+        horizontalSpacing,
+        other.horizontalSpacing,
+        t,
+      ),
+      verticalSpacing: lerpDouble(verticalSpacing, other.verticalSpacing, t),
     );
   }
 }
