@@ -31,7 +31,10 @@ class TranscriptLineWidget extends ConsumerWidget {
         ? TextScaler.linear(scale!).clamp(maxScaleFactor: 3.0)
         : null;
 
-    final String? speakerName = transcript.lines[index].speaker;
+    final String? speakerName = index < transcript.lines.length
+        ? transcript.lines[index].speaker
+        : null;
+
     final Widget? speakerNameWidget = speakerName != null
         ? Text(
             speakerName,
@@ -40,7 +43,11 @@ class TranscriptLineWidget extends ConsumerWidget {
           )
         : null;
 
-    final String? speakerNameTranslation = translation?.lines[index].speaker;
+    final String? speakerNameTranslation =
+        translation != null && index < translation!.lines.length
+        ? translation?.lines[index].speaker
+        : null;
+
     final Widget? speakerNameTranslationWidget = speakerNameTranslation != null
         ? Text(
             speakerNameTranslation,
