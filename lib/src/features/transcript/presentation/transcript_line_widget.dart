@@ -26,7 +26,6 @@ class TranscriptLineWidget extends ConsumerWidget {
     final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
     final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
 
-    /// Only create a [TextScaler] if there a non-null scale.
     final TextScaler? textScaler = scale != null
         ? TextScaler.linear(scale!).clamp(maxScaleFactor: 3.0)
         : null;
