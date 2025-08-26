@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
@@ -108,6 +109,7 @@ class _DynamicScrollingTranscriptState
   @override
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(transcriptIndexControllerProvider);
+    final scale = ref.watch(transcriptScaleServiceProvider);
     final showTranslation = ref.watch(showTranslationServiceProvider);
     final canSeeTranslation = ref.watch(canSeeTranscriptServiceProvider);
     final shouldShowTranslation = showTranslation && canSeeTranslation;
@@ -135,6 +137,7 @@ class _DynamicScrollingTranscriptState
           transcript: widget.transcript,
           translation: shouldShowTranslation ? widget.translation : null,
           selected: index == currentIndex,
+          scale: scale,
           onTap: () => _onTap(index),
         );
       },
