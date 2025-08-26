@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kantan/src/features/transcript/application/can_see_translation_service.dart';
-import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
-import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/player/domain/kantan_playback_state.dart';
+import 'package:kantan/src/features/transcript/application/can_see_transcript_service.dart';
 import 'package:kantan/src/features/transcript/application/enable_auto_scroll_service.dart';
+import 'package:kantan/src/features/transcript/application/show_translation_service.dart';
 import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_widget.dart';
@@ -23,128 +23,119 @@ class DynamicScrollingTranscript extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ScrollingTranscriptScreenContentsState();
+      _DynamicScrollingTranscriptState();
 }
 
-class _ScrollingTranscriptScreenContentsState
+class _DynamicScrollingTranscriptState
     extends ConsumerState<DynamicScrollingTranscript> {
-  GlobalKey<_ScrollingTranscriptScreenContentsState> _key = GlobalKey();
-  final _scrollController = AutoScrollController();
+  final _scrollController = ItemScrollController();
+  final _itemsPositionsListener = ItemPositionsListener.create();
   bool _isAutoScrolling = false;
 
   @override
   void initState() {
     super.initState();
-    final index = ref.read(transcriptIndexControllerProvider);
-    _scrollToIndex(index);
-    _scrollController.addListener(_maybeDisableAutoScroll);
+    _itemsPositionsListener.itemPositions.addListener(_maybeDisableAutoScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_maybeDisableAutoScroll);
-    _scrollController.dispose();
+    _itemsPositionsListener.itemPositions.removeListener(
+      _maybeDisableAutoScroll,
+    );
     super.dispose();
   }
 
-  /// Scroll to the given index of the transcript.
-  ///
-  /// Sets [_isAutoScrolling] to [true] just before scrolling and then back to
-  /// [false] when complete, so as not to accidentally disable auto scrolling
-  /// when [_onScroll] is called.
-  void _scrollToIndex(int? index) {
+  Future<void> _scrollToItem(int? index) async {
     final enableAutoScroll = ref.read(enableAutoScrollServiceProvider);
-    if (enableAutoScroll && index != null) {
+    if (enableAutoScroll && index != null && !_isAutoScrolling && mounted) {
       _isAutoScrolling = true;
-      _scrollController
-          .scrollToIndex(
-            index,
-            preferPosition: AutoScrollPosition.middle,
-            duration: Config.scrollDuration,
-          )
-          .then((_) {
-            _isAutoScrolling = false;
-          });
-    }
-  }
 
-  /// Disables auto scroll upon manual scroll.
-  ///
-  /// When a user scrolls the transcript manually disable auto scrolling if it
-  /// is enabled, audio is currently playing, and this feature is enabled by the
-  /// customer.
-  void _maybeDisableAutoScroll() async {
-    if (!_isAutoScrolling) {
-      final autoScrollEnabled = ref.read(enableAutoScrollServiceProvider);
-      final currentlyPlaying = await ref.read(
-        kantanPlaybackStateStreamProvider.future,
-      );
-      if (autoScrollEnabled &&
-          currentlyPlaying == KantanPlaybackState.playing &&
-          Config.disableAutoScrollOnUserScroll) {
-        ref
-            .read(enableAutoScrollServiceProvider.notifier)
-            .setEnableAutoScroll(false);
+      try {
+        await _scrollController.scrollTo(
+          index: index,
+          duration: Config.scrollDuration,
+          alignment: Config.autoScrollTranscriptAlignment,
+        );
+        // In the rare occurrence that the transcript moves to a new line before
+        // the scrolling animation completes, this delay prevents
+        // `_maybeDisableAutoScroll` from doing its job erroneously.
+        await Future.delayed(Config.transcriptDebounce);
+      } finally {
+        if (mounted) {
+          _isAutoScrolling = false;
+        }
       }
     }
   }
 
-  /// Immediate auto scrolls when auto scrolling is toggled on.
-  ///
-  /// If enable auto scroll changes from [false] to [true], immediately scrolls
-  /// to the portion of the transcript associated with position of the current
-  /// track.
-  void _enabler(bool enable) {
-    if (enable) {
-      final index = ref.read(transcriptIndexControllerProvider);
-      _scrollToIndex(index);
-    }
+  /// If the user manually scrolls while audio is playing, then disable auto
+  /// scrolling. This feature is toggleable according to client preferences.
+  void _maybeDisableAutoScroll() {
+    if (_isAutoScrolling || !mounted) return;
+
+    scheduleMicrotask(() async {
+      final isPlaying =
+          await ref.read(
+            kantanPlaybackStateStreamProvider.future,
+          ) ==
+          KantanPlaybackState.playing;
+
+      if (mounted && isPlaying && Config.disableAutoScrollOnUserScroll) {
+        ref
+            .read(enableAutoScrollServiceProvider.notifier)
+            .setEnableAutoScroll(false);
+      }
+    });
   }
 
-  void _reset() {
-    setState(() {
-      _key = GlobalKey();
-    });
+  /// Seek to the position in the audio file that corresponds to the beginning
+  /// of the text in the line at the given index.
+  void _onTap(int index) {
+    // Although you can be highly confident that the provided index will always
+    // be within the range of the list of lines, in the very unlikely case that,
+    // for example, the transcript has incorrect timestamps that messes with the
+    // index logic, then this function won't accidentally cause an out of range
+    // error.
+    if (index >= 0 && index < widget.transcript.lines.length) {
+      final position = widget.transcript.lines[index].startTime;
+      if (position != null) {
+        ref.read(audioHandlerProvider).requireValue.seek(position);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = ref.watch(transcriptIndexControllerProvider);
+    final showTranslation = ref.watch(showTranslationServiceProvider);
+    final canSeeTranslation = ref.watch(canSeeTranscriptServiceProvider);
+    final shouldShowTranslation = showTranslation && canSeeTranslation;
+
     ref.listen<int?>(
       transcriptIndexControllerProvider,
-      (_, index) => _scrollToIndex(index),
+      (_, index) => _scrollToItem(index),
     );
-    ref.listen(
+
+    ref.listen<bool>(
       enableAutoScrollServiceProvider,
-      (_, enable) => _enabler(enable),
+      (_, enabled) {
+        if (enabled) _scrollToItem(currentIndex);
+      },
     );
-    final currentIndex = ref.watch(transcriptIndexControllerProvider);
-    // ref.listen(showTranslationServiceProvider, (_, show) {
-    //   _reset();
-    // });
-    final scale = ref.watch(transcriptScaleServiceProvider);
-    final showTranslation = ref.watch(showTranslationServiceProvider);
-    final canSeeTranslation = ref.watch(canSeeTranslationServiceProvider);
-    return ListView.builder(
-      controller: _scrollController,
+
+    return ScrollablePositionedList.builder(
       itemCount: widget.transcript.lines.length,
+      physics: const ClampingScrollPhysics(),
+      itemScrollController: _scrollController,
+      itemPositionsListener: _itemsPositionsListener,
       itemBuilder: (context, index) {
-        return AutoScrollTag(
-          key: ValueKey(index),
-          controller: _scrollController,
+        return TranscriptLineWidget(
           index: index,
-          child: TranscriptLineWidget(
-            index: index,
-            transcript: widget.transcript,
-            translation: showTranslation && canSeeTranslation
-                ? widget.translation
-                : null,
-            selected: index == currentIndex,
-            scale: scale,
-            onTap: () => ref
-                .read(audioHandlerProvider)
-                .requireValue
-                .seek(widget.transcript.lines[index].startTime!),
-          ),
+          transcript: widget.transcript,
+          translation: shouldShowTranslation ? widget.translation : null,
+          selected: index == currentIndex,
+          onTap: () => _onTap(index),
         );
       },
     );
