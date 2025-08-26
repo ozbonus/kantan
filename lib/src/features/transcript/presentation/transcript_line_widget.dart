@@ -24,6 +24,7 @@ class TranscriptLineWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final style = Theme.of(context).extension<TranscriptLineWidgetStyle>();
+    final borderRadius = BorderRadius.circular(style?.borderRadius ?? 0);
     final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
 
     final TextScaler? textScaler = scale != null
@@ -74,10 +75,10 @@ class TranscriptLineWidget extends ConsumerWidget {
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
         color: selected ? style?.activeColor : null,
-        borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+        borderRadius: borderRadius,
       ),
       foregroundDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+        borderRadius: borderRadius,
         border: selected
             ? Border.all(
                 width: style?.borderWidth ?? 0,
@@ -90,7 +91,7 @@ class TranscriptLineWidget extends ConsumerWidget {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           splashColor: style?.splashColor,
-          borderRadius: BorderRadius.circular(style?.borderRadius ?? 0),
+          borderRadius: borderRadius,
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(
