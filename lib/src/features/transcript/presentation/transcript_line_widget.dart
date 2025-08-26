@@ -55,7 +55,7 @@ class TranscriptLineWidget extends ConsumerWidget {
           )
         : null;
 
-    Widget transcriptTextWidget = Text(
+    final Widget transcriptTextWidget = Text(
       transcript.lines[index].text,
       style: baseTextStyle?.merge(style?.transcriptTextStyle),
       textScaler: textScaler,
