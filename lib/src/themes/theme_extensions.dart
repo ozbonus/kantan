@@ -578,22 +578,31 @@ class TranscriptProgressSliderStyle
 class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
   const TranscriptScreenStyle({
     this.backgroundColor,
+    this.bottomPaddingFactor,
     this.appBarElevation,
     this.appBarScrolledUnderElevation,
   });
 
   final Color? backgroundColor;
+  final double? bottomPaddingFactor;
   final double? appBarElevation;
   final double? appBarScrolledUnderElevation;
+
+  static const defaultBottomPaddingFactor = 0.3;
+
+  double get effectiveBottomPaddingFactor =>
+      bottomPaddingFactor ?? defaultBottomPaddingFactor;
 
   @override
   TranscriptScreenStyle copyWith({
     Color? backgroundColor,
+    double? bottomPaddingFactor,
     double? appBarElevation,
     double? appBarScrolledUnderElevation,
   }) {
     return TranscriptScreenStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
+      bottomPaddingFactor: bottomPaddingFactor ?? this.bottomPaddingFactor,
       appBarElevation: appBarElevation ?? this.appBarElevation,
       appBarScrolledUnderElevation:
           appBarScrolledUnderElevation ?? this.appBarScrolledUnderElevation,
@@ -611,6 +620,11 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
 
     return TranscriptScreenStyle(
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
+      bottomPaddingFactor: lerpDouble(
+        bottomPaddingFactor,
+        other.bottomPaddingFactor,
+        t,
+      ),
       appBarElevation: lerpDouble(appBarElevation, other.appBarElevation, t),
       appBarScrolledUnderElevation: lerpDouble(
         appBarScrolledUnderElevation,
