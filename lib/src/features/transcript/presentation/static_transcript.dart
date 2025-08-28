@@ -16,6 +16,7 @@ class StaticTranscript extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
       itemCount: transcript.lines.length,
+      physics: const ClampingScrollPhysics(),
       itemBuilder: (context, index) => TranscriptLineWidget(
         index: index,
         transcript: transcript,
