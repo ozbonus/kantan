@@ -14,9 +14,14 @@ class StaticTranscript extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final bottomPadding = screenHeight / 3;
     return ListView.builder(
       itemCount: transcript.lines.length,
       physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.only(
+        bottom: bottomPadding,
+      ),
       itemBuilder: (context, index) => TranscriptLineWidget(
         index: index,
         transcript: transcript,
