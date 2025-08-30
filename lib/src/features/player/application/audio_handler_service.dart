@@ -276,7 +276,7 @@ class AudioHandlerService extends BaseAudioHandler {
   @override
   Future<void> seek(Duration position) async => _player.seek(position);
 
-  // just_audio may briefly report an errorenous current position when the
+  // just_audio may briefly report an erroneous current position when the
   // default implementations of fast forward and rewind go beyond the bounds of
   // the current audio source. For example, rewinding 5 seconds when the current
   // position is 3 seconds. Thus the custom implementations of these two methods
