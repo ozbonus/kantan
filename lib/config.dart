@@ -16,7 +16,8 @@ class Config {
   static int get smallButtonGridBreakpoint => 400;
 
   static Duration get saveStateUpdateDuration => const Duration(seconds: 2);
-
+  static Duration transcriptDebounce = const Duration(milliseconds: 500);
+  static double autoScrollTranscriptAlignment = 0.4;
   static Duration get rewindDuration => const Duration(seconds: 5);
   static Duration get fastForwardDuration => const Duration(seconds: 5);
 

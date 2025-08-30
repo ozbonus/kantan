@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kantan/src/features/player/application/audio_handler_service.dart';
+import 'package:kantan/src/features/transcript/presentation/debounced_position_data_stream.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_controller.dart';
 
 part 'transcript_index_controller.g.dart';
@@ -17,31 +17,26 @@ part 'transcript_index_controller.g.dart';
 /// * the index is out of bounds of the transcript (possible when seeking)
 @riverpod
 int? transcriptIndexController(Ref ref) {
-  return ref
-      .watch(transcriptControllerProvider)
-      .whenOrNull(
-        error: (e, st) => throw Exception('$e $st'),
-        data: (transcriptData) {
-          final transcript = transcriptData.transcript;
-          if (transcript == null || transcript.endTimes == null) {
-            return null;
-          }
-          return ref
-              .watch(positionDataStreamProvider)
-              .whenOrNull(
-                data: (positionData) {
-                  final currentPosition = positionData.position;
-                  final endTimes = transcript.endTimes!;
-                  final index = endTimes.indexWhere(
-                    (endTime) => currentPosition < endTime,
-                  );
-                  if (index >= 0) {
-                    return index;
-                  } else {
-                    return null;
-                  }
-                },
-              );
+  final transcriptValue = ref.watch(transcriptControllerProvider);
+  final positionDataValue = ref.watch(debouncedPositionStreamProvider);
+
+  return transcriptValue.whenOrNull(
+    data: (transcriptData) {
+      final transcript = transcriptData.transcript;
+      if (transcript?.endTimes == null) return null;
+
+      return positionDataValue.whenOrNull(
+        data: (positionData) {
+          final currentPosition = positionData.position;
+          final endTimes = transcript!.endTimes!;
+
+          final index = endTimes.indexWhere(
+            (endTime) => currentPosition < endTime,
+          );
+
+          return index >= 0 ? index : null;
         },
       );
+    },
+  );
 }
