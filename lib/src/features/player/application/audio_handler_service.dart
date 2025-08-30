@@ -51,7 +51,7 @@ class AudioHandlerService extends BaseAudioHandler {
     try {
       await _player.setAudioSource(_playlist);
     } catch (e, st) {
-      throw Exception('AudioHandlerService._loadEmptyPlaylist(): $e $st');
+      throw Exception('Failed to load empty playlist: $e $st');
     }
   }
 
