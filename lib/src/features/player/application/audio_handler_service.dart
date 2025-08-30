@@ -35,7 +35,7 @@ class AudioHandlerService extends BaseAudioHandler {
     KantanPlaybackState.loading,
   );
 
-  late Timer _saveStateTimer;
+  Timer? _saveStateTimer;
   late Ref ref;
 
   @visibleForTesting
@@ -151,7 +151,7 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   // audio_service relies on MediaItem, but just_audio relies on AudioSource. In
-  // a Kantan Player app the tracks repository provdies a list of MediaItems
+  // a Kantan Player app the tracks repository provides a list of MediaItems
   // wherein the required id field is the same as the local asset's location.
   AudioSource _createAudioSourceFromMediaItem(MediaItem item) {
     final uri = 'asset:///packages/${Config.assetsPackage}/assets/${item.id}';
@@ -159,7 +159,7 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   Future<void> dispose() async {
-    _saveStateTimer.cancel();
+    _saveStateTimer?.cancel();
     await _player.dispose();
   }
 
