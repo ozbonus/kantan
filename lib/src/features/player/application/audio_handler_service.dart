@@ -34,6 +34,7 @@ class AudioHandlerService extends BaseAudioHandler {
   final kantanPlaybackState = BehaviorSubject.seeded(
     KantanPlaybackState.loading,
   );
+  final List<StreamSubscription> _subscriptions = [];
 
   Timer? _saveStateTimer;
   late Ref ref;
@@ -56,13 +57,14 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   void _listenForCurrentSongIndexChanges() {
-    _player.currentIndexStream.listen((index) {
+    final subscription = _player.currentIndexStream.listen((index) {
       final playlist = queue.value;
       if (index == null || playlist.isEmpty) {
         return;
       }
       mediaItem.add(playlist[index]);
     });
+    _subscriptions.add(subscription);
   }
 
   // audio_service needs a duration in order to make the system ui progress bar.
@@ -73,7 +75,7 @@ class AudioHandlerService extends BaseAudioHandler {
   // requires also updating the queue, according the semi-official tutorial.
   // TODO: Can this made shorter or avoided altogether?
   void _listenForDurationChanges() {
-    _player.durationStream.listen((duration) {
+    final subscription = _player.durationStream.listen((duration) {
       final index = _player.currentIndex;
       final newQueue = queue.value;
       if (index == null || newQueue.isEmpty) return;
@@ -83,10 +85,13 @@ class AudioHandlerService extends BaseAudioHandler {
       queue.add(newQueue);
       mediaItem.add(newMediaItem);
     });
+    _subscriptions.add(subscription);
   }
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
-    _player.playbackEventStream.listen((PlaybackEvent event) {
+    final subscription = _player.playbackEventStream.listen((
+      PlaybackEvent event,
+    ) {
       final playing = _player.playing;
       playbackState.add(
         playbackState.value.copyWith(
@@ -116,6 +121,7 @@ class AudioHandlerService extends BaseAudioHandler {
         ),
       );
     });
+    _subscriptions.add(subscription);
   }
 
   void loadState(SettingsRepository settingsRepository) async {
@@ -160,6 +166,10 @@ class AudioHandlerService extends BaseAudioHandler {
 
   Future<void> dispose() async {
     _saveStateTimer?.cancel();
+    for (final subscription in _subscriptions) {
+      await subscription.cancel();
+    }
+    _subscriptions.clear();
     await _player.dispose();
   }
 
@@ -360,7 +370,7 @@ class AudioHandlerService extends BaseAudioHandler {
   Stream<RepeatMode> get repeatModeStream => _repeatMode.stream;
 
   void _listenForPlaybackStateChanges() {
-    playbackState.listen((state) {
+    final subscription = playbackState.listen((state) {
       final processingState = state.processingState;
 
       if (state.playing) {
@@ -381,6 +391,7 @@ class AudioHandlerService extends BaseAudioHandler {
           kantanPlaybackState.add(KantanPlaybackState.error);
       }
     });
+    _subscriptions.add(subscription);
   }
 
   PositionData get lastPositionData => PositionData(
