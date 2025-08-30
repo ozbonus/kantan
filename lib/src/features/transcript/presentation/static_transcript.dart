@@ -16,11 +16,14 @@ class StaticTranscript extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final style = Theme.of(context).extension<TranscriptScreenStyle>();
+    // Provide some bottom padding in case a use would like to scroll the final
+    // items to the middle of the screen.
     final screenHeight = MediaQuery.sizeOf(context).height;
     final bottomPaddingFactor =
         style?.bottomPaddingFactor ??
         TranscriptScreenStyle.defaultBottomPaddingFactor;
     final bottomPadding = screenHeight * bottomPaddingFactor;
+
     return ListView.builder(
       itemCount: transcript.lines.length,
       physics: const ClampingScrollPhysics(),
