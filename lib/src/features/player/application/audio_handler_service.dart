@@ -300,7 +300,6 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> rewind() async {
     final currentDuration = _player.duration;
     final rewindDuration = Config.rewindDuration;
-    debugPrint(rewindDuration.toString());
     final desiredPosition = _player.position - rewindDuration;
     if (currentDuration == null) {
       return;
