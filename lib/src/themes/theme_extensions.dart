@@ -590,9 +590,6 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
 
   static const defaultBottomPaddingFactor = 0.3;
 
-  double get effectiveBottomPaddingFactor =>
-      bottomPaddingFactor ?? defaultBottomPaddingFactor;
-
   @override
   TranscriptScreenStyle copyWith({
     Color? backgroundColor,
