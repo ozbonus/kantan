@@ -284,8 +284,7 @@ class AudioHandlerService extends BaseAudioHandler {
   @override
   Future<void> fastForward() async {
     final currentDuration = _player.duration;
-    final fastForwardDuration = Config.rewindDuration;
-    final desiredPosition = _player.position + fastForwardDuration;
+    final desiredPosition = _player.position + Config.fastForwardDuration;
     if (currentDuration == null) {
       return;
     } else if (desiredPosition < currentDuration) {
