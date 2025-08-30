@@ -17,6 +17,9 @@ android/key.properties
 .swiftpm/
 migrate_working_dir/
 
+# Generated files
+*.g.dart
+
 # IntelliJ related
 *.iml
 *.ipr
