@@ -250,10 +250,20 @@ class AudioHandlerService extends BaseAudioHandler {
   // always return true when AudioPlayer.loopMode is set to any of the repeating
   // versions. This leads to a wrong result when playing the first or last track
   // in a playlist.
-  bool get hasNext => _player.currentIndex! < _player.sequence!.length - 1;
+  bool get hasNext {
+    final currentIndex = _player.currentIndex;
+    final sequenceLength = _player.sequence?.length;
+    return currentIndex != null &&
+        sequenceLength != null &&
+        currentIndex < sequenceLength - 1;
+  }
 
   // just_audio's hasPrevious getter suffers the same issue as its hasNext.
-  bool get hasPrevious => _player.currentIndex! > 0;
+  // bool get hasPrevious => _player.currentIndex! > 0;
+  bool get hasPrevious {
+    final currentIndex = _player.currentIndex;
+    return currentIndex != null && currentIndex > 0;
+  }
 
   // The seekToNext and seekToPrevious methods that are built into just_audio
   // exhibit bizarre, yet nevertheless intentional behavior when
