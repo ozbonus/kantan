@@ -28,7 +28,7 @@ class TranscriptScreenContents extends ConsumerWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: child,
             ),
           ),
