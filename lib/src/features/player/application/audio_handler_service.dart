@@ -62,7 +62,11 @@ class AudioHandlerService extends BaseAudioHandler {
       (index) {
         try {
           final playlist = queue.value;
-          if (index == null || playlist.isEmpty) return;
+
+          if (index == null || playlist.isEmpty || index >= playlist.length) {
+            return;
+          }
+
           mediaItem.add(playlist[index]);
         } catch (error, stackTrace) {
           log('Error listening for song index changes: $error');
