@@ -189,6 +189,8 @@ class AudioHandlerService extends BaseAudioHandler {
     }
   }
 
+  /// Save current queue index, position, speed, and repeat mode at regular
+  /// intervals.
   void saveState(SettingsRepository settingsRepository) {
     _saveStateTimer?.cancel();
     _saveStateTimer = Timer.periodic(
