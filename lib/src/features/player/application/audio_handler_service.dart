@@ -550,6 +550,8 @@ FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
     await audioHandler.loadState(settings);
     audioHandler.saveState(settings);
 
+    ref.onDispose(() async => await audioHandler.dispose());
+
     return audioHandler;
   } catch (error, stackTrace) {
     log('Error initializing audio handler: $error');
