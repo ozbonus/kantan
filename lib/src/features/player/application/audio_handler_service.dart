@@ -198,6 +198,7 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   void saveState(SettingsRepository settingsRepository) {
+    _saveStateTimer?.cancel();
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
       (timer) async {
@@ -291,6 +292,7 @@ class AudioHandlerService extends BaseAudioHandler {
 
   @override
   Future<void> stop() async {
+    _saveStateTimer?.cancel();
     await _player.dispose();
     await super.stop();
   }
