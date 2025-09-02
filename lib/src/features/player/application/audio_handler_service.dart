@@ -158,7 +158,7 @@ class AudioHandlerService extends BaseAudioHandler {
     _subscriptions.add(subscription);
   }
 
-  void loadState(SettingsRepository settingsRepository) async {
+  Future<void> loadState(SettingsRepository settingsRepository) async {
     final queueIndex = settingsRepository.queueIndex;
     final position = settingsRepository.position;
     final speed = settingsRepository.speed;
