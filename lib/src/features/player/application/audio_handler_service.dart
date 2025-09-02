@@ -83,7 +83,7 @@ class AudioHandlerService extends BaseAudioHandler {
   // listens for when the duration is ready and swaps out the current MediaItem
   // for a new version that has the correct duration. Changing the MediaItem
   // requires also updating the queue, according the semi-official tutorial.
-  // TODO: Can this made shorter or avoided altogether?
+  // This is recommended by the package's author.
   void _listenForDurationChanges() {
     final subscription = _player.durationStream.listen(
       (duration) {
