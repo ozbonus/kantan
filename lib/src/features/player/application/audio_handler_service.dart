@@ -159,25 +159,37 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   Future<void> loadState(SettingsRepository settingsRepository) async {
-    final queueIndex = settingsRepository.queueIndex;
-    final position = settingsRepository.position;
-    final speed = settingsRepository.speed;
-    final repeatMode = settingsRepository.repeatMode;
+    try {
+      final queueIndex = settingsRepository.queueIndex;
+      final position = settingsRepository.position;
+      final speed = settingsRepository.speed;
+      final repeatMode = settingsRepository.repeatMode;
 
-    // Check to make sure the saved queue index is not out of bounds in the rare
-    // event that a new version of the app changes the number of tracks.
-    if (queueIndex >= 0 && queueIndex < queue.value.length) {
-      await _player.seek(position, index: queueIndex);
-    }
+      // Check to make sure the saved queue index is not out of bounds in the rare
+      // event that a new version of the app changes the number of tracks.
+      if (queueIndex >= 0 && queueIndex < queue.value.length) {
+        await _player.seek(position, index: queueIndex);
+      }
 
-    await _player.setSpeed(speed);
-    switch (repeatMode) {
-      case RepeatMode.none:
-        await setRepeatMode(AudioServiceRepeatMode.none);
-      case RepeatMode.one:
-        await setRepeatMode(AudioServiceRepeatMode.one);
-      case RepeatMode.all:
-        await setRepeatMode(AudioServiceRepeatMode.all);
+      // Check to make sure that the saved speed is within the bounds of the
+      // minimum and maximum speeds defined in the config file. It's possible that
+      // a new version of the app might change those settings. If the saved speed
+      // is out of bounds, then it will be automatically set to 1.0x.
+      if (speed >= Config.minimumSpeed && speed <= Config.maximumSpeed) {
+        await _player.setSpeed(speed);
+      }
+
+      switch (repeatMode) {
+        case RepeatMode.none:
+          await setRepeatMode(AudioServiceRepeatMode.none);
+        case RepeatMode.one:
+          await setRepeatMode(AudioServiceRepeatMode.one);
+        case RepeatMode.all:
+          await setRepeatMode(AudioServiceRepeatMode.all);
+      }
+    } catch (error, stackTrace) {
+      log('Error while loading state: $error');
+      log('Stack trace: $stackTrace');
     }
   }
 
