@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
@@ -34,9 +35,9 @@ class AudioHandlerService extends BaseAudioHandler {
   final kantanPlaybackState = BehaviorSubject.seeded(
     KantanPlaybackState.loading,
   );
+  final List<StreamSubscription> _subscriptions = [];
 
-  late Timer _saveStateTimer;
-  late Ref ref;
+  Timer? _saveStateTimer;
 
   @visibleForTesting
   @protected
@@ -50,19 +51,31 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> _loadEmptyPlaylist() async {
     try {
       await _player.setAudioSource(_playlist);
-    } catch (e, st) {
-      throw Exception('AudioHandlerService._loadEmptyPlaylist(): $e $st');
+    } catch (error, stackTrace) {
+      _logError('loading empty playlist', error, stackTrace);
     }
   }
 
   void _listenForCurrentSongIndexChanges() {
-    _player.currentIndexStream.listen((index) {
-      final playlist = queue.value;
-      if (index == null || playlist.isEmpty) {
-        return;
-      }
-      mediaItem.add(playlist[index]);
-    });
+    final subscription = _player.currentIndexStream.listen(
+      (index) {
+        try {
+          final playlist = queue.value;
+
+          if (index == null || playlist.isEmpty || index >= playlist.length) {
+            return;
+          }
+
+          mediaItem.add(playlist[index]);
+        } catch (error, stackTrace) {
+          _logError('listening for song index changes', error, stackTrace);
+        }
+      },
+      onError: (error, stackTrace) {
+        _logStreamError('currentIndexStream', error, stackTrace);
+      },
+    );
+    _subscriptions.add(subscription);
   }
 
   // audio_service needs a duration in order to make the system ui progress bar.
@@ -71,95 +84,154 @@ class AudioHandlerService extends BaseAudioHandler {
   // listens for when the duration is ready and swaps out the current MediaItem
   // for a new version that has the correct duration. Changing the MediaItem
   // requires also updating the queue, according the semi-official tutorial.
-  // TODO: Can this made shorter or avoided altogether?
+  // This is recommended by the package's author.
   void _listenForDurationChanges() {
-    _player.durationStream.listen((duration) {
-      final index = _player.currentIndex;
-      final newQueue = queue.value;
-      if (index == null || newQueue.isEmpty) return;
-      final oldMediaItem = newQueue[index];
-      final newMediaItem = oldMediaItem.copyWith(duration: duration);
-      newQueue[index] = newMediaItem;
-      queue.add(newQueue);
-      mediaItem.add(newMediaItem);
-    });
+    final subscription = _player.durationStream.listen(
+      (duration) {
+        try {
+          final index = _player.currentIndex;
+          final newQueue = queue.value;
+          if (index == null || newQueue.isEmpty) return;
+          final oldMediaItem = newQueue[index];
+          final newMediaItem = oldMediaItem.copyWith(duration: duration);
+          newQueue[index] = newMediaItem;
+          queue.add(newQueue);
+          mediaItem.add(newMediaItem);
+        } catch (error, stackTrace) {
+          _logError('listening for duration changes', error, stackTrace);
+        }
+      },
+      onError: (error, stackTrace) {
+        _logStreamError('durationStream', error, stackTrace);
+      },
+    );
+    _subscriptions.add(subscription);
   }
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
-    _player.playbackEventStream.listen((PlaybackEvent event) {
-      final playing = _player.playing;
-      playbackState.add(
-        playbackState.value.copyWith(
-          controls: [
-            MediaControl.skipToPrevious,
-            MediaControl.rewind,
-            playing ? MediaControl.pause : MediaControl.play,
-            MediaControl.fastForward,
-            MediaControl.skipToNext,
-          ],
-          systemActions: const {
-            MediaAction.seek,
-          },
-          androidCompactActionIndices: const [0, 2, 4],
-          processingState: const {
-            ProcessingState.idle: AudioProcessingState.idle,
-            ProcessingState.loading: AudioProcessingState.loading,
-            ProcessingState.buffering: AudioProcessingState.buffering,
-            ProcessingState.ready: AudioProcessingState.ready,
-            ProcessingState.completed: AudioProcessingState.completed,
-          }[_player.processingState]!,
-          playing: playing,
-          updatePosition: _player.position,
-          bufferedPosition: _player.bufferedPosition,
-          speed: _player.speed,
-          queueIndex: event.currentIndex,
-        ),
-      );
-    });
+    final subscription = _player.playbackEventStream.listen(
+      (PlaybackEvent event) {
+        try {
+          final playing = _player.playing;
+          playbackState.add(
+            playbackState.value.copyWith(
+              controls: [
+                MediaControl.skipToPrevious,
+                MediaControl.rewind,
+                playing ? MediaControl.pause : MediaControl.play,
+                MediaControl.fastForward,
+                MediaControl.skipToNext,
+              ],
+              systemActions: const {
+                MediaAction.seek,
+              },
+              androidCompactActionIndices: const [0, 2, 4],
+              processingState:
+                  const {
+                    ProcessingState.idle: AudioProcessingState.idle,
+                    ProcessingState.loading: AudioProcessingState.loading,
+                    ProcessingState.buffering: AudioProcessingState.buffering,
+                    ProcessingState.ready: AudioProcessingState.ready,
+                    ProcessingState.completed: AudioProcessingState.completed,
+                  }[_player.processingState] ??
+                  AudioProcessingState.idle,
+              playing: playing,
+              updatePosition: _player.position,
+              bufferedPosition: _player.bufferedPosition,
+              speed: _player.speed,
+              queueIndex: event.currentIndex,
+            ),
+          );
+        } catch (error, stackTrace) {
+          _logError('notifying handler of playback event', error, stackTrace);
+        }
+      },
+      onError: (error, stackTrace) {
+        _logStreamError('playbackEventStream', error, stackTrace);
+      },
+    );
+    _subscriptions.add(subscription);
   }
 
-  void loadState(SettingsRepository settingsRepository) async {
-    final queueIndex = settingsRepository.queueIndex;
-    final position = settingsRepository.position;
-    final speed = settingsRepository.speed;
-    final repeatMode = settingsRepository.repeatMode;
+  Future<void> loadState(SettingsRepository settingsRepository) async {
+    try {
+      final queueIndex = settingsRepository.queueIndex;
+      final position = settingsRepository.position;
+      final speed = settingsRepository.speed;
+      final repeatMode = settingsRepository.repeatMode;
 
-    await _player.seek(position, index: queueIndex);
-    await _player.setSpeed(speed);
-    switch (repeatMode) {
-      case RepeatMode.none:
-        await setRepeatMode(AudioServiceRepeatMode.none);
-      case RepeatMode.one:
-        await setRepeatMode(AudioServiceRepeatMode.one);
-      case RepeatMode.all:
-        await setRepeatMode(AudioServiceRepeatMode.all);
+      // Check to make sure the saved queue index is not out of bounds in the
+      // rare event that a new version of the app changes the number of tracks.
+      if (queueIndex >= 0 && queueIndex < queue.value.length) {
+        await _player.seek(position, index: queueIndex);
+      }
+
+      // Check to make sure that the saved speed is within the bounds of the
+      // minimum and maximum speeds defined in the config file. It's possible
+      // that a new version of the app might change those settings. If the saved
+      // speed is out of bounds, then it will be automatically set to 1.0x.
+      if (speed >= Config.minimumSpeed && speed <= Config.maximumSpeed) {
+        await _player.setSpeed(speed);
+      }
+
+      switch (repeatMode) {
+        case RepeatMode.none:
+          await setRepeatMode(AudioServiceRepeatMode.none);
+        case RepeatMode.one:
+          await setRepeatMode(AudioServiceRepeatMode.one);
+        case RepeatMode.all:
+          await setRepeatMode(AudioServiceRepeatMode.all);
+      }
+    } catch (error, stackTrace) {
+      _logError('loading state', error, stackTrace);
     }
   }
 
+  /// Save current queue index, position, speed, and repeat mode at regular
+  /// intervals.
   void saveState(SettingsRepository settingsRepository) {
+    _saveStateTimer?.cancel();
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
       (timer) async {
-        settingsRepository.setQueueIndex(
-          _player.currentIndex ?? Config.defaultQueueIndex,
-        );
-        settingsRepository.setPosition(_player.position);
-        settingsRepository.setSpeed(_player.speed);
-        settingsRepository.setRepeatMode(_repeatMode.value);
+        try {
+          settingsRepository.setQueueIndex(
+            _player.currentIndex ?? Config.defaultQueueIndex,
+          );
+          settingsRepository.setPosition(_player.position);
+          settingsRepository.setSpeed(_player.speed);
+          settingsRepository.setRepeatMode(_repeatMode.value);
+        } catch (error, stackTrace) {
+          _logError('saving state with timer', error, stackTrace);
+        }
       },
     );
   }
 
   // audio_service relies on MediaItem, but just_audio relies on AudioSource. In
-  // a Kantan Player app the tracks repository provdies a list of MediaItems
+  // a Kantan Player app the tracks repository provides a list of MediaItems
   // wherein the required id field is the same as the local asset's location.
   AudioSource _createAudioSourceFromMediaItem(MediaItem item) {
     final uri = 'asset:///packages/${Config.assetsPackage}/assets/${item.id}';
     return AudioSource.uri(Uri.parse(uri));
   }
 
+  void _logError(String operation, Object error, StackTrace stackTrace) {
+    log('Error $operation: $error');
+    log('Stack trace: $stackTrace');
+  }
+
+  void _logStreamError(String streamName, Object error, StackTrace stackTrace) {
+    log('Error in $streamName: $error');
+    log('Stack trace: $stackTrace');
+  }
+
   Future<void> dispose() async {
-    _saveStateTimer.cancel();
+    _saveStateTimer?.cancel();
+    for (final subscription in _subscriptions) {
+      await subscription.cancel();
+    }
+    _subscriptions.clear();
     await _player.dispose();
   }
 
@@ -180,36 +252,58 @@ class AudioHandlerService extends BaseAudioHandler {
 
   @override
   Future<void> addQueueItem(MediaItem mediaItem) async {
-    // Manage just_audio.
-    final AudioSource audioSource = _createAudioSourceFromMediaItem(mediaItem);
-    _playlist.add(audioSource);
+    try {
+      // Manage just_audio.
+      final AudioSource audioSource = _createAudioSourceFromMediaItem(
+        mediaItem,
+      );
+      _playlist.add(audioSource);
 
-    // Manage audio_service.
-    final newQueue = queue.value..add(mediaItem);
-    queue.add(newQueue);
+      // Manage audio_service.
+      final newQueue = queue.value..add(mediaItem);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('adding a queue item', error, stackTrace);
+    }
   }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
-    // Manage just_audio.
-    final List<AudioSource> audioSources = mediaItems.map((mediaItem) {
-      return _createAudioSourceFromMediaItem(mediaItem);
-    }).toList();
-    _playlist.addAll(audioSources);
+    try {
+      // Manage just_audio.
+      final List<AudioSource> audioSources = mediaItems.map((mediaItem) {
+        return _createAudioSourceFromMediaItem(mediaItem);
+      }).toList();
+      _playlist.addAll(audioSources);
 
-    // Manage audio_service.
-    final newQueue = queue.value..addAll(mediaItems);
-    queue.add(newQueue);
+      // Manage audio_service.
+      final newQueue = queue.value..addAll(mediaItems);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('adding multiple queue items', error, stackTrace);
+    }
   }
 
   @override
   Future<void> removeQueueItemAt(int index) async {
-    // Manage just_audio.
-    _playlist.removeAt(index);
+    try {
+      final queueLength = queue.value.length;
+      if (index < 0 || index >= queueLength) {
+        log(
+          'Invalid index $index for removal from queue which has a length of $queueLength',
+        );
+        return;
+      }
 
-    // Manage audio_service.
-    final newQueue = queue.value..removeAt(index);
-    queue.add(newQueue);
+      // Manage just_audio.
+      _playlist.removeAt(index);
+
+      // Manage audio_service.
+      final newQueue = queue.value..removeAt(index);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('removing queue item at index $index', error, stackTrace);
+    }
   }
 
   // For some as yet unknown reason, we have to call this method after adding
@@ -226,6 +320,7 @@ class AudioHandlerService extends BaseAudioHandler {
 
   @override
   Future<void> stop() async {
+    _saveStateTimer?.cancel();
     await _player.dispose();
     await super.stop();
   }
@@ -240,10 +335,20 @@ class AudioHandlerService extends BaseAudioHandler {
   // always return true when AudioPlayer.loopMode is set to any of the repeating
   // versions. This leads to a wrong result when playing the first or last track
   // in a playlist.
-  bool get hasNext => _player.currentIndex! < _player.sequence!.length - 1;
+  bool get hasNext {
+    final currentIndex = _player.currentIndex;
+    final sequenceLength = _player.sequence?.length;
+    return currentIndex != null &&
+        sequenceLength != null &&
+        currentIndex < sequenceLength - 1;
+  }
 
   // just_audio's hasPrevious getter suffers the same issue as its hasNext.
-  bool get hasPrevious => _player.currentIndex! > 0;
+  // bool get hasPrevious => _player.currentIndex! > 0;
+  bool get hasPrevious {
+    final currentIndex = _player.currentIndex;
+    return currentIndex != null && currentIndex > 0;
+  }
 
   // The seekToNext and seekToPrevious methods that are built into just_audio
   // exhibit bizarre, yet nevertheless intentional behavior when
@@ -251,32 +356,31 @@ class AudioHandlerService extends BaseAudioHandler {
   // will seek back to the beginning of the currently-playing track, regardless
   // whether or not a previous or next track exists in the queue. Known issue.
   // https://github.com/ryanheise/just_audio/issues/862
+  /// Skip to the next track, if one exists, regardless of current loop mode.
   @override
   Future<void> skipToNext() async {
-    if (hasNext) {
-      final nextTrack = _player.currentIndex! + 1;
-      // TODO: Check that this call works properly being called just once.
+    final currentIndex = _player.currentIndex;
+    if (currentIndex != null && hasNext) {
+      final nextTrack = currentIndex + 1;
       await _player.seek(Duration.zero, index: nextTrack);
-    } else {
-      return;
     }
   }
 
+  /// Skip to the previous track, if one exists, regardless of current loop
+  /// mode.
   @override
   Future<void> skipToPrevious() async {
-    if (hasPrevious) {
-      final previousTrack = _player.currentIndex! - 1;
-      // TODO: Check that this call works properly being called just once.
+    final currentIndex = _player.currentIndex;
+    if (currentIndex != null && hasPrevious) {
+      final previousTrack = currentIndex - 1;
       await _player.seek(Duration.zero, index: previousTrack);
-    } else {
-      return;
     }
   }
 
   @override
   Future<void> seek(Duration position) async => _player.seek(position);
 
-  // just_audio may briefly report an errorenous current position when the
+  // just_audio may briefly report an erroneous current position when the
   // default implementations of fast forward and rewind go beyond the bounds of
   // the current audio source. For example, rewinding 5 seconds when the current
   // position is 3 seconds. Thus the custom implementations of these two methods
@@ -284,8 +388,7 @@ class AudioHandlerService extends BaseAudioHandler {
   @override
   Future<void> fastForward() async {
     final currentDuration = _player.duration;
-    final fastForwardDuration = Config.rewindDuration;
-    final desiredPosition = _player.position + fastForwardDuration;
+    final desiredPosition = _player.position + Config.fastForwardDuration;
     if (currentDuration == null) {
       return;
     } else if (desiredPosition < currentDuration) {
@@ -361,27 +464,37 @@ class AudioHandlerService extends BaseAudioHandler {
   Stream<RepeatMode> get repeatModeStream => _repeatMode.stream;
 
   void _listenForPlaybackStateChanges() {
-    playbackState.listen((state) {
-      final processingState = state.processingState;
+    final subscription = playbackState.listen(
+      (state) {
+        try {
+          final processingState = state.processingState;
 
-      if (state.playing) {
-        kantanPlaybackState.add(KantanPlaybackState.playing);
-        return;
-      }
+          if (state.playing) {
+            kantanPlaybackState.add(KantanPlaybackState.playing);
+            return;
+          }
 
-      switch (processingState) {
-        case AudioProcessingState.idle:
-        case AudioProcessingState.buffering:
-        case AudioProcessingState.loading:
-          kantanPlaybackState.add(KantanPlaybackState.loading);
-        case AudioProcessingState.ready:
-          kantanPlaybackState.add(KantanPlaybackState.paused);
-        case AudioProcessingState.completed:
-          kantanPlaybackState.add(KantanPlaybackState.completed);
-        case AudioProcessingState.error:
-          kantanPlaybackState.add(KantanPlaybackState.error);
-      }
-    });
+          switch (processingState) {
+            case AudioProcessingState.idle:
+            case AudioProcessingState.buffering:
+            case AudioProcessingState.loading:
+              kantanPlaybackState.add(KantanPlaybackState.loading);
+            case AudioProcessingState.ready:
+              kantanPlaybackState.add(KantanPlaybackState.paused);
+            case AudioProcessingState.completed:
+              kantanPlaybackState.add(KantanPlaybackState.completed);
+            case AudioProcessingState.error:
+              kantanPlaybackState.add(KantanPlaybackState.error);
+          }
+        } catch (error, stackTrace) {
+          _logError('listening for playback state changes', error, stackTrace);
+        }
+      },
+      onError: (error, stackTrace) {
+        _logStreamError('playbackState stream', error, stackTrace);
+      },
+    );
+    _subscriptions.add(subscription);
   }
 
   PositionData get lastPositionData => PositionData(
@@ -409,31 +522,40 @@ class AudioHandlerService extends BaseAudioHandler {
 
 @Riverpod(keepAlive: true)
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
-  final session = await AudioSession.instance;
-  await session.configure(const AudioSessionConfiguration.speech());
-  final audioHandler = await AudioService.init(
-    builder: () => AudioHandlerService(),
-    config: AudioServiceConfig(
-      androidNotificationChannelId: Config.channelId,
-      androidNotificationChannelName: Config.channelName,
-      // Setting androidStopForegroundOnPause would require the app the ask
-      // users to disable battery optimization for the app. Given that this
-      // app is meant to be accessible to young children and non-tech savvy
-      // adults, that's probably not a safe thing to ask.
-      androidStopForegroundOnPause: false,
-      androidNotificationIcon: 'drawable/text_to_speech',
-      rewindInterval: Config.rewindDuration,
-      fastForwardInterval: Config.fastForwardDuration,
-    ),
-  );
+  try {
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech());
+    final audioHandler = await AudioService.init(
+      builder: () => AudioHandlerService(),
+      config: AudioServiceConfig(
+        androidNotificationChannelId: Config.channelId,
+        androidNotificationChannelName: Config.channelName,
+        // Setting androidStopForegroundOnPause would require the app the ask
+        // users to disable battery optimization for the app. Given that this
+        // app is meant to be accessible to young children and non-tech savvy
+        // adults, that's probably not a safe thing to ask.
+        androidStopForegroundOnPause: false,
+        androidNotificationIcon: 'drawable/text_to_speech',
+        rewindInterval: Config.rewindDuration,
+        fastForwardInterval: Config.fastForwardDuration,
+      ),
+    );
 
-  final tracks = ref.watch(tracksRepositoryProvider).requireValue;
-  final settings = ref.watch(settingsRepositoryProvider).requireValue;
+    final tracks = ref.watch(tracksRepositoryProvider).requireValue;
+    final settings = ref.watch(settingsRepositoryProvider).requireValue;
 
-  audioHandler.loadTracks(tracks).then((_) => audioHandler.loadState(settings));
+    await audioHandler.loadTracks(tracks);
+    await audioHandler.loadState(settings);
+    audioHandler.saveState(settings);
 
-  audioHandler.saveState(settings);
-  return audioHandler;
+    ref.onDispose(() async => await audioHandler.dispose());
+
+    return audioHandler;
+  } catch (error, stackTrace) {
+    log('Error initializing audio handler: $error');
+    log('Stack trace: $stackTrace');
+    rethrow;
+  }
 }
 
 @riverpod
