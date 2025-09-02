@@ -108,13 +108,9 @@ class AudioHandlerService extends BaseAudioHandler {
     _subscriptions.add(subscription);
   }
 
-  // TODO: Add a try-catch block like the others then commit. After that,
-  // continue code review
   void _notifyAudioHandlerAboutPlaybackEvents() {
     final subscription = _player.playbackEventStream.listen(
-      (
-        PlaybackEvent event,
-      ) {
+      (PlaybackEvent event) {
         try {
           final playing = _player.playing;
           playbackState.add(
