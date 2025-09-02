@@ -38,7 +38,6 @@ class AudioHandlerService extends BaseAudioHandler {
   final List<StreamSubscription> _subscriptions = [];
 
   Timer? _saveStateTimer;
-  late Ref ref;
 
   @visibleForTesting
   @protected
