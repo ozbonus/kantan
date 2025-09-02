@@ -51,8 +51,9 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> _loadEmptyPlaylist() async {
     try {
       await _player.setAudioSource(_playlist);
-    } catch (e, st) {
-      throw Exception('Failed to load empty playlist: $e $st');
+    } catch (error, stackTrace) {
+      log('Error loading empty playlist: $error');
+      log('Stack trace: $stackTrace');
     }
   }
 
