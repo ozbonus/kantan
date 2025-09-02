@@ -798,6 +798,60 @@ class TranscriptScreenToggleStyle
   final ButtonStyle? inactive;
   final ButtonStyle? disabled;
 
+  factory TranscriptScreenToggleStyle.light(ColorScheme colorScheme) =>
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondary,
+          backgroundColor: colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 2.0,
+            color: colorScheme.secondary,
+          ),
+        ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+
+  factory TranscriptScreenToggleStyle.dark(ColorScheme colorScheme) =>
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondary,
+          backgroundColor: colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 2.0,
+            color: colorScheme.secondary,
+          ),
+        ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+
   @override
   TranscriptScreenToggleStyle copyWith({
     ButtonStyle? active,

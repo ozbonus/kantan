@@ -343,31 +343,7 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      TranscriptScreenToggleStyle(
-        active: IconButton.styleFrom(
-          foregroundColor: lightColorScheme.onSecondary,
-          backgroundColor: lightColorScheme.secondary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        inactive: IconButton.styleFrom(
-          foregroundColor: lightColorScheme.onSecondaryContainer,
-          backgroundColor: lightColorScheme.secondaryContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          side: BorderSide(
-            width: 2.0,
-            color: lightColorScheme.secondary,
-          ),
-        ),
-        disabled: IconButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ),
+      TranscriptScreenToggleStyle.light(lightColorScheme),
     ],
   );
 
@@ -577,31 +553,7 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      TranscriptScreenToggleStyle(
-        active: IconButton.styleFrom(
-          foregroundColor: darkColorScheme.onSecondary,
-          backgroundColor: darkColorScheme.secondary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        inactive: IconButton.styleFrom(
-          foregroundColor: darkColorScheme.onSecondaryContainer,
-          backgroundColor: darkColorScheme.secondaryContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          side: BorderSide(
-            width: 2.0,
-            color: darkColorScheme.secondary,
-          ),
-        ),
-        disabled: IconButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ),
+      TranscriptScreenToggleStyle.dark(darkColorScheme),
     ],
   );
 }
