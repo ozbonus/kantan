@@ -126,13 +126,15 @@ class AudioHandlerService extends BaseAudioHandler {
                 MediaAction.seek,
               },
               androidCompactActionIndices: const [0, 2, 4],
-              processingState: const {
-                ProcessingState.idle: AudioProcessingState.idle,
-                ProcessingState.loading: AudioProcessingState.loading,
-                ProcessingState.buffering: AudioProcessingState.buffering,
-                ProcessingState.ready: AudioProcessingState.ready,
-                ProcessingState.completed: AudioProcessingState.completed,
-              }[_player.processingState]!,
+              processingState:
+                  const {
+                    ProcessingState.idle: AudioProcessingState.idle,
+                    ProcessingState.loading: AudioProcessingState.loading,
+                    ProcessingState.buffering: AudioProcessingState.buffering,
+                    ProcessingState.ready: AudioProcessingState.ready,
+                    ProcessingState.completed: AudioProcessingState.completed,
+                  }[_player.processingState] ??
+                  AudioProcessingState.idle,
               playing: playing,
               updatePosition: _player.position,
               bufferedPosition: _player.bufferedPosition,
