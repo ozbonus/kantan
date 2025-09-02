@@ -332,7 +332,6 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> skipToNext() async {
     if (hasNext) {
       final nextTrack = _player.currentIndex! + 1;
-      // TODO: Check that this call works properly being called just once.
       await _player.seek(Duration.zero, index: nextTrack);
     } else {
       return;
@@ -343,7 +342,6 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> skipToPrevious() async {
     if (hasPrevious) {
       final previousTrack = _player.currentIndex! - 1;
-      // TODO: Check that this call works properly being called just once.
       await _player.seek(Duration.zero, index: previousTrack);
     } else {
       return;
