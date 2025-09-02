@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 /// This theme extension is also used to set the scaffold color on the track
 /// list screen.
@@ -13,7 +14,34 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
   final BoxDecoration? decoration;
 
   factory TrackListPaneStyle.light(ColorScheme colorScheme) =>
-      const TrackListPaneStyle();
+      TrackListPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
 
   factory TrackListPaneStyle.dark(ColorScheme colorScheme) =>
       const TrackListPaneStyle();
@@ -61,7 +89,39 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
   final BoxDecoration? imageContainerForegroundDecoration;
 
   factory TrackListAppBarStyle.light(ColorScheme colorScheme) =>
-      const TrackListAppBarStyle();
+      TrackListAppBarStyle(
+        systemUiOverlayStyle: SystemUiOverlayStyle.dark,
+        fullscreenAppBarCollapsedColor: colorScheme.primaryContainer,
+        backgroundContainerDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              colorScheme.surface.blend(colorScheme.primary, 20),
+              colorScheme.surface,
+            ],
+            stops: [0.8, 0.8],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        imageContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withAlpha(64),
+              blurRadius: 4.0,
+              offset: const Offset(0.0, 2.0),
+            ),
+          ],
+        ),
+        imageContainerForegroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignInside,
+            width: 2.0,
+            color: colorScheme.outline,
+          ),
+        ),
+      );
 
   factory TrackListAppBarStyle.dark(ColorScheme colorScheme) =>
       const TrackListAppBarStyle();
@@ -150,8 +210,53 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   final TextStyle? trackTitleTextStyle;
   final TextStyle? trackDescriptionTextStyle;
 
-  factory PlayerPaneStyle.light(ColorScheme colorScheme) =>
-      const PlayerPaneStyle();
+  factory PlayerPaneStyle.light(ColorScheme colorScheme) => PlayerPaneStyle(
+    containerDecoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          colorScheme.primaryContainer,
+          colorScheme.primary,
+        ],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+      ),
+      borderRadius: BorderRadius.circular(24.0),
+    ),
+    appBarForegroundColor: colorScheme.surface,
+    trackNumberTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: colorScheme.surface,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackTitleTextStyle: TextStyle(
+      fontWeight: FontWeight.w600,
+      color: colorScheme.surface,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackDescriptionTextStyle: TextStyle(
+      color: colorScheme.surface,
+      fontWeight: FontWeight.bold,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+  );
 
   factory PlayerPaneStyle.dark(ColorScheme colorScheme) =>
       const PlayerPaneStyle();
@@ -227,7 +332,35 @@ class FloatingMiniPlayerPlayPauseButtonStyle
 
   factory FloatingMiniPlayerPlayPauseButtonStyle.light(
     ColorScheme colorScheme,
-  ) => const FloatingMiniPlayerPlayPauseButtonStyle();
+  ) => FloatingMiniPlayerPlayPauseButtonStyle(
+    decoration: BoxDecoration(
+      color: colorScheme.secondaryContainer,
+      borderRadius: BorderRadius.circular(16.0),
+      border: Border(
+        top: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        right: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        bottom: BorderSide(
+          width: 8,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        left: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+      ),
+    ),
+    iconColor: colorScheme.onSecondaryContainer,
+  );
 
   factory FloatingMiniPlayerPlayPauseButtonStyle.dark(
     ColorScheme colorScheme,
@@ -274,7 +407,34 @@ class FloatingMiniPlayerTrackInfoButton
   final TextStyle? trackNameTextStyle;
 
   factory FloatingMiniPlayerTrackInfoButton.light(ColorScheme colorScheme) =>
-      const FloatingMiniPlayerTrackInfoButton();
+      FloatingMiniPlayerTrackInfoButton(
+        decoration: BoxDecoration(
+          color: colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
 
   factory FloatingMiniPlayerTrackInfoButton.dark(ColorScheme colorScheme) =>
       const FloatingMiniPlayerTrackInfoButton();
@@ -326,7 +486,34 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
   final BoxDecoration? decoration;
 
   factory TranscriptPaneStyle.light(ColorScheme colorScheme) =>
-      const TranscriptPaneStyle();
+      TranscriptPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
 
   factory TranscriptPaneStyle.dark(ColorScheme colorScheme) =>
       const TranscriptPaneStyle();
@@ -371,7 +558,37 @@ class PlayerScreenControlsStyle
   final Color? iconColor;
 
   factory PlayerScreenControlsStyle.light(ColorScheme colorScheme) =>
-      const PlayerScreenControlsStyle();
+      PlayerScreenControlsStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        mainAxisSpacing: 24.0,
+        crossAxisSpacing: 24.0,
+        iconColor: colorScheme.primary,
+      );
 
   factory PlayerScreenControlsStyle.dark(ColorScheme colorScheme) =>
       const PlayerScreenControlsStyle();
@@ -421,7 +638,35 @@ class OpenTranscriptButtonStyle
   final Color? foregroundColor;
 
   factory OpenTranscriptButtonStyle.light(ColorScheme colorScheme) =>
-      const OpenTranscriptButtonStyle();
+      OpenTranscriptButtonStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.secondary,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        foregroundColor: colorScheme.onSecondary,
+      );
 
   factory OpenTranscriptButtonStyle.dark(ColorScheme colorScheme) =>
       const OpenTranscriptButtonStyle();
@@ -484,7 +729,17 @@ class PlayerScreenSliderStyle extends ThemeExtension<PlayerScreenSliderStyle> {
   final double? elevation;
 
   factory PlayerScreenSliderStyle.light(ColorScheme colorScheme) =>
-      const PlayerScreenSliderStyle();
+      PlayerScreenSliderStyle(
+        trackHeight: 8.0,
+        activeTrackColor: colorScheme.primary,
+        inactiveTrackColor: colorScheme.shadow,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.primary,
+        thumbRadius: 12.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.primary.withAlpha(50),
+        overlayRadius: 24.0,
+      );
 
   factory PlayerScreenSliderStyle.dark(ColorScheme colorScheme) =>
       const PlayerScreenSliderStyle();
@@ -574,7 +829,17 @@ class TranscriptProgressSliderStyle
   final double? elevation;
 
   factory TranscriptProgressSliderStyle.light(ColorScheme colorScheme) =>
-      const TranscriptProgressSliderStyle();
+      TranscriptProgressSliderStyle(
+        trackHeight: 4.0,
+        activeTrackColor: colorScheme.secondary,
+        inactiveTrackColor: colorScheme.secondaryContainer,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.secondary,
+        thumbRadius: 8.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.secondaryContainer.withAlpha(50),
+        overlayRadius: 12.0,
+      );
 
   factory TranscriptProgressSliderStyle.dark(ColorScheme colorScheme) =>
       const TranscriptProgressSliderStyle();
@@ -653,7 +918,11 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
   static const defaultBottomPaddingFactor = 0.3;
 
   factory TranscriptScreenStyle.light(ColorScheme colorScheme) =>
-      const TranscriptScreenStyle();
+      TranscriptScreenStyle(
+        backgroundColor: colorScheme.secondaryContainer,
+        appBarElevation: 0.0,
+        appBarScrolledUnderElevation: 0.0,
+      );
 
   factory TranscriptScreenStyle.dark(ColorScheme colorScheme) =>
       const TranscriptScreenStyle();
@@ -736,7 +1005,36 @@ class TranscriptLineWidgetStyle
   final double? verticalSpacing;
 
   factory TranscriptLineWidgetStyle.light(ColorScheme colorScheme) =>
-      const TranscriptLineWidgetStyle();
+      TranscriptLineWidgetStyle(
+        inactiveColor: colorScheme.secondaryContainer,
+        activeColor: colorScheme.secondaryContainer.darken(5),
+        borderRadius: 16.0,
+        borderColor: colorScheme.secondaryContainer.darken(50),
+        borderWidth: 2.0,
+        splashColor: colorScheme.secondary.withAlpha(128),
+        speakerNameTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        speakerNameTranslationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+        transcriptTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        translationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+      );
 
   factory TranscriptLineWidgetStyle.dark(ColorScheme colorScheme) =>
       const TranscriptLineWidgetStyle();
@@ -836,7 +1134,15 @@ class TranscriptScreenButtonStyle
   final ButtonStyle? buttonStyle;
 
   factory TranscriptScreenButtonStyle.light(ColorScheme colorScheme) =>
-      const TranscriptScreenButtonStyle();
+      TranscriptScreenButtonStyle(
+        buttonStyle: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
 
   factory TranscriptScreenButtonStyle.dark(ColorScheme colorScheme) =>
       const TranscriptScreenButtonStyle();
