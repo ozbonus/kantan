@@ -286,7 +286,7 @@ class AudioHandlerService extends BaseAudioHandler {
   Future<void> removeQueueItemAt(int index) async {
     try {
       final queueLength = queue.value.length;
-      if (queueLength < 0 || index >= queueLength) {
+      if (index < 0 || index >= queueLength) {
         log(
           'Invalid index $index for removal from queue which has a length of $queueLength',
         );
