@@ -437,27 +437,38 @@ class AudioHandlerService extends BaseAudioHandler {
   Stream<RepeatMode> get repeatModeStream => _repeatMode.stream;
 
   void _listenForPlaybackStateChanges() {
-    final subscription = playbackState.listen((state) {
-      final processingState = state.processingState;
+    final subscription = playbackState.listen(
+      (state) {
+        try {
+          final processingState = state.processingState;
 
-      if (state.playing) {
-        kantanPlaybackState.add(KantanPlaybackState.playing);
-        return;
-      }
+          if (state.playing) {
+            kantanPlaybackState.add(KantanPlaybackState.playing);
+            return;
+          }
 
-      switch (processingState) {
-        case AudioProcessingState.idle:
-        case AudioProcessingState.buffering:
-        case AudioProcessingState.loading:
-          kantanPlaybackState.add(KantanPlaybackState.loading);
-        case AudioProcessingState.ready:
-          kantanPlaybackState.add(KantanPlaybackState.paused);
-        case AudioProcessingState.completed:
-          kantanPlaybackState.add(KantanPlaybackState.completed);
-        case AudioProcessingState.error:
-          kantanPlaybackState.add(KantanPlaybackState.error);
-      }
-    });
+          switch (processingState) {
+            case AudioProcessingState.idle:
+            case AudioProcessingState.buffering:
+            case AudioProcessingState.loading:
+              kantanPlaybackState.add(KantanPlaybackState.loading);
+            case AudioProcessingState.ready:
+              kantanPlaybackState.add(KantanPlaybackState.paused);
+            case AudioProcessingState.completed:
+              kantanPlaybackState.add(KantanPlaybackState.completed);
+            case AudioProcessingState.error:
+              kantanPlaybackState.add(KantanPlaybackState.error);
+          }
+        } catch (error, stackTrace) {
+          log('Error listening for playback state changes: $error');
+          log('Stack trace: $stackTrace');
+        }
+      },
+      onError: (error, stackTrace) {
+        log('Stream error in playback state: $error');
+        log('Stack trace: $stackTrace');
+      },
+    );
     _subscriptions.add(subscription);
   }
 
