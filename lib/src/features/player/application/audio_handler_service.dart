@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
@@ -57,13 +58,22 @@ class AudioHandlerService extends BaseAudioHandler {
   }
 
   void _listenForCurrentSongIndexChanges() {
-    final subscription = _player.currentIndexStream.listen((index) {
-      final playlist = queue.value;
-      if (index == null || playlist.isEmpty) {
-        return;
-      }
-      mediaItem.add(playlist[index]);
-    });
+    final subscription = _player.currentIndexStream.listen(
+      (index) {
+        try {
+          final playlist = queue.value;
+          if (index == null || playlist.isEmpty) return;
+          mediaItem.add(playlist[index]);
+        } catch (error, stackTrace) {
+          log('Error listening for song index changes: $error');
+          log('Stack trace: $stackTrace');
+        }
+      },
+      onError: (error, stackTrace) {
+        log('Stream error in currentIndexStream: $error');
+        log('Stack trace: $stackTrace');
+      },
+    );
     _subscriptions.add(subscription);
   }
 
@@ -75,52 +85,76 @@ class AudioHandlerService extends BaseAudioHandler {
   // requires also updating the queue, according the semi-official tutorial.
   // TODO: Can this made shorter or avoided altogether?
   void _listenForDurationChanges() {
-    final subscription = _player.durationStream.listen((duration) {
-      final index = _player.currentIndex;
-      final newQueue = queue.value;
-      if (index == null || newQueue.isEmpty) return;
-      final oldMediaItem = newQueue[index];
-      final newMediaItem = oldMediaItem.copyWith(duration: duration);
-      newQueue[index] = newMediaItem;
-      queue.add(newQueue);
-      mediaItem.add(newMediaItem);
-    });
+    final subscription = _player.durationStream.listen(
+      (duration) {
+        try {
+          final index = _player.currentIndex;
+          final newQueue = queue.value;
+          if (index == null || newQueue.isEmpty) return;
+          final oldMediaItem = newQueue[index];
+          final newMediaItem = oldMediaItem.copyWith(duration: duration);
+          newQueue[index] = newMediaItem;
+          queue.add(newQueue);
+          mediaItem.add(newMediaItem);
+        } catch (error, stackTrace) {
+          log('Error listening for duration changes: $error');
+          log('Stack trace: $stackTrace');
+        }
+      },
+      onError: (error, stackTrace) {
+        log('Stream error in durationStream: $error');
+        log('Stack trace: $stackTrace');
+      },
+    );
     _subscriptions.add(subscription);
   }
 
+  // TODO: Add a try-catch block like the others then commit. After that,
+  // continue code review
   void _notifyAudioHandlerAboutPlaybackEvents() {
-    final subscription = _player.playbackEventStream.listen((
-      PlaybackEvent event,
-    ) {
-      final playing = _player.playing;
-      playbackState.add(
-        playbackState.value.copyWith(
-          controls: [
-            MediaControl.skipToPrevious,
-            MediaControl.rewind,
-            playing ? MediaControl.pause : MediaControl.play,
-            MediaControl.fastForward,
-            MediaControl.skipToNext,
-          ],
-          systemActions: const {
-            MediaAction.seek,
-          },
-          androidCompactActionIndices: const [0, 2, 4],
-          processingState: const {
-            ProcessingState.idle: AudioProcessingState.idle,
-            ProcessingState.loading: AudioProcessingState.loading,
-            ProcessingState.buffering: AudioProcessingState.buffering,
-            ProcessingState.ready: AudioProcessingState.ready,
-            ProcessingState.completed: AudioProcessingState.completed,
-          }[_player.processingState]!,
-          playing: playing,
-          updatePosition: _player.position,
-          bufferedPosition: _player.bufferedPosition,
-          speed: _player.speed,
-          queueIndex: event.currentIndex,
-        ),
-      );
-    });
+    final subscription = _player.playbackEventStream.listen(
+      (
+        PlaybackEvent event,
+      ) {
+        try {
+          final playing = _player.playing;
+          playbackState.add(
+            playbackState.value.copyWith(
+              controls: [
+                MediaControl.skipToPrevious,
+                MediaControl.rewind,
+                playing ? MediaControl.pause : MediaControl.play,
+                MediaControl.fastForward,
+                MediaControl.skipToNext,
+              ],
+              systemActions: const {
+                MediaAction.seek,
+              },
+              androidCompactActionIndices: const [0, 2, 4],
+              processingState: const {
+                ProcessingState.idle: AudioProcessingState.idle,
+                ProcessingState.loading: AudioProcessingState.loading,
+                ProcessingState.buffering: AudioProcessingState.buffering,
+                ProcessingState.ready: AudioProcessingState.ready,
+                ProcessingState.completed: AudioProcessingState.completed,
+              }[_player.processingState]!,
+              playing: playing,
+              updatePosition: _player.position,
+              bufferedPosition: _player.bufferedPosition,
+              speed: _player.speed,
+              queueIndex: event.currentIndex,
+            ),
+          );
+        } catch (error, stackTrace) {
+          log('Error notifying audio handler about playback event: $error');
+          log('Stack trace: $stackTrace');
+        }
+      },
+      onError: (error, stackTrace) {
+        log('Stream error in playbackEventStream: $error');
+        log('Stack trace: $stackTrace');
+      },
+    );
     _subscriptions.add(subscription);
   }
 
