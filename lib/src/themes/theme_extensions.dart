@@ -12,6 +12,12 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 
   final BoxDecoration? decoration;
 
+  factory TrackListPaneStyle.light(ColorScheme colorScheme) =>
+      const TrackListPaneStyle();
+
+  factory TrackListPaneStyle.dark(ColorScheme colorScheme) =>
+      const TrackListPaneStyle();
+
   @override
   TrackListPaneStyle copyWith({
     BoxDecoration? containerDecoration,
@@ -53,6 +59,12 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
   final BoxDecoration? backgroundContainerDecoration;
   final BoxDecoration? imageContainerDecoration;
   final BoxDecoration? imageContainerForegroundDecoration;
+
+  factory TrackListAppBarStyle.light(ColorScheme colorScheme) =>
+      const TrackListAppBarStyle();
+
+  factory TrackListAppBarStyle.dark(ColorScheme colorScheme) =>
+      const TrackListAppBarStyle();
 
   @override
   TrackListAppBarStyle copyWith({
@@ -138,6 +150,12 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   final TextStyle? trackTitleTextStyle;
   final TextStyle? trackDescriptionTextStyle;
 
+  factory PlayerPaneStyle.light(ColorScheme colorScheme) =>
+      const PlayerPaneStyle();
+
+  factory PlayerPaneStyle.dark(ColorScheme colorScheme) =>
+      const PlayerPaneStyle();
+
   @override
   PlayerPaneStyle copyWith({
     BoxDecoration? containerDecoration,
@@ -207,6 +225,14 @@ class FloatingMiniPlayerPlayPauseButtonStyle
   final BoxDecoration? decoration;
   final Color? iconColor;
 
+  factory FloatingMiniPlayerPlayPauseButtonStyle.light(
+    ColorScheme colorScheme,
+  ) => const FloatingMiniPlayerPlayPauseButtonStyle();
+
+  factory FloatingMiniPlayerPlayPauseButtonStyle.dark(
+    ColorScheme colorScheme,
+  ) => const FloatingMiniPlayerPlayPauseButtonStyle();
+
   @override
   FloatingMiniPlayerPlayPauseButtonStyle copyWith({
     BoxDecoration? decoration,
@@ -246,6 +272,12 @@ class FloatingMiniPlayerTrackInfoButton
   final BoxDecoration? decoration;
   final TextStyle? trackNumberTextStyle;
   final TextStyle? trackNameTextStyle;
+
+  factory FloatingMiniPlayerTrackInfoButton.light(ColorScheme colorScheme) =>
+      const FloatingMiniPlayerTrackInfoButton();
+
+  factory FloatingMiniPlayerTrackInfoButton.dark(ColorScheme colorScheme) =>
+      const FloatingMiniPlayerTrackInfoButton();
 
   @override
   FloatingMiniPlayerTrackInfoButton copyWith({
@@ -293,6 +325,12 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
 
   final BoxDecoration? decoration;
 
+  factory TranscriptPaneStyle.light(ColorScheme colorScheme) =>
+      const TranscriptPaneStyle();
+
+  factory TranscriptPaneStyle.dark(ColorScheme colorScheme) =>
+      const TranscriptPaneStyle();
+
   @override
   TranscriptPaneStyle copyWith({
     BoxDecoration? decoration,
@@ -331,6 +369,12 @@ class PlayerScreenControlsStyle
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
   final Color? iconColor;
+
+  factory PlayerScreenControlsStyle.light(ColorScheme colorScheme) =>
+      const PlayerScreenControlsStyle();
+
+  factory PlayerScreenControlsStyle.dark(ColorScheme colorScheme) =>
+      const PlayerScreenControlsStyle();
 
   @override
   PlayerScreenControlsStyle copyWith({
@@ -375,6 +419,12 @@ class OpenTranscriptButtonStyle
 
   final BoxDecoration? decoration;
   final Color? foregroundColor;
+
+  factory OpenTranscriptButtonStyle.light(ColorScheme colorScheme) =>
+      const OpenTranscriptButtonStyle();
+
+  factory OpenTranscriptButtonStyle.dark(ColorScheme colorScheme) =>
+      const OpenTranscriptButtonStyle();
 
   @override
   OpenTranscriptButtonStyle copyWith({
@@ -432,6 +482,12 @@ class PlayerScreenSliderStyle extends ThemeExtension<PlayerScreenSliderStyle> {
   final SliderTickMarkShape? sliderTickMarkShape;
   final Color? thumbColor;
   final double? elevation;
+
+  factory PlayerScreenSliderStyle.light(ColorScheme colorScheme) =>
+      const PlayerScreenSliderStyle();
+
+  factory PlayerScreenSliderStyle.dark(ColorScheme colorScheme) =>
+      const PlayerScreenSliderStyle();
 
   @override
   PlayerScreenSliderStyle copyWith({
@@ -517,6 +573,12 @@ class TranscriptProgressSliderStyle
   final Color? thumbColor;
   final double? elevation;
 
+  factory TranscriptProgressSliderStyle.light(ColorScheme colorScheme) =>
+      const TranscriptProgressSliderStyle();
+
+  factory TranscriptProgressSliderStyle.dark(ColorScheme colorScheme) =>
+      const TranscriptProgressSliderStyle();
+
   @override
   TranscriptProgressSliderStyle copyWith({
     double? trackHeight,
@@ -589,6 +651,12 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
   final double? appBarScrolledUnderElevation;
 
   static const defaultBottomPaddingFactor = 0.3;
+
+  factory TranscriptScreenStyle.light(ColorScheme colorScheme) =>
+      const TranscriptScreenStyle();
+
+  factory TranscriptScreenStyle.dark(ColorScheme colorScheme) =>
+      const TranscriptScreenStyle();
 
   @override
   TranscriptScreenStyle copyWith({
@@ -666,6 +734,12 @@ class TranscriptLineWidgetStyle
   final double? padding;
   final double? horizontalSpacing;
   final double? verticalSpacing;
+
+  factory TranscriptLineWidgetStyle.light(ColorScheme colorScheme) =>
+      const TranscriptLineWidgetStyle();
+
+  factory TranscriptLineWidgetStyle.dark(ColorScheme colorScheme) =>
+      const TranscriptLineWidgetStyle();
 
   @override
   TranscriptLineWidgetStyle copyWith({
@@ -760,6 +834,12 @@ class TranscriptScreenButtonStyle
   });
 
   final ButtonStyle? buttonStyle;
+
+  factory TranscriptScreenButtonStyle.light(ColorScheme colorScheme) =>
+      const TranscriptScreenButtonStyle();
+
+  factory TranscriptScreenButtonStyle.dark(ColorScheme colorScheme) =>
+      const TranscriptScreenButtonStyle();
 
   @override
   TranscriptScreenButtonStyle copyWith({
