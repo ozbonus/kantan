@@ -336,8 +336,6 @@ class AudioHandlerService extends BaseAudioHandler {
       // If hasNext is true, then _player.currentIndex must be non-null.
       final nextTrack = _player.currentIndex! + 1;
       await _player.seek(Duration.zero, index: nextTrack);
-    } else {
-      return;
     }
   }
 
@@ -347,8 +345,6 @@ class AudioHandlerService extends BaseAudioHandler {
       // If hasPrevious is true, then _player.currentIndex must be non-null.
       final previousTrack = _player.currentIndex! - 1;
       await _player.seek(Duration.zero, index: previousTrack);
-    } else {
-      return;
     }
   }
 
