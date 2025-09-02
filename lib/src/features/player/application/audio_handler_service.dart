@@ -52,8 +52,7 @@ class AudioHandlerService extends BaseAudioHandler {
     try {
       await _player.setAudioSource(_playlist);
     } catch (error, stackTrace) {
-      log('Error loading empty playlist: $error');
-      log('Stack trace: $stackTrace');
+      _logError('loading empty playlist', error, stackTrace);
     }
   }
 
@@ -69,13 +68,11 @@ class AudioHandlerService extends BaseAudioHandler {
 
           mediaItem.add(playlist[index]);
         } catch (error, stackTrace) {
-          log('Error listening for song index changes: $error');
-          log('Stack trace: $stackTrace');
+          _logError('listening for song index changes', error, stackTrace);
         }
       },
       onError: (error, stackTrace) {
-        log('Stream error in currentIndexStream: $error');
-        log('Stack trace: $stackTrace');
+        _logStreamError('currentIndexStream', error, stackTrace);
       },
     );
     _subscriptions.add(subscription);
@@ -101,13 +98,11 @@ class AudioHandlerService extends BaseAudioHandler {
           queue.add(newQueue);
           mediaItem.add(newMediaItem);
         } catch (error, stackTrace) {
-          log('Error listening for duration changes: $error');
-          log('Stack trace: $stackTrace');
+          _logError('listening for duration changes', error, stackTrace);
         }
       },
       onError: (error, stackTrace) {
-        log('Stream error in durationStream: $error');
-        log('Stack trace: $stackTrace');
+        _logStreamError('durationStream', error, stackTrace);
       },
     );
     _subscriptions.add(subscription);
@@ -150,13 +145,11 @@ class AudioHandlerService extends BaseAudioHandler {
             ),
           );
         } catch (error, stackTrace) {
-          log('Error notifying audio handler about playback event: $error');
-          log('Stack trace: $stackTrace');
+          _logError('notifying handler of playback event', error, stackTrace);
         }
       },
       onError: (error, stackTrace) {
-        log('Stream error in playbackEventStream: $error');
-        log('Stack trace: $stackTrace');
+        _logStreamError('playbackEventStream', error, stackTrace);
       },
     );
     _subscriptions.add(subscription);
@@ -192,8 +185,7 @@ class AudioHandlerService extends BaseAudioHandler {
           await setRepeatMode(AudioServiceRepeatMode.all);
       }
     } catch (error, stackTrace) {
-      log('Error while loading state: $error');
-      log('Stack trace: $stackTrace');
+      _logError('loading state', error, stackTrace);
     }
   }
 
@@ -218,6 +210,16 @@ class AudioHandlerService extends BaseAudioHandler {
   AudioSource _createAudioSourceFromMediaItem(MediaItem item) {
     final uri = 'asset:///packages/${Config.assetsPackage}/assets/${item.id}';
     return AudioSource.uri(Uri.parse(uri));
+  }
+
+  void _logError(String operation, Object error, StackTrace stackTrace) {
+    log('Error $operation: $error');
+    log('Stack trace: $stackTrace');
+  }
+
+  void _logStreamError(String streamName, Object error, StackTrace stackTrace) {
+    log('Error in $streamName: $error');
+    log('Stack trace: $stackTrace');
   }
 
   Future<void> dispose() async {
@@ -460,13 +462,11 @@ class AudioHandlerService extends BaseAudioHandler {
               kantanPlaybackState.add(KantanPlaybackState.error);
           }
         } catch (error, stackTrace) {
-          log('Error listening for playback state changes: $error');
-          log('Stack trace: $stackTrace');
+          _logError('listening for playback state changes', error, stackTrace);
         }
       },
       onError: (error, stackTrace) {
-        log('Stream error in playback state: $error');
-        log('Stack trace: $stackTrace');
+        _logStreamError('playbackState stream', error, stackTrace);
       },
     );
     _subscriptions.add(subscription);
