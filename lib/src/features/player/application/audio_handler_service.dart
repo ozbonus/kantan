@@ -194,12 +194,16 @@ class AudioHandlerService extends BaseAudioHandler {
     _saveStateTimer = Timer.periodic(
       Config.saveStateUpdateDuration,
       (timer) async {
-        settingsRepository.setQueueIndex(
-          _player.currentIndex ?? Config.defaultQueueIndex,
-        );
-        settingsRepository.setPosition(_player.position);
-        settingsRepository.setSpeed(_player.speed);
-        settingsRepository.setRepeatMode(_repeatMode.value);
+        try {
+          settingsRepository.setQueueIndex(
+            _player.currentIndex ?? Config.defaultQueueIndex,
+          );
+          settingsRepository.setPosition(_player.position);
+          settingsRepository.setSpeed(_player.speed);
+          settingsRepository.setRepeatMode(_repeatMode.value);
+        } catch (error, stackTrace) {
+          _logError('saving state with timer', error, stackTrace);
+        }
       },
     );
   }
@@ -248,36 +252,58 @@ class AudioHandlerService extends BaseAudioHandler {
 
   @override
   Future<void> addQueueItem(MediaItem mediaItem) async {
-    // Manage just_audio.
-    final AudioSource audioSource = _createAudioSourceFromMediaItem(mediaItem);
-    _playlist.add(audioSource);
+    try {
+      // Manage just_audio.
+      final AudioSource audioSource = _createAudioSourceFromMediaItem(
+        mediaItem,
+      );
+      _playlist.add(audioSource);
 
-    // Manage audio_service.
-    final newQueue = queue.value..add(mediaItem);
-    queue.add(newQueue);
+      // Manage audio_service.
+      final newQueue = queue.value..add(mediaItem);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('adding a queue item', error, stackTrace);
+    }
   }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
-    // Manage just_audio.
-    final List<AudioSource> audioSources = mediaItems.map((mediaItem) {
-      return _createAudioSourceFromMediaItem(mediaItem);
-    }).toList();
-    _playlist.addAll(audioSources);
+    try {
+      // Manage just_audio.
+      final List<AudioSource> audioSources = mediaItems.map((mediaItem) {
+        return _createAudioSourceFromMediaItem(mediaItem);
+      }).toList();
+      _playlist.addAll(audioSources);
 
-    // Manage audio_service.
-    final newQueue = queue.value..addAll(mediaItems);
-    queue.add(newQueue);
+      // Manage audio_service.
+      final newQueue = queue.value..addAll(mediaItems);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('adding multiple queue items', error, stackTrace);
+    }
   }
 
   @override
   Future<void> removeQueueItemAt(int index) async {
-    // Manage just_audio.
-    _playlist.removeAt(index);
+    try {
+      final queueLength = queue.value.length;
+      if (queueLength < 0 || index >= queueLength) {
+        log(
+          'Invalid index $index for removal from queue which has a length of $queueLength',
+        );
+        return;
+      }
 
-    // Manage audio_service.
-    final newQueue = queue.value..removeAt(index);
-    queue.add(newQueue);
+      // Manage just_audio.
+      _playlist.removeAt(index);
+
+      // Manage audio_service.
+      final newQueue = queue.value..removeAt(index);
+      queue.add(newQueue);
+    } catch (error, stackTrace) {
+      _logError('removing queue item at index $index', error, stackTrace);
+    }
   }
 
   // For some as yet unknown reason, we have to call this method after adding
