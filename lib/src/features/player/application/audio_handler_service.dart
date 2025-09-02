@@ -164,7 +164,12 @@ class AudioHandlerService extends BaseAudioHandler {
     final speed = settingsRepository.speed;
     final repeatMode = settingsRepository.repeatMode;
 
-    await _player.seek(position, index: queueIndex);
+    // Check to make sure the saved queue index is not out of bounds in the rare
+    // event that a new version of the app changes the number of tracks.
+    if (queueIndex >= 0 && queueIndex < queue.value.length) {
+      await _player.seek(position, index: queueIndex);
+    }
+
     await _player.setSpeed(speed);
     switch (repeatMode) {
       case RepeatMode.none:
