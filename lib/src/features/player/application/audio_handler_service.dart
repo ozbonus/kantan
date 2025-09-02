@@ -330,20 +330,23 @@ class AudioHandlerService extends BaseAudioHandler {
   // will seek back to the beginning of the currently-playing track, regardless
   // whether or not a previous or next track exists in the queue. Known issue.
   // https://github.com/ryanheise/just_audio/issues/862
+  /// Skip to the next track, if one exists, regardless of current loop mode.
   @override
   Future<void> skipToNext() async {
-    if (hasNext) {
-      // If hasNext is true, then _player.currentIndex must be non-null.
-      final nextTrack = _player.currentIndex! + 1;
+    final currentIndex = _player.currentIndex;
+    if (currentIndex != null && hasNext) {
+      final nextTrack = currentIndex + 1;
       await _player.seek(Duration.zero, index: nextTrack);
     }
   }
 
+  /// Skip to the previous track, if one exists, regardless of current loop
+  /// mode.
   @override
   Future<void> skipToPrevious() async {
-    if (hasPrevious) {
-      // If hasPrevious is true, then _player.currentIndex must be non-null.
-      final previousTrack = _player.currentIndex! - 1;
+    final currentIndex = _player.currentIndex;
+    if (currentIndex != null && hasPrevious) {
+      final previousTrack = currentIndex - 1;
       await _player.seek(Duration.zero, index: previousTrack);
     }
   }
