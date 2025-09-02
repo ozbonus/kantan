@@ -480,31 +480,38 @@ class AudioHandlerService extends BaseAudioHandler {
 
 @Riverpod(keepAlive: true)
 FutureOr<AudioHandlerService> audioHandler(Ref ref) async {
-  final session = await AudioSession.instance;
-  await session.configure(const AudioSessionConfiguration.speech());
-  final audioHandler = await AudioService.init(
-    builder: () => AudioHandlerService(),
-    config: AudioServiceConfig(
-      androidNotificationChannelId: Config.channelId,
-      androidNotificationChannelName: Config.channelName,
-      // Setting androidStopForegroundOnPause would require the app the ask
-      // users to disable battery optimization for the app. Given that this
-      // app is meant to be accessible to young children and non-tech savvy
-      // adults, that's probably not a safe thing to ask.
-      androidStopForegroundOnPause: false,
-      androidNotificationIcon: 'drawable/text_to_speech',
-      rewindInterval: Config.rewindDuration,
-      fastForwardInterval: Config.fastForwardDuration,
-    ),
-  );
+  try {
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech());
+    final audioHandler = await AudioService.init(
+      builder: () => AudioHandlerService(),
+      config: AudioServiceConfig(
+        androidNotificationChannelId: Config.channelId,
+        androidNotificationChannelName: Config.channelName,
+        // Setting androidStopForegroundOnPause would require the app the ask
+        // users to disable battery optimization for the app. Given that this
+        // app is meant to be accessible to young children and non-tech savvy
+        // adults, that's probably not a safe thing to ask.
+        androidStopForegroundOnPause: false,
+        androidNotificationIcon: 'drawable/text_to_speech',
+        rewindInterval: Config.rewindDuration,
+        fastForwardInterval: Config.fastForwardDuration,
+      ),
+    );
 
-  final tracks = ref.watch(tracksRepositoryProvider).requireValue;
-  final settings = ref.watch(settingsRepositoryProvider).requireValue;
+    final tracks = ref.watch(tracksRepositoryProvider).requireValue;
+    final settings = ref.watch(settingsRepositoryProvider).requireValue;
 
-  audioHandler.loadTracks(tracks).then((_) => audioHandler.loadState(settings));
+    await audioHandler.loadTracks(tracks);
+    await audioHandler.loadState(settings);
+    audioHandler.saveState(settings);
 
-  audioHandler.saveState(settings);
-  return audioHandler;
+    return audioHandler;
+  } catch (error, stackTrace) {
+    log('Error initializing audio handler: $error');
+    log('Stack trace: $stackTrace');
+    rethrow;
+  }
 }
 
 @riverpod
