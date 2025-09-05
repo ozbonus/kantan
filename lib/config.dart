@@ -98,8 +98,6 @@ class Config {
 
   // Theming
   static Color get primary => Color(0xFFBE3137);
-  static double get layoutOuterPadding => 16.0;
-  static double get layoutSpacing => 24.0;
   static double get bookCoverPadding => 24.0;
   static Duration get scrollDuration => const Duration(milliseconds: 200);
 }

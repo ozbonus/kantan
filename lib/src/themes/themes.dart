@@ -23,6 +23,7 @@ abstract final class AppTheme {
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
+      LayoutStyle.light(lightColorScheme),
       TrackListPaneStyle.light(lightColorScheme),
       TrackListAppBarStyle.light(lightColorScheme),
       PlayerPaneStyle.light(lightColorScheme),
@@ -51,6 +52,7 @@ abstract final class AppTheme {
       splashType: FlexSplashType.inkSparkle,
     ),
     extensions: <ThemeExtension<dynamic>>[
+      LayoutStyle.dark(darkColorScheme),
       TrackListPaneStyle.dark(darkColorScheme),
       TrackListAppBarStyle.dark(darkColorScheme),
       PlayerPaneStyle.dark(darkColorScheme),

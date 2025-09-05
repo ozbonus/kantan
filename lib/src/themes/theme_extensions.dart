@@ -3,6 +3,53 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
+@immutable
+class LayoutStyle extends ThemeExtension<LayoutStyle> {
+  const LayoutStyle({
+    this.layoutSpacing,
+    this.outerPadding,
+  });
+
+  final double? layoutSpacing;
+  final double? outerPadding;
+
+  factory LayoutStyle.light(ColorScheme colorScheme) => LayoutStyle(
+    layoutSpacing: 24.0,
+    outerPadding: 16.0,
+  );
+
+  factory LayoutStyle.dark(ColorScheme colorScheme) => LayoutStyle(
+    layoutSpacing: 24.0,
+    outerPadding: 16.0,
+  );
+
+  @override
+  LayoutStyle copyWith({
+    double? layoutSpacing,
+    double? outerPadding,
+  }) {
+    return LayoutStyle(
+      layoutSpacing: layoutSpacing ?? this.layoutSpacing,
+      outerPadding: outerPadding ?? this.outerPadding,
+    );
+  }
+
+  @override
+  ThemeExtension<LayoutStyle> lerp(
+    ThemeExtension<LayoutStyle>? other,
+    double t,
+  ) {
+    if (other is! LayoutStyle) {
+      return this;
+    }
+
+    return LayoutStyle(
+      layoutSpacing: lerpDouble(layoutSpacing, other.layoutSpacing, t),
+      outerPadding: lerpDouble(outerPadding, other.outerPadding, t),
+    );
+  }
+}
+
 /// This theme extension is also used to set the scaffold color on the track
 /// list screen.
 @immutable
