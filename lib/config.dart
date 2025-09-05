@@ -97,7 +97,6 @@ class Config {
   static bool showSpeakerNameTranslation = true;
 
   // Theming
-  static Color get primary => Color(0xFFBE3137);
   static double get bookCoverPadding => 24.0;
   static Duration get scrollDuration => const Duration(milliseconds: 200);
 }
