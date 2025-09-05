@@ -62,10 +62,16 @@ class MediumLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewPadding = MediaQuery.viewPaddingOf(context);
     return Scaffold(
       drawer: const SettingsMenu(),
       body: SafeArea(
-        minimum: EdgeInsets.all(Config.layoutOuterPadding),
+        minimum: EdgeInsets.only(
+          left: viewPadding.left + Config.layoutOuterPadding,
+          right: viewPadding.right + Config.layoutOuterPadding,
+          bottom: viewPadding.left + Config.layoutOuterPadding,
+          top: viewPadding.bottom + Config.layoutOuterPadding,
+        ),
         child: Row(
           spacing: Config.layoutSpacing,
           children: [
@@ -99,7 +105,6 @@ class LargeLayout extends StatelessWidget {
           bottom: viewPadding.left + Config.layoutOuterPadding,
           top: viewPadding.bottom + Config.layoutOuterPadding,
         ),
-        // minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
           spacing: Config.layoutSpacing,
           children: [
