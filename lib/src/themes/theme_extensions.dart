@@ -1,6 +1,54 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+
+@immutable
+class LayoutStyle extends ThemeExtension<LayoutStyle> {
+  const LayoutStyle({
+    this.layoutSpacing,
+    this.outerPadding,
+  });
+
+  final double? layoutSpacing;
+  final double? outerPadding;
+
+  factory LayoutStyle.light(ColorScheme colorScheme) => LayoutStyle(
+    layoutSpacing: 24.0,
+    outerPadding: 16.0,
+  );
+
+  factory LayoutStyle.dark(ColorScheme colorScheme) => LayoutStyle(
+    layoutSpacing: 24.0,
+    outerPadding: 16.0,
+  );
+
+  @override
+  LayoutStyle copyWith({
+    double? layoutSpacing,
+    double? outerPadding,
+  }) {
+    return LayoutStyle(
+      layoutSpacing: layoutSpacing ?? this.layoutSpacing,
+      outerPadding: outerPadding ?? this.outerPadding,
+    );
+  }
+
+  @override
+  ThemeExtension<LayoutStyle> lerp(
+    ThemeExtension<LayoutStyle>? other,
+    double t,
+  ) {
+    if (other is! LayoutStyle) {
+      return this;
+    }
+
+    return LayoutStyle(
+      layoutSpacing: lerpDouble(layoutSpacing, other.layoutSpacing, t),
+      outerPadding: lerpDouble(outerPadding, other.outerPadding, t),
+    );
+  }
+}
 
 /// This theme extension is also used to set the scaffold color on the track
 /// list screen.
@@ -12,12 +60,50 @@ class TrackListPaneStyle extends ThemeExtension<TrackListPaneStyle> {
 
   final BoxDecoration? decoration;
 
+  factory TrackListPaneStyle.light(ColorScheme colorScheme) =>
+      TrackListPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
+
+  factory TrackListPaneStyle.dark(ColorScheme colorScheme) =>
+      TrackListPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+      );
+
   @override
   TrackListPaneStyle copyWith({
-    BoxDecoration? containerDecoration,
+    BoxDecoration? decoration,
   }) {
     return TrackListPaneStyle(
-      decoration: containerDecoration ?? this.decoration,
+      decoration: decoration ?? this.decoration,
     );
   }
 
@@ -45,6 +131,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
     this.backgroundContainerDecoration,
     this.imageContainerDecoration,
     this.imageContainerForegroundDecoration,
+    this.bookCoverPadding,
   });
 
   final SystemUiOverlayStyle? systemUiOverlayStyle;
@@ -53,6 +140,72 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
   final BoxDecoration? backgroundContainerDecoration;
   final BoxDecoration? imageContainerDecoration;
   final BoxDecoration? imageContainerForegroundDecoration;
+  final double? bookCoverPadding;
+
+  factory TrackListAppBarStyle.light(ColorScheme colorScheme) =>
+      TrackListAppBarStyle(
+        systemUiOverlayStyle: SystemUiOverlayStyle.dark,
+        fullscreenAppBarCollapsedColor: colorScheme.primaryContainer,
+        backgroundContainerDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              colorScheme.surface.blend(colorScheme.primary, 20),
+              colorScheme.surface,
+            ],
+            stops: [0.8, 0.8],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        imageContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withAlpha(64),
+              blurRadius: 4.0,
+              offset: const Offset(0.0, 2.0),
+            ),
+          ],
+        ),
+        imageContainerForegroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignInside,
+            width: 2.0,
+            color: colorScheme.outline,
+          ),
+        ),
+        bookCoverPadding: 24.0,
+      );
+
+  factory TrackListAppBarStyle.dark(ColorScheme colorScheme) =>
+      TrackListAppBarStyle(
+        systemUiOverlayStyle: SystemUiOverlayStyle.light,
+        fullscreenAppBarCollapsedColor: colorScheme.primary,
+        backgroundContainerDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              colorScheme.surface.blend(colorScheme.primary, 50),
+              colorScheme.surface,
+            ],
+            stops: [0.8, 0.8],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        imageContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        imageContainerForegroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignInside,
+            width: 2.0,
+            color: colorScheme.outline,
+          ),
+        ),
+        bookCoverPadding: 24.0,
+      );
 
   @override
   TrackListAppBarStyle copyWith({
@@ -62,6 +215,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
     BoxDecoration? backgroundContainerDecoration,
     BoxDecoration? imageContainerDecoration,
     BoxDecoration? imageContainerForegroundDecoration,
+    double? bookCoverPadding,
   }) {
     return TrackListAppBarStyle(
       systemUiOverlayStyle: systemUiOverlayStyle ?? this.systemUiOverlayStyle,
@@ -77,6 +231,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
       imageContainerForegroundDecoration:
           imageContainerForegroundDecoration ??
           this.imageContainerForegroundDecoration,
+      bookCoverPadding: bookCoverPadding ?? this.bookCoverPadding,
     );
   }
 
@@ -118,6 +273,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
         other.imageContainerForegroundDecoration,
         t,
       ),
+      bookCoverPadding: lerpDouble(bookCoverPadding, other.bookCoverPadding, t),
     );
   }
 }
@@ -137,6 +293,103 @@ class PlayerPaneStyle extends ThemeExtension<PlayerPaneStyle> {
   final TextStyle? trackNumberTextStyle;
   final TextStyle? trackTitleTextStyle;
   final TextStyle? trackDescriptionTextStyle;
+
+  factory PlayerPaneStyle.light(ColorScheme colorScheme) => PlayerPaneStyle(
+    containerDecoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          colorScheme.primaryContainer,
+          colorScheme.primary,
+        ],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+      ),
+      borderRadius: BorderRadius.circular(24.0),
+    ),
+    appBarForegroundColor: colorScheme.surface,
+    trackNumberTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: colorScheme.surface,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackTitleTextStyle: TextStyle(
+      fontWeight: FontWeight.w600,
+      color: colorScheme.surface,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackDescriptionTextStyle: TextStyle(
+      color: colorScheme.surface,
+      fontWeight: FontWeight.bold,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+  );
+
+  factory PlayerPaneStyle.dark(ColorScheme colorScheme) => PlayerPaneStyle(
+    containerDecoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          colorScheme.primaryContainer.blend(Colors.black, 70),
+          Colors.black,
+        ],
+        stops: [0.0, 0.6],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+      borderRadius: BorderRadius.circular(24.0),
+    ),
+    appBarForegroundColor: colorScheme.onPrimary,
+    trackNumberTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: colorScheme.onPrimary,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackTitleTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: colorScheme.onPrimary,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    trackDescriptionTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: colorScheme.onPrimary,
+      shadows: [
+        Shadow(
+          color: colorScheme.shadow,
+          offset: Offset(0.0, 1.5),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+  );
 
   @override
   PlayerPaneStyle copyWith({
@@ -207,6 +460,53 @@ class FloatingMiniPlayerPlayPauseButtonStyle
   final BoxDecoration? decoration;
   final Color? iconColor;
 
+  factory FloatingMiniPlayerPlayPauseButtonStyle.light(
+    ColorScheme colorScheme,
+  ) => FloatingMiniPlayerPlayPauseButtonStyle(
+    decoration: BoxDecoration(
+      color: colorScheme.secondaryContainer,
+      borderRadius: BorderRadius.circular(16.0),
+      border: Border(
+        top: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        right: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        bottom: BorderSide(
+          width: 8,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        left: BorderSide(
+          width: 4,
+          color: colorScheme.shadow,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+      ),
+    ),
+    iconColor: colorScheme.onSecondaryContainer,
+  );
+
+  factory FloatingMiniPlayerPlayPauseButtonStyle.dark(
+    ColorScheme colorScheme,
+  ) => FloatingMiniPlayerPlayPauseButtonStyle(
+    decoration: BoxDecoration(
+      color: colorScheme.secondaryContainer,
+      borderRadius: BorderRadius.circular(16.0),
+      border: Border.all(
+        width: 2,
+        strokeAlign: BorderSide.strokeAlignOutside,
+        color: colorScheme.secondary,
+      ),
+    ),
+    iconColor: colorScheme.onSecondaryContainer,
+  );
+
   @override
   FloatingMiniPlayerPlayPauseButtonStyle copyWith({
     BoxDecoration? decoration,
@@ -246,6 +546,49 @@ class FloatingMiniPlayerTrackInfoButton
   final BoxDecoration? decoration;
   final TextStyle? trackNumberTextStyle;
   final TextStyle? trackNameTextStyle;
+
+  factory FloatingMiniPlayerTrackInfoButton.light(ColorScheme colorScheme) =>
+      FloatingMiniPlayerTrackInfoButton(
+        decoration: BoxDecoration(
+          color: colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
+
+  factory FloatingMiniPlayerTrackInfoButton.dark(ColorScheme colorScheme) =>
+      FloatingMiniPlayerTrackInfoButton(
+        decoration: BoxDecoration(
+          color: colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: colorScheme.secondary,
+          ),
+        ),
+      );
 
   @override
   FloatingMiniPlayerTrackInfoButton copyWith({
@@ -293,6 +636,44 @@ class TranscriptPaneStyle extends ThemeExtension<TranscriptPaneStyle> {
 
   final BoxDecoration? decoration;
 
+  factory TranscriptPaneStyle.light(ColorScheme colorScheme) =>
+      TranscriptPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 12,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+      );
+
+  factory TranscriptPaneStyle.dark(ColorScheme colorScheme) =>
+      TranscriptPaneStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+      );
+
   @override
   TranscriptPaneStyle copyWith({
     BoxDecoration? decoration,
@@ -332,18 +713,67 @@ class PlayerScreenControlsStyle
   final double? crossAxisSpacing;
   final Color? iconColor;
 
+  factory PlayerScreenControlsStyle.light(ColorScheme colorScheme) =>
+      PlayerScreenControlsStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        mainAxisSpacing: 24.0,
+        crossAxisSpacing: 24.0,
+        iconColor: colorScheme.primary,
+      );
+
+  factory PlayerScreenControlsStyle.dark(ColorScheme colorScheme) =>
+      PlayerScreenControlsStyle(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: colorScheme.primary.blend(colorScheme.onSurface, 50),
+          ),
+        ),
+        mainAxisSpacing: 24.0,
+        crossAxisSpacing: 24.0,
+        iconColor: colorScheme.primary,
+      );
+
   @override
   PlayerScreenControlsStyle copyWith({
-    BoxDecoration? containerDecoration,
+    BoxDecoration? decoration,
     double? mainAxisSpacing,
     double? crossAxisSpacing,
-    Color? foregroundColor,
+    Color? iconColor,
   }) {
     return PlayerScreenControlsStyle(
-      decoration: containerDecoration ?? this.decoration,
+      decoration: decoration ?? this.decoration,
       mainAxisSpacing: mainAxisSpacing ?? this.mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing ?? this.crossAxisSpacing,
-      iconColor: foregroundColor ?? this.iconColor,
+      iconColor: iconColor ?? this.iconColor,
     );
   }
 
@@ -375,6 +805,45 @@ class OpenTranscriptButtonStyle
 
   final BoxDecoration? decoration;
   final Color? foregroundColor;
+
+  factory OpenTranscriptButtonStyle.light(ColorScheme colorScheme) =>
+      OpenTranscriptButtonStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.secondary,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border(
+            top: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            right: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            bottom: BorderSide(
+              width: 8,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.shadow,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
+        ),
+        foregroundColor: colorScheme.onSecondary,
+      );
+
+  factory OpenTranscriptButtonStyle.dark(ColorScheme colorScheme) =>
+      OpenTranscriptButtonStyle(
+        decoration: BoxDecoration(
+          color: colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+      );
 
   @override
   OpenTranscriptButtonStyle copyWith({
@@ -432,6 +901,32 @@ class PlayerScreenSliderStyle extends ThemeExtension<PlayerScreenSliderStyle> {
   final SliderTickMarkShape? sliderTickMarkShape;
   final Color? thumbColor;
   final double? elevation;
+
+  factory PlayerScreenSliderStyle.light(ColorScheme colorScheme) =>
+      PlayerScreenSliderStyle(
+        trackHeight: 8.0,
+        activeTrackColor: colorScheme.primary,
+        inactiveTrackColor: colorScheme.shadow,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.primary,
+        thumbRadius: 12.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.primary.withAlpha(50),
+        overlayRadius: 24.0,
+      );
+
+  factory PlayerScreenSliderStyle.dark(ColorScheme colorScheme) =>
+      PlayerScreenSliderStyle(
+        trackHeight: 8.0,
+        activeTrackColor: colorScheme.primary,
+        inactiveTrackColor: colorScheme.surfaceBright,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.primary,
+        thumbRadius: 12.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.primary.withAlpha(50),
+        overlayRadius: 24.0,
+      );
 
   @override
   PlayerScreenSliderStyle copyWith({
@@ -517,6 +1012,32 @@ class TranscriptProgressSliderStyle
   final Color? thumbColor;
   final double? elevation;
 
+  factory TranscriptProgressSliderStyle.light(ColorScheme colorScheme) =>
+      TranscriptProgressSliderStyle(
+        trackHeight: 4.0,
+        activeTrackColor: colorScheme.secondary,
+        inactiveTrackColor: colorScheme.secondaryContainer,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.secondary,
+        thumbRadius: 8.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.secondaryContainer.withAlpha(50),
+        overlayRadius: 12.0,
+      );
+
+  factory TranscriptProgressSliderStyle.dark(ColorScheme colorScheme) =>
+      TranscriptProgressSliderStyle(
+        trackHeight: 4.0,
+        activeTrackColor: colorScheme.secondary,
+        inactiveTrackColor: colorScheme.secondaryContainer,
+        sliderTickMarkShape: SliderTickMarkShape.noTickMark,
+        thumbColor: colorScheme.secondary,
+        thumbRadius: 8.0,
+        elevation: 0.0,
+        overlayColor: colorScheme.secondaryContainer.withAlpha(50),
+        overlayRadius: 12.0,
+      );
+
   @override
   TranscriptProgressSliderStyle copyWith({
     double? trackHeight,
@@ -589,6 +1110,20 @@ class TranscriptScreenStyle extends ThemeExtension<TranscriptScreenStyle> {
   final double? appBarScrolledUnderElevation;
 
   static const defaultBottomPaddingFactor = 0.3;
+
+  factory TranscriptScreenStyle.light(ColorScheme colorScheme) =>
+      TranscriptScreenStyle(
+        backgroundColor: colorScheme.secondaryContainer,
+        appBarElevation: 0.0,
+        appBarScrolledUnderElevation: 0.0,
+      );
+
+  factory TranscriptScreenStyle.dark(ColorScheme colorScheme) =>
+      TranscriptScreenStyle(
+        backgroundColor: colorScheme.secondaryContainer,
+        appBarElevation: 0.0,
+        appBarScrolledUnderElevation: 0.0,
+      );
 
   @override
   TranscriptScreenStyle copyWith({
@@ -666,6 +1201,70 @@ class TranscriptLineWidgetStyle
   final double? padding;
   final double? horizontalSpacing;
   final double? verticalSpacing;
+
+  factory TranscriptLineWidgetStyle.light(ColorScheme colorScheme) =>
+      TranscriptLineWidgetStyle(
+        inactiveColor: colorScheme.secondaryContainer,
+        activeColor: colorScheme.secondaryContainer.darken(5),
+        borderRadius: 16.0,
+        borderColor: colorScheme.secondaryContainer.darken(50),
+        borderWidth: 2.0,
+        splashColor: colorScheme.secondary.withAlpha(128),
+        speakerNameTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        speakerNameTranslationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+        transcriptTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        translationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+  factory TranscriptLineWidgetStyle.dark(ColorScheme colorScheme) =>
+      TranscriptLineWidgetStyle(
+        inactiveColor: colorScheme.secondaryContainer,
+        activeColor: colorScheme.secondaryContainer.darken(4),
+        borderRadius: 16.0,
+        borderColor: colorScheme.secondaryContainer.darken(8),
+        borderWidth: 2.0,
+        splashColor: colorScheme.secondary.withAlpha(128),
+        speakerNameTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        speakerNameTranslationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+        transcriptTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        translationTextStyle: TextStyle(
+          color: colorScheme.onSecondaryContainer.blend(
+            colorScheme.secondaryContainer,
+            50,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
+      );
 
   @override
   TranscriptLineWidgetStyle copyWith({
@@ -761,6 +1360,28 @@ class TranscriptScreenButtonStyle
 
   final ButtonStyle? buttonStyle;
 
+  factory TranscriptScreenButtonStyle.light(ColorScheme colorScheme) =>
+      TranscriptScreenButtonStyle(
+        buttonStyle: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+
+  factory TranscriptScreenButtonStyle.dark(ColorScheme colorScheme) =>
+      TranscriptScreenButtonStyle(
+        buttonStyle: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+
   @override
   TranscriptScreenButtonStyle copyWith({
     ButtonStyle? buttonStyle,
@@ -797,6 +1418,60 @@ class TranscriptScreenToggleStyle
   final ButtonStyle? active;
   final ButtonStyle? inactive;
   final ButtonStyle? disabled;
+
+  factory TranscriptScreenToggleStyle.light(ColorScheme colorScheme) =>
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondary,
+          backgroundColor: colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 2.0,
+            color: colorScheme.secondary,
+          ),
+        ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+
+  factory TranscriptScreenToggleStyle.dark(ColorScheme colorScheme) =>
+      TranscriptScreenToggleStyle(
+        active: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondary,
+          backgroundColor: colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        inactive: IconButton.styleFrom(
+          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.secondaryContainer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(
+            width: 2.0,
+            color: colorScheme.secondary,
+          ),
+        ),
+        disabled: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
 
   @override
   TranscriptScreenToggleStyle copyWith({

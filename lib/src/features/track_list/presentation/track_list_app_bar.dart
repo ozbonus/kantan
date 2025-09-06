@@ -24,6 +24,7 @@ class TrackListAppBar extends StatelessWidget {
         style?.imageContainerDecoration ?? BoxDecoration();
     final imageForegroundDecoration =
         style?.imageContainerForegroundDecoration ?? BoxDecoration();
+    final bookCoverPadding = style?.bookCoverPadding ?? 0.0;
 
     return SliverAppBar(
       systemOverlayStyle: isFullscreen ? overlayStyle : null,
@@ -44,7 +45,7 @@ class TrackListAppBar extends StatelessWidget {
         background: Container(
           decoration: backgroundDecoration,
           child: SafeArea(
-            minimum: EdgeInsets.all(Config.bookCoverPadding),
+            minimum: EdgeInsets.all(bookCoverPadding),
             child: FittedBox(
               fit: BoxFit.contain,
               child: Container(

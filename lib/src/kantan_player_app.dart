@@ -62,12 +62,21 @@ class MediumLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewPadding = MediaQuery.viewPaddingOf(context);
+    final style = Theme.of(context).extension<LayoutStyle>();
+    final outerPadding = style?.outerPadding ?? 0.0;
+    final layoutSpacing = style?.layoutSpacing ?? 0.0;
     return Scaffold(
       drawer: const SettingsMenu(),
       body: SafeArea(
-        minimum: EdgeInsets.all(Config.layoutOuterPadding),
+        minimum: EdgeInsets.only(
+          left: viewPadding.left + outerPadding,
+          right: viewPadding.right + outerPadding,
+          bottom: viewPadding.bottom + outerPadding,
+          top: viewPadding.top + outerPadding,
+        ),
         child: Row(
-          spacing: Config.layoutSpacing,
+          spacing: layoutSpacing,
           children: [
             Expanded(
               flex: 1,
@@ -90,18 +99,20 @@ class LargeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
+    final style = Theme.of(context).extension<LayoutStyle>();
+    final outerPadding = style?.outerPadding ?? 0.0;
+    final layoutSpacing = style?.layoutSpacing ?? 0.0;
     return Scaffold(
       drawer: const SettingsMenu(),
       body: SafeArea(
         minimum: EdgeInsets.only(
-          left: viewPadding.left + Config.layoutOuterPadding,
-          right: viewPadding.right + Config.layoutOuterPadding,
-          bottom: viewPadding.left + Config.layoutOuterPadding,
-          top: viewPadding.bottom + Config.layoutOuterPadding,
+          left: viewPadding.left + outerPadding,
+          right: viewPadding.right + outerPadding,
+          bottom: viewPadding.bottom + outerPadding,
+          top: viewPadding.top + outerPadding,
         ),
-        // minimum: EdgeInsets.all(Config.layoutOuterPadding),
         child: Row(
-          spacing: Config.layoutSpacing,
+          spacing: layoutSpacing,
           children: [
             Expanded(
               flex: 1,
