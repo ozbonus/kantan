@@ -131,6 +131,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
     this.backgroundContainerDecoration,
     this.imageContainerDecoration,
     this.imageContainerForegroundDecoration,
+    this.bookCoverPadding,
   });
 
   final SystemUiOverlayStyle? systemUiOverlayStyle;
@@ -139,6 +140,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
   final BoxDecoration? backgroundContainerDecoration;
   final BoxDecoration? imageContainerDecoration;
   final BoxDecoration? imageContainerForegroundDecoration;
+  final double? bookCoverPadding;
 
   factory TrackListAppBarStyle.light(ColorScheme colorScheme) =>
       TrackListAppBarStyle(
@@ -173,6 +175,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
             color: colorScheme.outline,
           ),
         ),
+        bookCoverPadding: 24.0,
       );
 
   factory TrackListAppBarStyle.dark(ColorScheme colorScheme) =>
@@ -201,6 +204,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
             color: colorScheme.outline,
           ),
         ),
+        bookCoverPadding: 24.0,
       );
 
   @override
@@ -211,6 +215,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
     BoxDecoration? backgroundContainerDecoration,
     BoxDecoration? imageContainerDecoration,
     BoxDecoration? imageContainerForegroundDecoration,
+    double? bookCoverPadding,
   }) {
     return TrackListAppBarStyle(
       systemUiOverlayStyle: systemUiOverlayStyle ?? this.systemUiOverlayStyle,
@@ -226,6 +231,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
       imageContainerForegroundDecoration:
           imageContainerForegroundDecoration ??
           this.imageContainerForegroundDecoration,
+      bookCoverPadding: bookCoverPadding ?? this.bookCoverPadding,
     );
   }
 
@@ -267,6 +273,7 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
         other.imageContainerForegroundDecoration,
         t,
       ),
+      bookCoverPadding: lerpDouble(bookCoverPadding, other.bookCoverPadding, t),
     );
   }
 }
