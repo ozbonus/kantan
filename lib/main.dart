@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/config.dart';
@@ -5,6 +7,7 @@ import 'package:kantan/src/common_widgets/error_message_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
+import 'package:kantan/src/features/wakelock/application/wakelock_service.dart';
 import 'package:kantan/src/kantan_player_app.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -47,6 +50,7 @@ class AppStartupWidget extends ConsumerWidget {
         );
       },
       data: (_) {
+        // if (Config.useWakelockFeature) ref.watch(wakelockServiceProvider);
         return child;
       },
     );
@@ -120,8 +124,38 @@ Future<void> appStartup(Ref ref) async {
     ref.invalidate(tracksRepositoryProvider);
     ref.invalidate(audioHandlerProvider);
   });
-  await ref
-      .watch(settingsRepositoryProvider.future)
-      .then((_) => ref.watch(tracksRepositoryProvider.future))
-      .then((_) => ref.watch(audioHandlerProvider.future));
+  try {
+    await ref.read(settingsRepositoryProvider.future);
+  } catch (error, stackTrace) {
+    log('Error starting up settings repository provider: $error');
+    log('Stack trace: $stackTrace');
+    rethrow;
+  }
+
+  try {
+    await ref.read(tracksRepositoryProvider.future);
+  } catch (error, stackTrace) {
+    log('Error starting up tracks repository provider: $error');
+    log('Stack trace: $stackTrace');
+    rethrow;
+  }
+
+  try {
+    await ref.read(audioHandlerProvider.future);
+  } catch (error, stackTrace) {
+    log('Error starting up audio handler provider: $error');
+    log('Stack trace: $stackTrace');
+    rethrow;
+  }
+
+  // The wakelock service is non-critical. If it fails to start up then the app
+  // can continue to function near-normally. Re-throwing is unnecessary.
+  if (Config.useWakelockFeature) {
+    try {
+      ref.read(wakelockServiceProvider);
+    } catch (error, stackTrace) {
+      log('Error starting up wakelock service provider: $error');
+      log('Stack trace: $stackTrace');
+    }
+  }
 }
