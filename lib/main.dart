@@ -5,6 +5,7 @@ import 'package:kantan/src/common_widgets/error_message_widget.dart';
 import 'package:kantan/src/features/player/application/audio_handler_service.dart';
 import 'package:kantan/src/features/settings/data/settings_repository.dart';
 import 'package:kantan/src/features/track_list/data/tracks_repository.dart';
+import 'package:kantan/src/features/wakelock/application/wakelock_service.dart';
 import 'package:kantan/src/kantan_player_app.dart';
 import 'package:kantan/l10n/string_hardcoded.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -47,6 +48,7 @@ class AppStartupWidget extends ConsumerWidget {
         );
       },
       data: (_) {
+        ref.watch(wakelockServiceProvider);
         return child;
       },
     );
