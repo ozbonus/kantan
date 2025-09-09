@@ -48,7 +48,7 @@ class AppStartupWidget extends ConsumerWidget {
         );
       },
       data: (_) {
-        ref.watch(wakelockServiceProvider);
+        if (Config.useWakelockFeature) ref.watch(wakelockServiceProvider);
         return child;
       },
     );
