@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kantan/config.dart';
 import 'package:kantan/l10n/app_localizations.dart';
 import 'package:kantan/src/features/parental_mode/presentation/math_challenge_screen.dart';
+import 'package:kantan/src/features/settings/presentation/app_about_dialog.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controller.dart';
 import 'package:kantan/src/features/settings/presentation/settings_menu_controllers.dart';
 
@@ -38,6 +39,8 @@ class SettingsMenu extends ConsumerWidget {
             const InterfaceLocaleSelector(),
           if (controller.showTranslationLanguageSelector)
             const TranslationLocaleSelector(),
+          const Divider(),
+          const AppAboutDialog(),
         ],
       ),
     );
