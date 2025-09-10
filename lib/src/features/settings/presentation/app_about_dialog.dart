@@ -16,15 +16,18 @@ class AppAboutDialog extends ConsumerWidget {
       loading: () => showAdaptiveAboutDialog(
         context: context,
         applicationName: Config.appTitle,
+        applicationLegalese: Config.legalese,
       ),
       error: (_, __) => showAdaptiveAboutDialog(
         context: context,
         applicationName: Config.appTitle,
+        applicationLegalese: Config.legalese,
       ),
       data: (info) => showAdaptiveAboutDialog(
         context: context,
         applicationName: Config.appTitle,
         applicationVersion: info.version,
+        applicationLegalese: Config.legalese,
       ),
     );
 
