@@ -258,11 +258,26 @@ class TrackListAppBarStyle extends ThemeExtension<TrackListAppBarStyle> {
         other.contentsOnlyAppBarCollapsedColor,
         t,
       ),
-      backgroundContainerDecoration: BoxDecoration.lerp(
-        backgroundContainerDecoration,
-        other.backgroundContainerDecoration,
-        t,
-      ),
+      // Although both the light and dark themes always have the same number of
+      // colors in the linear gradient within the
+      // `backgroundContainerDecoration`, when switching themes in the app the
+      // following exception is thrown:
+      //
+      // 'package:flutter/src/painting/gradient.dart': Failed assertion: line 53
+      // pos 10: 'bColors.length >= 2': is not true.
+      //
+      // This only began happening after the 3.27 to 3.35 Flutter upgrade and
+      // may be a bug within the framework. Refer to issue #116 for more
+      // information about the workaround below and thoughts about what do in
+      // the future.
+      backgroundContainerDecoration: t < 0.5
+          ? backgroundContainerDecoration
+          : other.backgroundContainerDecoration,
+      // backgroundContainerDecoration: BoxDecoration.lerp(
+      //   backgroundContainerDecoration,
+      //   other.backgroundContainerDecoration,
+      //   t,
+      // ),
       imageContainerDecoration: BoxDecoration.lerp(
         imageContainerDecoration,
         other.imageContainerDecoration,
