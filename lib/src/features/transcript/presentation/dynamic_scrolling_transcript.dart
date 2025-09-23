@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kantan/src/features/transcript/application/transcript_scale_service.dart';
@@ -13,6 +14,13 @@ import 'package:kantan/src/features/transcript/domain/transcript.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_index_controller.dart';
 import 'package:kantan/src/features/transcript/presentation/transcript_line_widget.dart';
 
+/// A scrollable transcript widget that automatically follows audio playback
+/// along with other features.
+///
+/// - Auto-scrolls to current audio position when playback advances
+/// - Disables auto-scroll when user manually scrolls during playback
+/// - Handles both transcript and optional translation display
+/// - Supports tap-to-seek functionality
 class DynamicScrollingTranscript extends ConsumerStatefulWidget {
   const DynamicScrollingTranscript({
     super.key,
@@ -31,12 +39,24 @@ class _DynamicScrollingTranscriptState
     extends ConsumerState<DynamicScrollingTranscript> {
   final _scrollController = ItemScrollController();
   final _itemsPositionsListener = ItemPositionsListener.create();
+  // When the list is being built the `ItemsPositionsListener` is called, which
+  // may cause auto scrolling to be toggled from enabled to disabled (dependent
+  // on other conditions). `_isInitializing` is initialized as `true` and then
+  // set to false after a short delay in the `init` method. This prevents
+  // `_maybeDisableAutoScroll` from firing accidentally.
+  bool _isInitializing = true;
   bool _isAutoScrolling = false;
 
   @override
   void initState() {
     super.initState();
     _itemsPositionsListener.itemPositions.addListener(_maybeDisableAutoScroll);
+
+    Future.delayed(Config.transcriptInitDebounce, () {
+      if (mounted) {
+        _isInitializing = false;
+      }
+    });
   }
 
   @override
@@ -62,6 +82,9 @@ class _DynamicScrollingTranscriptState
         // the scrolling animation completes, this delay prevents
         // `_maybeDisableAutoScroll` from doing its job erroneously.
         await Future.delayed(Config.transcriptDebounce);
+      } catch (error, stackTrace) {
+        log('Failed to scroll to line at index $index: $error');
+        log('Stack trace: $stackTrace');
       } finally {
         if (mounted) {
           _isAutoScrolling = false;
@@ -73,7 +96,7 @@ class _DynamicScrollingTranscriptState
   /// If the user manually scrolls while audio is playing, then disable auto
   /// scrolling. This feature is toggleable according to client preferences.
   void _maybeDisableAutoScroll() {
-    if (_isAutoScrolling || !mounted) return;
+    if (_isAutoScrolling || !mounted || _isInitializing) return;
 
     scheduleMicrotask(() async {
       final isPlaying =
